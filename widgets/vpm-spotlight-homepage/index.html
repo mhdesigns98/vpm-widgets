@@ -1,23 +1,327 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="VPM Spotlight - Original Content">
-  <title>VPM Spotlight</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VPM Spotlight — Option C: Lead on Top</title>
+  <style>
+    body {
+      font-family: 'GT America', Arial, Helvetica, sans-serif;
+      background: #eaeef2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .preview-label {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 1rem;
+    }
+
+    .preview-wrap { width: 100%; max-width: 1100px; }
+
+    /* ── COMPONENT ── */
+    .vpm-spotlight {
+      width: 100%;
+      font-size: 16px;
+      font-family: 'GT America', Arial, Helvetica, sans-serif;
+      border-radius: 3px;
+      overflow: hidden;
+      box-shadow: 0 4px 28px rgba(0,0,0,0.14);
+    }
+
+    .vpm-spotlight *, .vpm-spotlight *::before, .vpm-spotlight *::after {
+      box-sizing: border-box; margin: 0; padding: 0;
+    }
+
+    /* HEADER */
+    .vpm-spotlight__header {
+      background: #003865;
+      padding: 1.25em 1.75em 1.35em;
+    }
+
+    .vpm-spotlight__eyebrow {
+      display: flex; align-items: center; gap: 0.6em; margin-bottom: 0.4em;
+    }
+
+    .vpm-spotlight__dash { width: 28px; height: 2px; background: #E0E721; flex-shrink: 0; }
+
+    .vpm-spotlight__label {
+      font-size: 0.75em; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: #E0E721;
+    }
+
+    .vpm-spotlight__title {
+      font-size: clamp(1.5em, 2.2vw, 1.875em);
+      font-weight: 800; color: #ffffff; line-height: 1.05; letter-spacing: -0.02em;
+    }
+
+    /* LEAD CARD — full width, horizontal layout */
+    .vpm-spotlight__lead {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      background: #ffffff;
+      border-bottom: 2px solid #B2B4B2;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vpm-spotlight__lead:hover .vpm-spotlight__img img { transform: scale(1.03); }
+    .vpm-spotlight__lead:hover .vpm-spotlight__arrow { opacity: 1; transform: translateX(0); }
+
+    .vpm-spotlight__lead::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px; background: #E0E721; transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    .vpm-spotlight__lead:hover::after { transform: scaleX(1); }
+
+    /* IMAGE */
+    .vpm-spotlight__img {
+      position: relative; overflow: hidden; background: #003865;
+    }
+
+    .vpm-spotlight__lead .vpm-spotlight__img {
+      aspect-ratio: 3/2;
+    }
+
+    .vpm-spotlight__img img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .vpm-spotlight__img::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(0,56,101,0.25) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* BADGE */
+    .vpm-spotlight__badge {
+      position: absolute; top: 14px; left: 14px;
+      display: flex; align-items: center; gap: 5px;
+      padding: 5px 11px 4px; border-radius: 2px;
+      font-size: 0.75em; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; z-index: 2;
+    }
+
+    .vpm-spotlight__badge--video   { background: #003865; color: #ffffff; }
+    .vpm-spotlight__badge--podcast { background: #6CACE4; color: #003865; }
+    .vpm-spotlight__badge--article { background: #E0E721; color: #003865; }
+
+    /* LEAD BODY */
+    .vpm-spotlight__lead .vpm-spotlight__body {
+      padding: 2.5em 2.5em 2em;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.65em;
+      background: #003865;
+    }
+
+    .vpm-spotlight__section {
+      font-size: 0.75em; font-weight: 700; letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .vpm-spotlight__lead .vpm-spotlight__section { color: #6CACE4; }
+    .vpm-spotlight__card .vpm-spotlight__section  { color: #6CACE4; }
+
+    .vpm-spotlight__headline {
+      font-weight: 800; line-height: 1.12; letter-spacing: -0.02em;
+    }
+
+    .vpm-spotlight__lead .vpm-spotlight__headline {
+      font-size: clamp(1.375em, 2.2vw, 1.875em);
+      color: #ffffff;
+    }
+
+    .vpm-spotlight__desc { line-height: 1.55; }
+
+    .vpm-spotlight__lead .vpm-spotlight__desc {
+      font-size: 1em;
+      color: rgba(255,255,255,0.72);
+    }
+
+    .vpm-spotlight__footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 0.75em; border-top: 1px solid rgba(255,255,255,0.15);
+      margin-top: auto;
+    }
+
+    .vpm-spotlight__lead .vpm-spotlight__meta {
+      font-size: 0.875em; color: rgba(255,255,255,0.45); font-weight: 600;
+    }
+
+    .vpm-spotlight__arrow {
+      font-size: 0.875em; font-weight: 700;
+      display: flex; align-items: center; gap: 4px;
+      opacity: 0.4; transform: translateX(-4px);
+      transition: opacity 0.28s ease, transform 0.28s ease;
+      letter-spacing: 0.06em; text-transform: uppercase;
+    }
+
+    .vpm-spotlight__lead .vpm-spotlight__arrow { color: #E0E721; }
+
+    /* SECONDARY ROW */
+    .vpm-spotlight__secondary-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: #B2B4B2;
+    }
+
+    /* SECONDARY CARDS */
+    .vpm-spotlight__card {
+      background: #ffffff;
+      display: flex;
+      flex-direction: row;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+      overflow: hidden;
+    }
+
+    .vpm-spotlight__card:hover .vpm-spotlight__img img { transform: scale(1.04); }
+    .vpm-spotlight__card:hover .vpm-spotlight__arrow { opacity: 1; transform: translateX(0); }
+
+    .vpm-spotlight__card::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px; background: #E0E721; transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    .vpm-spotlight__card:hover::after { transform: scaleX(1); }
+
+    .vpm-spotlight__card .vpm-spotlight__img {
+      width: 45%; flex-shrink: 0; aspect-ratio: 3/2; position: relative;
+    }
+
+    .vpm-spotlight__card .vpm-spotlight__img img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+    }
+
+    .vpm-spotlight__card .vpm-spotlight__body {
+      padding: 1.125em 1.25em;
+      display: flex; flex-direction: column; gap: 0.4em;
+      flex: 1; justify-content: center;
+    }
+
+    .vpm-spotlight__card .vpm-spotlight__headline {
+      font-size: clamp(1em, 1.1vw, 1.125em);
+      color: #003865;
+    }
+
+    .vpm-spotlight__card .vpm-spotlight__desc {
+      font-size: 0.9375em; color: #101820; opacity: 0.65;
+      display: -webkit-box; -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical; overflow: hidden;
+    }
+
+    .vpm-spotlight__card .vpm-spotlight__footer { border-top: 1px solid #e2e4e3; }
+
+    .vpm-spotlight__card .vpm-spotlight__meta {
+      font-size: 0.875em; color: #B2B4B2; font-weight: 600;
+    }
+
+    .vpm-spotlight__card .vpm-spotlight__arrow { color: #003865; }
+
+    /* STRIPE */
+    .vpm-spotlight__stripe {
+      height: 5px;
+      background: linear-gradient(to right, #E0E721 60%, #6CACE4 100%);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 760px) {
+      .vpm-spotlight__lead { grid-template-columns: 1fr; }
+      .vpm-spotlight__lead .vpm-spotlight__img { aspect-ratio: 3/2; }
+      .vpm-spotlight__lead .vpm-spotlight__body { padding: 1.5em; }
+      .vpm-spotlight__secondary-row { grid-template-columns: 1fr; }
+      .vpm-spotlight__card { flex-direction: column; }
+      .vpm-spotlight__card .vpm-spotlight__img { width: 100%; aspect-ratio: 3/2; }
+      .vpm-spotlight__card .vpm-spotlight__img img { position: relative; inset: auto; }
+      .vpm-spotlight__arrow { opacity: 1; transform: translateX(0); }
+    }
+  </style>
 </head>
 <body>
-  <div class="spotlight-section">
-    <div class="spotlight-container">
-      <h2 class="spotlight-heading">Spotlight on VPM Original Content</h2>
-      <div id="spotlight-cards" class="spotlight-cards">
-        <!-- Cards will be dynamically inserted here -->
-      </div>
-    </div>
-  </div>
+<div class="preview-wrap">
+  <p class="preview-label">Option C — Lead on Top</p>
 
-  <script src="script.js"></script>
+  <section class="vpm-spotlight">
+
+    <header class="vpm-spotlight__header">
+      <div class="vpm-spotlight__eyebrow">
+        <div class="vpm-spotlight__dash"></div>
+        <span class="vpm-spotlight__label">VPM Original Content</span>
+      </div>
+      <h2 class="vpm-spotlight__title">Spotlight on VPM Originals</h2>
+    </header>
+
+    <a class="vpm-spotlight__lead" href="#">
+      <div class="vpm-spotlight__img">
+        <img src="https://picsum.photos/seed/vpm1/600/400" alt="Feature image" />
+        <span class="vpm-spotlight__badge vpm-spotlight__badge--video">▶ Video</span>
+      </div>
+      <div class="vpm-spotlight__body">
+        <span class="vpm-spotlight__section">Black History Month</span>
+        <h3 class="vpm-spotlight__headline">Celebrate Black History Month: Virginia Voices &amp; Stories</h3>
+        <p class="vpm-spotlight__desc">Explore groundbreaking stories from Virginia and beyond — from landmark legislation to the people who shaped the Commonwealth.</p>
+        <div class="vpm-spotlight__footer">
+          <span class="vpm-spotlight__meta">44 min · Series</span>
+          <span class="vpm-spotlight__arrow">Watch now →</span>
+        </div>
+      </div>
+    </a>
+
+    <div class="vpm-spotlight__secondary-row">
+
+      <a class="vpm-spotlight__card" href="#">
+        <div class="vpm-spotlight__img">
+          <img src="https://picsum.photos/seed/vpm2/600/400" alt="Card 2 image" />
+          <span class="vpm-spotlight__badge vpm-spotlight__badge--video">▶ Video</span>
+        </div>
+        <div class="vpm-spotlight__body">
+          <span class="vpm-spotlight__section">Finding Edna Lewis</span>
+          <h3 class="vpm-spotlight__headline">Who Was Edna Lewis? Virginia Chef's Legacy with Leah Branch</h3>
+          <p class="vpm-spotlight__desc">Richmond Chef Leah Branch recreates Edna Lewis's iconic Southern dishes at The Roosevelt.</p>
+          <div class="vpm-spotlight__footer">
+            <span class="vpm-spotlight__meta">18 min</span>
+            <span class="vpm-spotlight__arrow">Watch →</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="vpm-spotlight__card" href="#">
+        <div class="vpm-spotlight__img">
+          <img src="https://picsum.photos/seed/vpm3/600/400" alt="Card 3 image" />
+          <span class="vpm-spotlight__badge vpm-spotlight__badge--podcast">◉ Podcast</span>
+        </div>
+        <div class="vpm-spotlight__body">
+          <span class="vpm-spotlight__section">Identity &amp; Culture</span>
+          <h3 class="vpm-spotlight__headline">Chasing Cambodia: A Cyclist's Journey to Identity</h3>
+          <p class="vpm-spotlight__desc">First-gen Cambodian-American Johnny Phan rides from Virginia to Cambodia to discover his roots.</p>
+          <div class="vpm-spotlight__footer">
+            <span class="vpm-spotlight__meta">32 min · Ep. 4</span>
+            <span class="vpm-spotlight__arrow">Listen →</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="vpm-spotlight__stripe"></div>
+
+  </section>
+</div>
 </body>
 </html>
-
