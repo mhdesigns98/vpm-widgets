@@ -145,6 +145,35 @@ body {
   padding: var(--space-6) var(--space-6) 80px;
 }
 
+/* ── Section ── */
+.wl-section {
+  margin-bottom: var(--space-8);
+}
+.wl-section__header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+  padding-left: var(--space-3);
+  border-left: 3px solid var(--vpm-yellow);
+}
+.wl-section__title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--vpm-dark-blue);
+  line-height: 1;
+}
+.wl-section__count {
+  font-size: var(--fs-eyebrow);
+  font-weight: 600;
+  color: var(--vpm-grey);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
 /* ── Grid ── */
 .wl-grid {
   display: grid;
@@ -169,7 +198,7 @@ body {
   transform: translateY(-2px);
 }
 
-/* THE RISK: full-bleed dark-blue name band */
+/* THE RISK: full-bleed name band — color encodes category */
 .wl-card__nameband {
   background: var(--vpm-dark-blue);
   padding: var(--space-4) var(--space-5) var(--space-3);
@@ -206,6 +235,11 @@ body {
 }
 .wl-card__preview-link:hover { opacity: 0.7; }
 .wl-card__preview-link svg { flex-shrink: 0; }
+
+/* Page-category cards use light-blue band */
+.wl-card--page .wl-card__nameband {
+  background: var(--vpm-blue-800, #002E54);
+}
 
 /* Body */
 .wl-card__body {
@@ -341,9 +375,7 @@ body {
   </div>
 </header>
 
-<main class="wl-main">
-  <div class="wl-grid" id="js-grid"></div>
-</main>
+<main class="wl-main" id="js-main"></main>
 
 <footer class="wl-site-footer">
   <a href="https://github.com/mhdesigns98/vpm-widgets" target="_blank" rel="noopener noreferrer">
@@ -360,6 +392,7 @@ body {
       slug: 'elections-2026-primary',
       name: 'Elections 2026 Primary',
       desc: '2026 Virginia Primary promo — dates, video carousel, article links. WordPress ACF split-file format.',
+      category: 'widget',
       preview: 'preview.html',
       files: [
         { label: 'HTML', file: 'html.html' },
@@ -368,30 +401,10 @@ body {
       ],
     },
     {
-      slug: 'elections-banner-2026',
-      name: 'Elections Banner 2026',
-      desc: '2026 elections coverage promo banner prototype.',
-      preview: 'index.html',
-      files: [{ label: 'HTML', file: 'index.html' }],
-    },
-    {
-      slug: 'vpm-banner',
-      name: 'VPM Banner',
-      desc: 'General-purpose promotional banner component with customizable templates.',
-      preview: 'index.html',
-      files: [{ label: 'HTML', file: 'index.html' }],
-    },
-    {
-      slug: 'vpm-spotlight-homepage',
-      name: 'VPM Spotlight',
-      desc: 'Homepage content spotlight with admin UI and JSON-driven content queue.',
-      preview: 'index.html',
-      files: [{ label: 'HTML', file: 'index.html' }],
-    },
-    {
       slug: 'morning-monitor-signup',
       name: 'Morning Monitor Signup',
       desc: 'Newsletter signup embed for the VPM Morning Monitor.',
+      category: 'widget',
       preview: 'index.html',
       files: [{ label: 'HTML', file: 'index.html' }],
     },
@@ -399,6 +412,7 @@ body {
       slug: 'watch-page-header',
       name: 'Watch Page Header',
       desc: 'Embeddable channel selector header for the VPM Watch live broadcast page.',
+      category: 'widget',
       preview: 'index.html',
       files: [{ label: 'HTML', file: 'index.html' }],
     },
@@ -406,20 +420,7 @@ body {
       slug: 'youtube-shorts-embed',
       name: 'YouTube Shorts Embed',
       desc: 'VPM News Shorts carousel embed for use on VPM pages.',
-      preview: 'index.html',
-      files: [{ label: 'HTML', file: 'index.html' }],
-    },
-    {
-      slug: 'ecp-partners-team',
-      name: 'ECP Partners & Team',
-      desc: 'Early Childhood Education partners & team section — Brightspot-optimized embed.',
-      preview: 'index.html',
-      files: [{ label: 'HTML', file: 'index.html' }],
-    },
-    {
-      slug: 'annual-report-2025',
-      name: 'Annual Report 2025',
-      desc: 'Interactive 2025 Annual Report embed for the VPM impact page.',
+      category: 'widget',
       preview: 'index.html',
       files: [{ label: 'HTML', file: 'index.html' }],
     },
@@ -427,6 +428,7 @@ body {
       slug: 'how-federal-funding-works',
       name: 'How Federal Funding Works',
       desc: 'Explainer section illustrating how federal funding flows to public media.',
+      category: 'widget',
       preview: 'index.html',
       files: [{ label: 'HTML', file: 'index.html' }],
     },
@@ -434,9 +436,48 @@ body {
       slug: 'impact-testimonial',
       name: 'Impact Testimonial',
       desc: 'Testimonial component for VPM\'s impact and giving pages.',
+      category: 'widget',
       preview: 'index.html',
       files: [{ label: 'HTML', file: 'index.html' }],
     },
+    {
+      slug: 'vpm-banner',
+      name: 'VPM Banner',
+      desc: 'General-purpose promotional banner component with customizable templates.',
+      category: 'widget',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+    {
+      slug: 'vpm-spotlight-homepage',
+      name: 'VPM Spotlight',
+      desc: 'Homepage content spotlight with admin UI and JSON-driven content queue.',
+      category: 'widget',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+    /* ── Pages ── */
+    {
+      slug: 'annual-report-2025',
+      name: 'Annual Report 2025',
+      desc: 'Interactive 2025 Annual Report embed for the VPM impact page.',
+      category: 'page',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+    {
+      slug: 'ecp-partners-team',
+      name: 'ECP Partners & Team',
+      desc: 'Early Childhood Education partners & team section — Brightspot-optimized embed.',
+      category: 'page',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+  ];
+
+  const SECTIONS = [
+    { key: 'widget', label: 'Widgets' },
+    { key: 'page',   label: 'Pages'   },
   ];
 
   function widgetPath(slug, file) {
@@ -483,14 +524,13 @@ body {
 
   function buildCard(w) {
     const card = document.createElement('article');
-    card.className = 'wl-card';
+    card.className = 'wl-card' + (w.category === 'page' ? ' wl-card--page' : '');
     card.setAttribute('aria-label', w.name);
 
-    /* name band */
     const band = document.createElement('div');
     band.className = 'wl-card__nameband';
 
-    const name = document.createElement('h2');
+    const name = document.createElement('h3');
     name.className = 'wl-card__name';
     name.textContent = w.name;
 
@@ -505,7 +545,6 @@ body {
     band.appendChild(name);
     band.appendChild(previewLink);
 
-    /* body */
     const body = document.createElement('div');
     body.className = 'wl-card__body';
     const desc = document.createElement('p');
@@ -513,7 +552,6 @@ body {
     desc.textContent = w.desc;
     body.appendChild(desc);
 
-    /* footer */
     const footer = document.createElement('div');
     footer.className = 'wl-card__footer';
 
@@ -547,10 +585,42 @@ body {
     return card;
   }
 
-  const grid = document.getElementById('js-grid');
+  function buildSection(key, label, items) {
+    const section = document.createElement('section');
+    section.className = 'wl-section';
+    section.setAttribute('aria-label', label);
+
+    const header = document.createElement('div');
+    header.className = 'wl-section__header';
+
+    const title = document.createElement('h2');
+    title.className = 'wl-section__title';
+    title.textContent = label;
+
+    const count = document.createElement('span');
+    count.className = 'wl-section__count';
+    count.textContent = items.length + ' ' + (items.length === 1 ? key : key + 's');
+
+    header.appendChild(title);
+    header.appendChild(count);
+
+    const grid = document.createElement('div');
+    grid.className = 'wl-grid';
+    items.forEach(function (w) { grid.appendChild(buildCard(w)); });
+
+    section.appendChild(header);
+    section.appendChild(grid);
+    return section;
+  }
+
+  const main = document.getElementById('js-main');
   const bigCount = document.getElementById('js-big-count');
   bigCount.textContent = WIDGETS.length;
-  WIDGETS.forEach(function (w) { grid.appendChild(buildCard(w)); });
+
+  SECTIONS.forEach(function (s) {
+    const items = WIDGETS.filter(function (w) { return w.category === s.key; });
+    if (items.length) main.appendChild(buildSection(s.key, s.label, items));
+  });
 })();
 </script>
 
