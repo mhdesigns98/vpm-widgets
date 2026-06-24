@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VPM Video Promo Section</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 2rem;
+      background: #eaeef2;
+      font-family: Arial, Helvetica, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* ── COMPONENT ── */
+    .vpm-ls {
+      --vpm-navy: #003a5d;
+      --vpm-blue: #6fb3e6;
+      --vpm-red: #e63946;
+      --vpm-radius: 10px;
+
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .vpm-ls__grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 0;
+      background: var(--vpm-navy);
+      border-radius: var(--vpm-radius);
+      overflow: hidden;
+    }
+
+    /* Left / video side */
+    .vpm-ls__media {
+      background: #000;
+    }
+
+    .vpm-ls__ratio {
+      position: relative;
+      padding-top: 56.25%;
+      height: 0;
+    }
+
+    .vpm-ls__poster,
+    .vpm-ls__frame,
+    .vpm-ls__frame iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .vpm-ls__poster {
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+      background: #000;
+      display: block;
+      z-index: 2;
+    }
+
+    .vpm-ls__poster img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .vpm-ls__posterShade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.65), rgba(0,0,0,.15), rgba(0,0,0,0));
+    }
+
+    .vpm-ls__play {
+      position: absolute;
+      left: 1rem;
+      bottom: 1rem;
+      width: 56px;
+      height: 56px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,.92);
+      color: #000;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .vpm-ls__livebug {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: var(--vpm-red);
+      color: #fff;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: .08em;
+      padding: .35rem .6rem;
+      border-radius: 999px;
+    }
+
+    .vpm-ls__frame {
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .vpm-ls__frame iframe {
+      pointer-events: auto;
+    }
+
+    /* Right / text side */
+    .vpm-ls__content {
+      padding: 2.25rem 2rem;
+      color: #fff;
+    }
+
+    .vpm-ls__kicker {
+      margin: 0 0 .75rem;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      font-size: 12px;
+      color: var(--vpm-blue);
+    }
+
+    .vpm-ls__title {
+      margin: 0 0 1rem;
+      font-size: 32px;
+      line-height: 1.1;
+    }
+
+    .vpm-ls__desc {
+      margin: 0 0 1.5rem;
+      max-width: 38ch;
+      font-size: 16px;
+      line-height: 1.5;
+      opacity: .95;
+    }
+
+    .vpm-ls__actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .vpm-ls__btn {
+      border: 0;
+      background: var(--vpm-blue);
+      color: #003a5d;
+      font-weight: 700;
+      padding: .75rem 1.25rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .vpm-ls__btn:hover {
+      filter: brightness(0.95);
+    }
+
+    .vpm-ls__btn--secondary {
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,.35);
+      font-weight: 600;
+    }
+
+    .vpm-ls__btn--secondary:hover {
+      background: rgba(255,255,255,.1);
+      border-color: rgba(255,255,255,.6);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .vpm-ls__grid {
+        grid-template-columns: 1fr;
+      }
+      .vpm-ls__content {
+        padding: 1.5rem;
+      }
+      .vpm-ls__title {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<section class="vpm-ls">
+  <div class="vpm-ls__grid" id="livestream">
+
+    <!-- VIDEO COLUMN -->
+    <div class="vpm-ls__media">
+      <div class="vpm-ls__ratio">
+
+        <!-- Poster overlay (click to load player) -->
+        <button
+          class="vpm-ls__poster"
+          type="button"
+          aria-label="Play livestream: State of the Commonwealth 2026"
+          data-vimeo-src="https://vimeo.com/event/5647492/embed/interaction"
+        >
+          <img
+            src="https://assets.vpm.org/62/0f/94c72e8645b0b5821d4096bf484c/vpm-news-sotc-202600477.png"
+            alt="State of the Commonwealth livestream"
+            loading="lazy"
+          />
+          <span class="vpm-ls__posterShade" aria-hidden="true"></span>
+          <span class="vpm-ls__play" aria-hidden="true">▶</span>
+          <span class="vpm-ls__livebug" aria-hidden="true">LIVE</span>
+        </button>
+
+        <!-- Iframe injected here after click -->
+        <div class="vpm-ls__frame" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <!-- TEXT COLUMN -->
+    <div class="vpm-ls__content">
+      <p class="vpm-ls__kicker">Live Coverage</p>
+      <h2 class="vpm-ls__title">State of the Commonwealth 2026 | Governor Youngkin</h2>
+      <p class="vpm-ls__desc">
+        Outgoing Governor of the Commonwealth of Virginia, Glenn Youngkin, gives a final speech to members of both houses
+        of the General Assembly. Live coverage.
+      </p>
+
+      <div class="vpm-ls__actions">
+        <button class="vpm-ls__btn" type="button" data-vpm-play>
+          Watch Live Coverage
+        </button>
+        <a
+          class="vpm-ls__btn vpm-ls__btn--secondary"
+          href="/news/politics/2026-general-assembly/"
+        >
+          2026 General Assembly Updates
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+(function () {
+  var root = document.querySelector('.vpm-ls');
+  if (!root) return;
+
+  function loadPlayer(container) {
+    var poster = container.querySelector('.vpm-ls__poster');
+    var frame  = container.querySelector('.vpm-ls__frame');
+    if (!poster || !frame) return;
+
+    var src = poster.getAttribute('data-vimeo-src');
+    if (!src) return;
+
+    if (frame.querySelector('iframe')) return;
+
+    frame.innerHTML =
+      '<iframe src="' + src + '" ' +
+      'frameborder="0" ' +
+      'allow="autoplay; fullscreen; picture-in-picture; encrypted-media; web-share" ' +
+      'referrerpolicy="strict-origin-when-cross-origin" ' +
+      'allowfullscreen></iframe>';
+
+    frame.setAttribute('aria-hidden', 'false');
+    frame.style.pointerEvents = 'auto';
+    poster.style.display = 'none';
+  }
+
+  root.addEventListener('click', function (e) {
+    var poster = e.target.closest('.vpm-ls__poster');
+    if (poster) {
+      loadPlayer(root);
+      return;
+    }
+
+    var btn = e.target.closest('[data-vpm-play]');
+    if (btn) {
+      loadPlayer(root);
+      var media = root.querySelector('.vpm-ls__media');
+      if (media) media.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
