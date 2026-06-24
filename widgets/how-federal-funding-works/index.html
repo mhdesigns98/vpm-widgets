@@ -1,0 +1,338 @@
+<style>
+    /* VPM Brand Colors and Variables */
+    :root {
+        /* Primary Palette */
+        --vpm-navy-blue: #003865;
+        --vpm-light-blue: #6CACE4;
+        --vpm-black: #101820;
+        --vpm-gray: #B2B4B2;
+        
+        /* Secondary Palette */
+        --vpm-red: #EE2737;
+        --vpm-chartreuse: #E0E721;
+        
+        /* Tints */
+        --vpm-navy-blue-75: rgba(0, 56, 101, 0.75);
+        --vpm-navy-blue-50: rgba(0, 56, 101, 0.5);
+        --vpm-navy-blue-25: rgba(0, 56, 101, 0.25);
+        
+        /* Typography */
+        --vpm-font-primary: 'GT America', Arial, sans-serif;
+        --vpm-font-fallback: Arial, sans-serif;
+        
+        /* Font Sizes */
+        --vpm-font-size-sm: 0.875rem;
+        --vpm-font-size-base: 1rem;
+        --vpm-font-size-lg: 1.25rem;
+        --vpm-font-size-xl: 1.5rem;
+        --vpm-font-size-2xl: 1.875rem;
+        --vpm-font-size-3xl: 2.25rem;
+        
+        /* Line Heights */
+        --vpm-line-height-tight: 1.2;
+        --vpm-line-height-normal: 1.5;
+        --vpm-line-height-relaxed: 1.75;
+        
+        /* Spacing */
+        --vpm-space-xs: 0.25rem;
+        --vpm-space-sm: 0.5rem;
+        --vpm-space-md: 1rem;
+        --vpm-space-lg: 1.5rem;
+        --vpm-space-xl: 2rem;
+        --vpm-space-2xl: 3rem;
+        --vpm-space-3xl: 4rem;
+        
+        /* Tracking */
+        --vpm-tracking-tight: -0.025em;
+        --vpm-tracking-normal: 0;
+        
+        /* Breakpoints */
+        --vpm-breakpoint-sm: 640px;
+        --vpm-breakpoint-md: 768px;
+        --vpm-breakpoint-lg: 1024px;
+        --vpm-breakpoint-xl: 1280px;
+    }
+    
+    /* Main CTA Container */
+    .vpm-funding-cta {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        background: linear-gradient(135deg, var(--vpm-navy-blue) 0%, var(--vpm-navy-blue-75) 100%);
+        color: white;
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+    }
+    
+    .vpm-funding-cta::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, transparent 30%, var(--vpm-light-blue) 70%, transparent 100%);
+        opacity: 0.1;
+        z-index: 1;
+    }
+    
+    .vpm-funding-cta-container {
+        position: relative;
+        z-index: 2;
+        padding: var(--vpm-space-2xl) var(--vpm-space-xl);
+    }
+    
+    /* Grid Layout */
+    .vpm-funding-cta-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--vpm-space-xl);
+        align-items: center;
+    }
+    
+    /* Content Section */
+    .vpm-funding-cta-content {
+        text-align: center;
+    }
+    
+    .vpm-funding-cta-title {
+        font-family: var(--vpm-font-primary);
+        font-weight: 700;
+        font-size: var(--vpm-font-size-2xl);
+        line-height: var(--vpm-line-height-tight);
+        letter-spacing: var(--vpm-tracking-tight);
+        margin-bottom: var(--vpm-space-md);
+        color: white;
+    }
+    
+    .vpm-funding-cta-subtitle {
+        font-family: var(--vpm-font-primary);
+        font-weight: 500;
+        font-size: var(--vpm-font-size-lg);
+        line-height: var(--vpm-line-height-normal);
+        margin-bottom: var(--vpm-space-lg);
+        color: var(--vpm-light-blue);
+    }
+    
+    .vpm-funding-cta-description {
+        font-family: var(--vpm-font-primary);
+        font-size: var(--vpm-font-size-base);
+        line-height: var(--vpm-line-height-relaxed);
+        margin-bottom: var(--vpm-space-xl);
+        opacity: 0.9;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    /* Video Section */
+    .vpm-funding-video-container {
+        position: relative;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+    }
+    
+    .vpm-funding-video-wrapper {
+        padding: 56.25% 0 0 0;
+        position: relative;
+    }
+    
+    .vpm-funding-video-wrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+    
+    /* Button Styles */
+    .vpm-funding-cta-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: var(--vpm-space-md);
+        align-items: center;
+        margin-top: var(--vpm-space-xl);
+    }
+    
+    .vpm-funding-btn {
+        display: inline-block;
+        padding: 0.75rem 2rem;
+        border-radius: 4px;
+        font-family: var(--vpm-font-primary);
+        font-weight: 500;
+        font-size: var(--vpm-font-size-base);
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        letter-spacing: var(--vpm-tracking-tight);
+        border: none;
+        min-width: 200px;
+    }
+    
+    .vpm-funding-btn-primary {
+        background-color: var(--vpm-red);
+        color: white;
+    }
+    
+    .vpm-funding-btn-primary:hover {
+        background-color: rgba(238, 39, 55, 0.9);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(238, 39, 55, 0.3);
+    }
+    
+    .vpm-funding-btn-secondary {
+        background-color: transparent;
+        color: white;
+        border: 2px solid white;
+    }
+    
+    .vpm-funding-btn-secondary:hover {
+        background-color: white;
+        color: var(--vpm-navy-blue);
+    }
+    
+    /* Tablet Styles */
+    @media (min-width: 768px) {
+        .vpm-funding-cta-container {
+            padding: var(--vpm-space-3xl) var(--vpm-space-2xl);
+        }
+    
+        .vpm-funding-cta-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: var(--vpm-space-2xl);
+        }
+    
+        .vpm-funding-cta-content {
+            text-align: left;
+        }
+    
+        .vpm-funding-cta-title {
+            font-size: 3rem;
+        }
+    
+        .vpm-funding-cta-subtitle {
+            font-size: var(--vpm-font-size-xl);
+        }
+    
+        .vpm-funding-cta-description {
+            font-size: var(--vpm-font-size-lg);
+            margin-left: 0;
+            margin-right: 0;
+        }
+    
+        .vpm-funding-cta-buttons {
+            flex-direction: row;
+            justify-content: flex-start;
+        }
+    }
+    
+    /* Desktop Styles */
+    @media (min-width: 1024px) {
+        .vpm-funding-cta-container {
+            padding: 5rem 3rem;
+        }
+    
+        .vpm-funding-cta-grid {
+            gap: var(--vpm-space-3xl);
+        }
+    
+        .vpm-funding-cta-title {
+            font-size: 4rem;
+        }
+    
+        .vpm-funding-cta-subtitle {
+            font-size: var(--vpm-font-size-2xl);
+        }
+    
+        .vpm-funding-cta-description {
+            font-size: var(--vpm-font-size-xl);
+        }
+    }
+    
+    /* Large Desktop */
+    @media (min-width: 1280px) {
+        .vpm-funding-cta-title {
+            font-size: 3.5rem;
+        }
+    }
+    
+    /* Accessibility */
+    .vpm-funding-btn:focus {
+        outline: 2px solid white;
+        outline-offset: 2px;
+    }
+    
+    @media (prefers-reduced-motion: reduce) {
+        .vpm-funding-btn {
+            transition: none;
+        }
+        
+        .vpm-funding-btn:hover {
+            transform: none;
+        }
+    }
+    </style>
+    
+    <section class="vpm-funding-cta" role="banner" aria-labelledby="funding-cta-title">
+        <div class="vpm-funding-cta-container">
+            <div class="vpm-funding-cta-grid">
+                <div class="vpm-funding-cta-content">
+                    <h1 id="funding-cta-title" class="vpm-funding-cta-title">
+                        Understanding Public Media Funding
+                    </h1>
+                    <p class="vpm-funding-cta-subtitle">
+                        How Your Support Makes a Difference
+                    </p>
+                    <p class="vpm-funding-cta-description">
+                        While VPM is primarily sustained through community support, annual federal funding distributed through the Corporation for Public Broadcasting (CPB) provides the foundation that enables our entire system to deliver the shows you love, trusted news, educational resources, and emergency information when communities need it most. Watch this fun video to learn how it all works!
+                    </p>
+                    <div class="vpm-funding-cta-buttons">
+                        <a href="#support" class="vpm-funding-btn vpm-funding-btn-primary" aria-label="Make a donation to VPM">
+                            Support VPM Today
+                        </a>
+                        <a href="#article" class="vpm-funding-btn vpm-funding-btn-secondary" aria-label="Read article about federal funding for public media">
+                            Learn More About Federal Funding
+                        </a>
+                    </div>
+                </div>
+                <div class="vpm-funding-video-container">
+                    <div class="vpm-funding-video-wrapper">
+                        <iframe 
+                            src="https://player.vimeo.com/video/1094035901?badge=0&autopause=0&player_id=0&app_id=58479" 
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                            title="CPB Funding Explainer VPM"
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <script src="https://player.vimeo.com/api/player.js"></script>
+    <script>
+    // Initialize Vimeo player with additional options
+    (function() {
+        const iframe = document.querySelector('.vpm-funding-video-wrapper iframe');
+        if (iframe && typeof Vimeo !== 'undefined') {
+            const player = new Vimeo.Player(iframe);
+            
+            // Optional: Add event listeners for analytics
+            player.on('play', function() {
+                console.log('VPM Funding video started playing');
+                // Add analytics tracking here
+            });
+            
+            player.on('ended', function() {
+                console.log('VPM Funding video finished');
+                // Add analytics tracking here
+            });
+        }
+    })();
+    </script>

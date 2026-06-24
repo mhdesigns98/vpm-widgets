@@ -1,0 +1,976 @@
+<!-- ============================================ -->
+<!-- EARLY CHILDHOOD COMMUNITY PARTNERS PAGE -->
+<!-- Optimized for Brightspot HTML Embed Module -->
+<!-- ============================================ -->
+
+<div class="vpm-ecp-embed">
+<style>
+    /* Early Childhood Partners Page Styles - Scoped to .vpm-ecp-embed */
+    
+    /* Base Container Styles */
+    .vpm-ecp-embed {
+        font-family: GT America, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        color: #101820;
+        max-width: 1280px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    
+    /* Hero Section */
+    .vpm-ecp-embed .ecp-hero {
+        background: linear-gradient(135deg, #003865 0%, #6CACE4 100%);
+        color: #ffffff;
+        padding: 60px 40px;
+        margin-bottom: 40px;
+        border-radius: 8px;
+    }
+
+    .vpm-ecp-embed .ecp-hero h1 {
+        font-size: 2.8rem;
+        margin-bottom: 20px;
+        font-weight: 700;
+        line-height: 1.2;
+        font-family: GT America, sans-serif;
+        max-width: 900px;
+    }
+
+    @media only screen and (min-width: 768px) {
+        .vpm-ecp-embed .ecp-hero h1 {
+            font-size: 3.4rem;
+        }
+    }
+
+    .vpm-ecp-embed .ecp-hero p {
+        font-size: 1.6rem;
+        max-width: 800px;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    /* Stats Bar */
+    .vpm-ecp-embed .ecp-stats-bar {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+        background: #ffffff;
+        padding: 40px;
+        margin: -30px 0 40px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.16), 0 1px 4px -1px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Responsive Grid - Stats */
+    @media (min-width: 768px) {
+        .vpm-ecp-embed .ecp-stats-bar {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+    .vpm-ecp-embed .ecp-stat {
+        text-align: center;
+    }
+
+    .vpm-ecp-embed .ecp-stat-number {
+        font-size: 3.6rem;
+        font-weight: 700;
+        color: #ff6f00;
+        display: block;
+        font-family: GT America, sans-serif;
+    }
+
+    @media only screen and (min-width: 768px) {
+        .vpm-ecp-embed .ecp-stat-number {
+            font-size: 4.8rem;
+        }
+    }
+
+    .vpm-ecp-embed .ecp-stat-label {
+        font-size: 1.4rem;
+        color: #666666;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Section Headers - Scoped to prevent conflicts */
+    .vpm-ecp-embed h2 {
+        color: #003865;
+        font-size: 2.4rem;
+        margin: 0 0 40px 0;
+        font-family: GT America, sans-serif;
+    }
+
+    @media only screen and (min-width: 768px) {
+        .vpm-ecp-embed h2 {
+            font-size: 3.4rem;
+        }
+    }
+
+    /* Partners Grid */
+    .vpm-ecp-embed .ecp-partners-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin-bottom: 60px;
+    }
+
+    /* Responsive Grid - Partners */
+    @media (min-width: 640px) {
+        .vpm-ecp-embed .ecp-partners-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .vpm-ecp-embed .ecp-partners-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    .vpm-ecp-embed .ecp-partner-card {
+        background: #ffffff;
+        border-radius: 4px;
+        padding: 30px;
+        box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.16), 0 1px 4px -1px rgba(0, 0, 0, 0.04);
+        transition: all 0.3s;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #f5f5f5;
+    }
+
+    .vpm-ecp-embed .ecp-partner-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 8px -2px rgba(0, 0, 0, 0.1), 0 6px 20px -3px rgba(0, 0, 0, 0.2);
+    }
+
+    .vpm-ecp-embed .ecp-partner-logo {
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        background: #EDEDED;
+        border-radius: 4px;
+        padding: 15px;
+    }
+
+    .vpm-ecp-embed .ecp-partner-logo img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+    .vpm-ecp-embed .ecp-partner-category {
+        display: inline-block;
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #ff6f00;
+        margin-bottom: 10px;
+    }
+
+    .vpm-ecp-embed .ecp-partner-name {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #003865;
+        margin-bottom: 15px;
+        font-family: GT America, sans-serif;
+    }
+
+    .vpm-ecp-embed .ecp-partner-description {
+        color: #666666;
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+        flex-grow: 1;
+        line-height: 1.6;
+    }
+
+    .vpm-ecp-embed .ecp-partner-links {
+        display: flex;
+        gap: 10px;
+        margin-top: auto;
+        flex-wrap: wrap;
+    }
+
+    .vpm-ecp-embed .ecp-partner-link {
+        padding: 8px 16px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 1.4rem;
+        font-weight: 600;
+        transition: all 0.3s;
+        display: inline-block;
+        font-family: GT America, sans-serif;
+    }
+
+    .vpm-ecp-embed .ecp-partner-link.primary {
+        background: #003865;
+        color: #ffffff;
+    }
+
+    .vpm-ecp-embed .ecp-partner-link.primary:hover {
+        background: #6CACE4;
+    }
+
+    .vpm-ecp-embed .ecp-partner-link.secondary {
+        border: 2px solid #003865;
+        color: #003865;
+        background: #ffffff;
+    }
+
+    .vpm-ecp-embed .ecp-partner-link.secondary:hover {
+        background: #003865;
+        color: #ffffff;
+    }
+
+    /* Team Section */
+    .vpm-ecp-embed .ecp-team-section {
+        background: #EDEDED;
+        padding: 60px 20px;
+        margin-bottom: 60px;
+        border-radius: 4px;
+    }
+
+    .vpm-ecp-embed .ecp-team-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin-top: 40px;
+    }
+
+    /* Responsive Grid - Team */
+    @media (min-width: 640px) {
+        .vpm-ecp-embed .ecp-team-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .vpm-ecp-embed .ecp-team-grid {
+            grid-template-columns: repeat(2, 1fr);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    .vpm-ecp-embed .ecp-team-card {
+        background: #ffffff;
+        border-radius: 4px;
+        overflow: hidden;
+        box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.16), 0 1px 4px -1px rgba(0, 0, 0, 0.04);
+        transition: all 0.3s;
+        border: 1px solid #f5f5f5;
+    }
+
+    .vpm-ecp-embed .ecp-team-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 8px -2px rgba(0, 0, 0, 0.1), 0 6px 20px -3px rgba(0, 0, 0, 0.2);
+    }
+
+    .vpm-ecp-embed .ecp-team-photo {
+        width: 100%;
+        height: 280px;
+        background: linear-gradient(135deg, #003865 0%, #6CACE4 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+        color: #ffffff;
+        font-weight: 700;
+    }
+
+    .vpm-ecp-embed .ecp-team-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .vpm-ecp-embed .ecp-team-info {
+        padding: 25px;
+    }
+
+    .vpm-ecp-embed .ecp-team-name {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #003865;
+        margin-bottom: 5px;
+        font-family: GT America, sans-serif;
+    }
+
+    .vpm-ecp-embed .ecp-team-title {
+        color: #666666;
+        font-size: 1.6rem;
+        margin-bottom: 15px;
+    }
+
+    .vpm-ecp-embed .ecp-team-bio {
+        color: #666666;
+        font-size: 1.6rem;
+        line-height: 1.6;
+    }
+
+    .vpm-ecp-embed .ecp-team-contact {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #f5f5f5;
+    }
+
+    .vpm-ecp-embed .ecp-team-contact a {
+        color: #237bbd;
+        text-decoration: none;
+        font-size: 1.6rem;
+    }
+
+    .vpm-ecp-embed .ecp-team-contact a:hover {
+        color: #125c8e;
+        text-decoration: underline;
+    }
+
+    /* Community Stories */
+    .vpm-ecp-embed .ecp-stories-section {
+        margin-bottom: 60px;
+    }
+
+    .vpm-ecp-embed .ecp-stories-section h2 {
+        color: #003865;
+        font-size: 2.4rem;
+        margin-bottom: 20px;
+        font-family: GT America, sans-serif;
+    }
+
+    @media only screen and (min-width: 768px) {
+        .vpm-ecp-embed .ecp-stories-section h2 {
+            font-size: 3.4rem;
+        }
+    }
+
+    .vpm-ecp-embed .ecp-stories-section > p {
+        color: #666666;
+        font-size: 1.6rem;
+        margin-bottom: 40px;
+    }
+
+    .vpm-ecp-embed .ecp-stories-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin-top: 40px;
+    }
+
+    /* Responsive Grid - Stories */
+    @media (min-width: 640px) {
+        .vpm-ecp-embed .ecp-stories-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .vpm-ecp-embed .ecp-stories-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    .vpm-ecp-embed .ecp-story-card {
+        background: #ffffff;
+        border-radius: 4px;
+        overflow: hidden;
+        box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.16), 0 1px 4px -1px rgba(0, 0, 0, 0.04);
+        transition: all 0.3s;
+        border: 1px solid #f5f5f5;
+    }
+
+    .vpm-ecp-embed .ecp-story-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 8px -2px rgba(0, 0, 0, 0.1), 0 6px 20px -3px rgba(0, 0, 0, 0.2);
+    }
+
+    .vpm-ecp-embed .ecp-story-image {
+        width: 100%;
+        height: 200px;
+        background: #EDEDED;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .vpm-ecp-embed .ecp-story-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .vpm-ecp-embed .ecp-play-button {
+        width: 60px;
+        height: 60px;
+        background: rgba(0, 56, 101, 0.9);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        font-size: 1.5rem;
+        position: absolute;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .vpm-ecp-embed .ecp-play-button:hover {
+        background: #003865;
+        transform: scale(1.1);
+    }
+
+    .vpm-ecp-embed .ecp-story-content {
+        padding: 25px;
+    }
+
+    .vpm-ecp-embed .ecp-story-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #003865;
+        margin-bottom: 15px;
+        font-family: GT America, sans-serif;
+    }
+
+    .vpm-ecp-embed .ecp-story-description {
+        color: #666666;
+        font-size: 1.6rem;
+        line-height: 1.6;
+    }
+
+    /* Utility Classes */
+    .vpm-ecp-embed .ecp-text-center { 
+        text-align: center; 
+    }
+    
+    .vpm-ecp-embed .ecp-mb-20 { 
+        margin-bottom: 20px; 
+    }
+    
+    .vpm-ecp-embed .ecp-mb-40 { 
+        margin-bottom: 40px; 
+    }
+
+    /* Additional Responsive Adjustments */
+    @media (max-width: 639px) {
+        .vpm-ecp-embed {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        
+        .vpm-ecp-embed .ecp-hero {
+            padding: 40px 20px;
+        }
+        
+        .vpm-ecp-embed .ecp-hero h1 {
+            font-size: 2.4rem;
+        }
+        
+        .vpm-ecp-embed .ecp-stats-bar {
+            padding: 30px 20px;
+            margin: -20px 0 30px;
+        }
+        
+        .vpm-ecp-embed .ecp-team-section,
+        .vpm-ecp-embed .ecp-stories-section {
+            padding: 40px 20px;
+        }
+    }
+
+    @media (min-width: 640px) and (max-width: 1023px) {
+        .vpm-ecp-embed {
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+        
+        .vpm-ecp-embed .ecp-hero {
+            padding: 50px 30px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .vpm-ecp-embed {
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+        
+        .vpm-ecp-embed .ecp-hero {
+            padding: 60px 40px;
+        }
+    }
+</style>
+
+<!-- ============================================ -->
+<!-- HERO SECTION -->
+<!-- ============================================ -->
+<div class="ecp-hero">
+    <h1>Early Childhood: Community Partners</h1>
+    <p>At VPM, we believe that every child matters and is deserving of opportunities. The relationship between families, educators and community partners is immeasurable. It is a cornerstone to our children's success in education and in life.</p>
+</div>
+
+<!-- ============================================ -->
+<!-- STATS BAR -->
+<!-- ============================================ -->
+<div class="ecp-stats-bar">
+    <div class="ecp-stat">
+        <span class="ecp-stat-number">40+</span>
+        <span class="ecp-stat-label">Community Partners</span>
+    </div>
+    <div class="ecp-stat">
+        <span class="ecp-stat-number">15</span>
+        <span class="ecp-stat-label">School Districts</span>
+    </div>
+    <div class="ecp-stat">
+        <span class="ecp-stat-number">5</span>
+        <span class="ecp-stat-label">Ready Regions</span>
+    </div>
+    <div class="ecp-stat">
+        <span class="ecp-stat-number">1000+</span>
+        <span class="ecp-stat-label">Families Served</span>
+    </div>
+</div>
+
+<!-- ============================================ -->
+<!-- COMMUNITY PARTNERS SECTION -->
+<!-- ============================================ -->
+<h2>Our Community Partners</h2>
+
+<div class="ecp-partners-grid">
+    
+    <!-- Healthcare Partners -->
+    <div class="ecp-partner-card" data-category="healthcare">
+        <div class="ecp-partner-logo">
+            <img src="https://assets.vpm.org/14/b3/8ca7eb834575bea5622211193556/augusta-health.jpg" alt="Augusta Health">
+        </div>
+        <span class="ecp-partner-category">Healthcare</span>
+        <h3 class="ecp-partner-name">Augusta Health</h3>
+        <p class="ecp-partner-description">Contributing to a healthy community through mobile health services and The Basics messaging for families with young children.</p>
+        <div class="ecp-partner-links">
+            <a href="https://www.augustahealth.com/service/community-outreach/" class="ecp-partner-link primary" target="_blank">Website</a>
+        </div>
+    </div>
+
+    <div class="ecp-partner-card" data-category="healthcare">
+        <div class="ecp-partner-logo">
+            <img src="https://assets.vpm.org/a2/64/223639e033be06458f8d4f5768bd/birth-in-color.jpg" alt="Birth In Color">
+        </div>
+        <span class="ecp-partner-category">Healthcare</span>
+        <h3 class="ecp-partner-name">Birth In Color</h3>
+        <p class="ecp-partner-description">Supporting maternal health and dismantling health barriers for Black women and women of color while supporting families with earliest learners.</p>
+        <div class="ecp-partner-links">
+            <a href="https://birthincolorrva.org/" class="ecp-partner-link primary" target="_blank">Website</a>
+            <a href="https://www.facebook.com/Birthincolorrva/" class="ecp-partner-link secondary" target="_blank">Facebook</a>
+        </div>
+    </div>
+
+    <div class="ecp-partner-card" data-category="healthcare">
+        <div class="ecp-partner-logo">
+            <div style="font-size: 1.5rem; font-weight: 700; color: #003865;">Healthy Families</div>
+        </div>
+        <span class="ecp-partner-category">Healthcare</span>
+        <h3 class="ecp-partner-name">Healthy Families of Blue Ridge</h3>
+        <p class="ecp-partner-description">Providing support and resources to families through community health programs and early childhood services.</p>
+        <div class="ecp-partner-links">
+            <a href="https://www.sentara.com/healthwellness/community-health-programs/healthy-families-of-blue-ridge" class="ecp-partner-link primary" target="_blank">Website</a>
+            <a href="https://www.facebook.com/sentarahealth" class="ecp-partner-link secondary" target="_blank">Facebook</a>
+        </div>
+    </div>
+
+    <div class="ecp-partner-card" data-category="healthcare">
+        <div class="ecp-partner-logo">
+            <div style="font-size: 1.5rem; font-weight: 700; color: #003865;">Child Health Partnership</div>
+        </div>
+        <span class="ecp-partner-category">Healthcare</span>
+        <h3 class="ecp-partner-name">Child Health Partnership</h3>
+        <p class="ecp-partner-description">Improving the health and well-being of children through collaborative partnerships and community-based programs.</p>
+        <div class="ecp-partner-links">
+            <a href="https://childhealthpartnership.org/" class="ecp-partner-link primary" target="_blank">Website</a>
+            <a href="https://www.facebook.com/childhealthpartnership/" class="ecp-partner-link secondary" target="_blank">Facebook</a>
+        </div>
+    </div>
+
+    <!-- Education Partners -->
+    <div class="ecp-partner-card" data-category="education">
+        <div class="ecp-partner-logo">
+            <img src="https://assets.vpm.org/fb/f6/bf4dfc254c32b1af00a361edc89e/elkton-rcps.jpg" alt="Rockingham County Schools">
+        </div>
+        <span class="ecp-partner-category">Education</span>
+        <h3 class="ecp-partner-name">Rockingham County Public Schools</h3>
+        <p class="ecp-partner-description">Partnering to establish VPM Learning Walls and Little Free Libraries, making educational resources available for families in the community.</p>
+        <div class="ecp-partner-links">
+            <a href="https://www.rcps.net/" class="ecp-partner-link primary" target="_blank">Website</a>
+            <a href="https://www.facebook.com/rcpsva" class="ecp-partner-link secondary" target="_blank">Facebook</a>
+        </div>
+    </div>
+
+    <div class="ecp-partner-card" data-category="education">
+        <div class="ecp-partner-logo">
+            <div style="font-size: 1.3rem; font-weight: 700; color: #003865; text-align: center;">Charlottesville City Schools</div>
+        </div>
+        <span class="ecp-partner-category">Education</span>
+        <h3 class="ecp-partner-name">Charlottesville City Schools</h3>
+        <p class="ecp-partner-description">Student & Family Engagement programs supporting early childhood education and family participation in learning.</p>
+        <div class="ecp-partner-links">
+            <a href="http://charlottesvilleschools.org/home/programs-activities/family-engagement/" class="ecp-partner-link primary" target="_blank">Website</a>
+            <a href="https://www.facebook.com/EngageFamCCS" class="ecp-partner-link secondary" target="_blank">Facebook</a>
+        </div>
+    </div>
+
+    <div class="ecp-partner-card" data-category="education">
+        <div class="ecp-partner-logo">
+            <div style="font-size: 1.3rem; font-weight: 700; color: #003865; text-align: center;">Hanover Preschool Initiative</div>
+        </div>
+        <span class="ecp-partner-category">Education</span>
+        <h3 class="ecp-partner-name">Hanover Preschool Initiative</h3>
+        <p class="ecp-partner-description">Providing quality preschool and early childhood special education services to prepare children for success in kindergarten.</p>
+        <div class="ecp-partner-links">
+            <a href="http://hcps.us/parents_students/programs/preschool_early_childhood_special_education/hanover_preschool_initiative" class="ecp-partner-link primary" target="_blank">Website</a>
+            <a href="https://www.facebook.com/Hanover-Preschool-Initiative-101388608197299/" class="ecp-partner-link secondary" target="_blank">Facebook</a>
+        </div>
+    </div>
+
+    <div class="ecp-partner-card" data-category="education">
+        <div class="ecp-partner-logo">
+            <div style="font-size: 1.5rem; font-weight: 700; color: #003865;">Oaks Community School</div>
+        </div>
+        <span class="ecp-partner-category">Education</span>
+        <h3 class="ecp-partner-name">Oaks Community School</h3>
+        <p class="ecp-partner-description">Providing comprehensive educational services and community support for students and families.</p>
+        <div class="ecp-partner-links">
+            <a href="https://www.henricoschools.us/o/oakavenue/page/about" class="ecp-partner-link primary" target="_blank">Website</a>
+        </div>
+    </div>
+
+    <!-- Literacy Partners -->
+    <div class="ecp-partner-card" data-category="literacy">
+        <div class="ecp-partner-logo">
+            <img src="https://assets.vpm.org/ce/f7/9a0ccc674cbc8a670c8a0c9c884c/vlp-logo.jpg" alt="Virginia Literacy Partnerships">
+        </div>
+        <span class="ecp-partner-category">Literacy</span>
+        <h3 class="ecp-partner-name">Virginia Literacy Partnerships</h3>
+        <p class="ecp-partner-description">Partnering with educational and community leaders to improve literacy through evidence-based instruction and the Reading Doesn't Just Happen campaign.</p>
+        <div class="ecp-partner-links">
+            <a href="https://literacy.virginia.edu/" class="ecp-partner-link primary" target="_blank">Website</a>
+        </div>
+    </div>
+
+    <div class="ecp-partner-card" data-category="literacy">
+        <div class="ecp-partner-logo">
+            <div style="font-size: 1.5rem; font-weight: 700; color: #003865;">ReadyKids</div>
+        </div>
+        <span class="ecp-partner-category">Literacy</span>
+        <h3 class="ecp-partner-name">ReadyKids</h3>
+        <p class="ecp-partner-description">Preparing children for kindergarten success through literacy programs and family engagement initiatives.</p>
+        <div class="ecp-partner-links">
+            <a href="https://readykidscville.org/" class="ecp-partner-link primary" target="_blank">Website</a>
+            <a href="https://www.facebook.com/ReadyKidsCharlottesville" class="ecp-partner-link secondary" target="_blank">Facebook</a>
+        </div>
+    </div>
+
+    <!-- Community Services -->
+    <div class="ecp-partner-card" data-category="community">
+        <div class="ecp-partner-logo">
+            <img src="https://assets.vpm.org/1b/f5/d943dc8e0fc43d03f2caa1bdcbc8/wildrock-logo2.jpg" alt="Wildrock">
+        </div>
+        <span class="ecp-partner-category">Community Services</span>
+        <h3 class="ecp-partner-name">Wildrock</h3>
+        <p class="ecp-partner-description">Bringing therapeutic benefits of nature play to children and families, with permanent Basics signage at Booker T. Washington Park.</p>
+        <div class="ecp-partner-links">
+            <a href="https://www.wildrock.org/" class="ecp-partner-link primary" target="_blank">Website</a>
+        </div>
+    </div>
+
+    <div class="ecp-partner-card" data-category="community">
+        <div class="ecp-partner-logo">
+            <div style="font-size: 1.5rem; font-weight: 700; color: #003865;">ChildSavers</div>
+        </div>
+        <span class="ecp-partner-category">Community Services</span>
+        <h3 class="ecp-partner-name">ChildSavers</h3>
+        <p class="ecp-partner-description">Providing mental health and early childhood services to help children and families thrive.</p>
+        <div class="ecp-partner-links">
+            <a href="https://www.childsavers.org/" class="ecp-partner-link primary" target="_blank">Website</a>
+            <a href="https://www.facebook.com/ChildSaversRVA/" class="ecp-partner-link secondary" target="_blank">Facebook</a>
+        </div>
+    </div>
+
+    <div class="ecp-partner-card" data-category="community">
+        <div class="ecp-partner-logo">
+            <div style="font-size: 1.5rem; font-weight: 700; color: #003865;">City of Promise</div>
+        </div>
+        <span class="ecp-partner-category">Community Services</span>
+        <h3 class="ecp-partner-name">City of Promise</h3>
+        <p class="ecp-partner-description">Building community partnerships to support children and families through education and enrichment programs.</p>
+        <div class="ecp-partner-links">
+            <a href="https://www.cityofpromise.org/" class="ecp-partner-link primary" target="_blank">Website</a>
+            <a href="https://www.facebook.com/CityofPromise" class="ecp-partner-link secondary" target="_blank">Facebook</a>
+        </div>
+    </div>
+
+    <div class="ecp-partner-card" data-category="community">
+        <div class="ecp-partner-logo">
+            <div style="font-size: 1.5rem; font-weight: 700; color: #003865;">Thrive Birth to Five</div>
+        </div>
+        <span class="ecp-partner-category">Community Services</span>
+        <h3 class="ecp-partner-name">Thrive Birth to Five</h3>
+        <p class="ecp-partner-description">Working to ensure all children in Greater Richmond are healthy, thriving, and ready for success in school and life.</p>
+        <div class="ecp-partner-links">
+            <a href="https://www.thriveb5.org/" class="ecp-partner-link primary" target="_blank">Website</a>
+            <a href="https://www.facebook.com/smartbeginningsrva/" class="ecp-partner-link secondary" target="_blank">Facebook</a>
+        </div>
+    </div>
+
+    <div class="ecp-partner-card" data-category="community">
+        <div class="ecp-partner-logo">
+            <div style="font-size: 1.3rem; font-weight: 700; color: #003865; text-align: center;">Greater Richmond SCAN</div>
+        </div>
+        <span class="ecp-partner-category">Community Services</span>
+        <h3 class="ecp-partner-name">Greater Richmond SCAN</h3>
+        <p class="ecp-partner-description">Preventing child abuse and neglect by helping families build strong, healthy foundations.</p>
+        <div class="ecp-partner-links">
+            <a href="https://grscan.com/" class="ecp-partner-link primary" target="_blank">Website</a>
+            <a href="https://www.facebook.com/GreaterRichmondSCAN/" class="ecp-partner-link secondary" target="_blank">Facebook</a>
+        </div>
+    </div>
+
+    <div class="ecp-partner-card" data-category="community">
+        <div class="ecp-partner-logo">
+            <div style="font-size: 1.2rem; font-weight: 700; color: #003865; text-align: center;">United Way of Greater Charlottesville</div>
+        </div>
+        <span class="ecp-partner-category">Community Services</span>
+        <h3 class="ecp-partner-name">United Way of Greater Charlottesville</h3>
+        <p class="ecp-partner-description">Improving lives through education, financial stability, and health initiatives, including the Go2Grow early childhood program.</p>
+        <div class="ecp-partner-links">
+            <a href="https://unitedwaycville.org/" class="ecp-partner-link primary" target="_blank">Website</a>
+            <a href="https://www.facebook.com/UnitedWayCville" class="ecp-partner-link secondary" target="_blank">Facebook</a>
+        </div>
+    </div>
+
+    <div class="ecp-partner-card" data-category="community">
+        <div class="ecp-partner-logo">
+            <div style="font-size: 1.3rem; font-weight: 700; color: #003865; text-align: center;">Piedmont Housing Alliance</div>
+        </div>
+        <span class="ecp-partner-category">Community Services</span>
+        <h3 class="ecp-partner-name">Piedmont Housing Alliance</h3>
+        <p class="ecp-partner-description">Creating and preserving quality affordable housing to foster strong, inclusive communities.</p>
+        <div class="ecp-partner-links">
+            <a href="https://piedmonthousingalliance.org/" class="ecp-partner-link primary" target="_blank">Website</a>
+            <a href="https://www.facebook.com/PiedmontHousingAlliance/" class="ecp-partner-link secondary" target="_blank">Facebook</a>
+        </div>
+    </div>
+
+    <!-- Business Partners -->
+    <div class="ecp-partner-card" data-category="business">
+        <div class="ecp-partner-logo">
+            <div style="font-size: 1.5rem; font-weight: 700; color: #003865;">The Market at 25th</div>
+        </div>
+        <span class="ecp-partner-category">Business</span>
+        <h3 class="ecp-partner-name">The Market at 25th</h3>
+        <p class="ecp-partner-description">A community grocery store committed to supporting its surrounding community through nutrition, food security, and educational experiences.</p>
+        <div class="ecp-partner-links">
+            <a href="http://themarketat25th.com/" class="ecp-partner-link primary" target="_blank">Website</a>
+            <a href="https://www.facebook.com/TheMarketAt25th/" class="ecp-partner-link secondary" target="_blank">Facebook</a>
+        </div>
+    </div>
+
+    <div class="ecp-partner-card" data-category="business">
+        <div class="ecp-partner-logo">
+            <div style="font-size: 1.3rem; font-weight: 700; color: #003865; text-align: center;">Elkton Family Pharmacy</div>
+        </div>
+        <span class="ecp-partner-category">Business</span>
+        <h3 class="ecp-partner-name">Elkton Family Pharmacy</h3>
+        <p class="ecp-partner-description">Independent family pharmacy hosting VPM Learning Wall and Little Free Library for community families.</p>
+        <div class="ecp-partner-links">
+            <a href="https://www.elktonfamilypharmacy.com/" class="ecp-partner-link primary" target="_blank">Website</a>
+        </div>
+    </div>
+
+    <div class="ecp-partner-card" data-category="business">
+        <div class="ecp-partner-logo">
+            <div style="font-size: 1.5rem; font-weight: 700; color: #003865;">Cargill</div>
+        </div>
+        <span class="ecp-partner-category">Business</span>
+        <h3 class="ecp-partner-name">Cargill</h3>
+        <p class="ecp-partner-description">Supporting employees and families through The Basics Principles training, encouraging child development through everyday activities.</p>
+        <div class="ecp-partner-links">
+            <a href="https://www.cargill.com/about/diversity-equity-inclusion" class="ecp-partner-link primary" target="_blank">Website</a>
+            <a href="https://www.facebook.com/cargill" class="ecp-partner-link secondary" target="_blank">Facebook</a>
+        </div>
+    </div>
+
+    <div class="ecp-partner-card" data-category="business">
+        <div class="ecp-partner-logo">
+            <div style="font-size: 1.5rem; font-weight: 700; color: #003865;">The Paramount Theater</div>
+        </div>
+        <span class="ecp-partner-category">Business</span>
+        <h3 class="ecp-partner-name">The Paramount Theater</h3>
+        <p class="ecp-partner-description">Providing cultural enrichment and educational programming for families and children through arts and entertainment.</p>
+        <div class="ecp-partner-links">
+            <a href="https://www.theparamount.net/" class="ecp-partner-link primary" target="_blank">Website</a>
+            <a href="https://www.facebook.com/cvilleparamount" class="ecp-partner-link secondary" target="_blank">Facebook</a>
+        </div>
+    </div>
+
+</div>
+
+<!-- ============================================ -->
+<!-- TEAM SECTION -->
+<!-- ============================================ -->
+<div class="ecp-team-section">
+    <h2 class="ecp-text-center ecp-mb-20" style="color: #003865; font-size: 2rem;">Our Early Childhood Team</h2>
+    <p class="ecp-text-center ecp-mb-40" style="color: #666666; max-width: 700px; margin-left: auto; margin-right: auto;">
+        Meet the dedicated VPM team members working to support early childhood education and community partnerships across Virginia.
+    </p>
+    
+    <div class="ecp-team-grid">
+        <!-- Team Member 1 - Mary Jo Grieve -->
+        <div class="ecp-team-card">
+            <div class="ecp-team-photo">MG</div>
+            <div class="ecp-team-info">
+                <h3 class="ecp-team-name">Mary Jo Grieve</h3>
+                <p class="ecp-team-title">Director, Early Childhood Care and Education</p>
+                <p class="ecp-team-bio">Leading VPM's early childhood initiatives including the Learning Neighborhoods program, bringing families, children, and educators together for interactive workshops and educational resources.</p>
+                <div class="ecp-team-contact">
+                    <a href="mailto:mgrieve@vpm.org">mgrieve@vpm.org</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Member 2 - Terri Allard -->
+        <div class="ecp-team-card">
+            <div class="ecp-team-photo">TA</div>
+            <div class="ecp-team-info">
+                <h3 class="ecp-team-name">Terri Allard</h3>
+                <p class="ecp-team-title">Charlottesville Education & Engagement Manager</p>
+                <p class="ecp-team-bio">Award-winning producer and host of Charlottesville Inside-Out, connecting VPM with the community through education, arts, and culture programming across the Piedmont region.</p>
+                <div class="ecp-team-contact">
+                    <a href="mailto:tallard@vpm.org">tallard@vpm.org</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================ -->
+<!-- COMMUNITY STORIES SECTION -->
+<!-- ============================================ -->
+<div class="ecp-stories-section">
+    <h2 style="color: #003865; font-size: 2rem; margin-bottom: 20px;">Community Stories</h2>
+    <p style="color: #666666; margin-bottom: 40px;">See how our partnerships are making a difference in communities across Virginia.</p>
+    
+    <div class="ecp-stories-grid">
+        <!-- Story 1 - BilingualKid -->
+        <div class="ecp-story-card">
+            <div class="ecp-story-image">
+                <div class="ecp-play-button">▶</div>
+            </div>
+            <div class="ecp-story-content">
+                <h3 class="ecp-story-title">Meeting Families Where They Are</h3>
+                <p class="ecp-story-description">BilingualKid Language Immersion School in Glen Allen uses a fully embedded Spanish curriculum to help children develop bilingual and biliteracy skills by age 4. Claudia Robles was selected as a 2019 PBS Early Learning Champion.</p>
+            </div>
+        </div>
+
+        <!-- Story 2 - Cargill Partnership -->
+        <div class="ecp-story-card">
+            <div class="ecp-story-image">
+                <div class="ecp-play-button">▶</div>
+            </div>
+            <div class="ecp-story-content">
+                <h3 class="ecp-story-title">Community Story: Cargill</h3>
+                <p class="ecp-story-description">In partnership with Smart Beginnings Greater Harrisonburg, VPM shared The Basics Principles with employees of Cargill to encourage child development through everyday activities at home.</p>
+            </div>
+        </div>
+
+        <!-- Story 3 - Learning Neighborhoods -->
+        <div class="ecp-story-card">
+            <div class="ecp-story-image">
+                <div class="ecp-play-button">▶</div>
+            </div>
+            <div class="ecp-story-content">
+                <h3 class="ecp-story-title">Learning Neighborhoods Initiative</h3>
+                <p class="ecp-story-description">VPM partnered with ExCELL to create Learning Neighborhoods, bringing families, children, and educators together for interactive workshops at schools in Richmond and Petersburg.</p>
+            </div>
+        </div>
+
+        <!-- Story 4 - Market at 25th -->
+        <div class="ecp-story-card">
+            <div class="ecp-story-image">
+                <div class="ecp-play-button">▶</div>
+            </div>
+            <div class="ecp-story-content">
+                <h3 class="ecp-story-title">The Market at 25th Partnership</h3>
+                <p class="ecp-story-description">VPM partners with Richmond Public Schools and The Market at 25th to combine nutrition and food security with educational experiences, simplifying preschool enrollment for families in Richmond's East End.</p>
+            </div>
+        </div>
+
+        <!-- Story 5 - Elkton Pharmacy -->
+        <div class="ecp-story-card">
+            <div class="ecp-story-image">
+                <div class="ecp-play-button">▶</div>
+            </div>
+            <div class="ecp-story-content">
+                <h3 class="ecp-story-title">VPM Learning Wall & Little Free Library</h3>
+                <p class="ecp-story-description">Thanks to Elkton Family Pharmacy and Rockingham County Public Schools for establishing the VPM Learning Wall and Little Free Library, making educational resources and books available for families.</p>
+            </div>
+        </div>
+
+        <!-- Story 6 - Wildrock -->
+        <div class="ecp-story-card">
+            <div class="ecp-story-image">
+                <div class="ecp-play-button">▶</div>
+            </div>
+            <div class="ecp-story-content">
+                <h3 class="ecp-story-title">Nature Play with Wildrock</h3>
+                <p class="ecp-story-description">Wildrock partners with VPM, Albemarle Garden Club, and Charlottesville Parks and Recreation to celebrate the benefits and importance of nature play for children and families.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        'use strict';
+        
+        // Early Childhood Community Partners Page - Scoped JavaScript
+        // Prevents global scope pollution and conflicts with Brightspot scripts
+        
+        // Wait for DOM to be ready
+        function init() {
+            var embed = document.querySelector('.vpm-ecp-embed');
+            if (!embed) return;
+            
+            // Count and log statistics (optional, can be removed in production)
+            var partnerCards = embed.querySelectorAll('.ecp-partner-card');
+            var storyCards = embed.querySelectorAll('.ecp-story-card');
+            var teamCards = embed.querySelectorAll('.ecp-team-card');
+            
+            if (console && console.log) {
+                console.log('VPM Early Childhood Community Partners page loaded');
+                console.log('Page Statistics: ' + partnerCards.length + ' Partners, ' + storyCards.length + ' Stories, ' + teamCards.length + ' Team Members');
+            }
+            
+            // Optional: Add click handlers for story cards (for future video integration)
+            storyCards.forEach(function(card) {
+                card.addEventListener('click', function() {
+                    var titleEl = this.querySelector('.ecp-story-title');
+                    if (titleEl && console && console.log) {
+                        console.log('Story card clicked:', titleEl.textContent);
+                    }
+                    // Future: Add video modal or redirect to video page
+                });
+            });
+        }
+        
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    })();
+</script>
+</div>
+

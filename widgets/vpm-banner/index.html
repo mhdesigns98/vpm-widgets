@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="VPM Banner Showcase - ADA-Compliant Website Banners">
+  <title>VPM Banner Showcase</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <div class="content-wrapper">
+      <!-- Header with theme toggle -->
+      <header class="header">
+        <div class="header-content">
+          <div class="header-title-section">
+            <h1 class="header-title">VPM Banner Showcase</h1>
+            <p class="header-subtitle">ADA-Compliant Website Banners</p>
+          </div>
+          <div class="header-actions">
+            <button 
+              id="theme-toggle" 
+              class="btn btn-icon btn-ghost" 
+              aria-label="Switch theme"
+            >
+              <svg id="theme-icon" class="icon" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                <!-- Moon icon (default) -->
+                <path id="moon-icon" d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
+                <!-- Sun icon (hidden by default) -->
+                <path id="sun-icon" class="hidden" d="M10 3V1m0 18v-2M5.636 5.636l1.414 1.414m11.314 11.314l1.414 1.414M3 10H1m18 0h-2M5.636 14.364l1.414-1.414m11.314-11.314l1.414-1.414M10 17a7 7 0 100-14 7 7 0 000 14z"/>
+              </svg>
+            </button>
+            <button class="btn btn-primary" style="background-color: var(--vpm-red);">
+              View Docs
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main class="main-content">
+        <div class="intro-section">
+          <h2 class="intro-title">All Banner Types</h2>
+          <p class="intro-description">
+            Explore our collection of accessible, responsive banners styled with VPM brand colors. All banners support
+            light and dark modes. Click "Show Embed Code" to copy and customize.
+          </p>
+        </div>
+
+        <div id="banners-container" class="banners-container">
+          <!-- Banners will be dynamically inserted here -->
+        </div>
+
+        <!-- Accessibility Features Section -->
+        <div class="card accessibility-card">
+          <h3 class="accessibility-title">
+            All Banners Include These Accessibility Features
+          </h3>
+          <div class="accessibility-grid">
+            <div class="accessibility-item">
+              <span class="accessibility-icon" style="color: var(--vpm-dark-blue);">✓</span>
+              <div>
+                <div class="accessibility-item-title">WCAG 2.1 AA Compliant</div>
+                <div class="accessibility-item-desc">High contrast ratios for readability</div>
+              </div>
+            </div>
+            <div class="accessibility-item">
+              <span class="accessibility-icon" style="color: var(--vpm-red);">✓</span>
+              <div>
+                <div class="accessibility-item-title">Screen Reader Optimized</div>
+                <div class="accessibility-item-desc">Proper ARIA roles and labels</div>
+              </div>
+            </div>
+            <div class="accessibility-item">
+              <span class="accessibility-icon" style="color: var(--vpm-light-blue);">✓</span>
+              <div>
+                <div class="accessibility-item-title">Keyboard Navigation</div>
+                <div class="accessibility-item-desc">Full keyboard support for all interactions</div>
+              </div>
+            </div>
+            <div class="accessibility-item">
+              <span class="accessibility-icon" style="color: var(--vpm-yellow);">✓</span>
+              <div>
+                <div class="accessibility-item-title">Fully Responsive</div>
+                <div class="accessibility-item-desc">Adapts to all screen sizes</div>
+              </div>
+            </div>
+            <div class="accessibility-item">
+              <span class="accessibility-icon" style="color: var(--vpm-dark-blue);">✓</span>
+              <div>
+                <div class="accessibility-item-title">No Dependencies</div>
+                <div class="accessibility-item-desc">Standalone code, works anywhere</div>
+              </div>
+            </div>
+            <div class="accessibility-item">
+              <span class="accessibility-icon" style="color: var(--vpm-red);">✓</span>
+              <div>
+                <div class="accessibility-item-title">Light & Dark Mode Support</div>
+                <div class="accessibility-item-desc">Works in both light and dark themes</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="footer-content">
+          <p>All banners are production-ready and fully customizable with VPM brand colors.</p>
+          <p class="footer-second-line">Built with accessibility and modern web standards in mind.</p>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

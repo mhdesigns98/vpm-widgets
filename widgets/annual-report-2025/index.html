@@ -1,0 +1,1665 @@
+<div class="vpm-impact-component" role="region" aria-label="VPM 2025 Community Impact Report">
+<style>
+/* Fonts (swap to GT America via your font service in production) */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+.vpm-impact-component {
+  /* Brand */
+  --vpm-navy: #003865;
+  --vpm-navy-deep: #003865;
+  --vpm-navy-light: #6cace4;
+  --vpm-gold: #e0e721;
+  --vpm-red: #ee2737;
+  --vpm-black: #101820;
+  --vpm-grey: #b2b4b2;
+  --vpm-cream: #f5f1e8;
+
+  /* Base */
+  --bg-light: #ffffff;
+  --bg-gray: #f8f9fa;
+  --text-primary: #003865;
+  --text-secondary: #4f6273;
+
+  /* Spacing */
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 60px;
+
+  /* Layout */
+  --max-width: 1100px;
+  --radius: 6px;
+  --shadow: 0 10px 28px rgba(0, 56, 101, 0.12);
+
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text-primary);
+  background: var(--bg-light);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--spacing-2xl) var(--spacing-md);
+}
+
+.vpm-impact-component * { box-sizing: border-box; }
+.vpm-impact-component img { max-width: 100%; }
+
+/* Sticky nav (scoped) */
+.vpm-impact-component .impact-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255,255,255,1);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0,56,101,0.12);
+  margin: 0 calc(var(--spacing-md) * -1) var(--spacing-2xl);
+  padding: var(--spacing-md) var(--spacing-md);
+  isolation: isolate;
+}
+
+.vpm-impact-component .impact-nav__inner {
+  display: flex;
+  gap: var(--spacing-lg);
+  align-items: center;
+  overflow-x: auto;
+  padding: 6px 0;
+  scrollbar-color: var(--vpm-gold) transparent;
+}
+.vpm-impact-component .impact-nav__inner::-webkit-scrollbar { height: 3px; }
+.vpm-impact-component .impact-nav__inner::-webkit-scrollbar-thumb { background: var(--vpm-gold); }
+
+.vpm-impact-component .nav-link {
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 8px 0;
+  border-bottom: 2px solid transparent;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.vpm-impact-component .nav-link:hover { color: var(--vpm-navy); border-bottom-color: rgba(224,231,33,0.6); }
+
+.vpm-impact-component .nav-link[aria-current="true"] {
+  color: var(--vpm-navy);
+  border-bottom-color: var(--vpm-gold);
+}
+
+.vpm-impact-component .nav-link:focus-visible {
+  outline: 3px solid rgba(108, 172, 228, 0.7);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* Hero */
+.vpm-impact-component .impact-hero { margin-bottom: var(--spacing-3xl); }
+.vpm-impact-component .impact-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--vpm-gold);
+}
+.vpm-impact-component .impact-hero__eyebrow::before {
+  content: "";
+  width: 40px;
+  height: 2px;
+  background: var(--vpm-gold);
+}
+.vpm-impact-component .impact-hero__title {
+  font-size: clamp(2.3rem, 5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin: 0 0 14px;
+  color: var(--vpm-navy);
+}
+.vpm-impact-component .impact-hero__title .highlight {
+  background: var(--vpm-gold);
+  color: var(--vpm-navy);
+  padding: 4px 10px 4px 0;
+  display: inline-block;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.vpm-impact-component .impact-hero__underline {
+  height: 4px;
+  width: 200px;
+  max-width: 100%;
+  margin-bottom: 16px;
+  background: linear-gradient(90deg, var(--vpm-gold), var(--vpm-red));
+}
+.vpm-impact-component .impact-hero__description {
+  margin: 0;
+  max-width: 70ch;
+  font-size: clamp(1rem, 1.3vw, 1.12rem);
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+/* Stats bar */
+.vpm-impact-component .impact-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--spacing-lg);
+  padding: var(--spacing-xl);
+  background: linear-gradient(135deg, var(--vpm-navy), var(--vpm-navy-light));
+  border-radius: var(--radius);
+  margin-bottom: var(--spacing-3xl);
+  position: relative;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.vpm-impact-component .impact-stats::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--vpm-gold), var(--vpm-red));
+}
+.vpm-impact-component .stat { text-align: center; position: relative; z-index: 1; }
+.vpm-impact-component .stat__value {
+  display: block;
+  font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--vpm-gold);
+  margin-bottom: 8px;
+}
+.vpm-impact-component .stat__label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(245, 241, 232, 0.92);
+}
+
+/* Yellow highlights box (replaces blue stats) */
+.vpm-impact-component .impact-highlights {
+  background: linear-gradient(180deg, var(--vpm-gold), #c9cb1c);
+  border-radius: var(--radius);
+  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-3xl);
+  box-shadow: var(--shadow);
+}
+
+.vpm-impact-component .highlights-title {
+  margin: 0 0 var(--spacing-lg);
+  font-size: clamp(1.5rem, 3vw, 1.9rem);
+  font-weight: 900;
+  color: var(--vpm-navy);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.vpm-impact-component .highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.vpm-impact-component .highlight-item {
+  text-align: center;
+}
+
+.vpm-impact-component .highlight-value {
+  display: block;
+  font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+  font-weight: 900;
+  line-height: 1;
+  color: var(--vpm-navy);
+  margin-bottom: 8px;
+}
+
+.vpm-impact-component .highlight-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--vpm-navy);
+  opacity: 0.85;
+}
+
+/* Subsection header */
+.vpm-impact-component .subsection-header {
+  margin: var(--spacing-3xl) 0 var(--spacing-xl);
+  padding-top: var(--spacing-2xl);
+  border-top: 3px solid var(--vpm-gold);
+}
+
+.vpm-impact-component .subsection-title {
+  margin: 0;
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  font-weight: 800;
+  color: var(--vpm-navy);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* Sections */
+.vpm-impact-component .impact-section { margin-bottom: var(--spacing-3xl); scroll-margin-top: 120px; position: relative; z-index: 1; }
+.vpm-impact-component .section-header { margin-bottom: var(--spacing-xl); }
+.vpm-impact-component .section-header__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--vpm-gold);
+}
+.vpm-impact-component .section-header__eyebrow::before { content:""; width:40px; height:2px; background: var(--vpm-gold); }
+.vpm-impact-component .section-header__title {
+  margin: 0 0 10px;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.vpm-impact-component .section-header__description {
+  margin: 0;
+  max-width: 75ch;
+  color: var(--text-secondary);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+/* Grid */
+.vpm-impact-component .impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+  position: relative;
+  z-index: 1;
+}
+@media (min-width: 768px) {
+  .vpm-impact-component .impact-grid { grid-template-columns: repeat(2, 1fr); }
+  .vpm-impact-component .impact-card--wide { grid-column: span 2; }
+}
+
+/* Cards */
+.vpm-impact-component .impact-card {
+  background: var(--bg-light);
+  border: 1px solid rgba(0, 56, 101, 0.12);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 14px rgba(0, 56, 101, 0.08);
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Clickable card link */
+.vpm-impact-component .impact-card__link {
+  text-decoration: none;
+  color: inherit;
+  display: contents;
+}
+.vpm-impact-component .impact-card__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  cursor: pointer;
+}
+.vpm-impact-component .impact-card__link:focus-visible::after {
+  outline: 3px solid rgba(224,231,33,0.9);
+  outline-offset: 3px;
+  border-radius: var(--radius);
+}
+.vpm-impact-component .impact-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 36px rgba(0, 56, 101, 0.16);
+  border-color: rgba(224,231,33,0.9);
+}
+
+.vpm-impact-component .impact-card__media {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, rgba(224, 231, 33, 0.10), rgba(238, 39, 55, 0.10));
+  overflow: hidden;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.vpm-impact-component .impact-card__media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+.vpm-impact-component .impact-card__body {
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.vpm-impact-component .impact-card__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--vpm-gold);
+}
+.vpm-impact-component .impact-card__eyebrow::before { content:""; width:20px; height:2px; background: var(--vpm-gold); }
+
+.vpm-impact-component .impact-card__title {
+  margin: 0;
+  font-size: clamp(1.25rem, 2vw, 1.55rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.vpm-impact-component .impact-card__text {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+.vpm-impact-component .impact-card__meta {
+  margin-top: 8px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(0,56,101,0.12);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* Chips */
+.vpm-impact-component .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+.vpm-impact-component .chip {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--vpm-navy);
+  background: rgba(108, 172, 228, 0.18);
+  border: 1px solid rgba(0,56,101,0.10);
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+/* Badge */
+.vpm-impact-component .badge {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 4px 10px;
+  background: rgba(0, 56, 101, 0.15);
+  color: var(--vpm-navy);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 2px;
+}
+
+/* Featured */
+.vpm-impact-component .impact-card--featured {
+  background: linear-gradient(135deg, var(--vpm-navy), var(--vpm-navy-light));
+  border-color: rgba(255,255,255,0.10);
+}
+.vpm-impact-component .impact-card--featured .impact-card__title,
+.vpm-impact-component .impact-card--featured .impact-card__text,
+.vpm-impact-component .impact-card--featured .impact-card__meta {
+  color: rgba(245,241,232,0.95);
+}
+.vpm-impact-component .impact-card--featured .impact-card__meta { border-top-color: rgba(255,255,255,0.14); }
+.vpm-impact-component .impact-card--featured .chip { background: rgba(245,241,232,0.18); color: rgba(245,241,232,0.95); border-color: rgba(255,255,255,0.15); }
+
+/* Callout */
+.vpm-impact-component .impact-card--callout {
+  background: linear-gradient(180deg, var(--vpm-gold), #c9cb1c);
+  border-color: rgba(224,231,33,0.9);
+}
+.vpm-impact-component .impact-card--callout .impact-card__title,
+.vpm-impact-component .impact-card--callout .impact-card__text { color: var(--vpm-navy); }
+.vpm-impact-component .impact-card--callout .impact-card__eyebrow { color: var(--vpm-navy); }
+.vpm-impact-component .impact-card--callout .impact-card__eyebrow::before { background: var(--vpm-navy); }
+
+/* Quote (contrast-safe: navy bg) */
+.vpm-impact-component .impact-card--quote {
+  display: grid;
+  grid-template-columns: 1fr;
+  background: linear-gradient(135deg, var(--vpm-navy), var(--vpm-navy-deep));
+  border-color: rgba(0,56,101,0.5);
+  overflow: visible;
+}
+@media (min-width: 768px) {
+  .vpm-impact-component .impact-card--quote { grid-template-columns: 1.4fr 1fr; }
+  .vpm-impact-component .impact-card--quote .impact-card__media { aspect-ratio: auto; }
+}
+.vpm-impact-component .impact-card--quote .impact-card__body { padding: var(--spacing-xl); }
+.vpm-impact-component .impact-card--quote .impact-card__quote {
+  margin: 0;
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  line-height: 1.65;
+  color: rgba(245,241,232,0.98);
+  font-weight: 600;
+}
+.vpm-impact-component .impact-card--quote .impact-card__title { color: rgba(245,241,232,0.98); }
+.vpm-impact-component .impact-card--quote .impact-card__text { color: rgba(245,241,232,0.85); }
+.vpm-impact-component .impact-card--quote .impact-card__eyebrow { color: var(--vpm-gold); }
+.vpm-impact-component .impact-card--quote .impact-card__eyebrow::before { background: var(--vpm-gold); }
+
+/* Letter */
+.vpm-impact-component .impact-card--letter .impact-card__media { 
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  background: linear-gradient(135deg, rgba(224, 231, 33, 0.10), rgba(238, 39, 55, 0.10));
+}
+.vpm-impact-component .impact-card--letter .impact-card__media img {
+  object-fit: contain;
+}
+.vpm-impact-component .impact-card--letter .impact-card__role {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text-secondary);
+  line-height: 1.35;
+}
+.vpm-impact-component .prose p { margin: 0; }
+.vpm-impact-component .prose p + p { margin-top: 12px; }
+
+/* Details/Summary for letters (progressive enhancement) */
+.vpm-impact-component .letter-details {
+  margin-top: 10px;
+}
+
+.vpm-impact-component .letter-details summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.vpm-impact-component .letter-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.vpm-impact-component .readmore {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(0,56,101,0.2);
+  background: rgba(108,172,228,0.12);
+  color: var(--vpm-navy);
+  font-weight: 800;
+  font-size: 14px;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 160ms ease;
+}
+
+.vpm-impact-component .readmore:hover { 
+  background: rgba(108,172,228,0.18);
+  border-color: rgba(0,56,101,0.3);
+}
+
+.vpm-impact-component .readmore:focus-visible { 
+  outline: 3px solid rgba(224,231,33,0.9); 
+  outline-offset: 3px; 
+}
+
+/* Arrow indicator */
+.vpm-impact-component .readmore::after {
+  content: "▼";
+  font-size: 10px;
+  transition: transform 160ms ease;
+}
+
+.vpm-impact-component .letter-details[open] .readmore::after {
+  transform: rotate(180deg);
+}
+
+/* Prose initially hidden in details */
+.vpm-impact-component .letter-details:not([open]) .prose {
+  display: none;
+}
+
+.vpm-impact-component .letter-details[open] .prose {
+  margin-top: 14px;
+}
+
+/* Quote decoration images */
+.vpm-impact-component .quote-decoration {
+  position: absolute;
+  top: -22px;
+  right: 20px;
+  width: 60px;
+  height: auto;
+  z-index: 2;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 8px rgba(0, 56, 101, 0.15));
+  transition: transform 320ms ease;
+}
+
+.vpm-impact-component .impact-card:hover .quote-decoration {
+  transform: translateY(-5px) rotate(3deg);
+}
+
+.vpm-impact-component .testimonial-card:hover .quote-decoration {
+  transform: translateY(-5px) rotate(3deg);
+}
+
+/* Testimonial */
+.vpm-impact-component .testimonial-card {
+  background: var(--bg-gray);
+  border: 1px solid rgba(0,56,101,0.12);
+  border-radius: var(--radius);
+  padding: var(--spacing-xl);
+  box-shadow: 0 2px 8px rgba(0, 56, 101, 0.06);
+  position: relative;
+  margin-top: 24px;
+  overflow: visible;
+}
+.vpm-impact-component .testimonial-card__quote {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--vpm-navy);
+  font-style: italic;
+}
+.vpm-impact-component .testimonial-card__author { display: flex; align-items: center; gap: var(--spacing-md); margin-top: var(--spacing-lg); }
+.vpm-impact-component .testimonial-card__photo {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--vpm-navy-light);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 900;
+}
+.vpm-impact-component .testimonial-card__name { margin: 0; font-weight: 900; color: var(--vpm-navy); }
+.vpm-impact-component .testimonial-card__location { margin: 0; color: var(--text-secondary); }
+
+/* Numbers */
+.vpm-impact-component .numbers-container-wrapper { 
+  display: flex; 
+  justify-content: center; 
+  padding: var(--spacing-xl) 0;
+  margin-top: var(--spacing-2xl);
+}
+.vpm-impact-component .numbers-container {
+  width: 100%;
+  max-width: 760px;
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0,56,101,0.10);
+}
+.vpm-impact-component .numbers-header { display: flex; align-items: stretch; }
+.vpm-impact-component .year-flag {
+  background: var(--vpm-navy-light);
+  color: white;
+  font-size: clamp(30px, 5vw, 40px);
+  font-weight: 900;
+  padding: 18px 28px 18px 22px;
+  clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+  min-width: 130px;
+  display: flex; align-items: center;
+}
+.vpm-impact-component .title-text {
+  background: white;
+  color: var(--vpm-navy);
+  font-size: clamp(22px, 4vw, 30px);
+  font-weight: 900;
+  padding: 18px 26px 18px 18px;
+  flex: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex; align-items: center;
+}
+.vpm-impact-component .numbers-content { background: var(--vpm-gold); padding: 28px 34px; }
+.vpm-impact-component .numbers-category { margin-bottom: 28px; }
+.vpm-impact-component .numbers-category:last-child { margin-bottom: 0; }
+.vpm-impact-component .category-title {
+  margin: 0 0 14px;
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--vpm-navy);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--vpm-navy);
+}
+.vpm-impact-component .number-item { 
+  margin-bottom: 12px; 
+  color: var(--vpm-navy); 
+  font-size: 20px; 
+  line-height: 1.55; 
+}
+.vpm-impact-component .number-item:last-child { margin-bottom: 0; }
+.vpm-impact-component .number { font-weight: 900; }
+.vpm-impact-component .italic { font-style: italic; }
+
+/* Awards */
+.vpm-impact-component .awards-hero {
+  background: linear-gradient(135deg, var(--vpm-navy), var(--vpm-navy-deep));
+  border-radius: var(--radius);
+  padding: var(--spacing-3xl) var(--spacing-xl);
+  overflow: hidden;
+  position: relative;
+}
+.vpm-impact-component .awards-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg, transparent, transparent 2px,
+    rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px
+  );
+  opacity: 0.5;
+  pointer-events: none;
+}
+.vpm-impact-component .awards-hero__content { position: relative; z-index: 1; }
+.vpm-impact-component .awards-hero__headline {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto 22px;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vpm-impact-component .awards-hero__headline img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius);
+}
+.vpm-impact-component .awards-hero__subheading {
+  margin: 0 0 var(--spacing-xl);
+  text-align: center;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--vpm-gold);
+  font-size: clamp(1.1rem, 2.5vw, 1.7rem);
+}
+.vpm-impact-component .awards-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 clamp(1rem, 7vw, 5rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+.vpm-impact-component .awards-list__item {
+  display: flex;
+  gap: var(--spacing-lg);
+  align-items: flex-start;
+  transform-origin: left center;
+}
+.vpm-impact-component .awards-list__number {
+  width: 60px;
+  height: 60px;
+  background: var(--vpm-gold);
+  color: var(--vpm-navy);
+  font-weight: 900;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  flex-shrink: 0;
+  transition: transform 160ms ease;
+}
+.vpm-impact-component .awards-list__item:nth-child(odd) .awards-list__number { transform: rotate(-0.7deg); }
+.vpm-impact-component .awards-list__item:nth-child(even) .awards-list__number { transform: rotate(0.6deg); }
+.vpm-impact-component .awards-list__item:hover .awards-list__number { transform: rotate(0) scale(1.06); }
+
+.vpm-impact-component .awards-list__name {
+  margin: 0;
+  padding-top: 8px;
+  color: rgba(245,241,232,0.96);
+  font-style: italic;
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  line-height: 1.55;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .vpm-impact-component .awards-list__item { opacity: 0; animation: fadeInUp 0.45s ease forwards; }
+  .vpm-impact-component .awards-list__item:nth-child(1) { animation-delay: 0.08s; }
+  .vpm-impact-component .awards-list__item:nth-child(2) { animation-delay: 0.12s; }
+  .vpm-impact-component .awards-list__item:nth-child(3) { animation-delay: 0.16s; }
+  .vpm-impact-component .awards-list__item:nth-child(4) { animation-delay: 0.20s; }
+  .vpm-impact-component .awards-list__item:nth-child(5) { animation-delay: 0.24s; }
+  .vpm-impact-component .awards-list__item:nth-child(6) { animation-delay: 0.28s; }
+  .vpm-impact-component .awards-list__item:nth-child(7) { animation-delay: 0.32s; }
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+}
+
+.vpm-impact-component .awards-hero__footer {
+  margin-top: var(--spacing-3xl);
+  padding-top: var(--spacing-xl);
+  border-top: 4px solid var(--vpm-gold);
+}
+.vpm-impact-component .awards-hero__footer-text {
+  margin: 0;
+  text-align: center;
+  color: rgba(245,241,232,0.92);
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .vpm-impact-component { padding: var(--spacing-xl) var(--spacing-md); }
+  .vpm-impact-component .impact-stats { grid-template-columns: 1fr; padding: var(--spacing-lg); }
+  .vpm-impact-component .impact-grid { grid-template-columns: 1fr; gap: var(--spacing-md); }
+  .vpm-impact-component .impact-card--wide { grid-column: span 1; }
+  .vpm-impact-component .awards-hero { padding: var(--spacing-xl) var(--spacing-lg); }
+  .vpm-impact-component .awards-list { padding: 0 var(--spacing-md); }
+  .vpm-impact-component .awards-list__number { width: 50px; height: 50px; font-size: 22px; }
+  .vpm-impact-component .year-flag { font-size: 30px; padding: 16px 24px 16px 20px; min-width: 110px; }
+  .vpm-impact-component .title-text { font-size: 22px; padding: 16px 20px 16px 16px; }
+  .vpm-impact-component .numbers-content { padding: 24px 28px; }
+  .vpm-impact-component .category-title { font-size: 16px; }
+  .vpm-impact-component .number-item { font-size: 18px; margin-bottom: 10px; }
+}
+</style>
+<div class="vpm-impact-component" role="region" aria-label="VPM 2025 Community Impact Report">
+  <!-- Sticky in-module nav -->
+  <nav class="impact-nav" aria-label="Impact report sections">
+    <div class="impact-nav__inner" id="impactNav">
+      <a class="nav-link" href="#leadership">Leadership</a>
+      <a class="nav-link" href="#making-impact">Making an Impact</a>
+      <a class="nav-link" href="#news">News</a>
+      <a class="nav-link" href="#arts-culture">Arts & Culture</a>
+      <a class="nav-link" href="#education">Education</a>
+      <a class="nav-link" href="#thank-you">Thank You</a>
+      <a class="nav-link" href="#awards">Awards</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="impact-hero">
+    <img
+      src="https://assets.vpm.org/6f/27/fdeaadde4e0d884dbaa2fbbfaab6/ir-impact-header.jpg"
+      alt="VPM 2025 Impact Report - Making an Impact in Our Communities"
+      style="width: 100%; border-radius: var(--radius);"
+      fetchpriority="high"
+    />
+  </header>
+
+  <!-- Leadership -->
+  <section class="impact-section" id="leadership">
+    <div class="section-header">
+      <div class="section-header__eyebrow">From Our Leaders</div>
+      <h2 class="section-header__title">Letters from Leadership</h2>
+      <p class="section-header__description">
+        A word from the people guiding VPM's mission and momentum.
+      </p>
+    </div>
+
+    <div class="impact-grid">
+      <!-- Jayme Swain Letter -->
+      <article class="impact-card impact-card--letter">
+        <div class="impact-card__media">
+          <img
+            src="https://assets.vpm.org/dims4/default/5317d0e/2147483647/resize/x500%3E/quality/90/?url=https%3A%2F%2Fk1-prod-vpm.s3.us-east-2.amazonaws.com%2Fbrightspot%2Fa8%2F75%2F787fec034948981f945d72013671%2Fir-jswain.png"
+            alt="Jayme Swain, President and CEO of VPM"
+            loading="lazy"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </div>
+        <div class="impact-card__body">
+          <h3 class="impact-card__title">Jayme Swain</h3>
+          <p class="impact-card__role">President &amp; CEO<br>VPM and the Virginia Foundation for Public Media</p>
+
+          <details class="letter-details">
+            <summary class="readmore" type="button" data-readmore>
+              Read full letter
+            </summary>
+            <div class="prose">
+              <p>This past year has tested our resilience. With AI reshaping media, shifting audience consumption behaviors and the loss of federal funding, public media faces significant changes. Yet, we see this as a moment of opportunity, to innovate and reimagine the future of public media.</p>
+              <p>Thanks to your support, VPM is strong. We're exploring new ways to connect people across Virginia with local news and information, storytelling about our region and resources to advance early childhood education.</p>
+              <p>Our mission is more important than ever. Together, we will ensure VPM enriches lives across Virginia for generations to come.</p>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- Patricia Merrill Letter -->
+      <article class="impact-card impact-card--letter">
+        <div class="impact-card__media">
+          <img
+            src="https://assets.vpm.org/dims4/default/2cd12f8/2147483647/resize/x500%3E/quality/90/?url=https%3A%2F%2Fk1-prod-vpm.s3.us-east-2.amazonaws.com%2Fbrightspot%2F0c%2F93%2F193b6f2444aca953483ef1de6115%2Fir-pmerrill.png"
+            alt="Patricia Merrill, Board Chair"
+            loading="lazy"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </div>
+        <div class="impact-card__body">
+          <h3 class="impact-card__title">Patricia Merrill</h3>
+          <p class="impact-card__role">2025–2026 Chair<br>VPM Media Corporation Board of Directors</p>
+
+          <details class="letter-details">
+            <summary class="readmore" type="button" data-readmore>
+              Read full letter
+            </summary>
+            <div class="prose">
+              <p>This is a remarkable time to be involved with VPM.</p>
+              <p>The organization celebrated its 60th anniversary by delivering award-winning content and experiences to communities across Virginia, all during a year of unprecedented challenges for public media.</p>
+              <p>In 2026, VPM will begin its next chapter by opening the doors to our new home in the heart of downtown Richmond. Our headquarters will feature a modern newsroom with over 25 staff, state-of-the art media production studios, and community spaces that will enable people to convene, converse and learn.</p>
+              <p>With our new location and exceptional facilities, VPM is positioned to engage more Virginians and deepen our impact for the next 60 years. We can't wait to welcome you!</p>
+            </div>
+          </details>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Making an Impact in Our Communities -->
+  <section class="impact-section" id="making-impact">
+    <div class="section-header">
+      <div class="section-header__eyebrow">2025 Highlights</div>
+      <h2 class="section-header__title">Making an Impact in Our Communities</h2>
+      <p class="section-header__description">
+        Across Central Virginia and the Shenandoah Valley, VPM was present and engaged in your community throughout 2025.
+      </p>
+    </div>
+
+    <div class="impact-grid">
+      <!-- Chasing Cambodia - PRIMARY -->
+      <article class="impact-card impact-card--featured impact-card--wide">
+        <a class="impact-card__link" href="https://www.vpm.org/2025-05-14/scenes-from-the-premiere-of-chasing-cambodia-at-the-byrd-theater" target="_blank" rel="noopener"></a>
+        <div class="impact-card__media">
+          <img
+            src="https://assets.vpm.org/a5/d2/76412c2f42b680de1ccdcd3fb6db/i5a9346.jpg"
+            alt="Chasing Cambodia premiere at Byrd Theater"
+            loading="lazy"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </div>
+        <div class="impact-card__body">
+          <div class="impact-card__eyebrow">May 2025</div>
+          <h3 class="impact-card__title">Chasing Cambodia Premiere</h3>
+          <p class="impact-card__text">
+            More than 400 people joined VPM at Richmond's Byrd Theater in May to be a part of the premiere of Chasing Cambodia, a documentary that explores one cyclist's journey to finding the balance between his Cambodian heritage and American upbringing. Following the screening, the directors, producers and film subject Johnny Phan took part in a panel conversation about the importance of honoring and celebrating Asian American heritage.
+          </p>
+        </div>
+      </article>
+
+      <!-- Education Forum -->
+      <article class="impact-card">
+        <div class="impact-card__media">
+          <img
+            src="https://assets.vpm.org/fb/5a/ed97e26f4ac394baddc270c14ef6/i5a7724.jpg"
+            alt="VPM Education Forum panel discussion"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="impact-card__body">
+          <div class="impact-card__eyebrow">February 2025</div>
+          <h3 class="impact-card__title">Education Forum</h3>
+          <p class="impact-card__text">
+            VPM sparked engaging conversations in February with our Education Forum. Moderated by the Honorable Anne B. Holton, Professor of Education Policy at George Mason University, the forum brought together more than 100 people to discuss opportunity gaps facing Virginia students; teacher recruitment and retention challenges; and innovative solutions by local school districts to address these issues.
+          </p>
+        </div>
+      </article>
+
+      <!-- Take Your Child to Work Day -->
+      <article class="impact-card">
+        <a class="impact-card__link" href="https://www.vpm.org/2025-05-01/kids-join-vpms-construction-site-for-the-day" target="_blank" rel="noopener"></a>
+        <div class="impact-card__media">
+          <img
+            src="https://assets.vpm.org/d2/c5/0530ee4c41d1bddc5a67eb9a2831/z7a0697.jpg"
+            alt="Kids at VPM construction site for Take Your Child to Work Day"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="impact-card__body">
+          <div class="impact-card__eyebrow">April 2025</div>
+          <h3 class="impact-card__title">Take Your Child to Work Day</h3>
+          <p class="impact-card__text">
+            It's Take Your Child to Work Day! In April, VPM and Clark Construction Group welcomed kids of construction trade and craft workers to our future headquarters site for a day of learning and fun. Even in our construction phase, we're always looking to share knowledge with the next generation.
+          </p>
+        </div>
+      </article>
+
+      <!-- Life in the Heart Land -->
+      <article class="impact-card">
+        <a class="impact-card__link" href="https://www.vpm.org/2025-09-23/scenes-from-life-in-the-heart-land-event-in-bridgewater" target="_blank" rel="noopener"></a>
+        <div class="impact-card__media">
+          <img
+            src="https://assets.vpm.org/d3/88/1796b3d54beeb9f2bdf982f38fd9/3s2a7561.jpg"
+            alt="Life in the Heart Land Season 3 celebration"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="impact-card__body">
+          <div class="impact-card__eyebrow">September 2025</div>
+          <h3 class="impact-card__title">Life in the Heart Land</h3>
+          <p class="impact-card__text">
+            On September 18, more than 150 people celebrated season 3 of Life in the Heart Land at the Sipe Center in Bridgewater in Rockingham County. With panel discussions, screenings, artisan demonstrations and musical performances, the event helped community members understand the work being done in rural communities to build meaningful, positive outcomes.
+          </p>
+        </div>
+      </article>
+
+      <!-- Richmond Folk Festival - Style Weekly -->
+      <article class="impact-card">
+        <a class="impact-card__link" href="https://www.vpm.org/2025-10-03/vpm-will-once-again-broadcast-richmond-folk-festival-oct-10-12" target="_blank" rel="noopener"></a>
+        <div class="impact-card__media">
+          <img
+            src="https://assets.vpm.org/53/0d/daa379924b8ca4c94f0780efb685/ff5akh.jpg"
+            alt="Style Weekly and VPM Music at Richmond Folk Festival"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="impact-card__body">
+          <div class="impact-card__eyebrow">October 2025</div>
+          <h3 class="impact-card__title">Richmond Folk Festival</h3>
+          <p class="impact-card__text">
+            Style Weekly and VPM Music celebrated at the 21st Richmond Folk Festival in October. VPM Music hosted a live broadcast of the festival so listeners could tune in all weekend long from their homes, cars or phones. Style Weekly set up a Listening Lounge for festival goers to kick back and relax or take part in an on-site screen-printing activity.
+          </p>
+        </div>
+      </article>
+
+      <!-- Healthy Birth Healthy Baby Expo -->
+      <article class="impact-card">
+        <div class="impact-card__media">
+          <img
+            src="https://assets.vpm.org/be/cb/d4a4d62642ef9426e042c4aefe51/childcare-resource-fair-2025.jpg"
+            alt="VPM at Healthy Birth Healthy Baby Expo in Charlottesville"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="impact-card__body">
+          <div class="impact-card__eyebrow">September 2025</div>
+          <h3 class="impact-card__title">Healthy Birth Healthy Baby Expo</h3>
+          <p class="impact-card__text">
+            In September, VPM joined more than 30 community partners for the 2025 Healthy Birth Healthy Baby Expo in Charlottesville, an annual free event that celebrates community, pregnancy, birth and babies. During the expo, Terri Allard, VPM's Education &amp; Engagement Manager for Charlottesville, and Hannah Davis-Reid, VPM News reporter, shared vital educational resources to help families engage with their children in meaningful ways.
+          </p>
+        </div>
+      </article>
+
+      <!-- Virginia Home Grown 25th Anniversary -->
+      <article class="impact-card">
+        <a class="impact-card__link" href="https://www.vpm.org/2025-03-24/virginia-home-grown-kicks-off-historic-25th-season-on-march-25" target="_blank" rel="noopener"></a>
+        <div class="impact-card__media">
+          <img
+            src="https://assets.vpm.org/4b/ee/6a5cf8c24832915b076c0f743d06/ir-vhg-25years-celebration-graphic.jpg"
+            alt="Virginia Home Grown 25th Anniversary"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="impact-card__body">
+          <div class="impact-card__eyebrow">Milestone</div>
+          <h3 class="impact-card__title">Virginia Home Grown - 25 Years</h3>
+          <p class="impact-card__text">
+            Happy anniversary to VPM's longest running series, Virginia Home Grown! In 2025, host Peggy Singlemann and team kicked off the 25th season of the fan-favorite show that highlights the unique richness of gardens and natural ecosystems throughout Virginia.
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- News -->
+  <section class="impact-section" id="news">
+    <div class="section-header">
+      <div class="section-header__eyebrow">Journalism</div>
+      <h2 class="section-header__title">News</h2>
+      <p class="section-header__description">
+        In 2025, the media landscape continued to change, and VPM met the challenges with strategy and innovation. We provided Virginians with local news and election coverage, added ways to consume news content and expanded coverage of the Shenandoah Valley. In 2025, the VPM newsroom remained one of the largest newsrooms in the state.
+      </p>
+    </div>
+
+    <div class="impact-grid">
+      <!-- Capitol Correspondents Intro -->
+      <article class="impact-card impact-card--wide">
+        <a class="impact-card__link" href="https://www.vpm.org/2025-02-21/a-look-at-vpm-news-coverage-of-the-virginia-general-assembly-with-jahd-khalil-and-shaban-athuman" target="_blank" rel="noopener"></a>
+        <div class="impact-card__body">
+          <h3 class="impact-card__title">Capitol Correspondents Team</h3>
+          <p class="impact-card__text">
+            If you're walking through the Virginia State Capitol during session, chances are you will run into the VPM News capitol correspondents team, made up of state politics reporter Jahd Khalil and multimedia journalist Shaban Athuman. This assignment isn't something they take lightly.
+          </p>
+        </div>
+      </article>
+
+      <!-- Capitol Correspondents Quote -->
+      <article class="impact-card impact-card--quote impact-card--wide">
+        <a class="impact-card__link" href="https://www.vpm.org/2025-02-21/a-look-at-vpm-news-coverage-of-the-virginia-general-assembly-with-jahd-khalil-and-shaban-athuman" target="_blank" rel="noopener"></a>
+        <img class="quote-decoration" src="https://assets.vpm.org/3a/5f/4920e16d4e6f9e756afaee3632bc/ir-rs-quote-s1.png" alt="" aria-hidden="true">
+        <div class="impact-card__body">
+          <div class="impact-card__eyebrow">State Coverage</div>
+          <p class="impact-card__quote">
+            "As journalists, we have a responsibility to uncover and spotlight what our state government is doing," says Jahd. What are the secrets to this duo's success? "Building relationships, so we can have access to the senators, delegates and staff to ask questions," Jahd explains. "And knowing that we're capturing history is a huge motivator," adds Shaban.
+          </p>
+          <h3 class="impact-card__title">Jahd Khalil &amp; Shaban Athuman</h3>
+          <p class="impact-card__text">VPM News Capitol Correspondents Team</p>
+        </div>
+        <div class="impact-card__media">
+          <img
+            src="https://assets.vpm.org/f2/63/a6daad7c45c8ab74d79785ad6662/z7a8492.jpg"
+            alt="VPM Capitol Correspondents Jahd Khalil and Shaban Athuman"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </article>
+
+      <!-- Staying Plugged in with Podcasts -->
+      <article class="impact-card">
+        <a class="impact-card__link" href="https://www.vpm.org/2025-09-19/rvas-got-issues-is-back-for-season-3-to-answer-more-of-your-questions" target="_blank" rel="noopener"></a>
+        <div class="impact-card__media">
+          <img
+            src="https://assets.vpm.org/3c/40/0c22caa04fefb2a8eec7d649130c/ir-dannyrich-podcast-studio.png"
+            alt="VPM Podcasts"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="impact-card__body">
+          <div class="impact-card__eyebrow">Podcasts</div>
+          <h3 class="impact-card__title">Staying Plugged in with Podcasts</h3>
+          <p class="impact-card__text">
+            2025 was a big year for VPM's podcast RVA's Got Issues as it launched both its second and third seasons covering the politics and big issues defining life in and around Richmond. New to the podcast line-up in 2025 was The Virginia Press Room, featuring reporters from the Virginia Press Corps offering a behind-the-scenes look at state politics and policies.
+          </p>
+        </div>
+      </article>
+
+      <!-- Covering All the Races -->
+      <article class="impact-card">
+        <a class="impact-card__link" href="https://www.vpm.org/2025-10-10/prepare-to-visit-the-polls-with-vpms-2025-election-coverage" target="_blank" rel="noopener"></a>
+        <div class="impact-card__media">
+          <img
+            src="https://assets.vpm.org/0b/ea/298bf31f4421bf4a9f2291f080c8/z7a8440-e.jpg"
+            alt="VPM News election coverage"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="impact-card__body">
+          <div class="impact-card__eyebrow">Election Coverage</div>
+          <h3 class="impact-card__title">Covering All the Races</h3>
+          <p class="impact-card__text">
+            In November's election, all three statewide offices and all 100 members of the House of Delegates were on the ballot, and the VPM News team prepared for months for this consequential Virginia election. "We're sharing our news stories across multiple platforms and in multiple formats – from YouTube to radio and from quick updates to in-depth analyses," explained Elliott Robinson, VPM's news director.
+          </p>
+        </div>
+      </article>
+    </div>
+
+    <!-- By the Numbers - News -->
+    <div class="numbers-container-wrapper">
+      <div class="numbers-container" aria-label="News by the numbers">
+        <div class="numbers-header">
+          <div class="year-flag">2025</div>
+          <div class="title-text">By the Numbers</div>
+        </div>
+        <div class="numbers-content">
+          <div class="numbers-category">
+            <h3 class="category-title">VPM News</h3>
+            <div class="number-item"><span class="number">1,000,000+</span> views of VPM News Shorts</div>
+            <div class="number-item"><span class="number">1,025+</span> stories published across all platforms</div>
+            <div class="number-item"><span class="number">15</span> stories published in Spanish</div>
+            <div class="number-item"><span class="number">25+</span> staff on the VPM News team</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Arts & Culture -->
+  <section class="impact-section" id="arts-culture">
+    <div class="section-header">
+      <div class="section-header__eyebrow">Storytelling</div>
+      <h2 class="section-header__title">Arts &amp; Culture</h2>
+      <p class="section-header__description">
+        VPM is dedicated to sharing stories about what highlights us as Virginians. In 2025, we expanded our local arts and culture coverage with docuseries and documentaries, TV series, digital content, community events and Style Weekly.
+      </p>
+    </div>
+
+    <div class="impact-grid">
+      <!-- Life in the Heart Land - FEATURED -->
+      <article class="impact-card impact-card--featured impact-card--wide">
+        <a class="impact-card__link" href="https://www.vpm.org/2025-09-23/scenes-from-life-in-the-heart-land-event-in-bridgewater" target="_blank" rel="noopener"></a>
+        <div class="impact-card__media">
+          <img
+            src="https://assets.vpm.org/d3/88/1796b3d54beeb9f2bdf982f38fd9/3s2a7561.jpg"
+            alt="Life in the Heart Land Season 3 celebration"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="impact-card__body">
+          <div class="impact-card__eyebrow">Documentary Series</div>
+          <h3 class="impact-card__title">Life in the Heart Land</h3>
+          <p class="impact-card__text">
+            On September 18, more than 150 people celebrated season 3 of Life in the Heart Land at the Sipe Center in Bridgewater in Rockingham County. With panel discussions, screenings, artisan demonstrations and musical performances, the event helped community members understand the work being done in rural communities to build meaningful, positive outcomes.
+          </p>
+        </div>
+      </article>
+
+      <!-- Style Weekly -->
+      <article class="impact-card">
+        <a class="impact-card__link" href="https://www.vpm.org/2025-08-21/scenes-from-style-weeklys-2025-best-fest" target="_blank" rel="noopener"></a>
+        <div class="impact-card__media">
+          <img
+            src="https://assets.vpm.org/f4/c9/a01bdfda4545a6b42df26651d7cb/bf12z.jpg"
+            alt="Style Weekly at community event"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="impact-card__body">
+          <div class="impact-card__eyebrow">Community Journalism</div>
+          <h3 class="impact-card__title">Style Weekly</h3>
+          <p class="impact-card__text">
+            With its award-winning journalism and photography, Style Weekly remained a fixture in the Richmond community. In 2025, Style hosted and joined events like FWD:RVA and the Richmond Folk Festival, covering and highlighting Richmond's unique arts scene and publishing quarterly print issues. In August 2025, Style Weekly celebrated the best of Richmond with Best Fest at The Branch Museum of Design. The event brought Richmonders together with local artists, restaurants and businesses for a celebration of the city's favorite things.
+          </p>
+        </div>
+      </article>
+
+      <!-- Virginia Home Grown -->
+      <article class="impact-card">
+        <a class="impact-card__link" href="https://www.vpm.org/2025-03-24/virginia-home-grown-kicks-off-historic-25th-season-on-march-25" target="_blank" rel="noopener"></a>
+        <div class="impact-card__media">
+          <img
+            src="https://assets.vpm.org/4b/ee/6a5cf8c24832915b076c0f743d06/ir-vhg-25years-celebration-graphic.jpg"
+            alt="Virginia Home Grown"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="impact-card__body">
+          <div class="impact-card__eyebrow">Milestone</div>
+          <h3 class="impact-card__title">Virginia Home Grown - 25 Years</h3>
+          <p class="impact-card__text">
+            Happy anniversary to VPM's longest running series, Virginia Home Grown! In 2025, host Peggy Singlemann and team kicked off the 25th season of the fan-favorite show that highlights the unique richness of gardens and natural ecosystems throughout Virginia.
+          </p>
+        </div>
+      </article>
+    </div>
+
+    <!-- By the Numbers - Arts & Culture -->
+    <div class="numbers-container-wrapper">
+      <div class="numbers-container" aria-label="Arts &amp; Culture by the numbers">
+        <div class="numbers-header">
+          <div class="year-flag">2025</div>
+          <div class="title-text">By the Numbers</div>
+        </div>
+        <div class="numbers-content">
+          <div class="numbers-category">
+            <h3 class="category-title">Style Weekly &amp; Arts</h3>
+            <div class="number-item"><span class="number">67,000+</span> Central Virginians read <span class="italic">Style Weekly's</span> quarterly print issues</div>
+            <div class="number-item"><span class="number">20,000,000+</span> views across <span class="italic">Style Weekly</span> social media platforms</div>
+            <div class="number-item"><span class="number">8,700+</span> streams and nearly <span class="number">10,000</span> new followers on Facebook for <span class="italic">Virginia Home Grown</span></div>
+            <div class="number-item"><span class="number">3,600+</span> views of <span class="italic">Finding Edna Lewis</span> on VPM's YouTube channel</div>
+            <div class="number-item"><span class="number">1,300+</span> views of Democracy360 on VPM's YouTube channel</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section class="impact-section" id="education">
+    <div class="section-header">
+      <div class="section-header__eyebrow">Learning Resources</div>
+      <h2 class="section-header__title">Education</h2>
+      <p class="section-header__description">
+        Throughout 2025, VPM continued to be an educational partner for families, caregivers and educators of the Commonwealth's children. Through community events, partnerships and programming, we provide families with learning resources to help kids in their earliest years.
+      </p>
+    </div>
+
+    <div class="impact-grid">
+      <!-- Sharing Resources in Impactful Places - PRIMARY -->
+      <article class="impact-card impact-card--featured impact-card--wide">
+        <div class="impact-card__media">
+          <img
+            src="https://assets.vpm.org/f1/80/8e9f979540c09bc508e22bd7a63e/z7a6642.jpg"
+            alt="Sharing Resources in Impactful Places - early childhood education"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="impact-card__body">
+          <div class="impact-card__eyebrow">Community Partnership</div>
+          <h3 class="impact-card__title">Sharing Resources in Impactful Places</h3>
+          <p class="impact-card__text">
+            In July, VPM delivered posters, Sesame Street materials, booklets, videos and other early learning resources to five Charlottesville-area WIC (Women, Infants &amp; Children) offices. "Our close partnerships with community organizations like the Anne &amp; Gene Worrell Foundation and the Blue Ridge Health District make this impactful work possible," explained Mary Jo Grieve, VPM's director of early childhood care and education.
+          </p>
+          <div class="chips">
+            <span class="chip">WIC Offices</span>
+            <span class="chip">Anne &amp; Gene Worrell Foundation</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Spreading the Message -->
+      <article class="impact-card">
+        <a class="impact-card__link" href="https://www.vpm.org/2025-02-18/intentional-daily-interactions-with-children-are-the-focus-of-vpms-new-90by5-messaging-campaign" target="_blank" rel="noopener"></a>
+        <div class="impact-card__media">
+          <img
+            src="https://assets.vpm.org/d8/c7/1666c41e446caa242254ecc88d61/screenshot-2025-02-12-at-4-53-24-pm.png"
+            alt="Spreading the Message - 90by5 campaign"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="impact-card__body">
+          <div class="impact-card__eyebrow">Campaign</div>
+          <h3 class="impact-card__title">Spreading the Message</h3>
+          <p class="impact-card__text">
+            Did you know that 90% of a child's brain develops by the age of 5? That is why it's important for children to have early, positive interactions that make a lasting difference. To spread this message, VPM partnered with the Robins Foundation and Thrive Birth to Five to develop a broadcast and digital campaign called "90by5." As a result of the campaign, more than 5,000 people visited 90by5.org to learn more about the importance of a child's earliest days of learning.
+          </p>
+        </div>
+      </article>
+
+      <!-- Exploring Solutions in Science -->
+      <article class="impact-card">
+        <a class="impact-card__link" href="https://www.vpm.org/2025-08-15/need-tips-on-sustainability-zero-waste-can-help" target="_blank" rel="noopener"></a>
+        <div class="impact-card__media">
+          <img
+            src="https://assets.vpm.org/cd/b3/af016041436ca9657cb7ff850fb7/ir-zerowaste-thumbnail.png"
+            alt="Exploring Solutions in Science - Zero Waste"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="impact-card__body">
+          <div class="impact-card__eyebrow">Digital Series</div>
+          <h3 class="impact-card__title">Exploring Solutions in Science</h3>
+          <p class="impact-card__text">
+            Zero Waste, a YouTube series focused on sustainability, offers solutions to help people improve their health, finances and the environment. In 2025, more than 40,000 people watched episodes on how to grow your own plants, manage sustainable lawn care and fix fast fashion, while ultimately helping to slow climate change.
+          </p>
+        </div>
+      </article>
+    </div>
+
+    <!-- By the Numbers - Education -->
+    <div class="numbers-container-wrapper">
+      <div class="numbers-container" aria-label="Education by the numbers">
+        <div class="numbers-header">
+          <div class="year-flag">2025</div>
+          <div class="title-text">By the Numbers</div>
+        </div>
+        <div class="numbers-content">
+          <div class="numbers-category">
+            <h3 class="category-title">Education</h3>
+            <div class="number-item"><span class="number">4,000+</span> books, activities and other learning resources delivered</div>
+            <div class="number-item"><span class="number">54</span> community partnerships to raise awareness of early brain development in children</div>
+            <div class="number-item"><span class="number">37,000</span> families served with materials and messaging at <span class="number">24 WIC offices</span> in Greater Richmond and Charlottesville</div>
+            <div class="number-item"><span class="number">100,000+</span> views of <span class="italic">Science Might Surprise You!</span> on VPM's YouTube channel</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Thank You -->
+  <section class="impact-section" id="thank-you">
+    <div class="section-header">
+      <div class="section-header__eyebrow">Gratitude</div>
+      <h2 class="section-header__title">Thank You</h2>
+      <p class="section-header__description">
+        We are grateful to our donors, partners, community supporters and corporate sponsors for making our work and our achievements in 2025 possible. Your support has strengthened VPM and enabled us to make a positive, lasting difference.
+      </p>
+    </div>
+
+    <!-- Because of Your Support subsection -->
+    <div class="subsection-header">
+      <h3 class="subsection-title">Because of Your Support</h3>
+    </div>
+
+    <div class="impact-grid">
+      <!-- Hannah -->
+      <article class="impact-card">
+        <a class="impact-card__link" href="https://www.vpm.org/2025-05-05/meet-vpms-new-charlottesville-reporter-hannah-davis-reid" target="_blank" rel="noopener"></a>
+        <div class="impact-card__media">
+          <img
+            src="https://assets.vpm.org/dims4/default/67b152c/2147483647/resize/x500%3E/quality/90/?url=https%3A%2F%2Fk1-prod-vpm.s3.us-east-2.amazonaws.com%2Fbrightspot%2F35%2F65%2Ff62f5b65477eb222e1c7cf5c5b7a%2F20250624-elex-gov-span-bus-sa1-06901.JPEG"
+            alt="Hannah Davis-Reid, VPM News reporter"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="impact-card__body">
+          <div class="impact-card__eyebrow">News Expansion</div>
+          <h3 class="impact-card__title">Growing the Newsroom</h3>
+          <p class="impact-card__text">
+            VPM expanded our news coverage in Central Virginia and the Shenandoah Valley. In May, we welcomed Hannah Davis-Reid to the VPM News team as our new general assignment reporter based in Charlottesville.
+          </p>
+        </div>
+      </article>
+
+      <!-- School Visit -->
+      <article class="impact-card">
+        <a class="impact-card__link" href="https://www.vpm.org/2025-03-12/spanish-class-from-turner-ashby-h-s-finds-new-interests-in-tour-at-vpm" target="_blank" rel="noopener"></a>
+        <div class="impact-card__media">
+          <img
+            src="https://assets.vpm.org/83/41/614220df4ebfa87f98be6081b002/keyris-turnerashbyhsstudents.jpg"
+            alt="Turner Ashby High School students visiting VPM"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="impact-card__body">
+          <div class="impact-card__eyebrow">Student Visit</div>
+          <h3 class="impact-card__title">From Classroom to Newsroom</h3>
+          <p class="impact-card__text">
+            VPM welcomes students to our headquarters to learn about media and community engagement … and maybe even inspires some to consider journalism or media careers. In March, a Spanish class from Rockingham County's Turner Ashby High School traveled to Richmond to tour VPM and speak with VPM multimedia reporter Keyris Manzanares.
+          </p>
+        </div>
+      </article>
+
+      <!-- Ken Burns -->
+      <article class="impact-card">
+        <a class="impact-card__link" href="https://www.vpm.org/2025-03-27/scenes-from-a-sunday-in-richmond-with-vpm-and-ken-burns" target="_blank" rel="noopener"></a>
+        <div class="impact-card__media">
+          <img
+            src="https://assets.vpm.org/36/89/16d25a974519a7e3ff29e9d2b052/i5a8882.jpg"
+            alt="The American Revolution screening with Ken Burns"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="impact-card__body">
+          <div class="impact-card__eyebrow">Special Event</div>
+          <h3 class="impact-card__title">The American Revolution</h3>
+          <p class="impact-card__text">
+            VPM proudly hosted the country's first screening of The American Revolution in March at the Altria Theater, featuring acclaimed filmmakers Ken Burns, Sarah Botstein and David Schmidt. We were honored to welcome Ken Burns and Sarah Botstein to Virginia once again on July 3 for a special donor gathering in Charlottesville, continuing the excitement and countdown.
+          </p>
+        </div>
+      </article>
+
+      <!-- Shenandoah -->
+      <article class="impact-card">
+        <a class="impact-card__link" href="https://www.vpm.org/2025-10-17/vpm-documentary-shenandoah-will-premiere-at-virginia-film-festival" target="_blank" rel="noopener"></a>
+        <div class="impact-card__media">
+          <img
+            src="https://assets.vpm.org/a0/2b/19cb18a34e348cd4d0d7d12fcce5/img-6874.jpg"
+            alt="Shenandoah documentary"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="impact-card__body">
+          <div class="impact-card__eyebrow">Original Production</div>
+          <h3 class="impact-card__title">Shenandoah</h3>
+          <p class="impact-card__text">
+            VPM's original production Shenandoah premiered at the Virginia Film Festival in October and is poised to bring national recognition to this Virginia treasure in 2026. This extraordinary film immerses viewers in the heart of Shenandoah National Park and its creation would not have been possible without the generous support of some exceptional donors.
+          </p>
+        </div>
+      </article>
+
+      <!-- Testimonials -->
+      <div class="testimonial-card">
+        <img class="quote-decoration" src="https://assets.vpm.org/fa/60/4d22ad2b4ea9ba4b6ce0a60083c2/ir-rs-quote-s2.png" alt="" aria-hidden="true">
+        <p class="testimonial-card__quote">
+          "We rely on public media for news coverage, information, entertainment and local programming. We find the news balanced and well-researched. PBS Passport is absolutely the best and there are more hours of shows than we can possibly watch! We choose to watch VPM every night - it's our 'go to' channel."
+        </p>
+        <div class="testimonial-card__author">
+          <div class="testimonial-card__photo">C&amp;D</div>
+          <div class="testimonial-card__info">
+            <p class="testimonial-card__name">Cindy &amp; Doug Skelley</p>
+            <p class="testimonial-card__location">Harrisonburg</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <img class="quote-decoration" src="https://assets.vpm.org/cf/49/591678f64dfdb2565a96952dd185/ir-rs-quote-s4.png" alt="" aria-hidden="true">
+        <p class="testimonial-card__quote">
+          "We love nature and the outdoors, and so the documentary Shenandoah was an excellent opportunity to support VPM and promote our extraordinary national park."
+        </p>
+        <div class="testimonial-card__author">
+          <div class="testimonial-card__photo">M&amp;J</div>
+          <div class="testimonial-card__info">
+            <p class="testimonial-card__name">Michelle Gluck &amp; John McGurl</p>
+            <p class="testimonial-card__location">Richmond</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <img class="quote-decoration" src="https://assets.vpm.org/3a/5f/4920e16d4e6f9e756afaee3632bc/ir-rs-quote-s1.png" alt="" aria-hidden="true">
+        <p class="testimonial-card__quote">
+          "My family has been pleased and proud to support VPM for decades. We appreciate the nonpartisan national news and the truly fine local interest stories and videos. Shenandoah is an outstanding example of the excellent films produced by VPM."
+        </p>
+        <div class="testimonial-card__author">
+          <div class="testimonial-card__photo">FS</div>
+          <div class="testimonial-card__info">
+            <p class="testimonial-card__name">Fred W. Scott, Jr.</p>
+            <p class="testimonial-card__location">Charlottesville</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Awards -->
+  <section class="impact-section" id="awards">
+    <div class="awards-hero">
+      <div class="awards-hero__content">
+        <div class="awards-hero__headline" aria-hidden="true">
+          <img src="https://assets.vpm.org/da/6e/7fe3be5841719ccd099a39353fd9/ir-winner-awards-header.png" alt="And the winner is...">
+        </div>
+        <h2 class="awards-hero__subheading">Awards Received During 2025</h2>
+
+        <ul class="awards-list" aria-label="Awards list">
+          <li class="awards-list__item">
+            <div class="awards-list__number">11</div>
+            <div class="awards-list__content">
+              <p class="awards-list__name">Telly Awards</p>
+            </div>
+          </li>
+          <li class="awards-list__item">
+            <div class="awards-list__number">6</div>
+            <div class="awards-list__content">
+              <p class="awards-list__name">Virginia Associated Press (AP) Broadcaster Awards</p>
+            </div>
+          </li>
+          <li class="awards-list__item">
+            <div class="awards-list__number">4</div>
+            <div class="awards-list__content">
+              <p class="awards-list__name">Public Media Awards from National Educational Telecommunications Association (NETA)</p>
+            </div>
+          </li>
+          <li class="awards-list__item">
+            <div class="awards-list__number">3</div>
+            <div class="awards-list__content">
+              <p class="awards-list__name">Regional Murrow Awards</p>
+            </div>
+          </li>
+          <li class="awards-list__item">
+            <div class="awards-list__number">2</div>
+            <div class="awards-list__content">
+              <p class="awards-list__name">Capital Emmy Awards</p>
+            </div>
+          </li>
+          <li class="awards-list__item">
+            <div class="awards-list__number">2</div>
+            <div class="awards-list__content">
+              <p class="awards-list__name">Public Media Journalists Association (PMJA) Awards</p>
+            </div>
+          </li>
+          <li class="awards-list__item">
+            <div class="awards-list__number">1</div>
+            <div class="awards-list__content">
+              <p class="awards-list__name">"Salute to Excellence" award from the National Association of Black Journalists (NABJ)</p>
+            </div>
+          </li>
+        </ul>
+
+        <div class="awards-hero__footer">
+          <p class="awards-hero__footer-text">
+            Your commitment and investment in VPM's mission is the foundation of our success.<br>
+            Your support not only sustains our operations, but it enables us to carry out award-winning work.<br>
+            Thank you for helping to educate, entertain and inspire Virginians.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<script>
+(function() {
+  'use strict';
+
+  // Find all instances of the component on the page
+  const components = document.querySelectorAll('.vpm-impact-component');
+  
+  if (components.length === 0) {
+    if (window.console && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+      console.warn('VPM Impact Component: No .vpm-impact-component found on page');
+    }
+    return;
+  }
+
+  // Initialize each component instance
+  components.forEach(function(root) {
+    initializeComponent(root);
+  });
+
+  function initializeComponent(root) {
+    const smoothScrollTo = function(element) {
+      if ('scrollBehavior' in document.documentElement.style) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        const targetPosition = element.getBoundingClientRect().top + window.pageYOffset;
+        const startPosition = window.pageYOffset;
+        const distance = targetPosition - startPosition;
+        const duration = 600;
+        let start = null;
+
+        const easeInOutCubic = function(t) {
+          return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+        };
+
+        const animation = function(currentTime) {
+          if (start === null) start = currentTime;
+          const timeElapsed = currentTime - start;
+          const progress = Math.min(timeElapsed / duration, 1);
+          const ease = easeInOutCubic(progress);
+          window.scrollTo(0, startPosition + distance * ease);
+          if (timeElapsed < duration) {
+            requestAnimationFrame(animation);
+          }
+        };
+
+        requestAnimationFrame(animation);
+      }
+    };
+
+    const navLinks = Array.from(root.querySelectorAll('.nav-link'));
+    const sections = Array.from(root.querySelectorAll('.impact-section[id]'));
+
+    if (navLinks.length === 0 || sections.length === 0) {
+      return;
+    }
+
+    const setActive = function(id) {
+      navLinks.forEach(function(a) {
+        const isActive = a.getAttribute('href') === '#' + id;
+        a.setAttribute('aria-current', isActive ? 'true' : 'false');
+      });
+    };
+
+    // Handle nav link clicks
+    navLinks.forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        const href = link.getAttribute('href');
+        if (!href || !href.startsWith('#')) return;
+        
+        // Find target within this component instance
+        const target = root.querySelector(href);
+        if (!target) return;
+        
+        e.preventDefault();
+        smoothScrollTo(target);
+        setActive(href.slice(1));
+      });
+    });
+
+    // Intersection Observer for active nav state
+    const observer = new IntersectionObserver(
+      function(entries) {
+        const visible = entries
+          .filter(function(e) { return e.isIntersecting; })
+          .sort(function(a, b) { return b.intersectionRatio - a.intersectionRatio; })[0];
+        if (visible) {
+          setActive(visible.target.id);
+        }
+      },
+      {
+        root: null,
+        rootMargin: '-25% 0px -65% 0px',
+        threshold: [0.08, 0.15, 0.25, 0.4],
+      }
+    );
+
+    sections.forEach(function(s) {
+      observer.observe(s);
+    });
+
+    // Letter details/summary functionality
+    const letterDetails = Array.from(root.querySelectorAll('.letter-details'));
+    
+    letterDetails.forEach(function(details) {
+      const summary = details.querySelector('.readmore');
+      if (!summary) return;
+
+      const closedText = 'Read full letter';
+      const openText = 'Collapse letter';
+      
+      const updateSummaryText = function() {
+        const isOpen = details.hasAttribute('open');
+        summary.textContent = isOpen ? openText : closedText;
+      };
+
+      details.addEventListener('toggle', updateSummaryText);
+
+      summary.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          if (details.hasAttribute('open')) {
+            details.removeAttribute('open');
+          } else {
+            details.setAttribute('open', '');
+          }
+        }
+      });
+    });
+
+    // Set initial active state
+    if (sections[0]) {
+      setActive(sections[0].id);
+    }
+
+    // Debug logging (development only)
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      if (window.console) {
+        console.log('VPM Impact Component initialized', {
+          sections: sections.length,
+          navLinks: navLinks.length,
+          letterDetails: letterDetails.length
+        });
+      }
+    }
+  }
+})();
+</script>
+</div>

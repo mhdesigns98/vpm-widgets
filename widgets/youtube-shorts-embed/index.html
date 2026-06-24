@@ -1,0 +1,566 @@
+<!--
+  VPM News Shorts — Playlist Embed
+  Homepage section component. Embeds a full YouTube playlist (Shorts-optimized)
+  in a 9:16 portrait player alongside editorial copy.
+  Configure via SHORTS_CONFIG at the top of the <script> block.
+  No API key required — YouTube handles playlist navigation natively.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VPM News Shorts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-navy:      #003865;
+      --color-blue:      #6CACE4;
+      --color-yellow:    #E0E721;
+      --color-red:       #EE2737;
+      --color-black:     #101820;
+      --color-grey:      #B2B4B2;
+      --color-white:     #FFFFFF;
+      --font-primary:    'GT America', 'Barlow', Arial, Helvetica, sans-serif;
+      --font-condensed:  'GT America Condensed', 'Barlow Condensed', Arial, sans-serif;
+    }
+
+    /* ── Scoped wrapper ── */
+    .vpm-shorts {
+      font-family: var(--font-primary);
+      background-color: var(--color-navy);
+      color: var(--color-white);
+      width: 100%;
+      overflow: hidden;
+    }
+
+    /* ── Decorative top accent bar ── */
+    .vpm-shorts__accent {
+      height: 4px;
+      background: var(--color-yellow);
+      width: 100%;
+    }
+
+    /* ── Inner grid ── */
+    .vpm-shorts__inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 52px 24px 48px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    @media (min-width: 860px) {
+      .vpm-shorts__inner {
+        grid-template-columns: 1fr auto;
+        gap: 64px;
+      }
+    }
+
+    /* ── Left: editorial ── */
+    .vpm-shorts__editorial {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      max-width: 560px;
+    }
+
+    .vpm-shorts__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-yellow);
+    }
+
+    .vpm-shorts__eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 3px;
+      background: var(--color-yellow);
+      flex-shrink: 0;
+      border-radius: 2px;
+    }
+
+    .vpm-shorts__headline {
+      font-family: var(--font-condensed);
+      font-size: clamp(36px, 5.5vw, 60px);
+      font-weight: 800;
+      line-height: 1.02;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+    }
+
+    .vpm-shorts__headline em {
+      font-style: normal;
+      color: var(--color-yellow);
+    }
+
+    .vpm-shorts__divider {
+      width: 48px;
+      height: 2px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 2px;
+    }
+
+    .vpm-shorts__description {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.72);
+    }
+
+    /* Feature bullets */
+    .vpm-shorts__bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .vpm-shorts__bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.4;
+    }
+
+    .vpm-shorts__bullets li::before {
+      content: '';
+      display: block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-blue);
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+
+    /* CTAs */
+    .vpm-shorts__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      padding-top: 4px;
+    }
+
+    .vpm-shorts__btn {
+      display: inline-block;
+      padding: 13px 28px;
+      font-family: var(--font-primary);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s, transform 0.12s, border-color 0.18s;
+      border: 2px solid transparent;
+    }
+
+    .vpm-shorts__btn--primary {
+      background: var(--color-yellow);
+      color: var(--color-navy);
+      border-color: var(--color-yellow);
+    }
+    .vpm-shorts__btn--primary:hover {
+      background: #ccd019;
+      border-color: #ccd019;
+      transform: translateY(-1px);
+    }
+
+    .vpm-shorts__btn--secondary {
+      background: transparent;
+      color: var(--color-white);
+      border-color: rgba(255,255,255,0.35);
+    }
+    .vpm-shorts__btn--secondary:hover {
+      border-color: var(--color-white);
+      background: rgba(255,255,255,0.07);
+    }
+
+    /* Social proof / meta badge */
+    .vpm-shorts__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.05em;
+    }
+
+    .vpm-shorts__badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--color-red);
+      animation: vpm-pulse 2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes vpm-pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.55; transform: scale(0.85); }
+    }
+
+    /* ── Right: player ── */
+    .vpm-shorts__player-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+    }
+
+    @media (min-width: 860px) {
+      .vpm-shorts__player-col {
+        position: sticky;
+        top: 24px;
+        width: auto;
+      }
+    }
+
+    /* Phone frame */
+    .vpm-shorts__phone {
+      position: relative;
+      width: 100%;
+      max-width: 300px;
+      /* Phone shell */
+      background: #0a1929;
+      border-radius: 36px;
+      padding: 10px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.12),
+        0 2px 0 1px rgba(255,255,255,0.06),
+        0 32px 80px rgba(0,0,0,0.6),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    /* Notch bar */
+    .vpm-shorts__phone-notch {
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 6px;
+    }
+
+    .vpm-shorts__phone-notch-pill {
+      width: 60px;
+      height: 5px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 10px;
+    }
+
+    /* Screen */
+    .vpm-shorts__screen {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--color-black);
+    }
+
+    .vpm-shorts__iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* Loading state */
+    .vpm-shorts__loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: #0b1f33;
+      z-index: 2;
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+
+    .vpm-shorts__loading.is-hidden { opacity: 0; }
+
+    .vpm-shorts__spinner {
+      width: 28px;
+      height: 28px;
+      border: 2.5px solid rgba(255,255,255,0.1);
+      border-top-color: var(--color-yellow);
+      border-radius: 50%;
+      animation: vpm-spin 0.7s linear infinite;
+    }
+    @keyframes vpm-spin { to { transform: rotate(360deg); } }
+
+    .vpm-shorts__loading-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-grey);
+    }
+
+    /* Bottom phone bar */
+    .vpm-shorts__phone-bar {
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 6px;
+    }
+
+    .vpm-shorts__phone-bar-pill {
+      width: 100px;
+      height: 4px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 10px;
+    }
+
+    /* YouTube label below phone */
+    .vpm-shorts__yt-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ── Footer ── */
+    .vpm-shorts__footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .vpm-shorts__footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .vpm-shorts__footer-brand {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .vpm-shorts__footer-link {
+      font-size: 11px;
+      color: var(--color-blue);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.15s;
+    }
+    .vpm-shorts__footer-link:hover {
+      color: var(--color-white);
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<section class="vpm-shorts" aria-label="VPM News Shorts">
+
+  <div class="vpm-shorts__accent" role="presentation"></div>
+
+  <div class="vpm-shorts__inner">
+
+    <!-- ── Editorial ── -->
+    <div class="vpm-shorts__editorial">
+
+      <span class="vpm-shorts__eyebrow" id="vpm-eyebrow"></span>
+      <h2 class="vpm-shorts__headline" id="vpm-headline"></h2>
+      <div class="vpm-shorts__divider" role="presentation"></div>
+      <p class="vpm-shorts__description" id="vpm-description"></p>
+
+      <ul class="vpm-shorts__bullets" id="vpm-bullets" aria-label="Playlist highlights"></ul>
+
+      <div class="vpm-shorts__actions">
+        <a class="vpm-shorts__btn vpm-shorts__btn--primary" id="vpm-cta-primary" href="#" target="_blank" rel="noopener"></a>
+        <a class="vpm-shorts__btn vpm-shorts__btn--secondary" id="vpm-cta-secondary" href="#" target="_blank" rel="noopener"></a>
+      </div>
+
+      <div class="vpm-shorts__badge" id="vpm-badge" aria-live="polite">
+        <span class="vpm-shorts__badge-dot" aria-hidden="true"></span>
+        <span id="vpm-badge-text"></span>
+      </div>
+
+    </div>
+
+    <!-- ── Player ── -->
+    <div class="vpm-shorts__player-col">
+      <div class="vpm-shorts__phone" role="figure" aria-label="YouTube Shorts player">
+
+        <div class="vpm-shorts__phone-notch" aria-hidden="true">
+          <div class="vpm-shorts__phone-notch-pill"></div>
+        </div>
+
+        <div class="vpm-shorts__screen">
+          <div class="vpm-shorts__loading" id="vpm-loading" aria-hidden="true">
+            <div class="vpm-shorts__spinner"></div>
+            <span class="vpm-shorts__loading-label">Loading…</span>
+          </div>
+          <!-- iframe injected by JS -->
+        </div>
+
+        <div class="vpm-shorts__phone-bar" aria-hidden="true">
+          <div class="vpm-shorts__phone-bar-pill"></div>
+        </div>
+
+      </div>
+
+      <div class="vpm-shorts__yt-label" aria-label="Powered by YouTube">
+        <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+          <rect width="14" height="10" rx="2.5" fill="#FF0000"/>
+          <path d="M5.5 2.8l4 2.2-4 2.2V2.8z" fill="#fff"/>
+        </svg>
+        YouTube Shorts
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="vpm-shorts__footer">
+    <div class="vpm-shorts__footer-inner">
+      <span class="vpm-shorts__footer-brand">VPM · Virginia Public Media</span>
+      <a class="vpm-shorts__footer-link" id="vpm-playlist-link" href="#" target="_blank" rel="noopener">
+        Open full playlist on YouTube ↗
+      </a>
+    </div>
+  </footer>
+
+</section>
+
+<script>
+// ─────────────────────────────────────────────────────────────────────────────
+//  CONFIGURATION — edit this to update the component in Brightspot.
+//
+//  playlistId  : the list= value from your YouTube playlist URL
+//  startIndex  : which video to open first (1 = first video in playlist)
+//  bullets     : up to 4 short lines shown as highlights under the description
+// ─────────────────────────────────────────────────────────────────────────────
+var SHORTS_CONFIG = {
+
+  // ── Content ──
+  eyebrow:     'News Shorts',
+  headline:    'Virginia<br>in <em>60\u202fseconds</em>',
+  description: 'Quick, essential news from across the Commonwealth. Our reporters bring you the stories that matter most \u2014 straight to the point, without the noise.',
+
+  bullets: [
+    'Breaking news as it happens',
+    'Local stories from every corner of Virginia',
+    'New shorts added throughout the day'
+  ],
+
+  badge: 'Updated daily \u2014 new shorts added regularly',
+
+  ctaPrimaryLabel:  'Visit VPM News \u2192',
+  ctaPrimaryUrl:    'https://www.vpm.org/news',
+
+  ctaSecondaryLabel: 'Subscribe on YouTube',
+  ctaSecondaryUrl:   'https://www.youtube.com/@VPMNews?sub_confirmation=1',
+
+  // ── YouTube playlist ──
+  playlistId:  'PLDpD9qYyo0hJUThx2RuUgE_TH9LN05ua3',
+  startIndex:  1,    // 1-based; change to open a specific video first
+
+  // Full playlist URL shown in footer (auto-built from playlistId if left empty)
+  playlistUrl: ''
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  Logic — no edits needed below
+// ─────────────────────────────────────────────────────────────────────────────
+(function () {
+  var c = SHORTS_CONFIG;
+
+  // Apply copy
+  document.getElementById('vpm-eyebrow').textContent      = c.eyebrow;
+  document.getElementById('vpm-headline').innerHTML       = c.headline;
+  document.getElementById('vpm-description').textContent  = c.description;
+  document.getElementById('vpm-badge-text').textContent   = c.badge;
+
+  var cta1 = document.getElementById('vpm-cta-primary');
+  cta1.textContent = c.ctaPrimaryLabel;
+  cta1.href        = c.ctaPrimaryUrl;
+
+  var cta2 = document.getElementById('vpm-cta-secondary');
+  cta2.textContent = c.ctaSecondaryLabel;
+  cta2.href        = c.ctaSecondaryUrl;
+
+  // Bullets
+  var ul = document.getElementById('vpm-bullets');
+  (c.bullets || []).forEach(function (text) {
+    var li = document.createElement('li');
+    li.textContent = text;
+    ul.appendChild(li);
+  });
+
+  // Playlist footer link
+  var plUrl = c.playlistUrl ||
+    ('https://www.youtube.com/playlist?list=' + c.playlistId);
+  document.getElementById('vpm-playlist-link').href = plUrl;
+
+  // Build iframe
+  var screen    = document.querySelector('.vpm-shorts__screen');
+  var loadingEl = document.getElementById('vpm-loading');
+
+  var iframeSrc =
+    'https://www.youtube.com/embed/videoseries' +
+    '?list='            + encodeURIComponent(c.playlistId) +
+    '&index='           + c.startIndex +
+    '&rel=0' +
+    '&modestbranding=1' +
+    '&color=white';
+
+  var iframe = document.createElement('iframe');
+  iframe.className       = 'vpm-shorts__iframe';
+  iframe.src             = iframeSrc;
+  iframe.title           = 'VPM News Shorts playlist';
+  iframe.allow           = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+  iframe.allowFullscreen = true;
+
+  iframe.addEventListener('load', function () {
+    loadingEl.classList.add('is-hidden');
+  });
+
+  screen.appendChild(iframe);
+
+}());
+</script>
+
+</body>
+</html>
