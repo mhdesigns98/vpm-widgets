@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VPM Widget Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* VPM tokens — exact from tokens.css */
+  --vpm-dark-blue:  #003865;
+  --vpm-light-blue: #6CACE4;
+  --vpm-yellow:     #E0E721;
+  --vpm-red:        #EE2737;
+  --vpm-black:      #101820;
+  --vpm-grey:       #B2B4B2;
+  --vpm-white:      #FFFFFF;
+
+  --vpm-blue-900: #002244;
+  --vpm-blue-800: #002E54;
+  --vpm-blue-050: #EEF4FB;
+  --vpm-blue-100: #D6E8F6;
+
+  --vpm-gray-050: #F8F9FA;
+  --vpm-gray-100: #F2F3F4;
+  --vpm-gray-200: #E5E7E9;
+  --vpm-gray-300: #D1D3D4;
+  --vpm-gray-500: #7B8591;
+  --vpm-gray-600: #5A6470;
+
+  --font-sans:    'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Oswald', Impact, sans-serif;
+
+  --fs-h1:     clamp(28px, 3.2vw, 44px);
+  --fs-body:   16px;
+  --fs-sm:     14px;
+  --fs-xs:     12px;
+  --fs-eyebrow: 13px;
+  --tracking-eyebrow: 0.12em;
+
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+
+  --radius-md: 4px;
+  --shadow-sm: 0 2px 6px rgba(16,24,32,0.08);
+  --shadow-md: 0 8px 24px rgba(16,24,32,0.12);
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+
+  --accent-bar: linear-gradient(90deg,
+    var(--vpm-light-blue) 0%,   var(--vpm-light-blue) 30%,
+    var(--vpm-yellow)     30%,  var(--vpm-yellow)     70%,
+    var(--vpm-red)        70%,  var(--vpm-red)        100%);
+
+  --border-default: var(--vpm-gray-200);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  color: var(--vpm-black);
+  background: var(--vpm-gray-050);
+  line-height: 1.45;
+  min-height: 100vh;
+}
+
+/* ── Accent bar ── */
+.accent-bar {
+  height: 5px;
+  background: var(--accent-bar);
+}
+
+/* ── Header ── */
+.wl-header {
+  background: var(--vpm-dark-blue);
+  padding: var(--space-7) var(--space-6) var(--space-7);
+}
+.wl-header__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+}
+.wl-header__left {}
+.wl-header__eyebrow {
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-eyebrow);
+  color: var(--vpm-yellow);
+  margin-bottom: var(--space-2);
+}
+.wl-header__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--vpm-white);
+  line-height: 1.05;
+  margin-bottom: var(--space-3);
+}
+.wl-header__sub {
+  font-size: var(--fs-sm);
+  color: rgba(255,255,255,0.6);
+  max-width: 400px;
+}
+.wl-header__count-block {
+  text-align: right;
+  flex-shrink: 0;
+}
+.wl-header__count-num {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 700;
+  color: var(--vpm-yellow);
+  line-height: 1;
+  display: block;
+}
+.wl-header__count-label {
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-eyebrow);
+  color: rgba(255,255,255,0.45);
+  display: block;
+  margin-top: var(--space-1);
+}
+
+/* ── Main ── */
+.wl-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-6) 80px;
+}
+
+/* ── Grid ── */
+.wl-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+@media (max-width: 1024px) { .wl-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px)  { .wl-grid { grid-template-columns: 1fr; } }
+
+/* ── Card ── */
+.wl-card {
+  background: var(--vpm-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: box-shadow var(--dur-base), transform var(--dur-base);
+}
+.wl-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* THE RISK: full-bleed dark-blue name band */
+.wl-card__nameband {
+  background: var(--vpm-dark-blue);
+  padding: var(--space-4) var(--space-5) var(--space-3);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.wl-card__name {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--vpm-white);
+  line-height: 1.15;
+  flex: 1;
+}
+.wl-card__preview-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--vpm-yellow);
+  text-decoration: none;
+  flex-shrink: 0;
+  margin-top: 3px;
+  transition: opacity var(--dur-fast);
+  border-bottom: 1px solid rgba(224,231,33,0.35);
+  padding-bottom: 1px;
+}
+.wl-card__preview-link:hover { opacity: 0.7; }
+.wl-card__preview-link svg { flex-shrink: 0; }
+
+/* Body */
+.wl-card__body {
+  padding: var(--space-4) var(--space-5);
+  flex: 1;
+}
+.wl-card__desc {
+  font-size: 13px;
+  color: var(--vpm-gray-600);
+  line-height: 1.6;
+}
+
+/* Footer */
+.wl-card__footer {
+  border-top: 1px solid var(--border-default);
+  padding: var(--space-2) var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  min-height: 48px;
+}
+.wl-card__copy-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--vpm-grey);
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+/* Buttons */
+.wl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  padding: 5px 10px;
+  cursor: pointer;
+  line-height: 1;
+  transition:
+    background var(--dur-fast),
+    color var(--dur-fast),
+    border-color var(--dur-fast),
+    transform var(--dur-base);
+  white-space: nowrap;
+}
+.wl-btn:hover { transform: translateY(-1px); }
+.wl-btn:focus-visible {
+  outline: 3px solid rgba(108,172,228,0.55);
+  outline-offset: 2px;
+}
+
+.wl-btn--copy {
+  background: var(--vpm-blue-050);
+  color: var(--vpm-dark-blue);
+  border-color: var(--vpm-blue-100);
+}
+.wl-btn--copy:hover { background: var(--vpm-blue-100); }
+.wl-btn--copy.is-copied {
+  background: #D4EDDA;
+  color: #155724;
+  border-color: #C3E6CB;
+}
+
+/* Share button uses yellow accent to signal "this leaves your clipboard with a URL" */
+.wl-btn--share {
+  background: transparent;
+  color: var(--vpm-grey);
+  border-color: var(--border-default);
+  margin-left: auto;
+}
+.wl-btn--share:hover {
+  color: var(--vpm-dark-blue);
+  border-color: var(--vpm-dark-blue);
+  background: var(--vpm-blue-050);
+}
+.wl-btn--share.is-copied {
+  background: #D4EDDA;
+  color: #155724;
+  border-color: #C3E6CB;
+}
+
+/* ── Site footer ── */
+.wl-site-footer {
+  border-top: 1px solid var(--border-default);
+  padding: var(--space-5) var(--space-6);
+  text-align: center;
+}
+.wl-site-footer a {
+  font-size: var(--fs-xs);
+  color: var(--vpm-grey);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+.wl-site-footer a:hover { color: var(--vpm-dark-blue); }
+
+@media (max-width: 620px) {
+  .wl-header { padding: var(--space-6) var(--space-4); }
+  .wl-header__count-block { display: none; }
+  .wl-main { padding: var(--space-5) var(--space-4) 60px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wl-card, .wl-btn, .wl-card__preview-link { transition: none; }
+  .wl-card:hover { transform: none; }
+  .wl-btn:hover { transform: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="accent-bar" role="presentation"></div>
+
+<header class="wl-header">
+  <div class="wl-header__inner">
+    <div class="wl-header__left">
+      <p class="wl-header__eyebrow">VPM News</p>
+      <h1 class="wl-header__title">Widget Lab</h1>
+      <p class="wl-header__sub">Standalone HTML embeds and web components. Preview, copy code, or share a link.</p>
+    </div>
+    <div class="wl-header__count-block" aria-hidden="true">
+      <span class="wl-header__count-num" id="js-big-count">—</span>
+      <span class="wl-header__count-label">Widgets</span>
+    </div>
+  </div>
+</header>
+
+<main class="wl-main">
+  <div class="wl-grid" id="js-grid"></div>
+</main>
+
+<footer class="wl-site-footer">
+  <a href="https://github.com/mhdesigns98/vpm-widgets" target="_blank" rel="noopener noreferrer">
+    github.com/mhdesigns98/vpm-widgets
+  </a>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  const WIDGETS = [
+    {
+      slug: 'elections-2026-primary',
+      name: 'Elections 2026 Primary',
+      desc: '2026 Virginia Primary promo — dates, video carousel, article links. WordPress ACF split-file format.',
+      preview: 'preview.html',
+      files: [
+        { label: 'HTML', file: 'html.html' },
+        { label: 'CSS',  file: 'css.css'  },
+        { label: 'JS',   file: 'js.js'    },
+      ],
+    },
+    {
+      slug: 'elections-banner-2026',
+      name: 'Elections Banner 2026',
+      desc: '2026 elections coverage promo banner prototype.',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+    {
+      slug: 'vpm-banner',
+      name: 'VPM Banner',
+      desc: 'General-purpose promotional banner component with customizable templates.',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+    {
+      slug: 'vpm-spotlight-homepage',
+      name: 'VPM Spotlight',
+      desc: 'Homepage content spotlight with admin UI and JSON-driven content queue.',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+    {
+      slug: 'morning-monitor-signup',
+      name: 'Morning Monitor Signup',
+      desc: 'Newsletter signup embed for the VPM Morning Monitor.',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+    {
+      slug: 'watch-page-header',
+      name: 'Watch Page Header',
+      desc: 'Embeddable channel selector header for the VPM Watch live broadcast page.',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+    {
+      slug: 'youtube-shorts-embed',
+      name: 'YouTube Shorts Embed',
+      desc: 'VPM News Shorts carousel embed for use on VPM pages.',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+    {
+      slug: 'ecp-partners-team',
+      name: 'ECP Partners & Team',
+      desc: 'Early Childhood Education partners & team section — Brightspot-optimized embed.',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+    {
+      slug: 'annual-report-2025',
+      name: 'Annual Report 2025',
+      desc: 'Interactive 2025 Annual Report embed for the VPM impact page.',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+    {
+      slug: 'how-federal-funding-works',
+      name: 'How Federal Funding Works',
+      desc: 'Explainer section illustrating how federal funding flows to public media.',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+    {
+      slug: 'impact-testimonial',
+      name: 'Impact Testimonial',
+      desc: 'Testimonial component for VPM\'s impact and giving pages.',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+  ];
+
+  function widgetPath(slug, file) {
+    return 'widgets/' + slug + '/' + file;
+  }
+
+  function shareUrl(w) {
+    const base = window.location.href.split('#')[0].replace(/\/?$/, '/');
+    return base + widgetPath(w.slug, w.preview);
+  }
+
+  function flash(btn, msg) {
+    const original = btn.dataset.label || btn.textContent;
+    btn.dataset.label = btn.dataset.label || btn.textContent;
+    btn.textContent = msg;
+    btn.classList.add('is-copied');
+    btn.disabled = true;
+    setTimeout(function () {
+      btn.textContent = original;
+      btn.classList.remove('is-copied');
+      btn.disabled = false;
+    }, 1800);
+  }
+
+  async function copyFile(slug, file, btn) {
+    try {
+      const res = await fetch(widgetPath(slug, file));
+      if (!res.ok) throw new Error(res.status);
+      await navigator.clipboard.writeText(await res.text());
+      flash(btn, 'Copied!');
+    } catch {
+      flash(btn, 'Error');
+    }
+  }
+
+  function copyLink(w, btn) {
+    navigator.clipboard.writeText(shareUrl(w))
+      .then(function () { flash(btn, 'Link copied!'); })
+      .catch(function () { flash(btn, 'Error'); });
+  }
+
+  const ARROW_SVG = '<svg width="9" height="9" viewBox="0 0 9 9" fill="none" aria-hidden="true"><path d="M1 8L8 1M8 1H3M8 1V6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const SHARE_SVG = '<svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true"><circle cx="8.5" cy="2.5" r="1.5" stroke="currentColor" stroke-width="1.15"/><circle cx="2.5" cy="5.5" r="1.5" stroke="currentColor" stroke-width="1.15"/><circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="1.15"/><line x1="3.9" y1="4.75" x2="7.1" y2="3.25" stroke="currentColor" stroke-width="1.15" stroke-linecap="round"/><line x1="3.9" y1="6.25" x2="7.1" y2="7.75" stroke="currentColor" stroke-width="1.15" stroke-linecap="round"/></svg>';
+
+  function buildCard(w) {
+    const card = document.createElement('article');
+    card.className = 'wl-card';
+    card.setAttribute('aria-label', w.name);
+
+    /* name band */
+    const band = document.createElement('div');
+    band.className = 'wl-card__nameband';
+
+    const name = document.createElement('h2');
+    name.className = 'wl-card__name';
+    name.textContent = w.name;
+
+    const previewLink = document.createElement('a');
+    previewLink.className = 'wl-card__preview-link';
+    previewLink.href = widgetPath(w.slug, w.preview);
+    previewLink.target = '_blank';
+    previewLink.rel = 'noopener noreferrer';
+    previewLink.setAttribute('aria-label', 'Preview ' + w.name + ' in a new tab');
+    previewLink.innerHTML = 'Preview ' + ARROW_SVG;
+
+    band.appendChild(name);
+    band.appendChild(previewLink);
+
+    /* body */
+    const body = document.createElement('div');
+    body.className = 'wl-card__body';
+    const desc = document.createElement('p');
+    desc.className = 'wl-card__desc';
+    desc.textContent = w.desc;
+    body.appendChild(desc);
+
+    /* footer */
+    const footer = document.createElement('div');
+    footer.className = 'wl-card__footer';
+
+    const copyLabel = document.createElement('span');
+    copyLabel.className = 'wl-card__copy-label';
+    copyLabel.textContent = 'Copy:';
+    footer.appendChild(copyLabel);
+
+    w.files.forEach(function (f) {
+      const btn = document.createElement('button');
+      btn.className = 'wl-btn wl-btn--copy';
+      btn.type = 'button';
+      btn.textContent = f.label;
+      btn.setAttribute('aria-label', 'Copy ' + f.label + ' for ' + w.name);
+      btn.addEventListener('click', function () { copyFile(w.slug, f.file, btn); });
+      footer.appendChild(btn);
+    });
+
+    const shareBtn = document.createElement('button');
+    shareBtn.className = 'wl-btn wl-btn--share';
+    shareBtn.type = 'button';
+    shareBtn.innerHTML = SHARE_SVG + ' Share URL';
+    shareBtn.dataset.label = 'Share URL';
+    shareBtn.setAttribute('aria-label', 'Copy shareable link for ' + w.name);
+    shareBtn.addEventListener('click', function () { copyLink(w, shareBtn); });
+    footer.appendChild(shareBtn);
+
+    card.appendChild(band);
+    card.appendChild(body);
+    card.appendChild(footer);
+    return card;
+  }
+
+  const grid = document.getElementById('js-grid');
+  const bigCount = document.getElementById('js-big-count');
+  bigCount.textContent = WIDGETS.length;
+  WIDGETS.forEach(function (w) { grid.appendChild(buildCard(w)); });
+})();
+</script>
+
+</body>
+</html>
