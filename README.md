@@ -37,6 +37,8 @@ All class names are namespaced to avoid conflicts with the host page.
 | `annual-report-2025/` | 2025 Annual Report interactive embed |
 | `how-federal-funding-works/` | Federal funding explainer for the impact page |
 | `impact-testimonial/` | Testimonial component for impact/giving pages |
+| `vpm-morning-monitor-popup/` | Newsletter signup banner — GTM Custom HTML Tag, Shadow DOM, 35s delay |
+| `basics-virginia/` | The Basics Virginia™ — full-page composite, 5-section HtmlModule |
 
 ## Brand Guide
 

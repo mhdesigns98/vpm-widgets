@@ -1,0 +1,666 @@
+<!-- ============================================================
+     The Basics Virginia™ — Full Page Composite
+     All 5 sections compiled into a single HtmlModule drop-in.
+     Sections (top to bottom):
+       1. Hero
+       2. 5 Principles Grid
+       3. The Basics in Action
+       4. The Movement (includes Toolkits video)
+       5. Nature Trail CTA
+
+     FONT NOTE: All font-size and spacing values use px (not rem)
+     so they render correctly regardless of Brightspot's or
+     WordPress's root font-size setting. rem is always relative
+     to the host document root, even inside Shadow DOM.
+     ============================================================ -->
+
+<!-- 1. Hero -->
+<basics-hero-section></basics-hero-section>
+
+<!-- 2. 5 Principles Grid -->
+<basics-principles-grid></basics-principles-grid>
+
+<!-- 3. The Basics in Action -->
+<basics-in-action></basics-in-action>
+
+<!-- 4. The Movement -->
+<basics-movement></basics-movement>
+
+<!-- 5. Nature Trail CTA -->
+<basics-nature-trail></basics-nature-trail>
+
+
+<script>
+/* =============================================================
+   SHARED DESIGN TOKENS
+   ============================================================= */
+const BASICS_TOKENS = {
+  colorNavy:     '#003865',
+  colorNavyDark: '#194173',
+  colorBlue:     '#6CACE4',
+  colorOrange:   '#ff6f00',
+  colorInk:      '#101820',
+  colorGray:     '#f5f5f5',
+  colorBorder:   '#e6e6e6',
+  fontDisplay:   '"GT America Condensed", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+  fontBody:      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif',
+  radiusCard:    '12px',
+  shadowCard:    '0 10px 30px rgba(0,0,0,0.2)',
+};
+
+
+/* =============================================================
+   1. HERO SECTION
+   ============================================================= */
+class BasicsHeroSection extends HTMLElement {
+  constructor() { super(); this.attachShadow({ mode: 'open' }); }
+  connectedCallback() {
+    this.shadowRoot.innerHTML = `
+      <style>
+        :host { display: block; font-size: 16px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        .basics-hero {
+          background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+          padding: 64px 0;
+          font-family: ${BASICS_TOKENS.fontBody};
+        }
+        .basics-hero__container {
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: 0 24px;
+        }
+        .basics-hero__title {
+          font-family: ${BASICS_TOKENS.fontDisplay};
+          font-size: clamp(40px, 6vw, 64px);
+          font-weight: 700;
+          color: ${BASICS_TOKENS.colorNavy};
+          margin-bottom: 48px;
+          text-align: center;
+          line-height: 1.2;
+        }
+        .basics-hero__main {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 32px;
+          align-items: stretch;
+        }
+        @media (min-width: 900px) {
+          .basics-hero__main { grid-template-columns: 2fr 1fr; gap: 48px; }
+        }
+        .video-embed {
+          position: relative;
+          padding-bottom: 56.25%;
+          height: 0;
+          overflow: hidden;
+          background: #000;
+          border-radius: ${BASICS_TOKENS.radiusCard};
+          box-shadow: ${BASICS_TOKENS.shadowCard};
+          transition: transform 250ms ease-in-out, box-shadow 250ms ease-in-out;
+        }
+        .video-embed:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        }
+        .video-embed iframe {
+          position: absolute; top: 0; left: 0;
+          width: 100%; height: 100%; border: 0;
+        }
+        .basics-hero__content {
+          background: linear-gradient(135deg, ${BASICS_TOKENS.colorNavy} 0%, ${BASICS_TOKENS.colorNavyDark} 100%);
+          padding: 40px;
+          border-radius: ${BASICS_TOKENS.radiusCard};
+          box-shadow: 0 4px 20px rgba(0,56,101,0.15);
+          position: relative;
+          overflow: hidden;
+        }
+        .basics-hero__content::before {
+          content: '';
+          position: absolute;
+          top: 0; left: 0; right: 0;
+          height: 4px;
+          background: linear-gradient(90deg, ${BASICS_TOKENS.colorBlue} 0%, ${BASICS_TOKENS.colorOrange} 100%);
+        }
+        .basics-hero__content p {
+          font-size: 17px;
+          margin-bottom: 20px;
+          line-height: 1.7;
+          color: #fff;
+        }
+        .basics-hero__content p:last-child { margin-bottom: 0; }
+        .basics-hero__intro { font-size: 18px; font-weight: 500; }
+        .basics-hero__content strong { color: ${BASICS_TOKENS.colorBlue}; font-weight: 700; }
+        .basics-hero__cta {
+          margin-top: 24px;
+          padding-top: 24px;
+          border-top: 1px solid rgba(108,172,228,0.3);
+        }
+        .basics-hero__content a {
+          color: ${BASICS_TOKENS.colorBlue};
+          text-decoration: underline;
+          transition: color 150ms ease-in-out;
+          font-weight: 600;
+        }
+        .basics-hero__content a:hover,
+        .basics-hero__content a:focus { color: #fff; }
+        a:focus-visible { outline: 3px solid ${BASICS_TOKENS.colorBlue}; outline-offset: 2px; }
+      </style>
+
+      <section class="basics-hero">
+        <div class="basics-hero__container">
+          <h1 class="basics-hero__title">The Basics Virginia™</h1>
+          <div class="basics-hero__main">
+            <div class="basics-hero__video">
+              <div class="video-embed">
+                <iframe
+                  src="https://player.vimeo.com/video/917233041?badge=0&autopause=0"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowfullscreen
+                  title="The Basics Virginia™"></iframe>
+              </div>
+            </div>
+            <div class="basics-hero__content">
+              <p class="basics-hero__intro">
+                <strong>The Basics™</strong> — a public health messaging campaign developed by the Harvard Achievement Gap Initiative and Dr. Ronald Ferguson to improve learning outcomes for all families.
+              </p>
+              <p>Focuses on five key caregiving behaviors important for cognitive and social-emotional development of children, birth to age five.</p>
+              <p>With these 5 principles, parents and caregivers lay the foundation for future growth and learning, giving every child a more equitable start in life.</p>
+              <p class="basics-hero__cta">
+                <a href="https://thebasicsvirginia.org/" target="_blank" rel="noopener noreferrer">Visit TheBasicsVirginia.org →</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+}
+customElements.define('basics-hero-section', BasicsHeroSection);
+
+
+/* =============================================================
+   2. 5 PRINCIPLES GRID
+   ============================================================= */
+class BasicsPrinciplesGrid extends HTMLElement {
+  constructor() { super(); this.attachShadow({ mode: 'open' }); }
+  connectedCallback() {
+    this.shadowRoot.innerHTML = `
+      <style>
+        :host { display: block; font-size: 16px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        img { max-width: 100%; height: auto; display: block; }
+
+        .basics-principles {
+          padding: 96px 0;
+          background-color: #ffffff;
+          font-family: ${BASICS_TOKENS.fontBody};
+        }
+        .basics-principles__container {
+          max-width: 1240px;
+          margin: 0 auto;
+          padding: 0 24px;
+        }
+        .basics-principles__title {
+          font-family: ${BASICS_TOKENS.fontDisplay};
+          font-size: clamp(36px, 5vw, 48px);
+          font-weight: 700;
+          color: ${BASICS_TOKENS.colorNavy};
+          text-align: center;
+          margin-bottom: 64px;
+          line-height: 1.2;
+        }
+        .basics-principles__grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+          gap: 24px;
+        }
+        @media (min-width: 768px) {
+          .basics-principles__grid { grid-template-columns: repeat(5, 1fr); gap: 32px; }
+        }
+        .principle-card {
+          background: #ffffff;
+          border: 2px solid ${BASICS_TOKENS.colorBorder};
+          border-radius: ${BASICS_TOKENS.radiusCard};
+          padding: 32px 24px;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          transition: all 250ms ease-in-out;
+        }
+        .principle-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+          border-color: ${BASICS_TOKENS.colorBlue};
+        }
+        .principle-card__icon {
+          width: 80px; height: 80px;
+          margin-bottom: 24px;
+          flex-shrink: 0;
+        }
+        .principle-card__icon img { width: 100%; height: 100%; object-fit: contain; }
+        .principle-card__content {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          align-items: center;
+        }
+        .principle-card__title {
+          font-size: 18px;
+          font-weight: 700;
+          margin-bottom: 16px;
+          line-height: 1.3;
+          flex: 1;
+        }
+        .principle-card__title a {
+          color: ${BASICS_TOKENS.colorInk};
+          text-decoration: none;
+          transition: color 150ms ease-in-out;
+        }
+        .principle-card__title a:hover,
+        .principle-card__title a:focus { color: ${BASICS_TOKENS.colorNavy}; text-decoration: underline; }
+        .principle-card__link--spanish { font-style: italic; }
+        .principle-card__link--spanish a {
+          color: #666;
+          font-size: 15px;
+          text-decoration: underline;
+          transition: color 150ms ease-in-out;
+        }
+        .principle-card__link--spanish a:hover,
+        .principle-card__link--spanish a:focus { color: ${BASICS_TOKENS.colorNavy}; }
+        a:focus-visible { outline: 3px solid ${BASICS_TOKENS.colorNavy}; outline-offset: 2px; }
+      </style>
+
+      <section class="basics-principles">
+        <div class="basics-principles__container">
+          <h2 class="basics-principles__title">The 5 Basics Principles</h2>
+          <div class="basics-principles__grid">
+
+            <article class="principle-card">
+              <div class="principle-card__icon">
+                <img src="https://assets.vpm.org/b2/68/fe66ee9f43d7a9644c5efc15b82f/basics-heart.png" alt="Heart icon" loading="lazy">
+              </div>
+              <div class="principle-card__content">
+                <h3 class="principle-card__title"><a href="/articles/23859/the-basics-maximize-love-manage-stress">Maximize Love, Manage Stress</a></h3>
+                <p class="principle-card__link principle-card__link--spanish"><a href="/articles/28009/los-basicos-maximiza-el-amor-controla-el-estres">Maximiza el amor, controla el estrés</a></p>
+              </div>
+            </article>
+
+            <article class="principle-card">
+              <div class="principle-card__icon">
+                <img src="https://assets.vpm.org/66/07/2def2f1d4f86865efc28f965c434/basics-thought-bubble.png" alt="Thought bubble icon" loading="lazy">
+              </div>
+              <div class="principle-card__content">
+                <h3 class="principle-card__title"><a href="/articles/23860/the-basics-talk-sing-and-point">Talk, Sing, Point</a></h3>
+                <p class="principle-card__link principle-card__link--spanish"><a href="/articles/28010/los-basicos-habla-canta-y-senala">Habla, canta y señala</a></p>
+              </div>
+            </article>
+
+            <article class="principle-card">
+              <div class="principle-card__icon">
+                <img src="https://assets.vpm.org/38/30/cd6f314343c199d3e8faa5e7b006/basics-numbers.png" alt="Numbers icon" loading="lazy">
+              </div>
+              <div class="principle-card__content">
+                <h3 class="principle-card__title"><a href="/articles/23861/the-basics-count-group-and-compare">Count, Group, Compare</a></h3>
+                <p class="principle-card__link principle-card__link--spanish"><a href="/articles/28011/los-basicos-cuenta-agrupa-y-compara">Cuenta, agrupa y compara</a></p>
+              </div>
+            </article>
+
+            <article class="principle-card">
+              <div class="principle-card__icon">
+                <img src="https://assets.vpm.org/fe/7b/f7f77f4d412d8061f31818ccf71a/basics-child.png" alt="Child playing icon" loading="lazy">
+              </div>
+              <div class="principle-card__content">
+                <h3 class="principle-card__title"><a href="/articles/23862/the-basics-explore-through-movement-and-play">Explore Through Movement and Play</a></h3>
+                <p class="principle-card__link principle-card__link--spanish"><a href="/articles/28012/los-basicos-explora-mediante-el-juego-y-el-movimiento">Explora mediante el juego y el movimiento</a></p>
+              </div>
+            </article>
+
+            <article class="principle-card">
+              <div class="principle-card__icon">
+                <img src="https://assets.vpm.org/2c/26/c7673e2142bd9c91e9caa5a965bb/basics-book.png" alt="Book icon" loading="lazy">
+              </div>
+              <div class="principle-card__content">
+                <h3 class="principle-card__title"><a href="/articles/23863/the-basics-read-and-discuss-stories">Read and Discuss Stories</a></h3>
+                <p class="principle-card__link principle-card__link--spanish"><a href="/articles/28013/los-basicos-lee-y-discute-libros">Lee y discute libros</a></p>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+    `;
+  }
+}
+customElements.define('basics-principles-grid', BasicsPrinciplesGrid);
+
+
+/* =============================================================
+   3. THE BASICS IN ACTION
+   ============================================================= */
+class BasicsInAction extends HTMLElement {
+  constructor() { super(); this.attachShadow({ mode: 'open' }); }
+  connectedCallback() {
+    this.shadowRoot.innerHTML = `
+      <style>
+        :host { display: block; font-size: 16px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        .basics-action {
+          background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+          padding: 96px 0;
+          font-family: ${BASICS_TOKENS.fontBody};
+        }
+        .basics-action__container {
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: 0 24px;
+        }
+        .basics-action__title {
+          font-family: ${BASICS_TOKENS.fontDisplay};
+          font-size: clamp(36px, 5vw, 48px);
+          font-weight: 700;
+          color: ${BASICS_TOKENS.colorNavy};
+          text-align: center;
+          margin-bottom: 48px;
+          line-height: 1.2;
+          position: relative;
+          padding-bottom: 16px;
+        }
+        .basics-action__title::after {
+          content: '';
+          position: absolute;
+          bottom: 0; left: 50%;
+          transform: translateX(-50%);
+          width: 60px; height: 4px;
+          background: linear-gradient(90deg, ${BASICS_TOKENS.colorNavy} 0%, ${BASICS_TOKENS.colorBlue} 100%);
+          border-radius: 2px;
+        }
+        .basics-action__main {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 32px;
+          align-items: center;
+        }
+        @media (min-width: 900px) {
+          .basics-action__main { grid-template-columns: 2fr 1fr; gap: 48px; }
+        }
+        .video-embed {
+          position: relative;
+          padding-bottom: 56.25%;
+          height: 0;
+          overflow: hidden;
+          background: #000;
+          border-radius: ${BASICS_TOKENS.radiusCard};
+          box-shadow: ${BASICS_TOKENS.shadowCard};
+          transition: transform 250ms ease-in-out, box-shadow 250ms ease-in-out;
+        }
+        .video-embed:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        }
+        .video-embed iframe {
+          position: absolute; top: 0; left: 0;
+          width: 100%; height: 100%; border: 0;
+        }
+        .basics-action__content {
+          background: #fff;
+          padding: 40px;
+          border-radius: ${BASICS_TOKENS.radiusCard};
+          border: 2px solid ${BASICS_TOKENS.colorBorder};
+          box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+          transition: border-color 250ms ease-in-out;
+        }
+        .basics-action__content:hover { border-color: ${BASICS_TOKENS.colorBlue}; }
+        .basics-action__content p {
+          font-size: 17px;
+          line-height: 1.7;
+          margin-bottom: 20px;
+          color: ${BASICS_TOKENS.colorInk};
+        }
+        .basics-action__content p:last-child { margin-bottom: 0; }
+        .basics-action__spanish-link {
+          margin-top: 24px;
+          padding-top: 24px;
+          border-top: 1px solid ${BASICS_TOKENS.colorBorder};
+        }
+        .basics-action__spanish-link a {
+          color: ${BASICS_TOKENS.colorNavy};
+          text-decoration: none;
+          font-weight: 600;
+          font-size: 17px;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          transition: all 150ms ease-in-out;
+        }
+        .basics-action__spanish-link a::after { content: '→'; transition: transform 150ms ease-in-out; }
+        .basics-action__spanish-link a:hover,
+        .basics-action__spanish-link a:focus { color: ${BASICS_TOKENS.colorBlue}; }
+        .basics-action__spanish-link a:hover::after { transform: translateX(4px); }
+        a:focus-visible { outline: 3px solid ${BASICS_TOKENS.colorNavy}; outline-offset: 2px; }
+        @media (max-width: 899px) {
+          .basics-action__content { padding: 32px; }
+        }
+      </style>
+
+      <section class="basics-action">
+        <div class="basics-action__container">
+          <h2 class="basics-action__title">The Basics in Action</h2>
+          <div class="basics-action__main">
+            <div class="basics-action__video">
+              <div class="video-embed">
+                <iframe
+                  src="https://player.vimeo.com/video/1042940007?badge=0&autopause=0"
+                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+                  allowfullscreen
+                  title="The Basics in Action"></iframe>
+              </div>
+            </div>
+            <div class="basics-action__content">
+              <p>Over the course of one year, Gaby Benzel documented her family's journey as they engaged with The Basics principles in their everyday activities.</p>
+              <p>As parents, they discovered how these simple interactions helped build positive relationships within the family, maximizing early learning and utilizing skills crucial to the development of their young children's brains.</p>
+              <p class="basics-action__spanish-link">
+                <a href="https://vimeo.com/1072295866" target="_blank" rel="noopener noreferrer">Mira la versión en español</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+}
+customElements.define('basics-in-action', BasicsInAction);
+
+
+/* =============================================================
+   4. THE MOVEMENT (includes Toolkits video)
+   ============================================================= */
+class BasicsMovement extends HTMLElement {
+  constructor() { super(); this.attachShadow({ mode: 'open' }); }
+  connectedCallback() {
+    this.shadowRoot.innerHTML = `
+      <style>
+        :host { display: block; font-size: 16px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        .basics-movement {
+          padding: 96px 0;
+          background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+          font-family: ${BASICS_TOKENS.fontBody};
+        }
+        .basics-movement__container {
+          max-width: 1240px;
+          margin: 0 auto;
+          padding: 0 24px;
+        }
+        .basics-movement__title {
+          font-family: ${BASICS_TOKENS.fontDisplay};
+          font-size: clamp(36px, 5vw, 48px);
+          font-weight: 700;
+          color: ${BASICS_TOKENS.colorNavy};
+          margin-bottom: 40px;
+          line-height: 1.2;
+          text-align: center;
+        }
+        .basics-movement__layout {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 48px;
+          align-items: start;
+        }
+        @media (min-width: 900px) {
+          .basics-movement__layout { grid-template-columns: 1fr 1fr; gap: 64px; }
+        }
+        .basics-movement__text p {
+          font-size: 17px;
+          line-height: 1.7;
+          margin-bottom: 24px;
+          color: ${BASICS_TOKENS.colorInk};
+        }
+        .basics-movement__text p strong { color: ${BASICS_TOKENS.colorNavy}; }
+        .basics-movement__text p:last-child { margin-bottom: 0; }
+        .video-embed {
+          position: relative;
+          padding-bottom: 56.25%;
+          height: 0;
+          overflow: hidden;
+          background: #000;
+          border-radius: ${BASICS_TOKENS.radiusCard};
+          box-shadow: ${BASICS_TOKENS.shadowCard};
+          transition: transform 250ms ease-in-out, box-shadow 250ms ease-in-out;
+        }
+        .video-embed:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        }
+        .video-embed iframe {
+          position: absolute; top: 0; left: 0;
+          width: 100%; height: 100%; border: 0;
+        }
+        .basics-movement__video-label {
+          font-size: 15px;
+          font-weight: 600;
+          color: ${BASICS_TOKENS.colorNavy};
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          margin-bottom: 16px;
+          opacity: 0.7;
+        }
+      </style>
+
+      <section class="basics-movement">
+        <div class="basics-movement__container">
+          <h2 class="basics-movement__title">The Basics Virginia™ Movement</h2>
+          <div class="basics-movement__layout">
+
+            <div class="basics-movement__text">
+              <p>In partnership with state and local community stakeholders, and the national Basics Learning Network, VPM has developed a multi-platform media campaign around school readiness using The Basics™ with our audiences. Why? Because many people are unaware of the importance of early brain development and its impact on lifelong learning. We need to dispel the common misconception that learning begins when a child enters school.</p>
+              <p><strong>90% of brain development occurs in the first 5 years of life.</strong> The Basics™ are a strategy for whole communities to support vibrant learning and brain development for all children. Everyday interactions and experiences in life are educational learning opportunities.</p>
+              <p>The five Basics principles encourage caregivers to play and interact with the children in their lives, which helps to lay the foundation for growth and learning. Parents learn and understand that they are their child's first and best teacher.</p>
+              <p>The Basics Virginia™ are shared on television, online, through social media and through community partner trainings and engagement activities.</p>
+            </div>
+
+            <div class="basics-movement__video">
+              <p class="basics-movement__video-label">Activity Toolkits</p>
+              <div class="video-embed">
+                <iframe
+                  src="https://player.vimeo.com/video/430395770?h=83462d130c&title=0&byline=0&portrait=0"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowfullscreen
+                  title="The Basics Virginia Toolkits"></iframe>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    `;
+  }
+}
+customElements.define('basics-movement', BasicsMovement);
+
+
+/* =============================================================
+   5. NATURE TRAIL CTA
+   ============================================================= */
+class BasicsNatureTrail extends HTMLElement {
+  constructor() { super(); this.attachShadow({ mode: 'open' }); }
+  connectedCallback() {
+    this.shadowRoot.innerHTML = `
+      <style>
+        :host { display: block; font-size: 16px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        img { max-width: 100%; height: auto; display: block; }
+
+        .basics-trail {
+          padding: 96px 0;
+          background-color: #ffffff;
+          font-family: ${BASICS_TOKENS.fontBody};
+        }
+        .basics-trail__container {
+          max-width: 1240px;
+          margin: 0 auto;
+          padding: 0 24px;
+        }
+        .basics-trail__content {
+          text-align: center;
+          margin-bottom: 48px;
+        }
+        .basics-trail__title {
+          font-family: ${BASICS_TOKENS.fontDisplay};
+          font-size: clamp(36px, 5vw, 48px);
+          font-weight: 700;
+          color: ${BASICS_TOKENS.colorNavy};
+          margin-bottom: 24px;
+          line-height: 1.2;
+        }
+        .basics-trail__text a {
+          display: inline-block;
+          padding: 16px 32px;
+          background-color: ${BASICS_TOKENS.colorNavy};
+          color: #fff;
+          text-decoration: none;
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 17px;
+          transition: all 250ms ease-in-out;
+        }
+        .basics-trail__text a:hover,
+        .basics-trail__text a:focus {
+          background-color: ${BASICS_TOKENS.colorBlue};
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        a:focus-visible { outline: 3px solid ${BASICS_TOKENS.colorNavy}; outline-offset: 2px; }
+        .basics-trail__image {
+          max-width: 1000px;
+          margin: 0 auto;
+        }
+        .basics-trail__image img {
+          width: 100%;
+          border-radius: ${BASICS_TOKENS.radiusCard};
+          box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+      </style>
+
+      <section class="basics-trail">
+        <div class="basics-trail__container">
+          <div class="basics-trail__content">
+            <h2 class="basics-trail__title">Explore The Basics Principles in Nature!</h2>
+            <p class="basics-trail__text">
+              <a href="https://www.vpm.org/the-basics-preschool-nature-trail">Visit the Preschool Nature Trail created by VPM and Wildrock</a>
+            </p>
+          </div>
+          <div class="basics-trail__image">
+            <img src="https://assets.vpm.org/7b/c8/9282f78c445c9c357eb184c7d888/basics-trail4.jpg"
+                 alt="Children exploring nature on The Basics trail"
+                 loading="lazy">
+          </div>
+        </div>
+      </section>
+    `;
+  }
+}
+customElements.define('basics-nature-trail', BasicsNatureTrail);
+</script>

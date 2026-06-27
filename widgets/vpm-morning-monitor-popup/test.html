@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MM Banner — Local Test</title>
+  <style>
+    body { font-family: sans-serif; padding: 40px; }
+    button { margin: 8px 4px; padding: 10px 20px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Morning Monitor Banner — Test Page</h1>
+  <p>Use the buttons below to trigger the banner without waiting for the 35s timer.</p>
+
+  <button onclick="triggerBanner()">Show Banner</button>
+  <button onclick="resetFlags()">Reset Suppression Flags</button>
+
+  <p id="status" style="color:#888;font-size:13px;margin-top:16px;"></p>
+
+  <script>
+    function resetFlags() {
+      localStorage.removeItem('mm_banner_close_count');
+      localStorage.removeItem('mm_banner_last_closed');
+      localStorage.removeItem('mm_banner_converted');
+      sessionStorage.removeItem('mm_banner_shown_session');
+      window.__mmBannerInit = false;
+      document.getElementById('status').textContent = 'Flags cleared — reload the page to reinitialize.';
+    }
+
+    function triggerBanner() {
+      // Force the time trigger
+      if (window.__mmBannerState) {
+        window.__mmBannerState.timeElapsed = true;
+        window.__mmBannerState.checkTriggers();
+        document.getElementById('status').textContent = 'Banner triggered.';
+      } else {
+        document.getElementById('status').textContent = 'Banner not initialized yet — wait a moment and try again.';
+      }
+    }
+  </script>
+
+  <!-- Banner script — paste latest version below -->
+  <!-- ============================================================
+    VPM Morning Monitor — Newsletter Banner
+    GTM Custom HTML Tag (Shadow DOM — Production)
+    ============================================================ -->
+
+  <script>
+  (function () {
+    'use strict';
+
+    if (window.__mmBannerInit) return;
+    window.__mmBannerInit = true;
+
+    var CONFIG = {
+      timeThreshold:       35000,
+      firstCloseCooldown:  7,
+      secondCloseCooldown: 30,
+    };
+
+    var state = {
+      timeElapsed:     false,
+      scrollReached:   false,
+      bannerShown:     false,
+      exitIntentFired: false
+    };
+
+    // Expose state for test controls above
+    window.__mmBannerState = {
+      state: state,
+      timeElapsed: false,
+      checkTriggers: function() { checkTriggers(); }
+    };
+
+    function getStorage(key) {
+      try { return localStorage.getItem(key); } catch (e) { return null; }
+    }
+    function setStorage(key, val) {
+      try { localStorage.setItem(key, val); } catch (e) {}
+    }
+    function daysSince(ts) {
+      if (!ts) return Infinity;
+      return (Date.now() - parseInt(ts, 10)) / 86400000;
+    }
+    function isMobile() {
+      return window.innerWidth <= 768;
+    }
+
+    function shouldShow() {
+      if (getStorage('mm_banner_converted') === 'true') return false;
+      if (sessionStorage.getItem('mm_banner_shown_session') === 'true') return false;
+      var n = parseInt(getStorage('mm_banner_close_count') || '0', 10);
+      var last = getStorage('mm_banner_last_closed');
+      if (n === 0) return true;
+      if (n === 1) return daysSince(last) >= CONFIG.firstCloseCooldown;
+      return daysSince(last) >= CONFIG.secondCloseCooldown;
+    }
+
+    var CSS = '\
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }\
+      \
+      :host {\
+        all: initial;\
+        display: block;\
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;\
+      }\
+      \
+      #host {\
+        display: none;\
+        position: fixed;\
+        inset: 0;\
+        z-index: 2147483647;\
+        width: 100vw;\
+        height: 100vh;\
+      }\
+      \
+      #host.show { display: block; }\
+      \
+      #backdrop {\
+        position: absolute;\
+        inset: 0;\
+        background: rgba(0,0,0,0.6);\
+        backdrop-filter: blur(4px);\
+        display: flex;\
+        align-items: center;\
+        justify-content: center;\
+      }\
+      \
+      #modal {\
+        position: relative;\
+        display: flex;\
+        flex-direction: row;\
+        width: 90%;\
+        max-width: 900px;\
+        max-height: 90vh;\
+        border-radius: 12px;\
+        overflow: hidden;\
+        box-shadow: 0 20px 60px rgba(0,0,0,0.35);\
+        background: white;\
+      }\
+      \
+      #panel-left {\
+        flex: 1 1 50%;\
+        min-width: 0;\
+        background: #003865;\
+        color: white;\
+        padding: 48px 40px;\
+        display: flex;\
+        flex-direction: column;\
+        justify-content: center;\
+        align-items: center;\
+        text-align: center;\
+      }\
+      \
+      #panel-right {\
+        flex: 1 1 50%;\
+        min-width: 0;\
+        background: white;\
+        padding: 72px 48px 48px;\
+        display: flex;\
+        flex-direction: column;\
+        justify-content: flex-start;\
+      }\
+      \
+      #close-btn { position: absolute; top: 8px; right: 8px; width: 44px; height: 44px; border-radius: 4px; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s; z-index: 10; padding: 0; opacity: 0.7; }\
+      #close-btn:hover { opacity: 1; }\
+      #close-btn::before, #close-btn::after { content: ""; position: absolute; width: 16px; height: 2px; background: #333; border-radius: 1px; }\
+      #close-btn::before { transform: rotate(45deg); }\
+      #close-btn::after  { transform: rotate(-45deg); }\
+      \
+      #logo { max-width: 160px; height: auto; margin-bottom: 20px; display: block; }\
+      \
+      #headline {\
+        font-size: 30px;\
+        font-weight: 700;\
+        line-height: 1.2;\
+        color: white;\
+        margin: 0 0 16px 0;\
+      }\
+      #subhead {\
+        font-size: 15px;\
+        line-height: 1.6;\
+        color: #555;\
+        margin: 0 0 20px 0;\
+      }\
+      \
+      #email-input {\
+        width: 100%;\
+        padding: 14px 16px;\
+        font-size: 16px;\
+        font-family: inherit;\
+        border: 2px solid #e0e0e0;\
+        border-radius: 8px;\
+        outline: none;\
+        transition: border-color 0.2s;\
+        margin-bottom: 12px;\
+        display: block;\
+      }\
+      #email-input:focus  { border-color: #6CACE4; }\
+      #email-input.error  { border-color: #EE2737; }\
+      \
+      #submit-btn {\
+        width: 100%;\
+        padding: 16px;\
+        font-size: 15px;\
+        font-weight: 700;\
+        font-family: inherit;\
+        letter-spacing: 0.5px;\
+        text-transform: uppercase;\
+        color: white;\
+        background: #003865;\
+        border: none;\
+        border-radius: 8px;\
+        cursor: pointer;\
+        transition: background 0.2s;\
+        display: block;\
+      }\
+      #submit-btn:hover:not(:disabled) { background: #002647; }\
+      #submit-btn:disabled { background: #aaa; cursor: not-allowed; }\
+      \
+      #submit-btn.loading::after {\
+        content: "";\
+        display: inline-block;\
+        width: 14px;\
+        height: 14px;\
+        border: 2px solid rgba(255,255,255,0.3);\
+        border-top-color: white;\
+        border-radius: 50%;\
+        animation: spin 0.6s linear infinite;\
+        vertical-align: middle;\
+      }\
+      @keyframes spin { to { transform: rotate(360deg); } }\
+      \
+      #error-msg {\
+        display: none;\
+        color: #EE2737;\
+        font-size: 13px;\
+        margin-top: -6px;\
+        margin-bottom: 10px;\
+      }\
+      #error-msg.show { display: block; }\
+      \
+      #privacy {\
+        font-size: 12px;\
+        color: #888;\
+        line-height: 1.5;\
+        text-align: center;\
+        margin-top: 16px;\
+      }\
+      \
+      #status-msg {\
+        display: none;\
+        padding: 14px;\
+        border-radius: 8px;\
+        font-size: 14px;\
+        font-weight: 600;\
+        line-height: 1.5;\
+        text-align: center;\
+        margin-bottom: 16px;\
+      }\
+      #status-msg.show   { display: block; }\
+      #status-msg.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }\
+      #status-msg.error   { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }\
+      \
+      @media (max-width: 768px) {\
+        #backdrop {\
+          align-items: flex-end;\
+          background: transparent;\
+          backdrop-filter: none;\
+        }\
+        #modal {\
+          flex-direction: column;\
+          width: 100%;\
+          max-width: 100%;\
+          max-height: none;\
+          border-radius: 12px 12px 0 0;\
+          animation: slideUp 0.3s ease-out;\
+          background: #003865;\
+        }\
+        @keyframes slideUp {\
+          from { transform: translateY(100%); }\
+          to   { transform: translateY(0); }\
+        }\
+        #panel-left {\
+          padding: 20px 20px 12px;\
+          align-items: center;\
+          text-align: center;\
+          flex: none;\
+        }\
+        #logo    { max-width: 100px; margin-bottom: 10px; }\
+        #headline { font-size: 18px; margin-bottom: 0; }\
+        #subhead  { font-size: 13px; color: rgba(255,255,255,1); margin-bottom: 14px; text-align: center; }\
+        #panel-right {\
+          background: #003865;\
+          padding: 12px 20px 24px;\
+          flex: none;\
+        }\
+        #email-input {\
+          font-size: 14px;\
+          padding: 12px 14px;\
+          background: white;\
+          margin-bottom: 10px;\
+        }\
+        #submit-btn  { font-size: 13px; padding: 13px; background: transparent; border: 2px solid white; color: white; }\
+        #submit-btn:hover:not(:disabled) { background: rgba(255,255,255,0.15); }\
+        #privacy     { color: rgba(255,255,255,0.7); font-size: 11px; }\
+        #error-msg   { color: #ffaaaa; }\
+        #close-btn   { top: 8px; right: 8px; opacity: 0.85; }\
+        #close-btn::before, #close-btn::after { background: white; }\
+        #status-msg.success { background: #d4edda; color: #155724; }\
+        #status-msg.error   { background: rgba(255,255,255,0.15); color: white; }\
+      }\
+    ';
+
+    var HTML = '\
+      <div id="host">\
+        <div id="backdrop">\
+          <div id="modal" role="dialog" aria-modal="true" aria-label="Newsletter signup">\
+            <button id="close-btn" aria-label="Close newsletter banner"></button>\
+            <div id="panel-left">\
+              <img id="logo"\
+                src="https://assets.vpm.org/cb/90/6566081547ebb236cc40dcac73c4/vpm-mm-logo-web-rev.png"\
+                alt="VPM News Morning Monitor">\
+              <h2 id="headline">Start Your Day with Virginia\'s Top Stories</h2>\
+            </div>\
+            <div id="panel-right">\
+              <div id="status-msg" role="alert" aria-live="polite"></div>\
+              <p id="subhead">News from across the commonwealth every weekday morning.</p>\
+              <input type="email" id="email-input"\
+                placeholder="Enter your email address"\
+                autocomplete="email"\
+                aria-label="Email address"\
+                aria-required="true">\
+              <div id="error-msg" role="alert">Please enter a valid email address</div>\
+              <button id="submit-btn">Keep Me Informed</button>\
+              <p id="privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>\
+            </div>\
+          </div>\
+        </div>\
+      </div>\
+    ';
+
+    var hostEl = document.createElement('div');
+    hostEl.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:2147483647;pointer-events:none;';
+    document.body.appendChild(hostEl);
+
+    var shadow = hostEl.attachShadow({ mode: 'open' });
+
+    var styleEl = document.createElement('style');
+    styleEl.textContent = CSS;
+    shadow.appendChild(styleEl);
+
+    var wrapper = document.createElement('div');
+    wrapper.innerHTML = HTML;
+    shadow.appendChild(wrapper);
+
+    function $$(id) { return shadow.getElementById(id); }
+
+    var host       = $$('host');
+    var backdrop   = $$('backdrop');
+    var closeBtn   = $$('close-btn');
+    var emailInput = $$('email-input');
+    var submitBtn  = $$('submit-btn');
+    var errorMsg   = $$('error-msg');
+    var statusMsg  = $$('status-msg');
+
+    var previousFocus = null;
+
+    function showBanner() {
+      if (state.bannerShown) return;
+      if (!shouldShow()) return;
+      previousFocus = document.activeElement;
+      host.classList.add('show');
+      hostEl.style.pointerEvents = 'auto';
+      state.bannerShown = true;
+      window.addEventListener('pointerdown', handleWindowClick, { capture: true });
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'mm_popup_view', popup_name: 'morning_monitor' });
+      sessionStorage.setItem('mm_banner_shown_session', 'true');
+      document.body.style.overflow = 'hidden';
+      setTimeout(function () { if (emailInput) emailInput.focus(); }, 150);
+
+      var playerOverlay = document.querySelector('.BrightspotPersistentPlayer-drawerOverlay');
+      if (playerOverlay) {
+        playerOverlay.dataset.mmPointerEventsOverride = playerOverlay.style.pointerEvents;
+        playerOverlay.style.pointerEvents = 'none';
+      }
+    }
+
+    function hideBanner() {
+      host.classList.remove('show');
+      hostEl.style.pointerEvents = 'none';
+      window.removeEventListener('pointerdown', handleWindowClick, { capture: true });
+      document.body.style.overflow = '';
+      if (previousFocus) previousFocus.focus();
+
+      var playerOverlay = document.querySelector('.BrightspotPersistentPlayer-drawerOverlay');
+      if (playerOverlay) {
+        playerOverlay.style.pointerEvents = playerOverlay.dataset.mmPointerEventsOverride || '';
+        delete playerOverlay.dataset.mmPointerEventsOverride;
+      }
+    }
+
+    function handleClose() {
+      var n = parseInt(getStorage('mm_banner_close_count') || '0', 10);
+      setStorage('mm_banner_close_count', (n + 1).toString());
+      setStorage('mm_banner_last_closed', Date.now().toString());
+      hideBanner();
+    }
+
+    function checkTriggers() {
+      if (state.timeElapsed || state.scrollReached) showBanner();
+    }
+
+    setTimeout(function () {
+      state.timeElapsed = true;
+      checkTriggers();
+    }, CONFIG.timeThreshold);
+
+    var lastScrollY = window.scrollY;
+    var pageLoadTime = Date.now();
+
+    function onScroll() {
+      var currentScrollY = window.scrollY;
+      var scrollingUp = currentScrollY < lastScrollY;
+      var timeOnPage = Date.now() - pageLoadTime;
+      if (scrollingUp && currentScrollY < 100 && timeOnPage >= 10000) {
+        state.scrollReached = true;
+        checkTriggers();
+        window.removeEventListener('scroll', onScroll);
+      }
+      lastScrollY = currentScrollY;
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    function onMouseOut(e) {
+      if (e.clientY <= 0 && !state.exitIntentFired && !state.bannerShown) {
+        state.exitIntentFired = true;
+        showBanner();
+        document.removeEventListener('mouseout', onMouseOut);
+      }
+    }
+    if (!isMobile()) document.addEventListener('mouseout', onMouseOut);
+
+    function validateEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function setStatus(type, text) {
+      statusMsg.className = 'show ' + type;
+      statusMsg.textContent = text;
+    }
+
+    function handleWindowClick(e) {
+      var path = e.composedPath();
+      if (!path || !path.length) return;
+      var t = path[0];
+      if (t === closeBtn || closeBtn.contains(t)) { handleClose(); return; }
+      if (t === submitBtn || submitBtn.contains(t)) { handleSubmit(); return; }
+      if (t === emailInput) { emailInput.focus(); return; }
+      if (t === backdrop) { handleClose(); return; }
+    }
+
+    function handleSubmit(e) {
+      if (submitBtn.disabled) return;
+      if (e) e.preventDefault();
+
+      var email = emailInput.value.trim();
+
+      if (!validateEmail(email)) {
+        emailInput.classList.add('error');
+        errorMsg.classList.add('show');
+        emailInput.focus();
+        return;
+      }
+
+      emailInput.classList.remove('error');
+      errorMsg.classList.remove('show');
+      submitBtn.disabled = true;
+      submitBtn.classList.add('loading');
+      submitBtn.textContent = 'Subscribing';
+
+      var callbackName = 'mm_cb_' + Date.now();
+      var timeout = setTimeout(function () {
+        window[callbackName] = null;
+        onError();
+      }, 8000);
+
+      window[callbackName] = function (res) {
+        clearTimeout(timeout);
+        window[callbackName] = null;
+        var s = document.getElementById('mm-jsonp-script');
+        if (s) s.parentNode.removeChild(s);
+        if (res.result === 'success') {
+          onSuccess();
+        } else {
+          if (res.msg && res.msg.toLowerCase().indexOf('already subscribed') > -1) {
+            onSuccess();
+          } else {
+            onError();
+          }
+        }
+      };
+
+      var script = document.createElement('script');
+      script.id = 'mm-jsonp-script';
+      script.src = 'https://vpm.us3.list-manage.com/subscribe/post-json' +
+        '?u=6fe41b3055c403be08140ec95' +
+        '&id=26497cf3ad' +
+        '&f_id=0097cee1f0' +
+        '&tags=1620245%2C10170514' +
+        '&EMAIL=' + encodeURIComponent(email) +
+        '&b_6fe41b3055c403be08140ec95_26497cf3ad=' +
+        '&c=' + callbackName;
+      document.head.appendChild(script);
+
+      function onSuccess() {
+        setStorage('mm_banner_converted', 'true');
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: 'mm_popup_conversion', popup_name: 'morning_monitor' });
+        setStatus('success', 'Thanks! Check your inbox for a confirmation email.');
+        submitBtn.classList.remove('loading');
+        submitBtn.textContent = 'Subscribed!';
+        setTimeout(hideBanner, 3000);
+      }
+
+      function onError() {
+        setStatus('error', 'Something went wrong. Please try again.');
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('loading');
+        submitBtn.textContent = 'Keep Me Informed';
+      }
+    }
+
+    closeBtn.addEventListener('click', handleClose);
+    backdrop.addEventListener('click', function (e) {
+      if (e.target === backdrop) handleClose();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && state.bannerShown) handleClose();
+    });
+    submitBtn.addEventListener('click', handleSubmit);
+    emailInput.addEventListener('input', function () {
+      emailInput.classList.remove('error');
+      errorMsg.classList.remove('show');
+    });
+    emailInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') handleSubmit();
+    });
+
+    console.log('[MM Banner] Initialized via Shadow DOM');
+
+  })();
+  </script>
+</body>
+</html>
