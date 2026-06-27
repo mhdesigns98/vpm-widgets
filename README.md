@@ -38,6 +38,15 @@ All class names are namespaced to avoid conflicts with the host page.
 | `how-federal-funding-works/` | Federal funding explainer for the impact page |
 | `impact-testimonial/` | Testimonial component for impact/giving pages |
 
+## Brand Guide
+
+VPM color, typography, voice, and component conventions live in two places:
+
+- **Visual:** [`brand-guide.html`](brand-guide.html) — rendered swatches, type scale, pattern examples, and copyable CSS variable blocks
+- **Reference:** [`BRAND_GUIDE.md`](BRAND_GUIDE.md) — Markdown tables of all tokens, a paste-ready `:root` CSS block, and the full conventions checklist
+
+Use `BRAND_GUIDE.md` as context when prompting Claude to build a new widget.
+
 ## Adding a new widget
 
 1. Create `/widgets/[short-name]/`

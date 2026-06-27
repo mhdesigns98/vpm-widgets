@@ -331,6 +331,44 @@ body {
   border-color: #C3E6CB;
 }
 
+/* ── Nav tabs ── */
+.wl-nav {
+  background: var(--vpm-blue-900, #002244);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.wl-nav__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+  display: flex;
+  gap: 0;
+}
+.wl-nav__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-eyebrow);
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 3px solid transparent;
+  margin-bottom: -1px;
+  transition: color var(--dur-fast), border-color var(--dur-fast);
+}
+.wl-nav__tab:hover { color: rgba(255,255,255,0.8); }
+.wl-nav__tab.is-active {
+  color: var(--vpm-yellow);
+  border-bottom-color: var(--vpm-yellow);
+}
+@media (max-width: 620px) {
+  .wl-nav__inner { padding: 0 var(--space-4); }
+  .wl-nav__tab { padding: var(--space-3) var(--space-3); }
+}
+
 /* ── Site footer ── */
 .wl-site-footer {
   border-top: 1px solid var(--border-default);
@@ -375,6 +413,13 @@ body {
     </div>
   </div>
 </header>
+
+<nav class="wl-nav" aria-label="Site sections">
+  <div class="wl-nav__inner">
+    <a class="wl-nav__tab is-active" href="index.html" aria-current="page">Widgets</a>
+    <a class="wl-nav__tab" href="brand-guide.html">Brand Guide</a>
+  </div>
+</nav>
 
 <main class="wl-main" id="js-main"></main>
 
