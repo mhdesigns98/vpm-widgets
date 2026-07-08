@@ -30,6 +30,7 @@ All class names are namespaced to avoid conflicts with the host page.
 | `elections-banner-2026/` | 2026 elections coverage promo banner |
 | `vpm-banner/` | General-purpose promotional banner component |
 | `vpm-spotlight-homepage/` | Homepage spotlight with admin UI and JSON content queue |
+| `vpm-spotlight-leadontop/` | Homepage spotlight variant — full-width lead story over a two-card row (static) |
 | `morning-monitor-signup/` | Morning Monitor newsletter signup embed |
 | `watch-page-header/` | Channel selector header for the Watch live page |
 | `youtube-shorts-embed/` | VPM News Shorts carousel embed |
