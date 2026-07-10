@@ -21,6 +21,9 @@ Some widgets (e.g. `elections-2026-primary`) use a split-file format for WordPre
     js.js            ← ACF JS field
 ```
 
+## Design Tokens
+`tokens.css` in the repo root is the **canonical VPM design token file** (migrated from the deprecated vpm-component-library). Widgets must stay self-contained, so copy the custom properties you need into the widget's scoped `<style>` — never link the file externally. No hard-coded hex values.
+
 ## Style Conventions
 - All class names and IDs namespaced with a widget-specific prefix (e.g. `vpm-elec26-`, `vpm-mm-`)
 - BEM naming convention within namespace
@@ -34,11 +37,24 @@ Some widgets (e.g. `elections-2026-primary`) use a split-file format for WordPre
 - Self-contained: a single file (or the split-file set) should work dropped into any CMS
 
 ## Workflow
-1. Build the widget in a Claude Code conversation
-2. When satisfied, add it under `/widgets/[name]/` following the structure above
-3. Write a one-paragraph `README.md` describing purpose, source, and usage
-4. Commit and push to `main`
-5. GitHub Pages preview: `https://mhdesigns98.github.io/vpm-widgets/widgets/[name]/`
+1. Write a brief first (`/brief`) — audience, done criteria, out-of-scope, deploy target
+2. Scaffold with `/new-widget`, then build in a Claude Code conversation
+3. When satisfied, add it under `/widgets/[name]/` following the structure above (`/save-component` does this)
+4. Write a one-paragraph `README.md` describing purpose, source, and usage
+5. **Pre-ship check** (`/ship-widget`) — required before pasting into any CMS, see checklist below
+6. Commit and push to `main`
+7. GitHub Pages preview: `https://mhdesigns98.github.io/vpm-widgets/widgets/[name]/`
+
+## Pre-Ship Checklist
+Every widget must pass the CMS test harness (`/harness/harness.html?widget=[name]` — see `/harness/README.md`) before deploying:
+
+- [ ] Survives delayed hydration + one detach/re-inject cycle (no double-init, listeners intact)
+- [ ] No focus loss or overlap issues with the sticky Stream Player
+- [ ] Styles fully scoped — unaffected by hostile host CSS (`!important` links, global heading sizes)
+- [ ] CTAs clickable after the click-interceptor overlay clears
+- [ ] Degrades gracefully in a 320px column
+- [ ] Keyboard accessible, visible focus, WCAG 2.1 AA contrast, `prefers-reduced-motion` respected
+- [ ] No console errors in the harness log
 
 ## Repo Consolidation
 When asked to consolidate, audit existing repos and Gists, identify widget/embed code, and migrate it into the structure above. Archive source repos after migration.

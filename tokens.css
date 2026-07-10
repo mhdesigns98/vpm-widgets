@@ -1,0 +1,256 @@
+/* ============================================
+   VPM Design System — Colors & Type
+   Living tokens for the VPM brand
+   Source of truth: https://claude.ai/design/p/548f9e49-14a7-437d-9bef-9c5aa193f4f8
+   ============================================ */
+
+/* ---- Webfonts ----
+   NOTE: VPM's primary brand typeface is GT America (paid, Grilli Type).
+   We substitute Inter (sans) + Oswald (condensed display) from Google Fonts.
+   Upload GT America .woff2 files to replace these.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Oswald:wght@500;600;700&display=swap');
+
+:root {
+  /* ---- Brand Core Palette (from VPM brand guide) ---- */
+  --vpm-dark-blue:  #003865; /* PMS 2955 C — primary brand color */
+  --vpm-light-blue: #6CACE4; /* PMS 284 C   — secondary/accent   */
+  --vpm-yellow:     #E0E721; /* PMS 388 C   — highlight/energy   */
+  --vpm-red:        #EE2737; /* PMS 1788 C  — accent/alerts      */
+  --vpm-black:      #101820; /* PMS Black 6 C                    */
+  --vpm-grey:       #B2B4B2; /* PMS 421 C                        */
+  --vpm-white:      #FFFFFF;
+
+  /* ---- Extended tints/shades (derived) ---- */
+  --vpm-blue-900: #002244;
+  --vpm-blue-800: #002E54;
+  --vpm-blue-700: #003865; /* core */
+  --vpm-blue-600: #0B4F85;
+  --vpm-blue-500: #1A6AA8;
+  --vpm-blue-300: #6CACE4; /* core light */
+  --vpm-blue-100: #D6E8F6;
+  --vpm-blue-050: #EEF4FB;
+
+  --vpm-yellow-600: #C8CF1C;
+  --vpm-yellow-500: #E0E721;
+  --vpm-yellow-200: #F2F5A2;
+
+  --vpm-red-700:  #B81E2A;
+  --vpm-red-500:  #EE2737;
+  --vpm-red-200:  #FBD0D4;
+
+  --vpm-gray-900: #1A1F26;
+  --vpm-gray-800: #2A313A;
+  --vpm-gray-700: #3D4652;
+  --vpm-gray-600: #5A6470;
+  --vpm-gray-500: #7B8591;
+  --vpm-gray-400: #B2B4B2; /* core grey */
+  --vpm-gray-300: #D1D3D4;
+  --vpm-gray-200: #E5E7E9;
+  --vpm-gray-100: #F2F3F4;
+  --vpm-gray-050: #F8F9FA;
+
+  /* ---- Semantic tokens ---- */
+  --bg-page:       var(--vpm-white);
+  --bg-surface:    var(--vpm-white);
+  --bg-inverse:    var(--vpm-dark-blue);
+  --bg-muted:      var(--vpm-gray-050);
+  --bg-hero:       var(--vpm-dark-blue);
+
+  --fg-default:    var(--vpm-black);
+  --fg-muted:      var(--vpm-gray-600);
+  --fg-subtle:     var(--vpm-gray-500);
+  --fg-inverse:    var(--vpm-white);
+  --fg-on-dark:    var(--vpm-white);
+  --fg-on-dark-muted: #B9C8D8;
+  --fg-link:       var(--vpm-blue-700);
+  --fg-link-hover: var(--vpm-blue-900);
+  --fg-accent:     var(--vpm-yellow);
+  --fg-alert:      var(--vpm-red);
+
+  --border-default: var(--vpm-gray-200);
+  --border-strong:  var(--vpm-gray-300);
+  --border-on-dark: rgba(255,255,255,0.18);
+
+  /* ---- Pillar accents (News / Arts & Culture / Education) ---- */
+  --pillar-news:      var(--vpm-red);       /* urgency, breaking */
+  --pillar-arts:      var(--vpm-yellow);    /* energy, creativity */
+  --pillar-education: var(--vpm-light-blue);/* clarity, trust */
+
+  /* ---- Type stack ---- */
+  --font-sans:    'Inter', 'GT America', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Oswald', 'GT America Condensed', 'Impact', sans-serif;
+  --font-serif:   'Times New Roman', Times, serif;
+  --font-mono:    ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  /* ---- Type scale ---- */
+  --fs-display-2xl: clamp(48px, 7vw, 96px);
+  --fs-display-xl:  clamp(40px, 5.5vw, 72px);
+  --fs-display-lg:  clamp(32px, 4vw, 56px);
+  --fs-h1:          clamp(28px, 3.2vw, 44px);
+  --fs-h2:          clamp(24px, 2.4vw, 32px);
+  --fs-h3:          20px;
+  --fs-h4:          18px;
+  --fs-body-lg:     18px;
+  --fs-body:        16px;
+  --fs-body-sm:     14px;
+  --fs-caption:     12px;
+  --fs-eyebrow:     13px;
+
+  --lh-tight:   1.05;
+  --lh-snug:    1.2;
+  --lh-normal:  1.45;
+  --lh-loose:   1.65;
+
+  --tracking-eyebrow: 0.12em;
+  --tracking-display: -0.01em;
+  --tracking-wide:    0.04em;
+
+  /* ---- Spacing (4px base) ---- */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 128px;
+
+  /* ---- Radii — VPM is sharp: 0–4px max, 8px exception ---- */
+  --radius-none: 0;
+  --radius-sm:   2px;
+  --radius-md:   4px;
+  --radius-lg:   8px;
+  --radius-pill: 999px;
+
+  /* ---- Shadows ---- */
+  --shadow-xs: 0 1px 2px rgba(16, 24, 32, 0.06);
+  --shadow-sm: 0 2px 6px rgba(16, 24, 32, 0.08);
+  --shadow-md: 0 8px 24px rgba(16, 24, 32, 0.10);
+  --shadow-lg: 0 18px 48px rgba(16, 24, 32, 0.14);
+  --shadow-focus: 0 0 0 3px rgba(108, 172, 228, 0.55);
+
+  /* ---- Motion ---- */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-entrance: cubic-bezier(0, 0, 0.2, 1);
+  --ease-exit:     cubic-bezier(0.4, 0, 1, 1);
+  --dur-fast:   120ms;
+  --dur-base:   200ms;
+  --dur-slow:   320ms;
+
+  /* ---- Layout ---- */
+  --container-max:  1200px;
+  --container-wide: 1440px;
+  --gutter:         24px;
+
+  /* ---- Accent bar (blue / yellow / red 3-stripe) ---- */
+  --accent-bar: linear-gradient(90deg,
+      var(--vpm-light-blue) 0%,
+      var(--vpm-light-blue) 30%,
+      var(--vpm-yellow)     30%,
+      var(--vpm-yellow)     70%,
+      var(--vpm-red)        70%,
+      var(--vpm-red)        100%);
+}
+
+/* ============================================
+   Semantic element styles
+   ============================================ */
+
+html, body {
+  font-family: var(--font-sans);
+  color: var(--fg-default);
+  background: var(--bg-page);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.vpm-display-xl {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-display-xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+}
+
+.vpm-display-lg {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-display-lg);
+  line-height: var(--lh-tight);
+  text-transform: uppercase;
+}
+
+h1, .vpm-h1 {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: var(--fs-h1);
+  line-height: var(--lh-snug);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  margin: 0;
+}
+
+h2, .vpm-h2 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-snug);
+  margin: 0;
+  text-wrap: balance;
+}
+
+h3, .vpm-h3 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--fs-h3);
+  line-height: var(--lh-snug);
+  margin: 0;
+}
+
+h4, .vpm-h4 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: var(--fs-h4);
+  line-height: var(--lh-snug);
+  margin: 0;
+}
+
+p, .vpm-body {
+  font-size: var(--fs-body);
+  line-height: var(--lh-loose);
+  color: var(--fg-default);
+  text-wrap: pretty;
+}
+
+.vpm-body-lg  { font-size: var(--fs-body-lg); line-height: var(--lh-loose); }
+.vpm-body-sm  { font-size: var(--fs-body-sm); line-height: var(--lh-normal); }
+.vpm-caption  { font-size: var(--fs-caption); color: var(--fg-muted); }
+
+.vpm-eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-eyebrow);
+  color: var(--vpm-yellow);
+}
+
+.vpm-eyebrow--dark { color: var(--vpm-dark-blue); }
+.vpm-eyebrow--red  { color: var(--vpm-red); }
+
+a, .vpm-link {
+  color: var(--fg-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--dur-fast) var(--ease-standard);
+}
+a:hover { color: var(--fg-link-hover); }
+
+code, pre, .vpm-mono { font-family: var(--font-mono); }

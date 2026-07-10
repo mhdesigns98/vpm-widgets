@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VPM CMS Test Harness</title>
+<style>
+  /* Deliberately hostile host-page styles — widgets must survive these */
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Georgia, serif; background: #fff; color: #222; }
+
+  .harness-toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 9000;
+    background: #101820; color: #fff; padding: 10px 16px;
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+    font: 13px/1.4 -apple-system, sans-serif;
+  }
+  .harness-toolbar strong { color: #E0E721; }
+  .harness-toolbar button {
+    font: inherit; padding: 4px 10px; cursor: pointer;
+    background: #003865; color: #fff; border: 1px solid #6CACE4; border-radius: 3px;
+  }
+  .harness-toolbar .status { margin-left: auto; opacity: .8; }
+
+  .page { max-width: 1200px; margin: 0 auto; padding: 96px 24px 160px; display: grid; grid-template-columns: 1fr 320px; gap: 32px; }
+  @media (max-width: 800px) { .page { grid-template-columns: 1fr; } }
+
+  /* Hostile CMS-ish global rules widgets often collide with */
+  .article-body img { max-width: 100%; border: 3px dashed #ccc; }
+  .article-body a { color: #EE2737 !important; text-decoration: underline; }
+  .article-body h2 { font-size: 3rem; margin: 2rem 0 0.5rem; }
+  .article-body p { line-height: 1.9; font-size: 19px; }
+  .article-body * { letter-spacing: 0.01em; }
+
+  .slot { min-height: 60px; border: 2px dashed #6CACE4; position: relative; }
+  .slot::before {
+    content: attr(data-label); position: absolute; top: -22px; left: 0;
+    font: 11px/1 -apple-system, sans-serif; color: #003865; letter-spacing: .08em; text-transform: uppercase;
+  }
+  .slot.hydrated { border-color: transparent; }
+  .slot.hydrated::before { display: none; }
+
+  /* Fake persistent Stream Player — mimics vpm.org's sticky audio player */
+  .fake-stream-player {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 2147483000;
+    background: #003865; color: #fff; padding: 14px 20px;
+    display: flex; gap: 16px; align-items: center;
+    font: 14px/1 -apple-system, sans-serif;
+    box-shadow: 0 -4px 20px rgba(0,0,0,.3);
+  }
+  .fake-stream-player button { font: inherit; padding: 8px 14px; cursor: pointer; background: #E0E721; border: none; border-radius: 3px; font-weight: 700; }
+
+  /* Invisible click-intercepting overlay — mimics analytics/consent scripts */
+  .click-interceptor {
+    position: fixed; inset: 0; z-index: 2147483100; background: transparent;
+  }
+
+  .log {
+    position: fixed; right: 12px; top: 48px; width: 300px; max-height: 40vh; overflow: auto; z-index: 9100;
+    background: rgba(16,24,32,.92); color: #d6e8f6; font: 11px/1.5 ui-monospace, monospace;
+    padding: 10px; border-radius: 6px;
+  }
+  .log .warn { color: #E0E721; }
+  .log .err { color: #ff8a94; }
+  .log.collapsed { display: none; }
+</style>
+</head>
+<body>
+
+<div class="harness-toolbar" role="banner">
+  <strong>VPM CMS HARNESS</strong>
+  <span id="hz-widget-name">no widget loaded</span>
+  <button onclick="Harness.rerun()">↻ Re-run all</button>
+  <button onclick="Harness.rerender()">Simulate re-render</button>
+  <button onclick="Harness.focusSteal()">Steal focus</button>
+  <button onclick="Harness.overlay(3000)">Overlay 3s</button>
+  <button onclick="document.getElementById('hz-log').classList.toggle('collapsed')">Log</button>
+  <span class="status" id="hz-status">idle</span>
+</div>
+
+<div class="log" id="hz-log" aria-live="polite"></div>
+
+<main class="page">
+  <article class="article-body">
+    <h2>A Very Real Article Headline That Is Quite Long Indeed</h2>
+    <p>This host page deliberately includes heavy-handed CMS styles — oversized headings, forced link colors with <code>!important</code>, dashed image borders — the kind of global CSS widgets meet in the wild. If the widget below inherits any of it, its styles aren't scoped hard enough.</p>
+
+    <div class="slot" data-label="Main slot — injected after 2.5s hydration delay" id="hz-slot-main"></div>
+
+    <p>Content continues after the widget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. <a href="#">An article link that should stay red</a> while the widget's links keep their own styling.</p>
+    <p>Scroll down to confirm nothing collides with the fake Stream Player pinned to the bottom of the viewport.</p>
+  </article>
+
+  <aside>
+    <div class="slot" data-label="Sidebar slot — 320px column" id="hz-slot-sidebar"></div>
+  </aside>
+</main>
+
+<div class="fake-stream-player" role="region" aria-label="Fake stream player">
+  <button id="hz-player-play" aria-label="Play">▶ LISTEN LIVE</button>
+  <span>VPM News · Fake Stream Player (z-index 2147483000, steals focus every 20s)</span>
+</div>
+
+<script>
+(function () {
+  const qs = new URLSearchParams(location.search);
+  const slug = qs.get('widget');
+  const mode = qs.get('mode') || 'auto'; // auto | single | acf
+  const HYDRATION_DELAY = 2500;
+  const logEl = document.getElementById('hz-log');
+  const statusEl = document.getElementById('hz-status');
+
+  function log(msg, cls) {
+    const line = document.createElement('div');
+    if (cls) line.className = cls;
+    line.textContent = `[${(performance.now() / 1000).toFixed(1)}s] ${msg}`;
+    logEl.appendChild(line);
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+  function status(s) { statusEl.textContent = s; }
+
+  // Surface widget JS errors loudly
+  window.addEventListener('error', e => log(`JS error: ${e.message}`, 'err'));
+
+  async function fetchWidget() {
+    if (!slug) { log('No ?widget=SLUG param — nothing to load.', 'warn'); status('no widget'); return null; }
+    document.getElementById('hz-widget-name').textContent = `widgets/${slug}/` + (mode !== 'auto' ? ` (${mode})` : '');
+    const base = `../widgets/${slug}/`;
+
+    // ACF mode: separate html/css/js blocks injected the way WordPress ACF does
+    if (mode === 'acf' || mode === 'auto') {
+      try {
+        const [html, css, js] = await Promise.all(
+          ['html.html', 'css.css', 'js.js'].map(f => fetch(base + f).then(r => r.ok ? r.text() : Promise.reject(f)))
+        );
+        log('Loaded ACF split files (html/css/js).');
+        return { kind: 'acf', html, css, js };
+      } catch (e) {
+        if (mode === 'acf') { log(`ACF file missing: ${e}`, 'err'); return null; }
+      }
+    }
+    // Single-file mode: parse index.html, extract styles/body/scripts
+    try {
+      const text = await fetch(base + 'index.html').then(r => { if (!r.ok) throw new Error(r.status); return r.text(); });
+      const doc = new DOMParser().parseFromString(text, 'text/html');
+      const css = [...doc.querySelectorAll('style')].map(s => s.textContent).join('\n');
+      const links = [...doc.querySelectorAll('link[rel="stylesheet"]')];
+      if (links.length) log(`⚠ widget links ${links.length} external stylesheet(s) — must be self-contained`, 'warn');
+      const scripts = [...doc.querySelectorAll('script')].map(s => ({ src: s.src, text: s.textContent }));
+      doc.querySelectorAll('style, script').forEach(n => n.remove());
+      log('Loaded single-file widget (index.html).');
+      return { kind: 'single', html: doc.body.innerHTML, css, scripts };
+    } catch (e) {
+      log(`Could not load widgets/${slug}/index.html (${e.message})`, 'err');
+      return null;
+    }
+  }
+
+  function inject(payload, slot, copyLabel) {
+    // CMS-style injection: styles + markup + scripts appended to the page
+    const styleId = `hz-style-${copyLabel}`;
+    if (!document.getElementById(styleId)) {
+      const st = document.createElement('style');
+      st.id = styleId;
+      st.textContent = payload.css || '';
+      document.head.appendChild(st);
+    }
+    slot.innerHTML = payload.html;
+    slot.classList.add('hydrated');
+    const scripts = payload.kind === 'acf' ? [{ text: payload.js }] : payload.scripts;
+    (scripts || []).forEach(s => {
+      const sc = document.createElement('script');
+      if (s.src) sc.src = s.src; else sc.textContent = s.text;
+      slot.appendChild(sc); // re-executes on every re-render, like a hydrating CMS
+    });
+    log(`Injected into ${copyLabel} slot.`);
+  }
+
+  let payload = null;
+
+  async function run() {
+    logEl.innerHTML = '';
+    status('loading…');
+    payload = await fetchWidget();
+    if (!payload) return;
+
+    // Scenario 1: delayed hydration — widget arrives late
+    status(`hydrating in ${HYDRATION_DELAY / 1000}s…`);
+    log(`Simulating framework hydration: injecting after ${HYDRATION_DELAY}ms.`);
+    setTimeout(() => {
+      inject(payload, document.getElementById('hz-slot-main'), 'main');
+      inject(payload, document.getElementById('hz-slot-sidebar'), 'sidebar'); // Scenario 5: narrow column
+      status('hydrated');
+
+      // Scenario 1b: one post-hydration re-render (detach + re-inject) 3s later
+      setTimeout(() => {
+        log('Simulating post-hydration re-render (detach + re-inject main slot)…', 'warn');
+        const main = document.getElementById('hz-slot-main');
+        main.innerHTML = '';
+        inject(payload, main, 'main');
+        log('Re-render done. Check: no double-init, listeners still work.');
+        status('re-rendered — verify manually');
+      }, 3000);
+    }, HYDRATION_DELAY);
+
+    // Scenario 4: click interceptor for the first 3s after load
+    Harness.overlay(3000);
+  }
+
+  // Scenario 2: player steals focus every 20s
+  setInterval(() => {
+    const active = document.activeElement;
+    document.getElementById('hz-player-play').focus();
+    log(`Stream Player stole focus (was: ${active && active.tagName !== 'BODY' ? active.tagName + (active.className ? '.' + String(active.className).split(' ')[0] : '') : 'body'})`, 'warn');
+  }, 20000);
+
+  window.Harness = {
+    rerun: run,
+    rerender() {
+      if (!payload) return log('Nothing loaded.', 'err');
+      const main = document.getElementById('hz-slot-main');
+      main.innerHTML = '';
+      inject(payload, main, 'main');
+      log('Manual re-render done.');
+    },
+    focusSteal() { document.getElementById('hz-player-play').focus(); log('Focus stolen manually.', 'warn'); },
+    overlay(ms) {
+      const ov = document.createElement('div');
+      ov.className = 'click-interceptor';
+      document.body.appendChild(ov);
+      log(`Click-intercepting overlay active for ${ms}ms — clicks on the widget should fail, then recover.`, 'warn');
+      setTimeout(() => { ov.remove(); log('Overlay removed. Verify CTAs are clickable again.'); }, ms);
+    }
+  };
+
+  run();
+})();
+</script>
+</body>
+</html>
