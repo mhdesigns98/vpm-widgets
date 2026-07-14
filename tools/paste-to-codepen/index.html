@@ -1,0 +1,346 @@
+<title>Paste to CodePen</title>
+<style>
+  :root {
+    --ground: #eceef1;
+    --panel: #ffffff;
+    --panel-edge: #d7dbe1;
+    --ink: #1b1f27;
+    --ink-dim: #5b6270;
+    --ink-faint: #8b93a3;
+    --accent: #b5730a;
+    --accent-ink: #ffffff;
+    --accent-soft: #f2e2c8;
+    --rule: #d7dbe1;
+    --shadow: 0 1px 2px rgba(27,31,39,.05), 0 6px 20px rgba(27,31,39,.05);
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, "Segoe UI", "IBM Plex Sans", system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #14161b;
+      --panel: #1b1e25;
+      --panel-edge: #2c2f38;
+      --ink: #e7e9ee;
+      --ink-dim: #a3a9b6;
+      --ink-faint: #666d7c;
+      --accent: #e0a040;
+      --accent-ink: #14161b;
+      --accent-soft: #3a301c;
+      --rule: #2c2f38;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #14161b; --panel: #1b1e25; --panel-edge: #2c2f38; --ink: #e7e9ee;
+    --ink-dim: #a3a9b6; --ink-faint: #666d7c; --accent: #e0a040; --accent-ink: #14161b;
+    --accent-soft: #3a301c; --rule: #2c2f38;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+  }
+  :root[data-theme="light"] {
+    --ground: #eceef1; --panel: #ffffff; --panel-edge: #d7dbe1; --ink: #1b1f27;
+    --ink-dim: #5b6270; --ink-faint: #8b93a3; --accent: #b5730a; --accent-ink: #ffffff;
+    --accent-soft: #f2e2c8; --rule: #d7dbe1;
+    --shadow: 0 1px 2px rgba(27,31,39,.05), 0 6px 20px rgba(27,31,39,.05);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 1.25rem;
+    border-bottom: 1px solid var(--rule);
+    background: var(--panel);
+  }
+  .mark {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+  }
+  .mark .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex: none; }
+  .mark .arrow { color: var(--ink-faint); font-weight: 400; }
+
+  #title {
+    flex: 1;
+    min-width: 0;
+    max-width: 30rem;
+    background: transparent;
+    border: none;
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    padding: 0.4rem 0.1rem;
+    border-bottom: 1px solid transparent;
+  }
+  #title:focus { outline: none; border-bottom-color: var(--accent); }
+  #title::placeholder { color: var(--ink-faint); }
+
+  .hint {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+    font-family: var(--mono);
+    white-space: nowrap;
+  }
+  kbd {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    background: var(--ground);
+    border: 1px solid var(--rule);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    padding: 0.05rem 0.35rem;
+  }
+
+  main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    overflow: hidden;
+  }
+  @media (max-width: 760px) {
+    main { grid-template-columns: 1fr; grid-auto-rows: minmax(220px, 1fr); overflow-y: auto; }
+  }
+
+  .pane {
+    background: var(--panel);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .pane-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 0.9rem;
+    border-bottom: 1px solid var(--rule);
+    flex: none;
+  }
+  .pane-head .chip {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+  }
+  .pane[data-kind="html"] .chip { background: #e4633522; color: #d3562e; }
+  .pane[data-kind="css"] .chip { background: #3a7bd522; color: #2f66b3; }
+  .pane[data-kind="js"] .chip { background: #d6a01922; color: #b5860a; }
+  @media (prefers-color-scheme: dark) {
+    .pane[data-kind="html"] .chip { color: #f0906c; }
+    .pane[data-kind="css"] .chip { color: #7fa8e8; }
+    .pane[data-kind="js"] .chip { color: #e0bd5c; }
+  }
+  :root[data-theme="dark"] .pane[data-kind="html"] .chip { color: #f0906c; }
+  :root[data-theme="dark"] .pane[data-kind="css"] .chip { color: #7fa8e8; }
+  :root[data-theme="dark"] .pane[data-kind="js"] .chip { color: #e0bd5c; }
+
+  .pane-head .filename {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--ink-dim);
+  }
+  .pane-head .count {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+  }
+  .pane-head .clear-btn {
+    background: none;
+    border: none;
+    color: var(--ink-faint);
+    cursor: pointer;
+    font-size: 0.72rem;
+    font-family: var(--sans);
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+  }
+  .pane-head .clear-btn:hover { color: var(--ink); background: var(--ground); }
+
+  textarea {
+    flex: 1;
+    resize: none;
+    border: none;
+    outline: none;
+    background: var(--panel);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    line-height: 1.55;
+    padding: 0.9rem;
+    tab-size: 2;
+  }
+  textarea::placeholder { color: var(--ink-faint); }
+  textarea:focus-visible { box-shadow: inset 0 0 0 2px var(--accent-soft); }
+
+  footer {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.85rem 1.25rem;
+    border-top: 1px solid var(--rule);
+    background: var(--panel);
+  }
+  #status {
+    font-size: 0.82rem;
+    color: var(--ink-dim);
+    font-family: var(--mono);
+  }
+  #status.err { color: #c34b3f; }
+
+  .spacer { flex: 1; }
+
+  button#send {
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.6rem 1.1rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.12s ease, filter 0.12s ease;
+  }
+  button#send:hover { filter: brightness(1.06); }
+  button#send:active { transform: translateY(1px); }
+  button#send:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button#send svg { width: 15px; height: 15px; flex: none; }
+
+  form#launcher { display: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    button#send { transition: none; }
+  }
+</style>
+
+<header>
+  <div class="mark"><span class="dot"></span>Paste<span class="arrow">→</span>CodePen</div>
+  <input id="title" placeholder="Untitled pen" autocomplete="off" spellcheck="false" />
+  <div class="hint"><kbd>⌘</kbd>+<kbd>Enter</kbd> to send</div>
+</header>
+
+<main>
+  <div class="pane" data-kind="html">
+    <div class="pane-head">
+      <span class="chip">HTML</span>
+      <span class="filename">index.html</span>
+      <span class="count" id="count-html">0</span>
+      <button class="clear-btn" data-target="html" type="button">clear</button>
+    </div>
+    <textarea id="html" placeholder="Paste HTML here — the &lt;body&gt; markup a chatbot gave you." spellcheck="false"></textarea>
+  </div>
+  <div class="pane" data-kind="css">
+    <div class="pane-head">
+      <span class="chip">CSS</span>
+      <span class="filename">style.css</span>
+      <span class="count" id="count-css">0</span>
+      <button class="clear-btn" data-target="css" type="button">clear</button>
+    </div>
+    <textarea id="css" placeholder="Paste CSS here." spellcheck="false"></textarea>
+  </div>
+  <div class="pane" data-kind="js">
+    <div class="pane-head">
+      <span class="chip">JS</span>
+      <span class="filename">script.js</span>
+      <span class="count" id="count-js">0</span>
+      <button class="clear-btn" data-target="js" type="button">clear</button>
+    </div>
+    <textarea id="js" placeholder="Paste JavaScript here." spellcheck="false"></textarea>
+  </div>
+</main>
+
+<footer>
+  <span id="status">Paste code from any chatbot, then send it to CodePen. Nothing is stored or uploaded anywhere else.</span>
+  <span class="spacer"></span>
+  <button id="send" type="button">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h8l-1 8 10-12h-8l1-8Z"/></svg>
+    Open in CodePen
+  </button>
+</footer>
+
+<form id="launcher" method="POST" action="https://codepen.io/pen/define" target="_blank">
+  <input type="hidden" name="data" id="payload" />
+</form>
+
+<script>
+  const ids = ['html', 'css', 'js'];
+  const areas = Object.fromEntries(ids.map(id => [id, document.getElementById(id)]));
+  const counts = Object.fromEntries(ids.map(id => [id, document.getElementById('count-' + id)]));
+  const status = document.getElementById('status');
+
+  function updateCount(id) {
+    const n = areas[id].value.length;
+    counts[id].textContent = n === 0 ? '0' : n.toLocaleString() + ' chars';
+  }
+  ids.forEach(id => {
+    updateCount(id);
+    areas[id].addEventListener('input', () => updateCount(id));
+  });
+
+  document.querySelectorAll('.clear-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const t = btn.dataset.target;
+      areas[t].value = '';
+      updateCount(t);
+      areas[t].focus();
+    });
+  });
+
+  function send() {
+    const html = areas.html.value;
+    const css = areas.css.value;
+    const js = areas.js.value;
+
+    if (!html.trim() && !css.trim() && !js.trim()) {
+      status.textContent = 'Nothing to send — paste some code first.';
+      status.classList.add('err');
+      return;
+    }
+
+    const titleInput = document.getElementById('title').value.trim();
+    const title = titleInput || 'Untitled pen';
+
+    const payload = { title, html, css, js };
+    document.getElementById('payload').value = JSON.stringify(payload);
+    document.getElementById('launcher').submit();
+
+    status.classList.remove('err');
+    status.textContent = 'Opened "' + title + '" in a new CodePen tab.';
+  }
+
+  document.getElementById('send').addEventListener('click', send);
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+      e.preventDefault();
+      send();
+    }
+  });
+</script>
