@@ -3,549 +3,236 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VPM Newsletter Form Mockups</title>
+<title>VPM Morning Monitor — Newsletter Signup</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --dark-blue: #003865;
-    --light-blue: #6CACE4;
-    --yellow: #E0E721;
-    --red: #EE2737;
-    --black: #101820;
-    --grey: #B2B4B2;
-    --white: #ffffff;
+    --vpm-dark-blue: #003865;
+    --vpm-yellow:    #E0E721;
+    --vpm-black:     #101820;
+    --vpm-grey:      #B2B4B2;
+    --mm-bg:     #C1E2FF;
+    --mm-circle: #0952A2;
+    --radius-md: 4px;
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.12);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
-    font-family: 'Barlow', sans-serif;
-    background: #f0f2f4;
-    color: var(--black);
-  }
-
-  /* ─── DEMO PAGE CHROME ─── */
-  .page-header {
-    background: var(--black);
-    color: var(--white);
-    padding: 20px 40px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    border-bottom: 3px solid var(--yellow);
-  }
-  .page-header h1 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--grey);
-  }
-  .page-header span {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 13px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--yellow);
-    background: rgba(224,231,33,0.12);
-    padding: 3px 10px;
-    border-radius: 2px;
-  }
-
-  .section-label {
+  .vpm-mm { font-family: 'Barlow', sans-serif; color: var(--vpm-black); }
+  .vpm-mm__section-label {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--grey);
-    padding: 32px 40px 12px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: #ccc;
-    max-width: 200px;
+    color: var(--vpm-grey);
+    padding: 32px 0 12px;
   }
 
-  /* ─── SHARED FORM ELEMENTS ─── */
-  input[type="email"] {
+  .vpm-mm__input {
     font-family: 'Barlow', sans-serif;
     font-size: 15px;
     width: 100%;
     padding: 13px 16px;
     border: 1.5px solid #d0d4d8;
-    border-radius: 4px;
+    border-radius: var(--radius-md);
     outline: none;
     transition: border-color 0.2s;
-    background: var(--white);
-    color: var(--black);
+    background: #fff;
+    color: var(--vpm-black);
   }
-  input[type="email"]::placeholder { color: #9aa0a6; }
-  input[type="email"]:focus { border-color: var(--light-blue); }
+  .vpm-mm__input:focus { border-color: var(--mm-circle); }
 
-  .btn-primary {
+  .vpm-mm__btn {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 15px;
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    background: var(--dark-blue);
-    color: var(--white);
+    background: var(--vpm-dark-blue);
+    color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: var(--radius-md);
     padding: 14px 28px;
     cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
+    transition: background 0.2s;
     white-space: nowrap;
-    width: 100%;
   }
-  .btn-primary:hover { background: #00294a; }
-  .btn-primary:active { transform: scale(0.98); }
+  .vpm-mm__btn:hover { background: #00294a; }
+  .vpm-mm__btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-  .checklist {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-top: 16px;
-  }
-  .checklist li {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--black);
-  }
-  .checklist .check {
-    width: 22px;
-    height: 22px;
-    background: var(--light-blue);
-    border-radius: 50%;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .checklist .check svg { width: 12px; height: 12px; }
+  .vpm-mm__privacy { font-size: 12px; color: #777; margin-top: 12px; line-height: 1.5; }
 
-  .privacy-note {
-    font-size: 12px;
-    color: #777;
-    margin-top: 12px;
-    line-height: 1.5;
-  }
 
-  .vpm-badge {
-    display: inline-block;
-    background: var(--white);
-    color: var(--dark-blue);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 6px 14px;
-    border-radius: 4px;
-    margin-bottom: 20px;
-  }
-
-  /* ═══════════════════════════════════════════
-     FORM 1 — FULL WIDTH
-  ═══════════════════════════════════════════ */
-  .fullwidth-section {
-    padding: 0 40px 40px;
-  }
-
-  .fullwidth-form {
+  /* ── FULL ── */
+  .vpm-mm__full {
     display: grid;
     grid-template-columns: 1fr 1fr;
     border-radius: 6px;
     overflow: hidden;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    box-shadow: var(--shadow-md);
   }
-
-  .fullwidth-left {
-    background: var(--light-blue);
-    padding: 52px 48px;
+  .vpm-mm__full-left {
+    background: var(--mm-bg);
+    padding: 48px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     position: relative;
     overflow: hidden;
   }
-  .fullwidth-left::before {
+  .vpm-mm__full-left::before {
     content: '';
     position: absolute;
-    bottom: -40px;
-    right: -40px;
-    width: 200px;
-    height: 200px;
+    top: -70px; right: -90px;
+    width: 240px; height: 240px;
     border-radius: 50%;
-    background: rgba(0,56,101,0.12);
+    background: var(--mm-circle);
   }
-
-  .fullwidth-left h2 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 44px;
-    font-weight: 800;
-    line-height: 1.0;
-    color: var(--white);
-    text-transform: uppercase;
-    margin-bottom: 14px;
-    letter-spacing: -0.01em;
-  }
-  .fullwidth-left h2 em {
-    font-style: normal;
-    color: var(--yellow);
-  }
-  .fullwidth-left p {
+  .vpm-mm__full-left img { position: relative; max-width: 220px; margin-bottom: 20px; }
+  .vpm-mm__full-left p {
+    position: relative;
+    text-align: center;
     font-size: 16px;
-    line-height: 1.6;
-    color: rgba(255,255,255,0.92);
-    max-width: 360px;
+    line-height: 1.5;
+    color: var(--vpm-dark-blue);
+    font-weight: 600;
+    max-width: 320px;
   }
-
-  .fullwidth-right {
-    background: var(--white);
-    padding: 52px 48px;
+  .vpm-mm__full-right {
+    background: #fff;
+    padding: 48px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 14px;
   }
-
-  /* ═══════════════════════════════════════════
-     FAKE ARTICLE CONTEXT (for inline + sidebar)
-  ═══════════════════════════════════════════ */
-  .article-section {
-    padding: 0 40px 40px;
-  }
-
-  .article-layout {
-    display: grid;
-    grid-template-columns: 1fr 320px;
-    gap: 40px;
-    align-items: start;
-  }
-
-  .article-body {}
-
-  .article-kicker {
+  .vpm-mm__full-right h2 {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--red);
-    margin-bottom: 10px;
-  }
-
-  .article-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 36px;
     font-weight: 800;
+    font-size: 30px;
+    color: var(--vpm-dark-blue);
     line-height: 1.1;
-    color: var(--black);
-    margin-bottom: 6px;
-    text-transform: uppercase;
-    letter-spacing: -0.01em;
   }
+  .vpm-mm__full-row { display: flex; gap: 10px; }
+  .vpm-mm__full-row .vpm-mm__btn { width: auto; }
 
-  .article-byline {
-    font-size: 13px;
-    color: #777;
-    margin-bottom: 20px;
-  }
-
-  .article-text {
-    font-size: 17px;
-    line-height: 1.75;
-    color: #2a2a2a;
-    margin-bottom: 20px;
-  }
-
-  /* ─── FORM 2 — INLINE ─── */
-  .inline-form-wrapper {
-    border-left: 4px solid var(--light-blue);
+  /* ── INLINE ── */
+  .vpm-mm__inline {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    align-items: center;
+    gap: 32px;
     background: #f7fafd;
+    border-left: 4px solid var(--mm-circle);
     border-radius: 0 6px 6px 0;
-    padding: 28px 32px;
-    margin: 28px 0;
-    box-shadow: 0 2px 12px rgba(108,172,228,0.10);
+    padding: 24px 32px;
   }
-
-  .inline-form-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 16px;
-  }
-
-  .inline-form-header .tag {
-    background: var(--dark-blue);
-    color: var(--white);
+  .vpm-mm__inline img { width: 100%; max-width: 170px; }
+  .vpm-mm__inline h3 {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 2px;
-  }
-
-  .inline-form-header h3 {
-    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
     font-size: 22px;
-    font-weight: 700;
-    color: var(--dark-blue);
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
+    color: var(--vpm-dark-blue);
+    margin-bottom: 4px;
   }
+  .vpm-mm__inline p { font-size: 14px; color: #555; margin-bottom: 12px; }
+  .vpm-mm__inline-row { display: flex; gap: 10px; }
+  .vpm-mm__inline-row .vpm-mm__input { flex: 1; }
+  .vpm-mm__inline-row .vpm-mm__btn { width: auto; }
 
-  .inline-form-header p {
-    font-size: 14px;
-    color: #555;
-    line-height: 1.5;
-  }
-
-  .inline-form-row {
-    display: flex;
-    gap: 10px;
-    margin-top: 12px;
-  }
-
-  .inline-form-row input { flex: 1; }
-  .inline-form-row .btn-primary { width: auto; }
-
-  .inline-checklist {
-    display: flex;
-    gap: 20px;
-    margin-top: 10px;
-    flex-wrap: wrap;
-  }
-
-  .inline-checklist li {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 13px;
-    font-weight: 600;
-    color: #555;
-    list-style: none;
-  }
-
-  .inline-checklist .check {
-    width: 18px;
-    height: 18px;
-    background: var(--light-blue);
-    border-radius: 50%;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .inline-checklist .check svg { width: 10px; height: 10px; }
-
-  /* ─── FORM 3 — SIDEBAR ─── */
-  .sidebar-form {
-    background: var(--dark-blue);
+  /* ── SIDEBAR ── */
+  .vpm-mm__sidebar {
+    max-width: 340px;
     border-radius: 6px;
     overflow: hidden;
-    box-shadow: 0 4px 24px rgba(0,56,101,0.20);
-    position: sticky;
-    top: 20px;
+    box-shadow: var(--shadow-md);
   }
-
-  .sidebar-top {
-    background: var(--dark-blue);
+  .vpm-mm__sidebar-top {
+    background: var(--mm-bg);
     padding: 28px 24px 20px;
     position: relative;
-    border-bottom: 1px solid rgba(108,172,228,0.2);
+    overflow: hidden;
+    text-align: center;
   }
-  .sidebar-top::after {
+  .vpm-mm__sidebar-top::before {
     content: '';
     position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--light-blue), var(--yellow));
+    top: -60px; right: -70px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: var(--mm-circle);
   }
-
-  .sidebar-top .vpm-badge {
-    margin-bottom: 12px;
-    font-size: 11px;
-  }
-
-  .sidebar-top h3 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 28px;
-    font-weight: 800;
-    text-transform: uppercase;
-    color: var(--white);
-    line-height: 1.0;
-    margin-bottom: 10px;
-    letter-spacing: 0.01em;
-  }
-  .sidebar-top h3 span {
-    color: var(--yellow);
-  }
-
-  .sidebar-top p {
-    font-size: 13px;
-    color: rgba(255,255,255,0.75);
-    line-height: 1.55;
-  }
-
-  .sidebar-bottom {
-    background: var(--white);
+  .vpm-mm__sidebar-top img { position: relative; max-width: 160px; margin-bottom: 14px; }
+  .vpm-mm__sidebar-top p { position: relative; font-size: 13px; color: var(--vpm-dark-blue); font-weight: 600; line-height: 1.5; }
+  .vpm-mm__sidebar-bottom {
+    background: #fff;
     padding: 20px 24px 24px;
     display: flex;
     flex-direction: column;
     gap: 12px;
   }
-
-  .sidebar-checklist {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .sidebar-checklist li {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--black);
-  }
-
-  .sidebar-checklist .check {
-    width: 18px;
-    height: 18px;
-    background: var(--light-blue);
-    border-radius: 50%;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .sidebar-checklist .check svg { width: 9px; height: 9px; }
-
-  /* ─── ANNOTATIONS ─── */
-  .annotation {
-    display: inline-block;
-    background: #1e1e2e;
-    color: var(--yellow);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 2px;
-    margin-bottom: 8px;
-  }
-
 </style>
 </head>
-<body>
+<body class="vpm-mm">
 
-<!-- PAGE HEADER -->
-<header class="page-header">
-  <h1>VPM Newsletter — Form Variants</h1>
-  <span>Mockup</span>
-</header>
-
-
-<!-- ════════════════════════════════════════
-     FORM 1: FULL WIDTH
-════════════════════════════════════════ -->
-<div class="section-label">01 — Full-Width Banner Form</div>
-<div class="fullwidth-section">
-  <div class="annotation">Full-width / hero placement</div>
-  <div class="fullwidth-form">
-    <div class="fullwidth-left">
-      <div class="vpm-badge">VPM News</div>
-      <h2>Start Your Day<br>with Virginia's<br><em>Top Stories</em></h2>
-      <p>News from across the commonwealth every weekday morning.</p>
-    </div>
-    <div class="fullwidth-right">
-      <input type="email" placeholder="Enter your email address">
-      <button class="btn-primary">Keep Me Informed</button>
-      <p class="privacy-note">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
-    </div>
+<div class="vpm-mm__section-label">Full-width</div>
+<div class="vpm-mm__full">
+  <div class="vpm-mm__full-left">
+    <img src="assets/morning-monitor-lockup.svg" alt="VPM News Morning Monitor" />
+    <p>News from across the Commonwealth every weekday morning.</p>
+  </div>
+  <div class="vpm-mm__full-right">
+    <h2>Start Your Day with Virginia's Top Stories</h2>
+    <form class="vpm-mm__full-row" data-mc-form="full" action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=26497cf3ad" method="post" target="_blank" novalidate>
+      <input type="email" class="vpm-mm__input" name="EMAIL" id="mm-full-email" placeholder="Enter your email address" required>
+      <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_26497cf3ad" tabindex="-1" value=""></div>
+      <button type="submit" class="vpm-mm__btn">Keep Me Informed</button>
+    </form>
+    <p class="vpm-mm__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
   </div>
 </div>
 
-
-<!-- ════════════════════════════════════════
-     FORMS 2 & 3: ARTICLE CONTEXT
-════════════════════════════════════════ -->
-<div class="section-label">02 — Inline Form &amp; 03 — Sidebar Form</div>
-<div class="article-section">
-  <div class="article-layout">
-
-    <!-- ARTICLE BODY (contains inline form) -->
-    <div class="article-body">
-      <p class="article-kicker">Virginia Politics</p>
-      <h2 class="article-title">General Assembly Passes Budget with<br>Historic Education Funding Increase</h2>
-      <p class="article-byline">By Sarah Mitchell · VPM News · March 10, 2026</p>
-
-      <p class="article-text">Virginia lawmakers approved a two-year state budget late Thursday that includes a record $1.2 billion increase in K–12 education funding, ending weeks of negotiations between the House and Senate over how to distribute money from a stronger-than-expected revenue surplus.</p>
-
-      <p class="article-text">The spending plan, which now heads to Governor's desk for signature, raises per-pupil funding by 14 percent and allocates $340 million to teacher pay increases statewide. Democrats and Republicans both claimed credit for the package, calling it a generational investment in public education.</p>
-
-      <!-- ── INLINE FORM ── -->
-      <div class="annotation" style="margin-top:28px;">Inline / in-article placement</div>
-      <div class="inline-form-wrapper">
-        <div class="inline-form-header">
-          <div>
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-              <span class="tag">Morning Monitor</span>
-            </div>
-            <h3>Get This Story First, Every Day</h3>
-            <p>News from across the commonwealth every weekday morning.</p>
-          </div>
-        </div>
-        <div class="inline-form-row">
-          <input type="email" placeholder="Enter your email address">
-          <button class="btn-primary" style="white-space:nowrap;width:auto;">Keep Me Informed</button>
-        </div>
-        <p class="privacy-note" style="margin-top:12px;">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
-      </div>
-
-      <p class="article-text" style="margin-top:20px;">Budget negotiators said the final package also included $180 million for school construction and repairs, funding that advocates had pushed for over multiple sessions. The state's share of Medicaid expenses will also increase by $420 million to cover expanded eligibility.</p>
-
-      <p class="article-text">"This is what it looks like when legislators prioritize classrooms over politics," said Sen. Patricia Hughes (D-Fairfax), one of the lead budget conferees. Republicans countered that their insistence on fiscal guardrails kept the spending plan sustainable.</p>
-    </div>
-
-    <!-- SIDEBAR (contains sidebar form) -->
-    <aside>
-      <div class="annotation">Sidebar placement</div>
-      <div class="sidebar-form">
-        <div class="sidebar-top">
-          <div class="vpm-badge">VPM News</div>
-          <h3>Start Your Day<br>with Virginia's<br><span>Top Stories</span></h3>
-          <p>News from across the commonwealth every weekday morning.</p>
-        </div>
-        <div class="sidebar-bottom">
-          <input type="email" placeholder="Enter your email address">
-          <button class="btn-primary">Keep Me Informed</button>
-          <p class="privacy-note">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
-        </div>
-      </div>
-    </aside>
-
+<div class="vpm-mm__section-label">Inline</div>
+<div class="vpm-mm__inline">
+  <img src="assets/morning-monitor-lockup.svg" alt="VPM News Morning Monitor" />
+  <div>
+    <h3>Start Your Day with Virginia's Top Stories</h3>
+    <p>News from across the Commonwealth every weekday morning.</p>
+    <form class="vpm-mm__inline-row" data-mc-form="inline" action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=26497cf3ad" method="post" target="_blank" novalidate>
+      <input type="email" class="vpm-mm__input" name="EMAIL" id="mm-inline-email" placeholder="Enter your email address" required>
+      <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_26497cf3ad" tabindex="-1" value=""></div>
+      <button type="submit" class="vpm-mm__btn">Keep Me Informed</button>
+    </form>
+    <p class="vpm-mm__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
   </div>
 </div>
+
+<div class="vpm-mm__section-label">Sidebar</div>
+<div class="vpm-mm__sidebar">
+  <div class="vpm-mm__sidebar-top">
+    <img src="assets/morning-monitor-lockup.svg" alt="VPM News Morning Monitor" />
+    <p>News from across the Commonwealth every weekday morning.</p>
+  </div>
+  <div class="vpm-mm__sidebar-bottom">
+    <form data-mc-form="sidebar" action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=26497cf3ad" method="post" target="_blank" novalidate style="display:flex;flex-direction:column;gap:12px;">
+      <input type="email" class="vpm-mm__input" name="EMAIL" id="mm-sidebar-email" placeholder="Enter your email address" required>
+      <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_26497cf3ad" tabindex="-1" value=""></div>
+      <button type="submit" class="vpm-mm__btn">Keep Me Informed</button>
+    </form>
+    <p class="vpm-mm__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
+  </div>
+</div>
+
+<!--
+  Each form above POSTs directly to Mailchimp's native embedded-form endpoint for the
+  Morning Monitor audience — no custom API, no backend, no JS required. Mailchimp's
+  response (a hosted confirmation/error page) opens in a new tab (target="_blank") so
+  the host page never navigates away. This is Mailchimp's own documented embed pattern:
+  Audience > Signup forms > Embedded forms.
+-->
 
 </body>
 </html>

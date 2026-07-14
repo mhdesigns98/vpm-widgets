@@ -68,7 +68,9 @@ When asked to consolidate, audit existing repos and Gists, identify widget/embed
 | `vpm-banner/` | General-purpose promotional banner component |
 | `vpm-spotlight-homepage/` | Homepage spotlight with admin UI and JSON content queue |
 | `vpm-spotlight-leadontop/` | Homepage spotlight variant — full-width lead story over a two-card row (static) |
-| `morning-monitor-signup/` | Morning Monitor newsletter signup embed |
+| `morning-monitor-signup/` | Morning Monitor newsletter signup embed (Full/Inline/Sidebar), POSTs directly to Mailchimp — no backend |
+| `weekly-update-signup/` | Weekly Update newsletter signup embed (Full/Inline/Sidebar), POSTs directly to Mailchimp — no backend |
+| `virginia-home-grown-signup/` | Virginia Home Grown newsletter signup embed (Full/Inline/Sidebar), POSTs directly to Mailchimp — no backend |
 | `watch-page-header/` | Channel selector header for the Watch live page |
 | `youtube-shorts-embed/` | VPM News Shorts carousel embed |
 | `ecp-partners-team/` | Early Childhood Education partners & team (Brightspot embed) |

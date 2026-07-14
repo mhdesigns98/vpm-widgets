@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VPM Virginia Home Grown — Newsletter Signup</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --vpm-black: #101820;
+    --vpm-grey:  #B2B4B2;
+    --vhg-green:      #2E8B57;
+    --vhg-green-dark: #194225;
+    --radius-md: 4px;
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .vpm-vhg { font-family: 'Barlow', sans-serif; color: var(--vpm-black); }
+  .vpm-vhg__section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--vpm-grey);
+    padding: 32px 0 12px;
+  }
+
+  .vpm-vhg__badge {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--vhg-green-dark);
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: var(--radius-md);
+    margin-bottom: 14px;
+  }
+
+  .vpm-vhg__input {
+    font-family: 'Barlow', sans-serif;
+    font-size: 15px;
+    width: 100%;
+    padding: 13px 16px;
+    border: 1.5px solid #d0d4d8;
+    border-radius: var(--radius-md);
+    outline: none;
+    transition: border-color 0.2s;
+    background: #fff;
+    color: var(--vpm-black);
+  }
+  .vpm-vhg__input:focus { border-color: var(--vhg-green); }
+
+  .vpm-vhg__btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--vhg-green-dark);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 14px 28px;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .vpm-vhg__btn:hover { background: #0f2b18; }
+  .vpm-vhg__btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .vpm-vhg__privacy { font-size: 12px; color: #777; margin-top: 12px; line-height: 1.5; }
+  .vpm-vhg__privacy--dark { color: rgba(255,255,255,0.75); }
+
+
+  .vpm-vhg__headline { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; text-transform: uppercase; line-height: 1.1; }
+  .vpm-vhg__headline em { font-style: normal; color: var(--vhg-green-dark); }
+
+  /* ── FULL (split panel, matches Figma) ── */
+  .vpm-vhg__full {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+  .vpm-vhg__full-left {
+    background: var(--vhg-green);
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .vpm-vhg__full-left .vpm-vhg__headline { font-size: 30px; color: #fff; margin-bottom: 12px; }
+  .vpm-vhg__full-left p { color: rgba(255,255,255,0.92); font-size: 15px; line-height: 1.5; max-width: 340px; }
+  .vpm-vhg__full-right {
+    background: #fff;
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+  }
+  .vpm-vhg__full-row { display: flex; gap: 10px; }
+  .vpm-vhg__full-row .vpm-vhg__btn { width: auto; }
+
+  /* ── INLINE ── */
+  .vpm-vhg__inline {
+    background: var(--vhg-green);
+    border-radius: 6px;
+    padding: 28px 32px;
+  }
+  .vpm-vhg__inline .vpm-vhg__headline { font-size: 22px; color: #fff; margin-bottom: 6px; }
+  .vpm-vhg__inline p { font-size: 14px; color: rgba(255,255,255,0.9); margin-bottom: 14px; max-width: 620px; }
+  .vpm-vhg__inline-row { display: flex; gap: 10px; max-width: 620px; }
+  .vpm-vhg__inline-row .vpm-vhg__input { flex: 1; }
+  .vpm-vhg__inline-row .vpm-vhg__btn { width: auto; }
+
+  /* ── SIDEBAR ── */
+  .vpm-vhg__sidebar {
+    max-width: 340px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+  .vpm-vhg__sidebar-top {
+    background: var(--vhg-green);
+    padding: 24px 24px 20px;
+  }
+  .vpm-vhg__sidebar-top .vpm-vhg__headline { font-size: 20px; color: #fff; margin-bottom: 8px; }
+  .vpm-vhg__sidebar-top p { font-size: 13px; color: rgba(255,255,255,0.9); line-height: 1.5; }
+  .vpm-vhg__sidebar-bottom {
+    background: #fff;
+    padding: 20px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+</style>
+</head>
+<body class="vpm-vhg">
+
+<div class="vpm-vhg__section-label">Full-width</div>
+<div class="vpm-vhg__full">
+  <div class="vpm-vhg__full-left">
+    <span class="vpm-vhg__badge">Virginia Home Grown</span>
+    <h2 class="vpm-vhg__headline">Discover why gardening <em>is for everyone!</em></h2>
+    <p>Cultivate your green thumb with helpful tips and tricks from our team.</p>
+  </div>
+  <div class="vpm-vhg__full-right">
+    <form class="vpm-vhg__full-row" action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=05042abff2" method="post" target="_blank" novalidate>
+      <input type="email" class="vpm-vhg__input" name="EMAIL" id="vhg-full-email" placeholder="Enter your email address" required>
+      <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_05042abff2" tabindex="-1" value=""></div>
+      <button type="submit" class="vpm-vhg__btn">Keep Me Informed</button>
+    </form>
+    <p class="vpm-vhg__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
+  </div>
+</div>
+
+<div class="vpm-vhg__section-label">Inline</div>
+<div class="vpm-vhg__inline">
+  <span class="vpm-vhg__badge" style="background:#fff;color:var(--vhg-green-dark);">Virginia Home Grown</span>
+  <h3 class="vpm-vhg__headline">Discover why gardening <em>is for everyone!</em></h3>
+  <p>Cultivate your green thumb with helpful tips and tricks from our team.</p>
+  <form class="vpm-vhg__inline-row" action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=05042abff2" method="post" target="_blank" novalidate>
+    <input type="email" class="vpm-vhg__input" name="EMAIL" id="vhg-inline-email" placeholder="Enter your email address" required>
+    <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_05042abff2" tabindex="-1" value=""></div>
+    <button type="submit" class="vpm-vhg__btn">Keep Me Informed</button>
+  </form>
+  <p class="vpm-vhg__privacy vpm-vhg__privacy--dark">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
+</div>
+
+<div class="vpm-vhg__section-label">Sidebar</div>
+<div class="vpm-vhg__sidebar">
+  <div class="vpm-vhg__sidebar-top">
+    <span class="vpm-vhg__badge" style="background:#fff;color:var(--vhg-green-dark);">Virginia Home Grown</span>
+    <h3 class="vpm-vhg__headline">Discover why gardening <em>is for everyone!</em></h3>
+    <p>Cultivate your green thumb with helpful tips and tricks from our team.</p>
+  </div>
+  <div class="vpm-vhg__sidebar-bottom">
+    <form action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=05042abff2" method="post" target="_blank" novalidate style="display:flex;flex-direction:column;gap:12px;">
+      <input type="email" class="vpm-vhg__input" name="EMAIL" id="vhg-sidebar-email" placeholder="Enter your email address" required>
+      <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_05042abff2" tabindex="-1" value=""></div>
+      <button type="submit" class="vpm-vhg__btn">Keep Me Informed</button>
+    </form>
+    <p class="vpm-vhg__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
+  </div>
+</div>
+
+<!--
+  Each form above POSTs directly to Mailchimp's native embedded-form endpoint for the
+  Virginia Home Grown audience — no custom API, no backend, no JS required. Mailchimp's
+  response opens in a new tab (target="_blank") so the host page never navigates away.
+-->
+
+</body>
+</html>
