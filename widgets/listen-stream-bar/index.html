@@ -1,0 +1,117 @@
+<!-- VPM "Listen" quick-access stream bar — drop-in replacement for the .listen-page-header block -->
+<style>
+.vpm-streambar {
+  /* --- inlined VPM tokens (self-contained for CMS embed) --- */
+  --vpm-dark-blue: #003865;
+  --vpm-light-blue: #6CACE4;
+  --vpm-yellow: #E0E721;
+  --vpm-red: #EE2737;
+  --vpm-white: #ffffff;
+  --radius-md: 4px;
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --accent-bar: linear-gradient(90deg,
+    var(--vpm-dark-blue) 0 33.33%,
+    var(--vpm-yellow) 33.33% 66.66%,
+    var(--vpm-red) 66.66% 100%);
+  --font-sans: 'Inter', 'GT America', Arial, sans-serif;
+
+  background: var(--vpm-dark-blue);
+  color: var(--vpm-white);
+  font-family: var(--font-sans);
+  border-top: 4px solid transparent;
+  border-image: var(--accent-bar) 1;
+}
+
+.vpm-streambar__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Eyebrow replaces the redundant "Listen to VPM" H1 */
+.vpm-streambar__label {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--vpm-yellow);
+  margin: 0;
+  white-space: nowrap;
+}
+
+.vpm-streambar__buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.vpm-streambar__button {
+  background: var(--vpm-white);
+  color: var(--vpm-dark-blue);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  border: 2px solid var(--vpm-white);
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+  transition: transform var(--dur-base) ease,
+              background-color var(--dur-fast) ease,
+              color var(--dur-fast) ease;
+}
+
+.vpm-streambar__button:hover {
+  background: var(--vpm-dark-blue);
+  color: var(--vpm-white);
+  transform: translateY(-2px);
+}
+
+.vpm-streambar__button:focus-visible {
+  outline: 3px solid var(--vpm-yellow);
+  outline-offset: 2px;
+}
+
+@media (max-width: 800px) {
+  .vpm-streambar__inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .vpm-streambar__label {
+    text-align: left;
+  }
+  .vpm-streambar__buttons {
+    justify-content: stretch;
+  }
+  .vpm-streambar__button {
+    flex: 1 1 45%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vpm-streambar__button { transition: none; }
+  .vpm-streambar__button:hover { transform: none; }
+}
+</style>
+
+<section class="vpm-streambar" aria-label="Listen to VPM">
+  <div class="vpm-streambar__inner">
+    <p class="vpm-streambar__label">Listen now</p>
+    <nav class="vpm-streambar__buttons" aria-label="VPM audio streams">
+      <a class="vpm-streambar__button" href="#news-stream">News Stream</a>
+      <a class="vpm-streambar__button" href="#music-stream">Music Stream</a>
+      <a class="vpm-streambar__button" href="#podcasts">Podcasts</a>
+      <a class="vpm-streambar__button" href="#music-archive">Music Archive</a>
+    </nav>
+  </div>
+</section>

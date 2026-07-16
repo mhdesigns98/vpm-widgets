@@ -71,6 +71,7 @@ When asked to consolidate, audit existing repos and Gists, identify widget/embed
 | `morning-monitor-signup/` | Morning Monitor newsletter signup embed (Full/Inline/Sidebar), POSTs directly to Mailchimp — no backend |
 | `weekly-update-signup/` | Weekly Update newsletter signup embed (Full/Inline/Sidebar), POSTs directly to Mailchimp — no backend |
 | `virginia-home-grown-signup/` | Virginia Home Grown newsletter signup embed (Full/Inline/Sidebar), POSTs directly to Mailchimp — no backend |
+| `listen-stream-bar/` | Quick-access audio stream bar for the Listen page — eyebrow label + four stream/podcast buttons on VPM dark blue (WordPress HTML block) |
 | `watch-page-header/` | Channel selector header for the Watch live page |
 | `youtube-shorts-embed/` | VPM News Shorts carousel embed |
 | `ecp-partners-team/` | Early Childhood Education partners & team (Brightspot embed) |
