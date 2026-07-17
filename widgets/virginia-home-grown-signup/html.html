@@ -1,0 +1,65 @@
+<!-- ================================================
+   VPM Virginia Home Grown Newsletter Signup — HTML block
+   ACF field: HTML / Custom HTML
+   Namespace prefix: vpm-vhg-
+   Includes all three layout variants (Full-width, Inline, Sidebar).
+   Delete the two you don't need for a given placement — each is a
+   self-contained block, none depend on the others.
+   ================================================ -->
+
+<div class="vpm-vhg-widget">
+
+  <!-- Full-width variant -->
+  <div class="vpm-vhg__full">
+    <div class="vpm-vhg__full-left">
+      <span class="vpm-vhg__badge">Virginia Home Grown</span>
+      <h2 class="vpm-vhg__headline">Discover why gardening <em>is for everyone!</em></h2>
+      <p>Cultivate your green thumb with helpful tips and tricks from our team.</p>
+    </div>
+    <div class="vpm-vhg__full-right">
+      <form class="vpm-vhg__full-row" action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=05042abff2" method="post" target="_blank" novalidate>
+        <input type="email" class="vpm-vhg__input" name="EMAIL" id="vhg-full-email" placeholder="Enter your email address" required>
+        <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_05042abff2" tabindex="-1" value=""></div>
+        <button type="submit" class="vpm-vhg__btn">Keep Me Informed</button>
+      </form>
+      <p class="vpm-vhg__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
+    </div>
+  </div>
+
+  <!-- Inline variant -->
+  <div class="vpm-vhg__inline">
+    <span class="vpm-vhg__badge" style="background:#fff;color:var(--vhg-green-dark);">Virginia Home Grown</span>
+    <h3 class="vpm-vhg__headline">Discover why gardening <em>is for everyone!</em></h3>
+    <p>Cultivate your green thumb with helpful tips and tricks from our team.</p>
+    <form class="vpm-vhg__inline-row" action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=05042abff2" method="post" target="_blank" novalidate>
+      <input type="email" class="vpm-vhg__input" name="EMAIL" id="vhg-inline-email" placeholder="Enter your email address" required>
+      <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_05042abff2" tabindex="-1" value=""></div>
+      <button type="submit" class="vpm-vhg__btn">Keep Me Informed</button>
+    </form>
+    <p class="vpm-vhg__privacy vpm-vhg__privacy--dark">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
+  </div>
+
+  <!-- Sidebar variant -->
+  <div class="vpm-vhg__sidebar">
+    <div class="vpm-vhg__sidebar-top">
+      <span class="vpm-vhg__badge" style="background:#fff;color:var(--vhg-green-dark);">Virginia Home Grown</span>
+      <h3 class="vpm-vhg__headline">Discover why gardening <em>is for everyone!</em></h3>
+      <p>Cultivate your green thumb with helpful tips and tricks from our team.</p>
+    </div>
+    <div class="vpm-vhg__sidebar-bottom">
+      <form action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=05042abff2" method="post" target="_blank" novalidate style="display:flex;flex-direction:column;gap:12px;">
+        <input type="email" class="vpm-vhg__input" name="EMAIL" id="vhg-sidebar-email" placeholder="Enter your email address" required>
+        <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_05042abff2" tabindex="-1" value=""></div>
+        <button type="submit" class="vpm-vhg__btn">Keep Me Informed</button>
+      </form>
+      <p class="vpm-vhg__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
+    </div>
+  </div>
+
+</div>
+
+<!--
+  Each form above POSTs directly to Mailchimp's native embedded-form endpoint for the
+  Virginia Home Grown audience — no custom API, no backend, no JS required. Mailchimp's
+  response opens in a new tab (target="_blank") so the host page never navigates away.
+-->

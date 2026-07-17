@@ -1,0 +1,167 @@
+/* ================================================
+   VPM Weekly Update Newsletter Signup — CSS block
+   ACF field: CSS
+   All rules scoped to .vpm-wu* to avoid conflicts
+   with WP / theme styles (no global resets).
+   ================================================ */
+
+.vpm-wu-widget {
+  --vpm-black: #101820;
+  --vpm-grey:  #B2B4B2;
+  --vpm-light-blue: #6CACE4;
+  --wu-bg:     #0F3865;
+  --wu-yellow: #DEE22B;
+  --radius-md: 4px;
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+/* Reset only within our scope — never target `*` globally in a shared CSS field */
+.vpm-wu-widget,
+.vpm-wu-widget *,
+.vpm-wu-widget *::before,
+.vpm-wu-widget *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.vpm-wu-widget {
+  font-family: 'Barlow', Arial, sans-serif;
+  color: var(--vpm-black);
+}
+
+.vpm-wu__input {
+  font-family: 'Barlow', Arial, sans-serif;
+  font-size: 15px;
+  width: 100%;
+  padding: 13px 16px;
+  border: 1.5px solid #d0d4d8;
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: border-color 0.2s;
+  background: #fff;
+  color: var(--vpm-black);
+}
+.vpm-wu__input:focus { border-color: var(--wu-bg); }
+
+.vpm-wu__btn {
+  font-family: 'Barlow Condensed', Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--wu-bg);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 14px 28px;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.vpm-wu__btn:hover { background: #0a2a4d; }
+.vpm-wu__btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.vpm-wu__full .vpm-wu__btn,
+.vpm-wu__inline .vpm-wu__btn,
+.vpm-wu__sidebar .vpm-wu__btn {
+  background: var(--vpm-light-blue);
+  color: var(--wu-bg);
+}
+.vpm-wu__full .vpm-wu__btn:hover,
+.vpm-wu__inline .vpm-wu__btn:hover,
+.vpm-wu__sidebar .vpm-wu__btn:hover { background: #5a99cf; }
+
+.vpm-wu__privacy { font-size: 12px; margin-top: 12px; line-height: 1.5; }
+.vpm-wu__privacy--dark { color: rgba(255,255,255,0.7); }
+
+.vpm-wu__eyebrow {
+  display: inline-block;
+  font-family: 'Barlow Condensed', Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: #fff;
+  color: var(--wu-bg);
+  padding: 5px 12px;
+  border-radius: var(--radius-md);
+  margin-bottom: 14px;
+}
+
+.vpm-wu__headline em { font-style: normal; color: var(--wu-yellow); }
+
+/* ── FULL ── */
+.vpm-wu__full {
+  background: var(--wu-bg);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  padding: 48px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 40px;
+  align-items: center;
+}
+.vpm-wu__full img { max-width: 220px; }
+.vpm-wu__full-content { display: flex; flex-direction: column; gap: 14px; }
+.vpm-wu__full-content h2 {
+  font-family: 'Barlow Condensed', Arial, sans-serif;
+  font-weight: 800;
+  font-size: 26px;
+  color: #fff;
+  text-transform: uppercase;
+  line-height: 1.15;
+}
+.vpm-wu__full-row { display: flex; gap: 10px; max-width: 620px; }
+.vpm-wu__full-row .vpm-wu__input { flex: 1; }
+.vpm-wu__full-row .vpm-wu__btn { width: auto; }
+
+/* ── INLINE ── */
+.vpm-wu__inline {
+  background: var(--wu-bg);
+  border-radius: 6px;
+  padding: 28px 32px;
+}
+.vpm-wu__inline h3 {
+  font-family: 'Barlow Condensed', Arial, sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  color: #fff;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.vpm-wu__inline p { font-size: 14px; color: rgba(255,255,255,0.85); margin-bottom: 14px; max-width: 620px; }
+.vpm-wu__inline-row { display: flex; gap: 10px; max-width: 620px; }
+.vpm-wu__inline-row .vpm-wu__input { flex: 1; }
+.vpm-wu__inline-row .vpm-wu__btn { width: auto; }
+
+/* ── SIDEBAR ── */
+.vpm-wu__sidebar {
+  max-width: 340px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+.vpm-wu__sidebar-top {
+  background: var(--wu-bg);
+  padding: 24px 24px 20px;
+}
+.vpm-wu__sidebar-top img { max-width: 180px; margin-bottom: 12px; }
+.vpm-wu__sidebar-top h3 {
+  font-family: 'Barlow Condensed', Arial, sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  color: #fff;
+  text-transform: uppercase;
+  line-height: 1.15;
+}
+.vpm-wu__sidebar-bottom {
+  background: #fff;
+  padding: 20px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.vpm-wu__sidebar-bottom .vpm-wu__btn { background: var(--wu-bg); color: #fff; }
+.vpm-wu__sidebar-bottom .vpm-wu__btn:hover { background: #0a2a4d; }

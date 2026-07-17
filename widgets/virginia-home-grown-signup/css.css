@@ -1,0 +1,143 @@
+/* ================================================
+   VPM Virginia Home Grown Newsletter Signup — CSS block
+   ACF field: CSS
+   All rules scoped to .vpm-vhg* to avoid conflicts
+   with WP / theme styles (no global resets).
+   ================================================ */
+
+.vpm-vhg-widget {
+  --vpm-black: #101820;
+  --vpm-grey:  #B2B4B2;
+  --vhg-green:      #2E8B57;
+  --vhg-green-dark: #194225;
+  --radius-md: 4px;
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+/* Reset only within our scope — never target `*` globally in a shared CSS field */
+.vpm-vhg-widget,
+.vpm-vhg-widget *,
+.vpm-vhg-widget *::before,
+.vpm-vhg-widget *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.vpm-vhg-widget {
+  font-family: 'Barlow', Arial, sans-serif;
+  color: var(--vpm-black);
+}
+
+.vpm-vhg__badge {
+  display: inline-block;
+  font-family: 'Barlow Condensed', Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--vhg-green-dark);
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: var(--radius-md);
+  margin-bottom: 14px;
+}
+
+.vpm-vhg__input {
+  font-family: 'Barlow', Arial, sans-serif;
+  font-size: 15px;
+  width: 100%;
+  padding: 13px 16px;
+  border: 1.5px solid #d0d4d8;
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: border-color 0.2s;
+  background: #fff;
+  color: var(--vpm-black);
+}
+.vpm-vhg__input:focus { border-color: var(--vhg-green); }
+
+.vpm-vhg__btn {
+  font-family: 'Barlow Condensed', Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--vhg-green-dark);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 14px 28px;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.vpm-vhg__btn:hover { background: #0f2b18; }
+.vpm-vhg__btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.vpm-vhg__privacy { font-size: 12px; color: #777; margin-top: 12px; line-height: 1.5; }
+.vpm-vhg__privacy--dark { color: rgba(255,255,255,0.75); }
+
+.vpm-vhg__headline { font-family: 'Barlow Condensed', Arial, sans-serif; font-weight: 800; text-transform: uppercase; line-height: 1.1; }
+.vpm-vhg__headline em { font-style: normal; color: var(--vhg-green-dark); }
+
+/* ── FULL (split panel, matches Figma) ── */
+.vpm-vhg__full {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+.vpm-vhg__full-left {
+  background: var(--vhg-green);
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.vpm-vhg__full-left .vpm-vhg__headline { font-size: 30px; color: #fff; margin-bottom: 12px; }
+.vpm-vhg__full-left p { color: rgba(255,255,255,0.92); font-size: 15px; line-height: 1.5; max-width: 340px; }
+.vpm-vhg__full-right {
+  background: #fff;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+}
+.vpm-vhg__full-row { display: flex; gap: 10px; }
+.vpm-vhg__full-row .vpm-vhg__btn { width: auto; }
+
+/* ── INLINE ── */
+.vpm-vhg__inline {
+  background: var(--vhg-green);
+  border-radius: 6px;
+  padding: 28px 32px;
+}
+.vpm-vhg__inline .vpm-vhg__headline { font-size: 22px; color: #fff; margin-bottom: 6px; }
+.vpm-vhg__inline p { font-size: 14px; color: rgba(255,255,255,0.9); margin-bottom: 14px; max-width: 620px; }
+.vpm-vhg__inline-row { display: flex; gap: 10px; max-width: 620px; }
+.vpm-vhg__inline-row .vpm-vhg__input { flex: 1; }
+.vpm-vhg__inline-row .vpm-vhg__btn { width: auto; }
+
+/* ── SIDEBAR ── */
+.vpm-vhg__sidebar {
+  max-width: 340px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+.vpm-vhg__sidebar-top {
+  background: var(--vhg-green);
+  padding: 24px 24px 20px;
+}
+.vpm-vhg__sidebar-top .vpm-vhg__headline { font-size: 20px; color: #fff; margin-bottom: 8px; }
+.vpm-vhg__sidebar-top p { font-size: 13px; color: rgba(255,255,255,0.9); line-height: 1.5; }
+.vpm-vhg__sidebar-bottom {
+  background: #fff;
+  padding: 20px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
