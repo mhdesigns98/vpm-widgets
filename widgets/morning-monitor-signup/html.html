@@ -1,0 +1,68 @@
+<!-- ================================================
+   VPM Morning Monitor Newsletter Signup — HTML block
+   ACF field: HTML / Custom HTML
+   Namespace prefix: vpm-mm-
+   Includes all three layout variants (Full-width, Inline, Sidebar).
+   Delete the two you don't need for a given placement — each is a
+   self-contained block, none depend on the others.
+   ================================================ -->
+
+<div class="vpm-mm-widget">
+
+  <!-- Full-width variant -->
+  <div class="vpm-mm__full">
+    <div class="vpm-mm__full-left">
+      <img src="https://mhdesigns98.github.io/vpm-widgets/widgets/morning-monitor-signup/assets/morning-monitor-lockup.svg" alt="VPM News Morning Monitor" />
+      <p>News from across the Commonwealth every weekday morning.</p>
+    </div>
+    <div class="vpm-mm__full-right">
+      <h2>Start Your Day with Virginia's Top Stories</h2>
+      <form class="vpm-mm__full-row" action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=26497cf3ad" method="post" target="_blank" novalidate>
+        <input type="email" class="vpm-mm__input" name="EMAIL" id="mm-full-email" placeholder="Enter your email address" required>
+        <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_26497cf3ad" tabindex="-1" value=""></div>
+        <button type="submit" class="vpm-mm__btn">Keep Me Informed</button>
+      </form>
+      <p class="vpm-mm__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
+    </div>
+  </div>
+
+  <!-- Inline variant -->
+  <div class="vpm-mm__inline">
+    <img src="https://mhdesigns98.github.io/vpm-widgets/widgets/morning-monitor-signup/assets/morning-monitor-lockup.svg" alt="VPM News Morning Monitor" />
+    <div>
+      <h3>Start Your Day with Virginia's Top Stories</h3>
+      <p>News from across the Commonwealth every weekday morning.</p>
+      <form class="vpm-mm__inline-row" action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=26497cf3ad" method="post" target="_blank" novalidate>
+        <input type="email" class="vpm-mm__input" name="EMAIL" id="mm-inline-email" placeholder="Enter your email address" required>
+        <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_26497cf3ad" tabindex="-1" value=""></div>
+        <button type="submit" class="vpm-mm__btn">Keep Me Informed</button>
+      </form>
+      <p class="vpm-mm__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
+    </div>
+  </div>
+
+  <!-- Sidebar variant -->
+  <div class="vpm-mm__sidebar">
+    <div class="vpm-mm__sidebar-top">
+      <img src="https://mhdesigns98.github.io/vpm-widgets/widgets/morning-monitor-signup/assets/morning-monitor-lockup.svg" alt="VPM News Morning Monitor" />
+      <p>News from across the Commonwealth every weekday morning.</p>
+    </div>
+    <div class="vpm-mm__sidebar-bottom">
+      <form action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=26497cf3ad" method="post" target="_blank" novalidate style="display:flex;flex-direction:column;gap:12px;">
+        <input type="email" class="vpm-mm__input" name="EMAIL" id="mm-sidebar-email" placeholder="Enter your email address" required>
+        <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_26497cf3ad" tabindex="-1" value=""></div>
+        <button type="submit" class="vpm-mm__btn">Keep Me Informed</button>
+      </form>
+      <p class="vpm-mm__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
+    </div>
+  </div>
+
+</div>
+
+<!--
+  Each form above POSTs directly to Mailchimp's native embedded-form endpoint for the
+  Morning Monitor audience — no custom API, no backend, no JS required. Mailchimp's
+  response (a hosted confirmation/error page) opens in a new tab (target="_blank") so
+  the host page never navigates away. This is Mailchimp's own documented embed pattern:
+  Audience > Signup forms > Embedded forms.
+-->

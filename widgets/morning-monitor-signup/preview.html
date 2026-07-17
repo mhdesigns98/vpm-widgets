@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VPM Morning Monitor — Newsletter Signup</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --vpm-dark-blue: #003865;
+    --vpm-yellow:    #E0E721;
+    --vpm-black:     #101820;
+    --vpm-grey:      #B2B4B2;
+    --mm-bg:     #C1E2FF;
+    --mm-circle: #0952A2;
+    --radius-md: 4px;
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .vpm-mm { font-family: 'Barlow', sans-serif; color: var(--vpm-black); }
+  .vpm-mm__section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--vpm-grey);
+    padding: 32px 0 12px;
+  }
+
+  .vpm-mm__input {
+    font-family: 'Barlow', sans-serif;
+    font-size: 15px;
+    width: 100%;
+    padding: 13px 16px;
+    border: 1.5px solid #d0d4d8;
+    border-radius: var(--radius-md);
+    outline: none;
+    transition: border-color 0.2s;
+    background: #fff;
+    color: var(--vpm-black);
+  }
+  .vpm-mm__input:focus { border-color: var(--mm-circle); }
+
+  .vpm-mm__btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--vpm-dark-blue);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 14px 28px;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .vpm-mm__btn:hover { background: #00294a; }
+  .vpm-mm__btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .vpm-mm__privacy { font-size: 12px; color: #777; margin-top: 12px; line-height: 1.5; }
+
+
+  /* ── FULL ── */
+  .vpm-mm__full {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+  .vpm-mm__full-left {
+    background: var(--mm-bg);
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .vpm-mm__full-left::before {
+    content: '';
+    position: absolute;
+    top: -70px; right: -90px;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: var(--mm-circle);
+  }
+  .vpm-mm__full-left img { position: relative; max-width: 220px; margin-bottom: 20px; }
+  .vpm-mm__full-left p {
+    position: relative;
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--vpm-dark-blue);
+    font-weight: 600;
+    max-width: 320px;
+  }
+  .vpm-mm__full-right {
+    background: #fff;
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+  }
+  .vpm-mm__full-right h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 30px;
+    color: var(--vpm-dark-blue);
+    line-height: 1.1;
+  }
+  .vpm-mm__full-row { display: flex; gap: 10px; }
+  .vpm-mm__full-row .vpm-mm__btn { width: auto; }
+
+  /* ── INLINE ── */
+  .vpm-mm__inline {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    align-items: center;
+    gap: 32px;
+    background: #f7fafd;
+    border-left: 4px solid var(--mm-circle);
+    border-radius: 0 6px 6px 0;
+    padding: 24px 32px;
+  }
+  .vpm-mm__inline img { width: 100%; max-width: 170px; }
+  .vpm-mm__inline h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    color: var(--vpm-dark-blue);
+    margin-bottom: 4px;
+  }
+  .vpm-mm__inline p { font-size: 14px; color: #555; margin-bottom: 12px; }
+  .vpm-mm__inline-row { display: flex; gap: 10px; }
+  .vpm-mm__inline-row .vpm-mm__input { flex: 1; }
+  .vpm-mm__inline-row .vpm-mm__btn { width: auto; }
+
+  /* ── SIDEBAR ── */
+  .vpm-mm__sidebar {
+    max-width: 340px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+  .vpm-mm__sidebar-top {
+    background: var(--mm-bg);
+    padding: 28px 24px 20px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .vpm-mm__sidebar-top::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -70px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: var(--mm-circle);
+  }
+  .vpm-mm__sidebar-top img { position: relative; max-width: 160px; margin-bottom: 14px; }
+  .vpm-mm__sidebar-top p { position: relative; font-size: 13px; color: var(--vpm-dark-blue); font-weight: 600; line-height: 1.5; }
+  .vpm-mm__sidebar-bottom {
+    background: #fff;
+    padding: 20px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+</style>
+</head>
+<body class="vpm-mm">
+
+<div class="vpm-mm__section-label">Full-width</div>
+<div class="vpm-mm__full">
+  <div class="vpm-mm__full-left">
+    <img src="https://mhdesigns98.github.io/vpm-widgets/widgets/morning-monitor-signup/assets/morning-monitor-lockup.svg" alt="VPM News Morning Monitor" />
+    <p>News from across the Commonwealth every weekday morning.</p>
+  </div>
+  <div class="vpm-mm__full-right">
+    <h2>Start Your Day with Virginia's Top Stories</h2>
+    <form class="vpm-mm__full-row" data-mc-form="full" action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=26497cf3ad" method="post" target="_blank" novalidate>
+      <input type="email" class="vpm-mm__input" name="EMAIL" id="mm-full-email" placeholder="Enter your email address" required>
+      <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_26497cf3ad" tabindex="-1" value=""></div>
+      <button type="submit" class="vpm-mm__btn">Keep Me Informed</button>
+    </form>
+    <p class="vpm-mm__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
+  </div>
+</div>
+
+<div class="vpm-mm__section-label">Inline</div>
+<div class="vpm-mm__inline">
+  <img src="https://mhdesigns98.github.io/vpm-widgets/widgets/morning-monitor-signup/assets/morning-monitor-lockup.svg" alt="VPM News Morning Monitor" />
+  <div>
+    <h3>Start Your Day with Virginia's Top Stories</h3>
+    <p>News from across the Commonwealth every weekday morning.</p>
+    <form class="vpm-mm__inline-row" data-mc-form="inline" action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=26497cf3ad" method="post" target="_blank" novalidate>
+      <input type="email" class="vpm-mm__input" name="EMAIL" id="mm-inline-email" placeholder="Enter your email address" required>
+      <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_26497cf3ad" tabindex="-1" value=""></div>
+      <button type="submit" class="vpm-mm__btn">Keep Me Informed</button>
+    </form>
+    <p class="vpm-mm__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
+  </div>
+</div>
+
+<div class="vpm-mm__section-label">Sidebar</div>
+<div class="vpm-mm__sidebar">
+  <div class="vpm-mm__sidebar-top">
+    <img src="https://mhdesigns98.github.io/vpm-widgets/widgets/morning-monitor-signup/assets/morning-monitor-lockup.svg" alt="VPM News Morning Monitor" />
+    <p>News from across the Commonwealth every weekday morning.</p>
+  </div>
+  <div class="vpm-mm__sidebar-bottom">
+    <form data-mc-form="sidebar" action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=26497cf3ad" method="post" target="_blank" novalidate style="display:flex;flex-direction:column;gap:12px;">
+      <input type="email" class="vpm-mm__input" name="EMAIL" id="mm-sidebar-email" placeholder="Enter your email address" required>
+      <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_26497cf3ad" tabindex="-1" value=""></div>
+      <button type="submit" class="vpm-mm__btn">Keep Me Informed</button>
+    </form>
+    <p class="vpm-mm__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
+  </div>
+</div>
+
+<!--
+  Each form above POSTs directly to Mailchimp's native embedded-form endpoint for the
+  Morning Monitor audience — no custom API, no backend, no JS required. Mailchimp's
+  response (a hosted confirmation/error page) opens in a new tab (target="_blank") so
+  the host page never navigates away. This is Mailchimp's own documented embed pattern:
+  Audience > Signup forms > Embedded forms.
+-->
+
+</body>
+</html>
