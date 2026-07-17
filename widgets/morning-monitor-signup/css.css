@@ -5,7 +5,9 @@
    with WP / theme styles (no global resets).
    ================================================ */
 
-.vpm-mm-widget {
+/* Defined on :root, not .vpm-mm-widget — if only one inner variant div (e.g. just
+   .vpm-mm__sidebar) gets pasted without the outer wrapper, these still resolve. */
+:root {
   --vpm-dark-blue: #003865;
   --vpm-yellow:    #E0E721;
   --vpm-black:     #101820;

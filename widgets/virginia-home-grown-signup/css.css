@@ -5,7 +5,9 @@
    with WP / theme styles (no global resets).
    ================================================ */
 
-.vpm-vhg-widget {
+/* Defined on :root, not .vpm-vhg-widget — if only one inner variant div (e.g. just
+   .vpm-vhg__sidebar) gets pasted without the outer wrapper, these still resolve. */
+:root {
   --vpm-black: #101820;
   --vpm-grey:  #B2B4B2;
   --vhg-green:      #2E8B57;
