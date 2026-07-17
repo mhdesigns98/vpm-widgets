@@ -65,45 +65,37 @@
   .vpm-mm__privacy { font-size: 12px; color: #777; margin-top: 12px; line-height: 1.5; }
 
 
-  /* ── FULL ── */
+  /* ── FULL ──
+     Single light-blue card; the logo lockup sits inside a dark-blue
+     pill badge (flush left, huge right-side border-radius) rather than
+     a separate white panel — matches the PDF spec, and gives the
+     white/yellow logo text a dark background to read against. */
   .vpm-mm__full {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(220px, 300px) 1fr;
+    align-items: stretch;
+    background: var(--mm-bg);
     border-radius: 6px;
     overflow: hidden;
     box-shadow: var(--shadow-md);
   }
   .vpm-mm__full-left {
-    background: var(--mm-bg);
-    padding: 48px;
+    background: var(--mm-circle);
+    border-radius: 0 9999px 9999px 0;
+    padding: 40px 48px 40px 32px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
   }
-  .vpm-mm__full-left::before {
-    content: '';
-    position: absolute;
-    top: -70px; right: -90px;
-    width: 240px; height: 240px;
-    border-radius: 50%;
-    background: var(--mm-circle);
-  }
-  .vpm-mm__full-left img { position: relative; max-width: 220px; margin-bottom: 20px; }
+  .vpm-mm__full-left img { max-width: 190px; margin-bottom: 16px; }
   .vpm-mm__full-left p {
-    position: relative;
-    text-align: center;
-    font-size: 16px;
+    color: #fff;
+    font-size: 14px;
     line-height: 1.5;
-    color: var(--vpm-dark-blue);
-    font-weight: 600;
-    max-width: 320px;
+    max-width: 260px;
   }
   .vpm-mm__full-right {
-    background: #fff;
-    padding: 48px;
+    padding: 40px 48px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -112,9 +104,9 @@
   .vpm-mm__full-right h2 {
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 800;
-    font-size: 30px;
+    font-size: 28px;
     color: var(--vpm-dark-blue);
-    line-height: 1.1;
+    line-height: 1.15;
   }
   .vpm-mm__full-row { display: flex; gap: 10px; }
   .vpm-mm__full-row .vpm-mm__btn { width: auto; }
@@ -122,15 +114,22 @@
   /* ── INLINE ── */
   .vpm-mm__inline {
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: auto 1fr;
     align-items: center;
-    gap: 32px;
-    background: #f7fafd;
-    border-left: 4px solid var(--mm-circle);
-    border-radius: 0 6px 6px 0;
-    padding: 24px 32px;
+    gap: 28px;
+    background: var(--mm-bg);
+    border-radius: 6px;
+    overflow: hidden;
+    padding: 20px 28px 20px 0;
   }
-  .vpm-mm__inline img { width: 100%; max-width: 170px; }
+  .vpm-mm__inline-badge {
+    background: var(--mm-circle);
+    border-radius: 0 9999px 9999px 0;
+    padding: 20px 28px 20px 20px;
+    display: flex;
+    align-items: center;
+  }
+  .vpm-mm__inline-badge img { width: 100%; max-width: 150px; }
   .vpm-mm__inline h3 {
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 800;
@@ -138,7 +137,7 @@
     color: var(--vpm-dark-blue);
     margin-bottom: 4px;
   }
-  .vpm-mm__inline p { font-size: 14px; color: #555; margin-bottom: 12px; }
+  .vpm-mm__inline p { font-size: 14px; color: var(--vpm-dark-blue); margin-bottom: 12px; }
   .vpm-mm__inline-row { display: flex; gap: 10px; }
   .vpm-mm__inline-row .vpm-mm__input { flex: 1; }
   .vpm-mm__inline-row .vpm-mm__btn { width: auto; }
@@ -146,29 +145,27 @@
   /* ── SIDEBAR ── */
   .vpm-mm__sidebar {
     max-width: 340px;
+    background: var(--mm-bg);
     border-radius: 6px;
     overflow: hidden;
     box-shadow: var(--shadow-md);
   }
-  .vpm-mm__sidebar-top {
-    background: var(--mm-bg);
-    padding: 28px 24px 20px;
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-  }
-  .vpm-mm__sidebar-top::before {
-    content: '';
-    position: absolute;
-    top: -60px; right: -70px;
-    width: 180px; height: 180px;
-    border-radius: 50%;
+  .vpm-mm__sidebar-top { padding: 0 28px; text-align: center; }
+  .vpm-mm__sidebar-badge {
     background: var(--mm-circle);
+    border-radius: 0 0 50% 50%;
+    padding: 32px 32px 56px;
+    margin: 0 -28px;
   }
-  .vpm-mm__sidebar-top img { position: relative; max-width: 160px; margin-bottom: 14px; }
-  .vpm-mm__sidebar-top p { position: relative; font-size: 13px; color: var(--vpm-dark-blue); font-weight: 600; line-height: 1.5; }
+  .vpm-mm__sidebar-badge img { max-width: 170px; }
+  .vpm-mm__sidebar-top p {
+    padding-top: 18px;
+    font-size: 14px;
+    color: var(--vpm-dark-blue);
+    font-weight: 600;
+    line-height: 1.5;
+  }
   .vpm-mm__sidebar-bottom {
-    background: #fff;
     padding: 20px 24px 24px;
     display: flex;
     flex-direction: column;
@@ -197,7 +194,9 @@
 
 <div class="vpm-mm__section-label">Inline</div>
 <div class="vpm-mm__inline">
-  <img src="https://mhdesigns98.github.io/vpm-widgets/widgets/morning-monitor-signup/assets/morning-monitor-lockup.svg" alt="VPM News Morning Monitor" />
+  <div class="vpm-mm__inline-badge">
+    <img src="https://mhdesigns98.github.io/vpm-widgets/widgets/morning-monitor-signup/assets/morning-monitor-lockup.svg" alt="VPM News Morning Monitor" />
+  </div>
   <div>
     <h3>Start Your Day with Virginia's Top Stories</h3>
     <p>News from across the Commonwealth every weekday morning.</p>
@@ -213,7 +212,9 @@
 <div class="vpm-mm__section-label">Sidebar</div>
 <div class="vpm-mm__sidebar">
   <div class="vpm-mm__sidebar-top">
-    <img src="https://mhdesigns98.github.io/vpm-widgets/widgets/morning-monitor-signup/assets/morning-monitor-lockup.svg" alt="VPM News Morning Monitor" />
+    <div class="vpm-mm__sidebar-badge">
+      <img src="https://mhdesigns98.github.io/vpm-widgets/widgets/morning-monitor-signup/assets/morning-monitor-lockup.svg" alt="VPM News Morning Monitor" />
+    </div>
     <p>News from across the Commonwealth every weekday morning.</p>
   </div>
   <div class="vpm-mm__sidebar-bottom">

@@ -159,11 +159,9 @@
   line-height: 1.15;
 }
 .vpm-wu__sidebar-bottom {
-  background: #fff;
-  padding: 20px 24px 24px;
+  background: var(--wu-bg);
+  padding: 0 24px 24px;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
-.vpm-wu__sidebar-bottom .vpm-wu__btn { background: var(--wu-bg); color: #fff; }
-.vpm-wu__sidebar-bottom .vpm-wu__btn:hover { background: #0a2a4d; }
