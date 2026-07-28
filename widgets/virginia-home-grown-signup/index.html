@@ -9,6 +9,7 @@
   :root {
     --vpm-black: #101820;
     --vpm-grey:  #B2B4B2;
+    --vpm-red-700:   #B81E2A;
     --vhg-green:      #2E8B57;
     --vhg-green-dark: #194225;
     --radius-md: 4px;
@@ -141,6 +142,22 @@
     flex-direction: column;
     gap: 12px;
   }
+
+  /* Given its own white surface rather than sitting straight on the card: these three
+     layouts have light-blue, dark-navy and green backgrounds, and no single text colour
+     clears WCAG AA on all of them. */
+  .vpm-vhg__status {
+    font-family: 'Barlow', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--vpm-black);
+    background: #fff;
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    margin-top: 6px;
+  }
+  .vpm-vhg__status--err { color: var(--vpm-red-700); }
 </style>
 </head>
 <body class="vpm-vhg">
@@ -153,11 +170,12 @@
     <p>Cultivate your green thumb with helpful tips and tricks from our team.</p>
   </div>
   <div class="vpm-vhg__full-right">
-    <form class="vpm-vhg__full-row" action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=05042abff2" method="post" target="_blank" novalidate>
+    <form class="vpm-vhg__full-row" data-mc-form="full" action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=05042abff2" method="post" target="_blank" novalidate>
       <input type="email" class="vpm-vhg__input" name="EMAIL" id="vhg-full-email" placeholder="Enter your email address" required>
       <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_05042abff2" tabindex="-1" value=""></div>
       <button type="submit" class="vpm-vhg__btn">Keep Me Informed</button>
     </form>
+    <div class="vpm-vhg__status" data-mc-status role="status" aria-live="polite" hidden></div>
     <p class="vpm-vhg__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
   </div>
 </div>
@@ -167,11 +185,12 @@
   <span class="vpm-vhg__badge" style="background:#fff;color:var(--vhg-green-dark);">Virginia Home Grown</span>
   <h3 class="vpm-vhg__headline">Discover why gardening <em>is for everyone!</em></h3>
   <p>Cultivate your green thumb with helpful tips and tricks from our team.</p>
-  <form class="vpm-vhg__inline-row" action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=05042abff2" method="post" target="_blank" novalidate>
+  <form class="vpm-vhg__inline-row" data-mc-form="inline" action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=05042abff2" method="post" target="_blank" novalidate>
     <input type="email" class="vpm-vhg__input" name="EMAIL" id="vhg-inline-email" placeholder="Enter your email address" required>
     <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_05042abff2" tabindex="-1" value=""></div>
     <button type="submit" class="vpm-vhg__btn">Keep Me Informed</button>
   </form>
+  <div class="vpm-vhg__status" data-mc-status role="status" aria-live="polite" hidden></div>
   <p class="vpm-vhg__privacy vpm-vhg__privacy--dark">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
 </div>
 
@@ -183,20 +202,141 @@
     <p>Cultivate your green thumb with helpful tips and tricks from our team.</p>
   </div>
   <div class="vpm-vhg__sidebar-bottom">
-    <form action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=05042abff2" method="post" target="_blank" novalidate style="display:flex;flex-direction:column;gap:12px;">
+    <form data-mc-form="sidebar" action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=05042abff2" method="post" target="_blank" novalidate style="display:flex;flex-direction:column;gap:12px;">
       <input type="email" class="vpm-vhg__input" name="EMAIL" id="vhg-sidebar-email" placeholder="Enter your email address" required>
       <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_05042abff2" tabindex="-1" value=""></div>
       <button type="submit" class="vpm-vhg__btn">Keep Me Informed</button>
     </form>
+    <div class="vpm-vhg__status" data-mc-status role="status" aria-live="polite" hidden></div>
     <p class="vpm-vhg__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
   </div>
 </div>
 
 <!--
   Each form above POSTs directly to Mailchimp's native embedded-form endpoint for the
-  Virginia Home Grown audience — no custom API, no backend, no JS required. Mailchimp's
-  response opens in a new tab (target="_blank") so the host page never navigates away.
+  Virginia Home Grown audience — no custom API, no backend, no API key. This is Mailchimp's
+  own documented embed pattern: Audience > Signup forms > Embedded forms.
+
+  The script below progressively enhances that: it intercepts the submit and calls the
+  same endpoint's JSONP variant (/subscribe/post-json?...&c=callback) so the real result
+  is confirmed in-page instead of in a Mailchimp-hosted new tab. Every action/method/
+  target attribute above is left intact — with JS off (or on timeout) the native POST
+  still works exactly as it did before.
 -->
+
+<script>
+(function () {
+  'use strict';
+
+  var CONFIRM = "You're all set! Thank you for subscribing. You'll start receiving your selected VPM newsletter soon.";
+  var GENERIC_ERR = "Sorry, we couldn't complete your subscription. Please try again.";
+  var TIMEOUT_MS = 20000; // generous: a cold cross-origin first hit can be slow
+  var seq = 0;
+
+  // Strips Mailchimp's markup and its "0 - " / "1 - " field-index prefix out of msg.
+  function cleanMessage(msg) {
+    var text = String(msg || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+    text = text.replace(/^\d+\s*-\s*/, '');
+    return text || GENERIC_ERR;
+  }
+
+  function jsonp(url, done) {
+    var name = 'vpmVhgSignup' + (++seq) + '_' + String(Math.random()).slice(2);
+    var script = document.createElement('script');
+    var timer;
+    var settled = false;
+
+    function settle(err, data) {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      // Mailchimp sometimes invokes the callback twice in one response, so leave a no-op
+      // behind rather than deleting it — a missing global would throw in the page.
+      window[name] = function () {};
+      setTimeout(function () { try { delete window[name]; } catch (e) {} }, 1000);
+      if (script.parentNode) script.parentNode.removeChild(script);
+      done(err, data);
+    }
+
+    window[name] = function (data) { settle(null, data); };
+    script.onerror = function () { settle(new Error('network')); };
+    // A successful callback runs while the script is evaluated, i.e. before onload. So if
+    // onload fires and nothing settled, the response was unusable — Mailchimp's rate-limit
+    // reply, for one, invokes the callback twice in a row, which is a SyntaxError and never
+    // runs. Fall back straight away rather than sitting on the timeout.
+    script.onload = function () {
+      setTimeout(function () { settle(new Error('no-callback')); }, 0);
+    };
+    timer = setTimeout(function () { settle(new Error('timeout')); }, TIMEOUT_MS);
+    script.src = url + '&c=' + name;
+    document.body.appendChild(script);
+  }
+
+  // Same endpoint as the form's action, swapped to the JSONP variant, with every named
+  // input (EMAIL plus the honeypot) carried over as a query param.
+  function requestUrl(form) {
+    var action = form.getAttribute('action').replace('/subscribe/post?', '/subscribe/post-json?');
+    var params = [];
+    Array.prototype.forEach.call(form.querySelectorAll('input[name]'), function (input) {
+      params.push(encodeURIComponent(input.name) + '=' + encodeURIComponent(input.value));
+    });
+    return action + '&' + params.join('&');
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('form[data-mc-form]'), function (form) {
+    if (form.getAttribute('data-mc-bound')) return; // survive a detach/re-inject cycle
+    form.setAttribute('data-mc-bound', '1');
+
+    var statusEl = form.parentNode.querySelector('[data-mc-status]');
+    var emailInput = form.querySelector('input[type="email"]');
+    var button = form.querySelector('button[type="submit"]');
+
+    function show(message, isError) {
+      if (!statusEl) return;
+      statusEl.textContent = message;
+      statusEl.className = 'vpm-vhg__status' + (isError ? ' vpm-vhg__status--err' : '');
+      statusEl.hidden = false;
+    }
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      // The form carries novalidate, so browser validation has to be asked for explicitly.
+      if (emailInput && !emailInput.checkValidity()) {
+        show('Please enter a valid email address.', true);
+        emailInput.focus();
+        return;
+      }
+
+      if (button) button.disabled = true;
+      show('Submitting…', false);
+
+      jsonp(requestUrl(form), function (err, data) {
+        if (err) {
+          // Never strand the subscriber — hand off to the native POST we left intact.
+          form.submit();
+          if (button) button.disabled = false;
+          show('Opening a secure Mailchimp window to finish your signup…', false);
+          return;
+        }
+
+        if (button) button.disabled = false;
+
+        if (data && data.result === 'success') {
+          form.hidden = true;
+          // The forms set display:flex (inline style on the sidebar variant), which would
+          // otherwise beat the UA's [hidden] rule and leave the form visible.
+          form.style.display = 'none';
+          show(CONFIRM, false);
+          return;
+        }
+
+        show(cleanMessage(data && data.msg), true);
+      });
+    });
+  });
+})();
+</script>
 
 </body>
 </html>

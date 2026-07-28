@@ -11,6 +11,7 @@
     --vpm-yellow:    #E0E721;
     --vpm-black:     #101820;
     --vpm-grey:      #B2B4B2;
+    --vpm-red-700:   #B81E2A;
     --mm-bg:     #C1E2FF;
     --mm-circle: #0952A2;
     --radius-md: 4px;
@@ -171,6 +172,22 @@
     flex-direction: column;
     gap: 12px;
   }
+
+  /* Given its own white surface rather than sitting straight on the card: these three
+     layouts have light-blue, dark-navy and green backgrounds, and no single text colour
+     clears WCAG AA on all of them. */
+  .vpm-mm__status {
+    font-family: 'Barlow', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--vpm-black);
+    background: #fff;
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    margin-top: 6px;
+  }
+  .vpm-mm__status--err { color: var(--vpm-red-700); }
 </style>
 </head>
 <body class="vpm-mm">
@@ -188,6 +205,7 @@
       <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_26497cf3ad" tabindex="-1" value=""></div>
       <button type="submit" class="vpm-mm__btn">Keep Me Informed</button>
     </form>
+    <div class="vpm-mm__status" data-mc-status role="status" aria-live="polite" hidden></div>
     <p class="vpm-mm__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
   </div>
 </div>
@@ -205,6 +223,7 @@
       <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_26497cf3ad" tabindex="-1" value=""></div>
       <button type="submit" class="vpm-mm__btn">Keep Me Informed</button>
     </form>
+    <div class="vpm-mm__status" data-mc-status role="status" aria-live="polite" hidden></div>
     <p class="vpm-mm__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
   </div>
 </div>
@@ -223,17 +242,136 @@
       <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_26497cf3ad" tabindex="-1" value=""></div>
       <button type="submit" class="vpm-mm__btn">Keep Me Informed</button>
     </form>
+    <div class="vpm-mm__status" data-mc-status role="status" aria-live="polite" hidden></div>
     <p class="vpm-mm__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
   </div>
 </div>
 
 <!--
   Each form above POSTs directly to Mailchimp's native embedded-form endpoint for the
-  Morning Monitor audience — no custom API, no backend, no JS required. Mailchimp's
-  response (a hosted confirmation/error page) opens in a new tab (target="_blank") so
-  the host page never navigates away. This is Mailchimp's own documented embed pattern:
-  Audience > Signup forms > Embedded forms.
+  Morning Monitor audience — no custom API, no backend, no API key. This is Mailchimp's
+  own documented embed pattern: Audience > Signup forms > Embedded forms.
+
+  The script below progressively enhances that: it intercepts the submit and calls the
+  same endpoint's JSONP variant (/subscribe/post-json?...&c=callback) so the real result
+  is confirmed in-page instead of in a Mailchimp-hosted new tab. Every action/method/
+  target attribute above is left intact — with JS off (or on timeout) the native POST
+  still works exactly as it did before.
 -->
+
+<script>
+(function () {
+  'use strict';
+
+  var CONFIRM = "You're all set! Thank you for subscribing. You'll start receiving your selected VPM newsletter soon.";
+  var GENERIC_ERR = "Sorry, we couldn't complete your subscription. Please try again.";
+  var TIMEOUT_MS = 20000; // generous: a cold cross-origin first hit can be slow
+  var seq = 0;
+
+  // Strips Mailchimp's markup and its "0 - " / "1 - " field-index prefix out of msg.
+  function cleanMessage(msg) {
+    var text = String(msg || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+    text = text.replace(/^\d+\s*-\s*/, '');
+    return text || GENERIC_ERR;
+  }
+
+  function jsonp(url, done) {
+    var name = 'vpmMmSignup' + (++seq) + '_' + String(Math.random()).slice(2);
+    var script = document.createElement('script');
+    var timer;
+    var settled = false;
+
+    function settle(err, data) {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      // Mailchimp sometimes invokes the callback twice in one response, so leave a no-op
+      // behind rather than deleting it — a missing global would throw in the page.
+      window[name] = function () {};
+      setTimeout(function () { try { delete window[name]; } catch (e) {} }, 1000);
+      if (script.parentNode) script.parentNode.removeChild(script);
+      done(err, data);
+    }
+
+    window[name] = function (data) { settle(null, data); };
+    script.onerror = function () { settle(new Error('network')); };
+    // A successful callback runs while the script is evaluated, i.e. before onload. So if
+    // onload fires and nothing settled, the response was unusable — Mailchimp's rate-limit
+    // reply, for one, invokes the callback twice in a row, which is a SyntaxError and never
+    // runs. Fall back straight away rather than sitting on the timeout.
+    script.onload = function () {
+      setTimeout(function () { settle(new Error('no-callback')); }, 0);
+    };
+    timer = setTimeout(function () { settle(new Error('timeout')); }, TIMEOUT_MS);
+    script.src = url + '&c=' + name;
+    document.body.appendChild(script);
+  }
+
+  // Same endpoint as the form's action, swapped to the JSONP variant, with every named
+  // input (EMAIL plus the honeypot) carried over as a query param.
+  function requestUrl(form) {
+    var action = form.getAttribute('action').replace('/subscribe/post?', '/subscribe/post-json?');
+    var params = [];
+    Array.prototype.forEach.call(form.querySelectorAll('input[name]'), function (input) {
+      params.push(encodeURIComponent(input.name) + '=' + encodeURIComponent(input.value));
+    });
+    return action + '&' + params.join('&');
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('form[data-mc-form]'), function (form) {
+    if (form.getAttribute('data-mc-bound')) return; // survive a detach/re-inject cycle
+    form.setAttribute('data-mc-bound', '1');
+
+    var statusEl = form.parentNode.querySelector('[data-mc-status]');
+    var emailInput = form.querySelector('input[type="email"]');
+    var button = form.querySelector('button[type="submit"]');
+
+    function show(message, isError) {
+      if (!statusEl) return;
+      statusEl.textContent = message;
+      statusEl.className = 'vpm-mm__status' + (isError ? ' vpm-mm__status--err' : '');
+      statusEl.hidden = false;
+    }
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      // The form carries novalidate, so browser validation has to be asked for explicitly.
+      if (emailInput && !emailInput.checkValidity()) {
+        show('Please enter a valid email address.', true);
+        emailInput.focus();
+        return;
+      }
+
+      if (button) button.disabled = true;
+      show('Submitting…', false);
+
+      jsonp(requestUrl(form), function (err, data) {
+        if (err) {
+          // Never strand the subscriber — hand off to the native POST we left intact.
+          form.submit();
+          if (button) button.disabled = false;
+          show('Opening a secure Mailchimp window to finish your signup…', false);
+          return;
+        }
+
+        if (button) button.disabled = false;
+
+        if (data && data.result === 'success') {
+          form.hidden = true;
+          // The forms set display:flex (inline style on the sidebar variant), which would
+          // otherwise beat the UA's [hidden] rule and leave the form visible.
+          form.style.display = 'none';
+          show(CONFIRM, false);
+          return;
+        }
+
+        show(cleanMessage(data && data.msg), true);
+      });
+    });
+  });
+})();
+</script>
 
 </body>
 </html>
