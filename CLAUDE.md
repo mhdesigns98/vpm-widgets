@@ -37,7 +37,7 @@ Some widgets (e.g. `elections-2026-primary`) use a split-file format for WordPre
 - Self-contained: a single file (or the split-file set) should work dropped into any CMS
 
 ## Workflow
-1. Write a brief first (`/brief`) — audience, done criteria, out-of-scope, deploy target
+1. Write a brief first (`/brief`) — done criteria, out-of-scope, deploy target
 2. Scaffold with `/new-widget`, then build in a Claude Code conversation
 3. When satisfied, add it under `/widgets/[name]/` following the structure above (`/save-component` does this)
 4. Write a one-paragraph `README.md` describing purpose, source, and usage
@@ -45,7 +45,13 @@ Some widgets (e.g. `elections-2026-primary`) use a split-file format for WordPre
 6. Commit and push to `main`
 7. GitHub Pages preview: `https://mhdesigns98.github.io/vpm-widgets/widgets/[name]/`
 
+**If a `BRIEF.md` exists in the widget folder, read it before building** and flag requests that contradict or expand its scope.
+
+VPM brand tokens and voice load automatically via the `vpm-design` skill — no need to invoke anything.
+
 ## Pre-Ship Checklist
+**This checklist is canonical** — it's the list `/ship-widget` enforces. Don't restate it elsewhere; link here instead.
+
 Every widget must pass the CMS test harness (`/harness/harness.html?widget=[name]` — see `/harness/README.md`) before deploying:
 
 - [ ] Survives delayed hydration + one detach/re-inject cycle (no double-init, listeners intact)
@@ -54,6 +60,7 @@ Every widget must pass the CMS test harness (`/harness/harness.html?widget=[name
 - [ ] CTAs clickable after the click-interceptor overlay clears
 - [ ] Degrades gracefully in a 320px column
 - [ ] Keyboard accessible, visible focus, WCAG 2.1 AA contrast, `prefers-reduced-motion` respected
+- [ ] No `id` attributes, or none that duplicate when the block is placed twice on one page
 - [ ] No console errors in the harness log
 
 ## Repo Consolidation
@@ -61,20 +68,6 @@ When asked to consolidate, audit existing repos and Gists, identify widget/embed
 
 ## Widgets Index
 
-| Folder | Description |
-|---|---|
-| `elections-2026-primary/` | 2026 Virginia Primary promo — dates, video carousel, article links (WordPress ACF split-file format) |
-| `elections-banner-2026/` | 2026 elections coverage promo banner (prototype) |
-| `vpm-banner/` | General-purpose promotional banner component |
-| `vpm-spotlight-homepage/` | Homepage spotlight with admin UI and JSON content queue |
-| `vpm-spotlight-leadontop/` | Homepage spotlight variant — full-width lead story over a two-card row (static) |
-| `morning-monitor-signup/` | Morning Monitor newsletter signup embed (Full/Inline/Sidebar), POSTs directly to Mailchimp via JSONP with in-page confirmation — no backend |
-| `weekly-update-signup/` | Weekly Update newsletter signup embed (Full/Inline/Sidebar), POSTs directly to Mailchimp via JSONP with in-page confirmation — no backend |
-| `virginia-home-grown-signup/` | Virginia Home Grown newsletter signup embed (Full/Inline/Sidebar), POSTs directly to Mailchimp via JSONP with in-page confirmation — no backend |
-| `listen-stream-bar/` | Quick-access audio stream bar for the Listen page — eyebrow label + four stream/podcast buttons on VPM dark blue (WordPress HTML block) |
-| `watch-page-header/` | Channel selector header for the Watch live page |
-| `youtube-shorts-embed/` | VPM News Shorts carousel embed |
-| `ecp-partners-team/` | Early Childhood Education partners & team (Brightspot embed) |
-| `annual-report-2025/` | 2025 Annual Report interactive embed |
-| `how-federal-funding-works/` | Federal funding explainer section for impact page |
-| `impact-testimonial/` | Testimonial component for impact/giving pages |
+See `INDEX.md` in the repo root — it lists every widget and its purpose. Read it when picking a
+new slug or checking a namespace prefix for collisions. It lives outside this file so it isn't
+loaded into context on every session.

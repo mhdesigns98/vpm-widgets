@@ -130,10 +130,13 @@
     // ACF mode: separate html/css/js blocks injected the way WordPress ACF does
     if (mode === 'acf' || mode === 'auto') {
       try {
-        const [html, css, js] = await Promise.all(
-          ['html.html', 'css.css', 'js.js'].map(f => fetch(base + f).then(r => r.ok ? r.text() : Promise.reject(f)))
+        // html + css are required; js.js is optional — a static widget with no
+        // behavior is a valid ACF widget and must still load here.
+        const [html, css] = await Promise.all(
+          ['html.html', 'css.css'].map(f => fetch(base + f).then(r => r.ok ? r.text() : Promise.reject(f)))
         );
-        log('Loaded ACF split files (html/css/js).');
+        const js = await fetch(base + 'js.js').then(r => r.ok ? r.text() : '').catch(() => '');
+        log(`Loaded ACF split files (html/css${js ? '/js' : ', no js.js — static widget'}).`);
         return { kind: 'acf', html, css, js };
       } catch (e) {
         if (mode === 'acf') { log(`ACF file missing: ${e}`, 'err'); return null; }
@@ -178,6 +181,21 @@
 
   let payload = null;
 
+  // Scenario 7: the same block placed twice on one page (main + sidebar).
+  // Any id inside the widget is duplicated — invalid HTML, and aria-labelledby /
+  // label[for] then resolve to the wrong element for screen readers.
+  function auditDuplicateIds() {
+    const ids = [...document.querySelectorAll('#hz-slot-main [id], #hz-slot-sidebar [id]')].map(e => e.id);
+    const dupes = [...new Set(ids.filter((v, i) => ids.indexOf(v) !== i))];
+    if (dupes.length) {
+      log(`✗ Duplicate id(s) across widget copies: ${dupes.join(', ')} — the widget can't be placed twice on a page.`, 'err');
+    } else if (ids.length) {
+      log(`Widget uses ${ids.length} id(s), none duplicated across copies.`);
+    } else {
+      log('No id attributes in the widget — safe to place more than once.');
+    }
+  }
+
   async function run() {
     logEl.innerHTML = '';
     status('loading…');
@@ -199,6 +217,7 @@
         main.innerHTML = '';
         inject(payload, main, 'main');
         log('Re-render done. Check: no double-init, listeners still work.');
+        auditDuplicateIds();
         status('re-rendered — verify manually');
       }, 3000);
     }, HYDRATION_DELAY);

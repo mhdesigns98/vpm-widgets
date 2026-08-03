@@ -14,6 +14,11 @@ Query params:
 - `widget=SLUG` — folder name under `/widgets/`
 - `mode=single|acf|auto` (default `auto`) — `acf` loads `html.html`/`css.css`/`js.js` as separate injected blocks the way WordPress ACF does; `single` parses `index.html`; `auto` tries ACF first, falls back to single.
 
+In `acf` mode only `html.html` and `css.css` are required. `js.js` is optional — a static
+widget with no behavior is valid, and the harness loads it fine. Expect one 404 in the
+browser console from the harness probing for the absent `js.js`; that's the harness, not
+the widget.
+
 ## What it throws at your widget
 
 1. **Delayed hydration** — injected 2.5s after page load, then detached and re-injected 3s later (watch for double-init and dead listeners)
@@ -22,5 +27,6 @@ Query params:
 4. **Click interception** — invisible full-viewport overlay for the first 3s (CTAs must recover)
 5. **Narrow container** — second copy rendered in a 320px sidebar
 6. **JS error surfacing** — widget errors appear in the on-screen log
+7. **Duplicate id audit** — the two copies are scanned for repeated `id`s after re-render. Any id inside a widget breaks the moment the block is placed twice on one page (invalid HTML; `aria-labelledby` resolves to the wrong element)
 
 Toolbar buttons let you re-run any scenario manually. Run `/ship-widget SLUG` in Claude Code for the full guided pre-deploy check.
