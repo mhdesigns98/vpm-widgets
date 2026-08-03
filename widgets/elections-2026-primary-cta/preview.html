@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VPM 2026 Primary — Homepage CTA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; padding: 40px 24px; background: #F2F3F4; font-family: 'Inter', system-ui, sans-serif; }
+  .preview-shell { max-width: 1000px; margin: 0 auto 48px; }
+  .preview-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #7B8591; margin: 0 0 12px; }
+  .preview-narrow { max-width: 320px; }
+/* ============================================
+   VPM 2026 Primary — Homepage CTA
+   Namespace: vpm-elec26cta-
+   Tokens inlined from tokens.css (widget must stay self-contained)
+   ============================================ */
+
+.vpm-elec26cta {
+  /* Brand core */
+  --vpm-elec26cta-dark-blue:  #003865;
+  --vpm-elec26cta-blue-900:   #002244;
+  --vpm-elec26cta-light-blue: #6CACE4;
+  --vpm-elec26cta-yellow:     #E0E721;
+  --vpm-elec26cta-red:        #EE2737;
+  --vpm-elec26cta-white:      #FFFFFF;
+  --vpm-elec26cta-on-dark-muted: #B9C8D8;
+
+  /* Type */
+  --vpm-elec26cta-font: 'Inter', 'GT America', 'Helvetica Neue', Arial, sans-serif;
+  --vpm-elec26cta-fs-h2: clamp(24px, 2.4vw, 32px);
+  --vpm-elec26cta-fs-body: 16px;
+  --vpm-elec26cta-fs-eyebrow: 13px;
+  --vpm-elec26cta-lh-snug: 1.2;
+  --vpm-elec26cta-lh-loose: 1.65;
+  --vpm-elec26cta-tracking-eyebrow: 0.12em;
+
+  /* Space / shape / motion */
+  --vpm-elec26cta-space-2: 8px;
+  --vpm-elec26cta-space-3: 12px;
+  --vpm-elec26cta-space-4: 16px;
+  --vpm-elec26cta-space-5: 24px;
+  --vpm-elec26cta-space-6: 32px;
+  --vpm-elec26cta-radius-md: 4px;
+  --vpm-elec26cta-shadow-md: 0 8px 24px rgba(16, 24, 32, 0.10);
+  --vpm-elec26cta-shadow-focus: 0 0 0 3px rgba(108, 172, 228, 0.55);
+  --vpm-elec26cta-ease: cubic-bezier(0.2, 0, 0, 1);
+  --vpm-elec26cta-dur-fast: 120ms;
+  --vpm-elec26cta-dur-base: 200ms;
+
+  /* Reset against hostile host CSS */
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: var(--vpm-elec26cta-font);
+  background: var(--vpm-elec26cta-dark-blue);
+  overflow: hidden;
+  position: relative;
+  isolation: isolate;
+
+  /* Layout responds to the widget's own width, not the viewport's, so it
+     still stacks correctly inside a narrow sidebar on a wide page. */
+  container-type: inline-size;
+  container-name: vpm-elec26cta;
+}
+
+.vpm-elec26cta *,
+.vpm-elec26cta *::before,
+.vpm-elec26cta *::after { box-sizing: border-box; }
+
+/* 3-stripe accent bar */
+.vpm-elec26cta__bar {
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg,
+    var(--vpm-elec26cta-light-blue) 0%,
+    var(--vpm-elec26cta-light-blue) 30%,
+    var(--vpm-elec26cta-yellow)     30%,
+    var(--vpm-elec26cta-yellow)     70%,
+    var(--vpm-elec26cta-red)        70%,
+    var(--vpm-elec26cta-red)        100%);
+}
+
+.vpm-elec26cta__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+/* ---- Media ---- */
+.vpm-elec26cta__media {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  background: var(--vpm-elec26cta-blue-900);
+}
+
+.vpm-elec26cta__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 0;
+  border-radius: 0;
+}
+
+/* ---- Panel ---- */
+.vpm-elec26cta__panel {
+  padding: var(--vpm-elec26cta-space-6) var(--vpm-elec26cta-space-5);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--vpm-elec26cta-space-4);
+  background: var(--vpm-elec26cta-dark-blue);
+}
+
+.vpm-elec26cta__eyebrow {
+  margin: 0;
+  font-size: var(--vpm-elec26cta-fs-eyebrow);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--vpm-elec26cta-tracking-eyebrow);
+  color: var(--vpm-elec26cta-yellow);
+  line-height: 1.3;
+}
+
+.vpm-elec26cta__title {
+  margin: 0;
+  font-family: var(--vpm-elec26cta-font);
+  font-size: var(--vpm-elec26cta-fs-h2);
+  font-weight: 800;
+  line-height: var(--vpm-elec26cta-lh-snug);
+  letter-spacing: -0.01em;
+  color: var(--vpm-elec26cta-white);
+  text-wrap: balance;
+  text-transform: none;
+}
+
+.vpm-elec26cta__body {
+  margin: 0;
+  max-width: 46ch;
+  font-size: var(--vpm-elec26cta-fs-body);
+  font-weight: 400;
+  line-height: var(--vpm-elec26cta-lh-loose);
+  color: var(--vpm-elec26cta-on-dark-muted);
+  text-wrap: pretty;
+}
+
+/* ---- CTA ---- */
+.vpm-elec26cta__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--vpm-elec26cta-space-2);
+  margin-top: var(--vpm-elec26cta-space-2);
+  padding: var(--vpm-elec26cta-space-3) var(--vpm-elec26cta-space-5);
+  background: var(--vpm-elec26cta-light-blue);
+  color: var(--vpm-elec26cta-blue-900);
+  font-family: var(--vpm-elec26cta-font);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border: 0;
+  border-radius: var(--vpm-elec26cta-radius-md);
+  transition:
+    background-color var(--vpm-elec26cta-dur-fast) var(--vpm-elec26cta-ease),
+    transform var(--vpm-elec26cta-dur-base) var(--vpm-elec26cta-ease),
+    box-shadow var(--vpm-elec26cta-dur-base) var(--vpm-elec26cta-ease);
+}
+
+.vpm-elec26cta__link:hover,
+.vpm-elec26cta__link:focus-visible {
+  background: var(--vpm-elec26cta-white);
+  color: var(--vpm-elec26cta-blue-900);
+  text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: var(--vpm-elec26cta-shadow-md);
+}
+
+.vpm-elec26cta__link:focus-visible {
+  outline: 2px solid var(--vpm-elec26cta-white);
+  outline-offset: 2px;
+  box-shadow: var(--vpm-elec26cta-shadow-focus);
+}
+
+.vpm-elec26cta__arrow {
+  transition: transform var(--vpm-elec26cta-dur-base) var(--vpm-elec26cta-ease);
+}
+
+.vpm-elec26cta__link:hover .vpm-elec26cta__arrow,
+.vpm-elec26cta__link:focus-visible .vpm-elec26cta__arrow {
+  transform: translateX(3px);
+}
+
+/* ---- Two-column once the widget itself is wide enough ---- */
+@container vpm-elec26cta (min-width: 720px) {
+  .vpm-elec26cta__grid {
+    grid-template-columns: minmax(0, 1.15fr) minmax(320px, 1fr);
+    align-items: stretch;
+  }
+
+  /* Photo fills the column height without dictating it */
+  .vpm-elec26cta__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  .vpm-elec26cta__panel {
+    padding: var(--vpm-elec26cta-space-6);
+    justify-content: center;
+  }
+}
+
+@container vpm-elec26cta (min-width: 1024px) {
+  .vpm-elec26cta__panel {
+    padding: 40px var(--vpm-elec26cta-space-6);
+  }
+}
+
+/* Fallback for engines without container queries: key off the viewport. */
+@supports not (container-type: inline-size) {
+  @media (min-width: 720px) {
+    .vpm-elec26cta__grid {
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 1fr);
+      align-items: stretch;
+    }
+    .vpm-elec26cta__img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      aspect-ratio: auto;
+    }
+    .vpm-elec26cta__panel {
+      padding: var(--vpm-elec26cta-space-6);
+      justify-content: center;
+    }
+  }
+}
+
+/* ---- Motion preference ---- */
+@media (prefers-reduced-motion: reduce) {
+  .vpm-elec26cta__link,
+  .vpm-elec26cta__arrow {
+    transition: none;
+  }
+  .vpm-elec26cta__link:hover,
+  .vpm-elec26cta__link:focus-visible {
+    transform: none;
+  }
+  .vpm-elec26cta__link:hover .vpm-elec26cta__arrow,
+  .vpm-elec26cta__link:focus-visible .vpm-elec26cta__arrow {
+    transform: none;
+  }
+}
+
+/* ---- Forced colors ---- */
+@media (forced-colors: active) {
+  .vpm-elec26cta__link { border: 1px solid currentColor; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="preview-shell">
+  <p class="preview-label">Homepage CTA — full width</p>
+<!-- VPM 2026 Primary — Homepage CTA -->
+<section class="vpm-elec26cta" aria-labelledby="vpm-elec26cta-title">
+  <div class="vpm-elec26cta__bar" aria-hidden="true"></div>
+
+  <div class="vpm-elec26cta__grid">
+
+    <!-- Media: swap the src for a VPM-owned photo. Remove this <figure> entirely
+         and the panel fills the full width with no layout break. -->
+    <figure class="vpm-elec26cta__media">
+      <img
+        class="vpm-elec26cta__img"
+        src="https://placehold.co/1200x800/003865/FFFFFF?text=Swap+in+VPM+photo"
+        alt=""
+        loading="lazy"
+        decoding="async"
+        width="1200"
+        height="800"
+      />
+    </figure>
+
+    <div class="vpm-elec26cta__panel">
+      <p class="vpm-elec26cta__eyebrow">VPM News &middot; Election Coverage</p>
+
+      <h2 class="vpm-elec26cta__title" id="vpm-elec26cta-title">
+        Virginia's 2026 primary election
+      </h2>
+
+      <p class="vpm-elec26cta__body">
+        Virginians choose their party nominees Tuesday, Aug. 4. VPM News has what's
+        on your ballot, where and when to vote, and live results as they come in.
+      </p>
+
+      <a class="vpm-elec26cta__link" href="https://vpm.org/elections">
+        Explore our coverage
+        <span class="vpm-elec26cta__arrow" aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+</div>
+
+<div class="preview-shell preview-narrow">
+  <p class="preview-label">320px column</p>
+<!-- VPM 2026 Primary — Homepage CTA -->
+<section class="vpm-elec26cta">
+  <div class="vpm-elec26cta__bar" aria-hidden="true"></div>
+
+  <div class="vpm-elec26cta__grid">
+
+    <!-- Media: swap the src for a VPM-owned photo. Remove this <figure> entirely
+         and the panel fills the full width with no layout break. -->
+    <figure class="vpm-elec26cta__media">
+      <img
+        class="vpm-elec26cta__img"
+        src="https://placehold.co/1200x800/003865/FFFFFF?text=Swap+in+VPM+photo"
+        alt=""
+        loading="lazy"
+        decoding="async"
+        width="1200"
+        height="800"
+      />
+    </figure>
+
+    <div class="vpm-elec26cta__panel">
+      <p class="vpm-elec26cta__eyebrow">VPM News &middot; Election Coverage</p>
+
+      <h2 class="vpm-elec26cta__title">
+        Virginia's 2026 primary election
+      </h2>
+
+      <p class="vpm-elec26cta__body">
+        Virginians choose their party nominees Tuesday, Aug. 4. VPM News has what's
+        on your ballot, where and when to vote, and live results as they come in.
+      </p>
+
+      <a class="vpm-elec26cta__link" href="https://vpm.org/elections">
+        Explore our coverage
+        <span class="vpm-elec26cta__arrow" aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+</div>
+
+</body>
+</html>
