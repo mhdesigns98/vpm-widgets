@@ -17,6 +17,7 @@ so they don't collide. Kept out of `CLAUDE.md` so it isn't loaded into context o
 | `weekly-update-signup/` | Weekly Update newsletter signup embed (Full/Inline/Sidebar), POSTs directly to Mailchimp via JSONP with in-page confirmation — no backend |
 | `virginia-home-grown-signup/` | Virginia Home Grown newsletter signup embed (Full/Inline/Sidebar), POSTs directly to Mailchimp via JSONP with in-page confirmation — no backend |
 | `listen-stream-bar/` | Quick-access audio stream bar for the Listen page — eyebrow label + four stream/podcast buttons on VPM dark blue (WordPress HTML block) |
+| `links-with-map/` | Reusable map-beside-directory block — Google My Maps embed + multi-column outbound link list; first instance is Virginia wineries A–Z (WordPress ACF split-file format, no JS) |
 | `watch-page-header/` | Channel selector header for the Watch live page |
 | `youtube-shorts-embed/` | VPM News Shorts carousel embed |
 | `ecp-partners-team/` | Early Childhood Education partners & team (Brightspot embed) |

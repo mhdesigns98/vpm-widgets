@@ -1,0 +1,96 @@
+<!-- VPM Links With Map — reusable directory block -->
+<!-- Per instance, only two things change:
+       1. the iframe src (any Google My Maps embed URL)
+       2. the <li> list inside .vpm-lwm__links
+     Everything else is the pattern.
+
+     Swap map side by removing "vpm-lwm--map-right" (default puts the map left).
+     No id attributes anywhere: this block may be placed more than once on a
+     page, and duplicate ids are invalid and confuse screen readers. The
+     section's accessible name comes from aria-label instead. -->
+<section class="vpm-lwm vpm-lwm--map-right" aria-label="Virginia wineries map and directory">
+ <div class="vpm-lwm__grid">
+
+  <div class="vpm-lwm__map">
+    <iframe
+      class="vpm-lwm__frame"
+      src="https://www.google.com/maps/d/embed?mid=1HI79r5gFHPyPeO0FygZrnQtQ90rVAGY&amp;ehbc=2E312F"
+      title="Virginia Wineries Map"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      allowfullscreen
+    ></iframe>
+  </div>
+
+  <div class="vpm-lwm__list">
+    <h2 class="vpm-lwm__heading">Virginia Wineries (A&ndash;Z)</h2>
+    <p class="vpm-lwm__note">All links open in a new tab.</p>
+
+    <ul class="vpm-lwm__links">
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.7ladyvineyards.com/" target="_blank" rel="noopener noreferrer">7 Lady Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://868estatevineyards.com/" target="_blank" rel="noopener noreferrer">868 Estate Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.aftonmountainvineyards.com/" target="_blank" rel="noopener noreferrer">Afton Mountain Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://ankidaridge.com/" target="_blank" rel="noopener noreferrer">Ankida Ridge Farm &amp; Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.bbvwine.com/" target="_blank" rel="noopener noreferrer">Barboursville Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://barreloak.com/" target="_blank" rel="noopener noreferrer">Barrel Oak Winery &amp; Farm Taphouse</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.barrenridgevineyards.com/" target="_blank" rel="noopener noreferrer">Barren Ridge Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://beliveauwinery.com/" target="_blank" rel="noopener noreferrer">Beliveau Farm Winery</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.bluestonevineyard.com/" target="_blank" rel="noopener noreferrer">Bluestone Vineyard</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.brixandcolumns.com/" target="_blank" rel="noopener noreferrer">Brix and Columns Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://canavineyards.com/" target="_blank" rel="noopener noreferrer">Cana Vineyards of Middleburg</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.cardinalpointwinery.com/" target="_blank" rel="noopener noreferrer">Cardinal Point Winery</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://casanelvineyards.com/" target="_blank" rel="noopener noreferrer">Casanel Vineyards &amp; Winery</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.caveridge.com/" target="_blank" rel="noopener noreferrer">Cave Ridge Vineyard</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.chrysaliswine.com/" target="_blank" rel="noopener noreferrer">Chrysalis Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://crosskeysvineyards.com/" target="_blank" rel="noopener noreferrer">Cross Keys Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.delaplanecellars.com/" target="_blank" rel="noopener noreferrer">Delaplane Cellars</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://ducardvineyards.com/" target="_blank" rel="noopener noreferrer">DuCard Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.earlymountain.com/" target="_blank" rel="noopener noreferrer">Early Mountain Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://eastwoodfarmandwinery.com/" target="_blank" rel="noopener noreferrer">Eastwood Farm and Winery</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://eccoadesso.com/" target="_blank" rel="noopener noreferrer">Ecco Adesso Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://53rdwinery.com/" target="_blank" rel="noopener noreferrer">Fifty-Third Winery &amp; Vineyard</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.flyingfoxvineyard.com/" target="_blank" rel="noopener noreferrer">Flying Fox Vineyard</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://glenmanorvineyards.com/" target="_blank" rel="noopener noreferrer">Glen Manor Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://graceestatewinery.com/" target="_blank" rel="noopener noreferrer">Grace Estates Winery</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.harkvineyards.com/" target="_blank" rel="noopener noreferrer">Hark Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.hazy-mountain.com/" target="_blank" rel="noopener noreferrer">Hazy Mountain Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.hillsboroughwine.com/" target="_blank" rel="noopener noreferrer">Hillsborough Winery</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://hortonwine.com/" target="_blank" rel="noopener noreferrer">Horton Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.inglesidevineyards.com/" target="_blank" rel="noopener noreferrer">Ingleside Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="http://jeffersonvineyards.com/" target="_blank" rel="noopener noreferrer">Jefferson Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://keswickvineyards.com/" target="_blank" rel="noopener noreferrer">Keswick Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://kingfamilyvineyards.com/" target="_blank" rel="noopener noreferrer">King Family Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.lindenvineyards.com/" target="_blank" rel="noopener noreferrer">Linden Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://lovingcupwine.com/" target="_blank" rel="noopener noreferrer">Loving Cup Vineyard</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.merriemillfarm.com/" target="_blank" rel="noopener noreferrer">Merrie Mill Farm &amp; Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.virginiawineworks.com/" target="_blank" rel="noopener noreferrer">Michael Shaps Wineworks</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://musevineyards.com/" target="_blank" rel="noopener noreferrer">Muse Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://newkentwinery.com/" target="_blank" rel="noopener noreferrer">New Kent Winery</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.paradisespringswinery.com/Home" target="_blank" rel="noopener noreferrer">Paradise Springs Winery</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.pcwinery.com/" target="_blank" rel="noopener noreferrer">Philip Carter Winery of Virginia 1762</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="http://www.pollakvineyards.com/" target="_blank" rel="noopener noreferrer">Pollak Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.potomacpointwinery.com/" target="_blank" rel="noopener noreferrer">Potomac Point Winery</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.rappahannockcellars.com/" target="_blank" rel="noopener noreferrer">Rappahannock Cellars</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://revalationvineyards.com/" target="_blank" rel="noopener noreferrer">Revalation Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://rockbridgevineyard.com/" target="_blank" rel="noopener noreferrer">Rockbridge Vineyard</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://rosemontofvirginia.com/" target="_blank" rel="noopener noreferrer">Rosemont of Virginia</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.sagebirdciderworks.com/" target="_blank" rel="noopener noreferrer">Sage Bird Ciderworks</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="http://www.saudecreek.com/" target="_blank" rel="noopener noreferrer">Saud&eacute; Creek Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.silverhandmeadery.com/" target="_blank" rel="noopener noreferrer">Silver Hand Meadery</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.smvwines.com/" target="_blank" rel="noopener noreferrer">Southwest Mountains Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.stonemountainvineyards.com/" target="_blank" rel="noopener noreferrer">Stone Mountain Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.stonetowerwinery.com/" target="_blank" rel="noopener noreferrer">Stone Tower Winery</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.twotwistedposts.com/" target="_blank" rel="noopener noreferrer">Two Twisted Posts</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="http://www.uppershirley.com/" target="_blank" rel="noopener noreferrer">Upper Shirley Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.valeriehillwinery.com/" target="_blank" rel="noopener noreferrer">Valerie Hill Winery</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.valleyroadwines.com/" target="_blank" rel="noopener noreferrer">Valley Road Vineyards</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://veritaswines.com/" target="_blank" rel="noopener noreferrer">Veritas Vineyard &amp; Winery</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://villaappalaccia.com/" target="_blank" rel="noopener noreferrer">Villa Appalaccia Winery</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.williamsburgwinery.com/" target="_blank" rel="noopener noreferrer">Williamsburg Winery at Wessex Hundred</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://www.wisdomoakwinery.com/" target="_blank" rel="noopener noreferrer">Wisdom Oak Winery</a></li>
+      <li class="vpm-lwm__item"><a class="vpm-lwm__link" href="https://zephwine.com/" target="_blank" rel="noopener noreferrer">Zephaniah Farm Vineyard</a></li>
+    </ul>
+  </div>
+
+ </div>
+</section>
