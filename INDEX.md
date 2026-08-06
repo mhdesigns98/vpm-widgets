@@ -23,3 +23,4 @@ so they don't collide. Kept out of `CLAUDE.md` so it isn't loaded into context o
 | `annual-report-2025/` | 2025 Annual Report interactive embed |
 | `how-federal-funding-works/` | Federal funding explainer section for impact page |
 | `impact-testimonial/` | Testimonial component for impact/giving pages |
+| `impact-report-2025/` | 2025 Impact Report page as deployed — hero, sticky jump links, awards counters; consolidated page stylesheet + deferred behavior script (namespaces `vpm-impact25-`, `vpm-awards2025`, full page rather than a single block) |
