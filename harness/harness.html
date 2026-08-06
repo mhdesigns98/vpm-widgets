@@ -125,6 +125,11 @@
   async function fetchWidget() {
     if (!slug) { log('No ?widget=SLUG param — nothing to load.', 'warn'); status('no widget'); return null; }
     document.getElementById('hz-widget-name').textContent = `widgets/${slug}/` + (mode !== 'auto' ? ` (${mode})` : '');
+    // Widget-only by design — do not add a vpm-pages branch here.
+    // This harness simulates a *block dropped into a hostile host page*: double placement,
+    // detach/re-inject, click-interceptor overlays. A full page build faces none of those,
+    // so pages get their own gate (`/ship-page`) and their own checklist in
+    // vpm-pages/CLAUDE.md rather than a mode flag on this file.
     const base = `../widgets/${slug}/`;
 
     // ACF mode: separate html/css/js blocks injected the way WordPress ACF does
