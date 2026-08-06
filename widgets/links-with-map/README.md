@@ -4,6 +4,17 @@ A reusable two-pane directory block: a Google My Maps embed beside a multi-colum
 outbound links. Built for VPM's WordPress ACF Code Block fields; the first instance is the
 Virginia wineries directory (62 wineries, A–Z).
 
+On the Un-Wine'd page it sits below [`unwined-episode`](../unwined-episode/), whose jump links
+target it. The `#vineyards` anchor belongs to the page, not to this block — wrap it:
+
+```html
+<div id="vineyards" style="scroll-margin-top: 96px;"></div>
+<!-- this block goes here -->
+```
+
+That keeps the block id-free and safe to place twice. See `unwined-episode/README.md` for the
+combined single-field stylesheet if you'd rather paste one CSS for the whole page.
+
 ## Per-instance changes
 
 Only two things change between uses:

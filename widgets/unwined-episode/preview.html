@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VPM Un-Wine'd — Episode + Sponsors</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; padding: 40px 24px; background: #F2F3F4; font-family: 'Inter', system-ui, sans-serif; }
+  .preview-shell { max-width: 1100px; margin: 0 auto 64px; }
+  .preview-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #7B8591; margin: 0 0 12px; }
+  .preview-narrow { max-width: 320px; }
+  .preview-stage { background: #FFFFFF; padding: 24px; border-radius: 4px; }
+  /* Deliberately hostile: proves the old global `img` rule is gone. */
+  .host-probe { margin: 0 auto 64px; max-width: 1100px; }
+  .host-probe img { border: 2px dashed #EE2737; }
+</style>
+<style>
+/* ============================================
+   VPM Un-Wine'd — episode + sponsors
+   Namespace: vpm-unwined-
+   Tokens inlined from tokens.css (widget must stay self-contained)
+
+   Every selector is scoped to .vpm-unwined. The block this replaces styled
+   bare `img` in a page-level <style>, which hit every image on the page.
+   ============================================ */
+
+.vpm-unwined {
+  /* Brand core */
+  --vpm-unwined-dark-blue:  #003865;
+  --vpm-unwined-blue-900:   #002244;
+  --vpm-unwined-light-blue: #6CACE4;
+  --vpm-unwined-white:      #FFFFFF;
+  --vpm-unwined-gray-600:   #5A6470;
+  --vpm-unwined-gray-200:   #E5E7E9;
+
+  /* Type */
+  --vpm-unwined-font:         'Inter', 'GT America', 'Helvetica Neue', Arial, sans-serif;
+  --vpm-unwined-fs-display:   clamp(32px, 4vw, 56px);
+  --vpm-unwined-fs-h2:        clamp(24px, 2.4vw, 32px);
+  --vpm-unwined-fs-body-lg:   18px;
+  --vpm-unwined-fs-body:      16px;
+  --vpm-unwined-fs-body-sm:   14px;
+  --vpm-unwined-fs-caption:   12px;
+  --vpm-unwined-fs-eyebrow:   13px;
+  --vpm-unwined-lh-tight:     1.05;
+  --vpm-unwined-lh-snug:      1.2;
+  --vpm-unwined-lh-normal:    1.45;
+  --vpm-unwined-lh-loose:     1.65;
+  --vpm-unwined-tracking-eyebrow: 0.12em;
+
+  /* Space / shape / motion */
+  --vpm-unwined-space-2: 8px;
+  --vpm-unwined-space-3: 12px;
+  --vpm-unwined-space-4: 16px;
+  --vpm-unwined-space-5: 24px;
+  --vpm-unwined-space-6: 32px;
+  --vpm-unwined-space-7: 48px;
+  --vpm-unwined-radius-md: 4px;
+  --vpm-unwined-ease: cubic-bezier(0.2, 0, 0, 1);
+  --vpm-unwined-dur-fast: 120ms;
+
+  /* PBS viral player chrome sits below the 16:9 video */
+  --vpm-unwined-player-chrome: 43px;
+  --vpm-unwined-measure: 68ch;
+
+  /* Reset against hostile host CSS */
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: var(--vpm-unwined-font);
+  font-size: var(--vpm-unwined-fs-body-lg);
+  line-height: var(--vpm-unwined-lh-normal);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--vpm-unwined-blue-900);
+  background: transparent;
+  text-align: center;
+  position: relative;
+  isolation: isolate;
+
+  container-type: inline-size;
+  container-name: vpm-unwined;
+}
+
+.vpm-unwined *,
+.vpm-unwined *::before,
+.vpm-unwined *::after { box-sizing: border-box; }
+
+/* Shared link treatment. !important only on color, where hostile host CSS
+   uses it too (forced .article-body link colors). */
+.vpm-unwined .vpm-unwined__link,
+.vpm-unwined .vpm-unwined__lockup-link,
+.vpm-unwined .vpm-unwined__jump-link {
+  color: var(--vpm-unwined-dark-blue) !important;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+  transition: color var(--vpm-unwined-dur-fast) var(--vpm-unwined-ease),
+              text-decoration-thickness var(--vpm-unwined-dur-fast) var(--vpm-unwined-ease);
+}
+
+.vpm-unwined .vpm-unwined__link:hover,
+.vpm-unwined .vpm-unwined__link:focus-visible,
+.vpm-unwined .vpm-unwined__lockup-link:hover,
+.vpm-unwined .vpm-unwined__lockup-link:focus-visible,
+.vpm-unwined .vpm-unwined__jump-link:hover,
+.vpm-unwined .vpm-unwined__jump-link:focus-visible {
+  color: var(--vpm-unwined-blue-900) !important;
+  text-decoration-thickness: 2px;
+}
+
+.vpm-unwined a:focus-visible,
+.vpm-unwined .vpm-unwined__sponsor-link:focus-visible {
+  outline: 2px solid var(--vpm-unwined-light-blue);
+  outline-offset: 3px;
+  border-radius: var(--vpm-unwined-radius-md);
+}
+
+/* ---- Lockup ---- */
+.vpm-unwined .vpm-unwined__lockup {
+  margin: 0 0 var(--vpm-unwined-space-4);
+  padding: 0;
+  font-size: var(--vpm-unwined-fs-display);
+  font-weight: 700;
+  line-height: var(--vpm-unwined-lh-tight);
+  letter-spacing: normal;
+  text-wrap: balance;
+}
+
+.vpm-unwined .vpm-unwined__show {
+  font-style: italic;
+  color: var(--vpm-unwined-dark-blue);
+}
+
+/* ---- Jump links ---- */
+.vpm-unwined .vpm-unwined__jump {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: var(--vpm-unwined-space-3);
+  margin: 0 0 var(--vpm-unwined-space-6);
+  padding: 0;
+  font-size: var(--vpm-unwined-fs-body-lg);
+}
+
+.vpm-unwined .vpm-unwined__jump-sep {
+  color: var(--vpm-unwined-gray-600);
+  user-select: none;
+}
+
+/* ---- Player ----
+   padding-top rather than aspect-ratio: the PBS viral player renders its own
+   control chrome below the 16:9 video, so the box is taller than the ratio. */
+.vpm-unwined .vpm-unwined__player {
+  position: relative;
+  width: 100%;
+  margin: 0 0 var(--vpm-unwined-space-6);
+  padding: 0;
+  padding-top: calc(56.25% + var(--vpm-unwined-player-chrome));
+  background: var(--vpm-unwined-blue-900);
+  border-radius: var(--vpm-unwined-radius-md);
+  overflow: hidden;
+}
+
+.vpm-unwined .vpm-unwined__frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: block;
+}
+
+/* ---- Episode copy ---- */
+.vpm-unwined .vpm-unwined__episode {
+  margin: 0 auto var(--vpm-unwined-space-6);
+  padding: 0;
+  max-width: var(--vpm-unwined-measure);
+}
+
+.vpm-unwined .vpm-unwined__heading {
+  margin: 0 0 var(--vpm-unwined-space-4);
+  padding: 0;
+  font-family: var(--vpm-unwined-font);
+  font-size: var(--vpm-unwined-fs-h2);
+  font-weight: 700;
+  line-height: var(--vpm-unwined-lh-snug);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--vpm-unwined-dark-blue);
+  text-wrap: balance;
+}
+
+.vpm-unwined .vpm-unwined__body {
+  margin: 0 0 var(--vpm-unwined-space-4);
+  padding: 0;
+  font-size: var(--vpm-unwined-fs-body-lg);
+  line-height: var(--vpm-unwined-lh-loose);
+  letter-spacing: normal;
+  text-align: left;
+}
+
+.vpm-unwined .vpm-unwined__body--note {
+  margin-bottom: 0;
+  font-size: var(--vpm-unwined-fs-body);
+  font-style: italic;
+  color: var(--vpm-unwined-gray-600);
+  text-align: center;
+}
+
+/* ---- Sponsors ---- */
+.vpm-unwined .vpm-unwined__sponsors {
+  margin: 0;
+  padding: var(--vpm-unwined-space-6) 0 0;
+  border-top: 1px solid var(--vpm-unwined-gray-200);
+}
+
+.vpm-unwined .vpm-unwined__sponsors-label {
+  margin: 0 0 var(--vpm-unwined-space-5);
+  padding: 0;
+  font-size: var(--vpm-unwined-fs-eyebrow);
+  font-weight: 700;
+  line-height: var(--vpm-unwined-lh-snug);
+  letter-spacing: var(--vpm-unwined-tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--vpm-unwined-gray-600);
+}
+
+/* Flex row, not a layout table: the old <table width="50%"> couldn't reflow
+   and forced both sponsors to share a fixed two-column grid on phones. */
+.vpm-unwined .vpm-unwined__sponsor-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--vpm-unwined-space-5) var(--vpm-unwined-space-7);
+  margin: 0 0 var(--vpm-unwined-space-5);
+  padding: 0;
+  list-style: none;
+}
+
+.vpm-unwined .vpm-unwined__sponsor {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex: 0 1 auto;
+  max-width: 100%;
+}
+
+.vpm-unwined .vpm-unwined__sponsor::marker { content: none; }
+
+.vpm-unwined .vpm-unwined__sponsor-name {
+  margin: 0;
+  padding: 0;
+  font-size: var(--vpm-unwined-fs-h2);
+  font-weight: 700;
+  line-height: var(--vpm-unwined-lh-snug);
+  letter-spacing: normal;
+  color: var(--vpm-unwined-dark-blue);
+}
+
+.vpm-unwined .vpm-unwined__sponsor-role {
+  margin: var(--vpm-unwined-space-2) 0 0;
+  padding: 0;
+  font-size: var(--vpm-unwined-fs-body-sm);
+  line-height: var(--vpm-unwined-lh-normal);
+  letter-spacing: normal;
+  color: var(--vpm-unwined-gray-600);
+}
+
+.vpm-unwined .vpm-unwined__sponsor-link {
+  display: inline-block;
+  line-height: 0; /* kills the inline-image descender gap */
+}
+
+/* Scoped to the widget. The block this replaces used a bare `img` selector in
+   a page-level <style>, which restyled every image on the page. */
+.vpm-unwined .vpm-unwined__sponsor-logo {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 120px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.vpm-unwined .vpm-unwined__become {
+  margin: 0;
+  padding: 0;
+  font-size: var(--vpm-unwined-fs-caption);
+  line-height: var(--vpm-unwined-lh-normal);
+  letter-spacing: normal;
+}
+
+/* ---- Narrow ---- */
+@container vpm-unwined (max-width: 480px) {
+  .vpm-unwined .vpm-unwined__lockup { font-size: clamp(26px, 8cqw, 34px); }
+  .vpm-unwined .vpm-unwined__sponsor-name { font-size: var(--vpm-unwined-fs-body-lg); }
+  .vpm-unwined .vpm-unwined__sponsor-list { gap: var(--vpm-unwined-space-5); }
+  /* Stack the jump links rather than let them wrap and strand the separator */
+  .vpm-unwined .vpm-unwined__jump { flex-direction: column; gap: var(--vpm-unwined-space-2); }
+  .vpm-unwined .vpm-unwined__jump-sep { display: none; }
+}
+
+/* ---- Motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  .vpm-unwined .vpm-unwined__link,
+  .vpm-unwined .vpm-unwined__lockup-link,
+  .vpm-unwined .vpm-unwined__jump-link { transition: none; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="preview-shell">
+  <p class="preview-label">Full width</p>
+  <div class="preview-stage">
+<!-- VPM Un-Wine'd — episode + sponsors -->
+<!-- Companion block to widgets/links-with-map/, which sits directly below this
+     one on the Un-Wine'd page.
+
+     Per episode, change: the lockup jump links, the player iframe src AND its
+     title, the episode heading, and the two body paragraphs. Sponsors change
+     per underwriting cycle, not per episode.
+
+     No id attributes anywhere: this block may be placed more than once on a
+     page, and duplicate ids are invalid and confuse screen readers. The jump
+     links below target ids that the PAGE owns, not the blocks — see README. -->
+<section class="vpm-unwined" aria-label="Un-Wine'd episode and sponsors">
+
+  <p class="vpm-unwined__lockup">
+    <a class="vpm-unwined__lockup-link" href="https://www.pbs.org/show/unwined/" target="_blank" rel="noopener noreferrer">Stream more</a>
+    <em class="vpm-unwined__show">Un-Wine'd</em>
+  </p>
+
+  <nav class="vpm-unwined__jump" aria-label="Jump to a section of this page">
+    <a class="vpm-unwined__jump-link" href="#recipes">Recipes</a>
+    <span class="vpm-unwined__jump-sep" aria-hidden="true">|</span>
+    <a class="vpm-unwined__jump-link" href="#vineyards">Wineries &amp; Vineyards</a>
+  </nav>
+
+  <div class="vpm-unwined__player">
+    <iframe
+      class="vpm-unwined__frame"
+      src="https://player.pbs.org/viralplayer/3097947935/"
+      title="Un-Wine'd, Season 7 Episode 8: Beliveau Farm Winery — full episode"
+      loading="lazy"
+      allowfullscreen
+    ></iframe>
+  </div>
+
+  <div class="vpm-unwined__episode">
+    <h2 class="vpm-unwined__heading">Beliveau Farm Winery</h2>
+
+    <p class="vpm-unwined__body">
+      In the beautiful valley between Roanoke and Blacksburg is nestled Beliveau Farm
+      featuring a bed and breakfast as well as an exquisite vineyard. Tassie enjoys a
+      chat with owner and winemaker, Yvan Beliveau. In the kitchen, it&rsquo;s Shrimp
+      Stuffed Salmon paired with semi-dry vidal blanc, peppers stuffed with couscous
+      perfect for a cabernet franc, and Blueberry Peach Pie with vidal blanc dessert
+      wine. (Season 7 Episode 8)
+    </p>
+
+    <p class="vpm-unwined__body vpm-unwined__body--note">
+      Watch <em>Un-Wine&rsquo;d</em> on VPM PBS
+      <a class="vpm-unwined__link" href="/watch/tv-schedule">Saturday afternoons</a>.
+      <a class="vpm-unwined__link" href="https://www.pbs.org/show/unwined/" target="_blank" rel="noopener noreferrer"><strong>Stream more episodes</strong></a>
+      now, or get the
+      <a class="vpm-unwined__link" href="https://www.pbs.org/pbs-video-app/" target="_blank" rel="noopener noreferrer">PBS App</a>
+      and watch anywhere, anytime.
+    </p>
+  </div>
+
+  <div class="vpm-unwined__sponsors">
+    <p class="vpm-unwined__sponsors-label">Sponsored by</p>
+
+    <ul class="vpm-unwined__sponsor-list">
+      <li class="vpm-unwined__sponsor">
+        <p class="vpm-unwined__sponsor-name">Cynthia V. Bailey</p>
+        <p class="vpm-unwined__sponsor-role">Major Sponsor</p>
+      </li>
+      <li class="vpm-unwined__sponsor">
+        <a class="vpm-unwined__sponsor-link" href="https://www.virginiawine.org/industry/virginia-wine-board" target="_blank" rel="noopener noreferrer">
+          <img
+            class="vpm-unwined__sponsor-logo"
+            src="https://assets.vpm.org/dims4/default/e554f1d/2147483647/resize/x500%3E/quality/90/?url=https%3A%2F%2Fk1-prod-vpm.s3.amazonaws.com%2Fbrightspot%2F9b%2Ffb%2F418d27f44da29e99ceb7ffff2ada%2Fthumbnail-image001-1.jpg"
+            alt="Virginia Wine Board"
+            width="360"
+            height="183"
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+      </li>
+    </ul>
+
+    <p class="vpm-unwined__become">
+      <a class="vpm-unwined__link" href="/support/business-sponsorship">Become a Sponsor</a>
+    </p>
+  </div>
+
+</section>
+
+  </div>
+</div>
+
+<div class="preview-shell preview-narrow">
+  <p class="preview-label">320px sidebar</p>
+  <div class="preview-stage" data-clone="narrow"></div>
+</div>
+
+<div class="host-probe">
+  <p class="preview-label">Host-owned image outside the block &mdash; must be unaffected by the widget CSS</p>
+  <img src="https://placehold.co/600x120/003865/FFFFFF?text=Host+image" alt="" width="600" height="120" />
+</div>
+
+<script>
+  (function () {
+    var src = document.querySelector('.preview-stage .vpm-unwined');
+    document.querySelectorAll('[data-clone]').forEach(function (stage) {
+      stage.appendChild(src.cloneNode(true));
+    });
+  })();
+</script>
+
+</body>
+</html>
