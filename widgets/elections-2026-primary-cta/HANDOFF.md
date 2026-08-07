@@ -1,16 +1,35 @@
 # Handoff — elections-2026-primary-cta
 
-Going up **Tue, Aug. 4, 2026**, staying up through the results days after.
+**Live in the CMS since Tue, Aug. 4, 2026.** Confirmed by Mark on 2026-08-06.
 
-- [ ] **Swap the placeholder photo.** `html.html` points at `placehold.co` — an external
-      dependency that must not ship. Replace the `src` on `.vpm-elec26cta__img` with a
-      VPM-owned image (16:9 or wider, ~1200px), or delete the whole `<figure>` block for a
-      text-only panel. `alt` stays empty; the image is decorative.
-- [ ] **Run `/ship-widget elections-2026-primary-cta`** — not yet through the CMS harness.
-- [ ] **Paste into the CMS** — `html.html` → ACF HTML field, `css.css` → ACF CSS field.
+## Done
+
+- [x] Ran up on schedule for the Aug. 4 primary.
+- [x] Pasted into the CMS — `html.html` → ACF HTML field, `css.css` → ACF CSS field.
       No JS field needed.
-- [ ] **Push** — commit `d13e89c` is local only.
-- [ ] **Pull it down** once the primary is no longer news.
+- [x] Pushed — `d13e89c` is on `origin/main`.
 
-Keep the copy day-agnostic when editing: it names Aug. 4 as a date rather than saying
-"today" or "tomorrow," which is what lets it run unchanged across multiple days.
+## Still open
+
+- [ ] **Reconcile the repo copy with what actually shipped.** `html.html:14` and
+      `preview.html:291,338` still point at
+      `https://placehold.co/1200x800/003865/FFFFFF?text=Swap+in+VPM+photo`. The live block
+      does not (the photo was swapped at paste time), so **this repo is not a faithful record
+      of the live widget**. Replace the `src` on `.vpm-elec26cta__img` with the real
+      VPM-owned image URL. `alt` stays empty — the image is decorative.
+      `README.md:25` describes the placeholder too and needs the same edit.
+- [ ] **Pull it down** once the primary is no longer news. Copy is day-agnostic (it names
+      Aug. 4 as a date rather than "today"), which is what let it run unchanged across the
+      results days — so there is no hard expiry, but it should not sit on the homepage
+      indefinitely. **Decide and record a date here.**
+
+## Notes
+
+Keep the copy day-agnostic when editing: naming the date rather than saying "today" or
+"tomorrow" is what makes the block safe to leave up across multiple days.
+
+## Session log
+
+- 2026-08-03: Built and hardened against hostile host CSS (`7d3e380`).
+- 2026-08-04: Went live in the CMS with a real photo swapped in at paste time.
+- 2026-08-06: Confirmed live; commit pushed. Repo/live photo divergence logged above.
