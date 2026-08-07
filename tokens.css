@@ -78,9 +78,13 @@
   --pillar-arts:      var(--vpm-yellow);    /* energy, creativity */
   --pillar-education: var(--vpm-light-blue);/* clarity, trust */
 
-  /* ---- Type stack ---- */
+  /* ---- Type stack ----
+     Display face moved to IBM Plex Sans Condensed 2026-08-07: closer to GT
+     America in weight, and it has a real condensed cut. Oswald stays second so
+     anything rendering before the theme loads IBM Plex still looks right.
+     NOTE: IBM Plex Sans Condensed has no 800 weight — cap display type at 700. */
   --font-sans:    'Public Sans', 'GT America', 'Helvetica Neue', Arial, sans-serif;
-  --font-display: 'Oswald', 'GT America Condensed', 'Impact', sans-serif;
+  --font-display: 'IBM Plex Sans Condensed', 'Oswald', 'GT America Condensed', 'Arial Narrow', sans-serif;
   --font-serif:   'Times New Roman', Times, serif;
   --font-mono:    ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
 
