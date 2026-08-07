@@ -196,9 +196,33 @@
     }
   }
 
+  // Scenario 8: a widget that loads a third-party script (AP's resizeClient, a
+  // chart vendor, a player SDK) must load it ONCE per page, not once per copy
+  // and not again on every re-render. A bare <script src> appended on each
+  // injection stacks duplicate listeners and re-runs vendor init; the fix is a
+  // querySelector guard before appending. Counts by src so two copies of the
+  // widget sharing one vendor script reads as correct, not as a miss.
+  function auditExternalScripts(baseline) {
+    const srcs = [...document.querySelectorAll('script[src]')]
+      .map(s => s.src)
+      .filter(src => !baseline.has(src));
+    if (!srcs.length) { log('Widget loads no external scripts.'); return; }
+    const counts = srcs.reduce((m, s) => (m[s] = (m[s] || 0) + 1, m), {});
+    for (const [src, n] of Object.entries(counts)) {
+      const name = src.split('/').pop();
+      if (n > 1) {
+        log(`✗ External script "${name}" loaded ${n}× — guard the append with a querySelector check, or it re-runs on every re-render.`, 'err');
+      } else {
+        log(`External script "${name}" loaded once across both copies + re-render.`);
+      }
+    }
+  }
+
   async function run() {
     logEl.innerHTML = '';
     status('loading…');
+    // Snapshot the host page's own scripts so Scenario 8 only counts the widget's.
+    const scriptBaseline = new Set([...document.querySelectorAll('script[src]')].map(s => s.src));
     payload = await fetchWidget();
     if (!payload) return;
 
@@ -218,6 +242,8 @@
         inject(payload, main, 'main');
         log('Re-render done. Check: no double-init, listeners still work.');
         auditDuplicateIds();
+        // Vendor scripts load async — give them a beat to actually land.
+        setTimeout(() => auditExternalScripts(scriptBaseline), 1500);
         status('re-rendered — verify manually');
       }, 3000);
     }, HYDRATION_DELAY);

@@ -28,5 +28,6 @@ the widget.
 5. **Narrow container** — second copy rendered in a 320px sidebar
 6. **JS error surfacing** — widget errors appear in the on-screen log
 7. **Duplicate id audit** — the two copies are scanned for repeated `id`s after re-render. Any id inside a widget breaks the moment the block is placed twice on one page (invalid HTML; `aria-labelledby` resolves to the wrong element)
+8. **Duplicate external script audit** — `<script src>` tags the widget adds are counted by URL after re-render. A vendor script (AP's resizer, a chart library, a player SDK) appended without a `querySelector` guard loads once per copy *and* again on every re-render, stacking duplicate listeners and re-running vendor init. Host-page scripts are excluded via a baseline snapshot, so two widget copies sharing one guarded vendor script reads as a pass
 
 Toolbar buttons let you re-run any scenario manually. Run `/ship-widget SLUG` in Claude Code for the full guided pre-deploy check.
