@@ -27,26 +27,26 @@
 }
 
 .vpm-vhg-widget {
-  font-family: 'Barlow', Arial, sans-serif;
+  font-family: 'Public Sans', Arial, sans-serif;
   color: var(--vpm-black);
 }
 
 .vpm-vhg__badge {
   display: inline-block;
-  font-family: 'Barlow Condensed', Arial, sans-serif;
-  font-size: 12px;
+  font-family: 'Oswald', Arial, sans-serif;
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   background: var(--vhg-green-dark);
   color: #fff;
-  padding: 5px 12px;
+  padding: 4px 10px;
   border-radius: var(--radius-md);
   margin-bottom: 14px;
 }
 
 .vpm-vhg__input {
-  font-family: 'Barlow', Arial, sans-serif;
+  font-family: 'Public Sans', Arial, sans-serif;
   font-size: 15px;
   width: 100%;
   padding: 13px 16px;
@@ -60,7 +60,7 @@
 .vpm-vhg__input:focus { border-color: var(--vhg-green); }
 
 .vpm-vhg__btn {
-  font-family: 'Barlow Condensed', Arial, sans-serif;
+  font-family: 'Oswald', Arial, sans-serif;
   font-size: 15px;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -80,7 +80,7 @@
 .vpm-vhg__privacy { font-size: 12px; color: #777; margin-top: 12px; line-height: 1.5; }
 .vpm-vhg__privacy--dark { color: rgba(255,255,255,0.75); }
 
-.vpm-vhg__headline { font-family: 'Barlow Condensed', Arial, sans-serif; font-weight: 800; text-transform: uppercase; line-height: 1.1; }
+.vpm-vhg__headline { font-family: 'Oswald', Arial, sans-serif; font-weight: 700; text-transform: uppercase; line-height: 1.1; }
 .vpm-vhg__headline em { font-style: normal; color: var(--vhg-green-dark); }
 
 /* ── FULL (split panel, matches Figma) ── */
@@ -99,7 +99,7 @@
   justify-content: center;
 }
 .vpm-vhg__full-left .vpm-vhg__headline { font-size: 30px; color: #fff; margin-bottom: 12px; }
-.vpm-vhg__full-left p { color: rgba(255,255,255,0.92); font-size: 15px; line-height: 1.5; max-width: 340px; }
+.vpm-vhg__full-left p { color: rgba(255,255,255,0.92); font-size: 15px; line-height: 1.5; max-width: 340px; text-align: left; }
 .vpm-vhg__full-right {
   background: #fff;
   padding: 48px;
@@ -118,7 +118,7 @@
   padding: 28px 32px;
 }
 .vpm-vhg__inline .vpm-vhg__headline { font-size: 22px; color: #fff; margin-bottom: 6px; }
-.vpm-vhg__inline p { font-size: 14px; color: rgba(255,255,255,0.9); margin-bottom: 14px; max-width: 620px; }
+.vpm-vhg__inline p { font-size: 14px; color: rgba(255,255,255,0.9); margin-bottom: 14px; max-width: 620px; text-align: left; font-weight: 600; }
 .vpm-vhg__inline-row { display: flex; gap: 10px; max-width: 620px; }
 .vpm-vhg__inline-row .vpm-vhg__input { flex: 1; }
 .vpm-vhg__inline-row .vpm-vhg__btn { width: auto; }
@@ -135,7 +135,7 @@
   padding: 24px 24px 20px;
 }
 .vpm-vhg__sidebar-top .vpm-vhg__headline { font-size: 20px; color: #fff; margin-bottom: 8px; }
-.vpm-vhg__sidebar-top p { font-size: 13px; color: rgba(255,255,255,0.9); line-height: 1.5; }
+.vpm-vhg__sidebar-top p { font-size: 13px; color: rgba(255,255,255,0.9); line-height: 1.5; text-align: left; }
 .vpm-vhg__sidebar-bottom {
   background: #fff;
   padding: 20px 24px 24px;

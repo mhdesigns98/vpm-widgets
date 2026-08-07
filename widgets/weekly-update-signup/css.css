@@ -13,6 +13,7 @@
   --vpm-light-blue: #6CACE4;
   --wu-bg:     #0F3865;
   --wu-yellow: #DEE22B;
+  --vpm-yellow: #E0E721;
   --radius-md: 4px;
   --shadow-md: 0 8px 24px rgba(0,0,0,0.12);
 }
@@ -28,12 +29,12 @@
 }
 
 .vpm-wu-widget {
-  font-family: 'Barlow', Arial, sans-serif;
+  font-family: 'Public Sans', Arial, sans-serif;
   color: var(--vpm-black);
 }
 
 .vpm-wu__input {
-  font-family: 'Barlow', Arial, sans-serif;
+  font-family: 'Public Sans', Arial, sans-serif;
   font-size: 15px;
   width: 100%;
   padding: 13px 16px;
@@ -47,7 +48,7 @@
 .vpm-wu__input:focus { border-color: var(--wu-bg); }
 
 .vpm-wu__btn {
-  font-family: 'Barlow Condensed', Arial, sans-serif;
+  font-family: 'Oswald', Arial, sans-serif;
   font-size: 15px;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -79,7 +80,7 @@
 
 .vpm-wu__eyebrow {
   display: inline-block;
-  font-family: 'Barlow Condensed', Arial, sans-serif;
+  font-family: 'Oswald', Arial, sans-serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -89,6 +90,11 @@
   padding: 5px 12px;
   border-radius: var(--radius-md);
   margin-bottom: 14px;
+}
+
+.vpm-wu__inline .vpm-wu__eyebrow {
+  background: var(--vpm-yellow);
+  color: var(--wu-bg);
 }
 
 .vpm-wu__headline em { font-style: normal; color: var(--wu-yellow); }
@@ -108,8 +114,8 @@
 .vpm-wu__full img { max-width: 220px; }
 .vpm-wu__full-content { display: flex; flex-direction: column; gap: 14px; }
 .vpm-wu__full-content h2 {
-  font-family: 'Barlow Condensed', Arial, sans-serif;
-  font-weight: 800;
+  font-family: 'Oswald', Arial, sans-serif;
+  font-weight: 700;
   font-size: 26px;
   color: #fff;
   text-transform: uppercase;
@@ -126,14 +132,14 @@
   padding: 28px 32px;
 }
 .vpm-wu__inline h3 {
-  font-family: 'Barlow Condensed', Arial, sans-serif;
-  font-weight: 800;
+  font-family: 'Oswald', Arial, sans-serif;
+  font-weight: 700;
   font-size: 20px;
   color: #fff;
   text-transform: uppercase;
   margin-bottom: 6px;
 }
-.vpm-wu__inline p { font-size: 14px; color: rgba(255,255,255,0.85); margin-bottom: 14px; max-width: 620px; }
+.vpm-wu__inline p { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.85); margin-bottom: 14px; max-width: 620px; }
 .vpm-wu__inline-row { display: flex; gap: 10px; max-width: 620px; }
 .vpm-wu__inline-row .vpm-wu__input { flex: 1; }
 .vpm-wu__inline-row .vpm-wu__btn { width: auto; }
@@ -151,8 +157,8 @@
 }
 .vpm-wu__sidebar-top img { max-width: 180px; margin-bottom: 12px; }
 .vpm-wu__sidebar-top h3 {
-  font-family: 'Barlow Condensed', Arial, sans-serif;
-  font-weight: 800;
+  font-family: 'Oswald', Arial, sans-serif;
+  font-weight: 700;
   font-size: 20px;
   color: #fff;
   text-transform: uppercase;
