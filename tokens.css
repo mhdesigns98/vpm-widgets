@@ -6,10 +6,11 @@
 
 /* ---- Webfonts ----
    NOTE: VPM's primary brand typeface is GT America (paid, Grilli Type).
-   We substitute Inter (sans) + Oswald (condensed display) from Google Fonts.
+   We substitute Public Sans (sans) + Oswald (condensed display) from Google Fonts.
    Upload GT America .woff2 files to replace these.
+   Public Sans replaced Inter as the body substitute per Leandra, 2026-08-03.
 */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Oswald:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800;900&family=Oswald:wght@500;600;700&display=swap');
 
 :root {
   /* ---- Brand Core Palette (from VPM brand guide) ---- */
@@ -78,7 +79,7 @@
   --pillar-education: var(--vpm-light-blue);/* clarity, trust */
 
   /* ---- Type stack ---- */
-  --font-sans:    'Inter', 'GT America', 'Helvetica Neue', Arial, sans-serif;
+  --font-sans:    'Public Sans', 'GT America', 'Helvetica Neue', Arial, sans-serif;
   --font-display: 'Oswald', 'GT America Condensed', 'Impact', sans-serif;
   --font-serif:   'Times New Roman', Times, serif;
   --font-mono:    ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
