@@ -151,8 +151,15 @@
   .vpm-wu__sidebar-top {
     background: var(--wu-bg);
     padding: 24px 24px 20px;
+    text-align: center;
   }
-  .vpm-wu__sidebar-top img { max-width: 180px; margin-bottom: 12px; }
+  .vpm-wu__sidebar-badge {
+    background: #fff;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .vpm-wu__sidebar-badge img { display: block; width: 100%; }
   .vpm-wu__sidebar-top h3 {
     font-family: 'Oswald', sans-serif;
     font-weight: 700;
@@ -160,6 +167,7 @@
     color: #fff;
     text-transform: uppercase;
     line-height: 1.15;
+    text-align: left;
   }
   .vpm-wu__sidebar-bottom {
     background: #fff;
@@ -205,7 +213,9 @@
 <div class="vpm-wu__section-label">Sidebar</div>
 <div class="vpm-wu__sidebar">
   <div class="vpm-wu__sidebar-top">
-    <img src="https://mhdesigns98.github.io/vpm-widgets/widgets/weekly-update-signup/assets/weekly-update-lockup.png" alt="VPM Weekly Update" />
+    <div class="vpm-wu__sidebar-badge">
+      <img src="https://mhdesigns98.github.io/vpm-widgets/widgets/weekly-update-signup/assets/weekly-update-lockup.svg" alt="VPM Weekly Update" />
+    </div>
     <h3 class="vpm-wu__headline">Arts &amp; Culture, News and Education, <em>Weekly</em></h3>
   </div>
   <div class="vpm-wu__sidebar-bottom">

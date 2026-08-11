@@ -154,8 +154,15 @@
 .vpm-wu__sidebar-top {
   background: var(--wu-bg);
   padding: 24px 24px 20px;
+  text-align: center;
 }
-.vpm-wu__sidebar-top img { max-width: 180px; margin-bottom: 12px; }
+.vpm-wu__sidebar-badge {
+  background: #fff;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.vpm-wu__sidebar-badge img { display: block; width: 100%; }
 .vpm-wu__sidebar-top h3 {
   font-family: 'Oswald', Arial, sans-serif;
   font-weight: 700;
@@ -163,6 +170,7 @@
   color: #fff;
   text-transform: uppercase;
   line-height: 1.15;
+  text-align: left;
 }
 .vpm-wu__sidebar-bottom {
   background: var(--wu-bg);
