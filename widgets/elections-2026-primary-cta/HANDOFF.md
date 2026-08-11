@@ -1,6 +1,8 @@
 # Handoff — elections-2026-primary-cta
 
-**Live in the CMS since Tue, Aug. 4, 2026.** Confirmed by Mark on 2026-08-06.
+*Status: shipped — live in the CMS since Tue, Aug. 4, 2026, and still up. Time-sensitive: needs a takedown date (see Still open).*
+*Last updated: 2026-08-10 · Last verified: 2026-08-06 — Mark confirmed it live in the CMS by eye. Not re-checked since.*
+*Live vs repo: **diverged.** The live block uses a real VPM photo swapped in at paste time; the repo still holds a placehold.co URL. The repo is not a faithful record of what shipped — see Still open.*
 
 ## Done
 

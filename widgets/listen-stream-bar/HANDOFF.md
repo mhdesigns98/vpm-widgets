@@ -1,7 +1,9 @@
 # Listen Stream Bar — Handoff
-*Last updated: 2026-08-06 · **PARKED** — code is done and pushed; blocked on Mark supplying the real stream URLs.*
+*Status: parked — code is done and pushed; blocked on Mark supplying the four real stream/podcast URLs.*
+*Last updated: 2026-08-06 · Last verified: unverified — never run through `/ship-widget`, so no CMS-harness or accessibility pass has happened.*
+*Live vs repo: repo only — the widget is on `origin/main` (`6274b4d`) but has never been pasted into the CMS. Nothing about it is live.*
 
-## Status: parked
+## Why it's parked
 
 Built 2026-07-16, then sat untouched for three weeks. Nothing is wrong with it — it is
 waiting on one input only: **the four real stream/podcast URLs**, which only Mark can
@@ -30,7 +32,7 @@ pushed 2026-08-06). It's a self-contained WordPress HTML-block embed: a horizont
 
 ## Gotchas / things that will bite you
 - Eyebrow label text is undecided — "Listen now" is current; alternatives floated were "Jump to" or no label at all.
-- Widget Lab rule: components live ONLY in `~/Projects/vpm-widgets/`. The old `vpm-component-library` is deprecated/archived — never save there.
+- Widget Lab rule: components live ONLY in `~/Projects/vpm/vpm-widgets/` (under the `vpm/` category folder — not flat in `~/Projects`). The old `vpm-component-library` is deprecated/archived — never save there.
 
 ## Key files
 - `widgets/listen-stream-bar/index.html` — the widget (scoped `.vpm-streambar__*`, tokens inlined)
