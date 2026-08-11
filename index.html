@@ -559,8 +559,7 @@ body {
   }
 
   function shareUrl(w) {
-    const base = window.location.href.split('#')[0].replace(/\/?$/, '/');
-    return base + widgetPath(w.slug, w.preview);
+    return new URL(widgetPath(w.slug, w.preview), document.baseURI).href;
   }
 
   function flash(btn, msg) {
