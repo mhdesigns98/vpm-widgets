@@ -17,6 +17,7 @@ so they don't collide. Kept out of `CLAUDE.md` so it isn't loaded into context o
 | `vpm-morning-monitor-popup/` | Morning Monitor signup popup — Shadow DOM modal with time / scroll / exit-intent triggers and localStorage cooldowns, POSTs to Mailchimp via JSONP (GTM-deployed, not a CMS block) |
 | `weekly-update-signup/` | Weekly Update newsletter signup embed (Full/Inline/Sidebar), POSTs directly to Mailchimp via JSONP with in-page confirmation — no backend |
 | `virginia-home-grown-signup/` | Virginia Home Grown newsletter signup embed (Full/Inline/Sidebar), POSTs directly to Mailchimp via JSONP with in-page confirmation — no backend |
+| `newsletter-signup-cta/` | Compact inline CTA banner linking out to the combined newsletter signup page (vpm.org/stay-connected-to-what-matters); for reuse across many pages that shouldn't embed the full form (WordPress ACF split-file format, namespace `vpm-nlcta-`, no JS) |
 | `listen-stream-bar/` | Quick-access audio stream bar for the Listen page — eyebrow label + four stream/podcast buttons on VPM dark blue (WordPress HTML block) |
 | `unwined-episode/` | Un-Wine'd page upper section — "Stream more" lockup, jump links, PBS viral player, episode write-up, sponsor row; pairs with `links-with-map/` below it (WordPress ACF split-file format, no JS) |
 | `links-with-map/` | Reusable map-beside-directory block — Google My Maps embed + multi-column outbound link list; first instance is Virginia wineries A–Z (WordPress ACF split-file format, no JS) |

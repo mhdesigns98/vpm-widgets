@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VPM Newsletters — Inline CTA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; padding: 40px 24px; background: #F2F3F4; font-family: 'Inter', system-ui, sans-serif; }
+  .preview-shell { max-width: 1000px; margin: 0 auto 48px; }
+  .preview-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #7B8591; margin: 0 0 12px; }
+  .preview-narrow { max-width: 320px; }
+/* ============================================
+   VPM Newsletters — Inline CTA banner
+   Namespace: vpm-nlcta-
+   Tokens inlined from tokens.css (widget must stay self-contained)
+   ============================================ */
+
+.vpm-nlcta {
+  /* Brand core */
+  --vpm-nlcta-dark-blue:  #003865;
+  --vpm-nlcta-blue-900:   #002244;
+  --vpm-nlcta-light-blue: #6CACE4;
+  --vpm-nlcta-yellow:     #E0E721;
+  --vpm-nlcta-white:      #FFFFFF;
+  --vpm-nlcta-on-dark-muted: #B9C8D8;
+
+  /* Type */
+  --vpm-nlcta-font: 'Inter', 'GT America', 'Helvetica Neue', Arial, sans-serif;
+  --vpm-nlcta-fs-h2: clamp(20px, 2vw, 26px);
+  --vpm-nlcta-fs-body: 15px;
+  --vpm-nlcta-fs-eyebrow: 12px;
+  --vpm-nlcta-lh-snug: 1.2;
+  --vpm-nlcta-lh-loose: 1.55;
+  --vpm-nlcta-tracking-eyebrow: 0.12em;
+
+  /* Space / shape / motion */
+  --vpm-nlcta-space-2: 8px;
+  --vpm-nlcta-space-3: 12px;
+  --vpm-nlcta-space-4: 16px;
+  --vpm-nlcta-space-5: 24px;
+  --vpm-nlcta-space-6: 32px;
+  --vpm-nlcta-radius-md: 4px;
+  --vpm-nlcta-shadow-md: 0 8px 24px rgba(16, 24, 32, 0.10);
+  --vpm-nlcta-shadow-focus: 0 0 0 3px rgba(108, 172, 228, 0.55);
+  --vpm-nlcta-ease: cubic-bezier(0.2, 0, 0, 1);
+  --vpm-nlcta-dur-fast: 120ms;
+  --vpm-nlcta-dur-base: 200ms;
+
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: var(--vpm-nlcta-font);
+  background: var(--vpm-nlcta-dark-blue);
+  overflow: hidden;
+  position: relative;
+  isolation: isolate;
+
+  container-type: inline-size;
+  container-name: vpm-nlcta;
+}
+
+.vpm-nlcta *,
+.vpm-nlcta *::before,
+.vpm-nlcta *::after { box-sizing: border-box; }
+
+.vpm-nlcta .vpm-nlcta__bar {
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg,
+    var(--vpm-nlcta-light-blue) 0%,
+    var(--vpm-nlcta-light-blue) 50%,
+    var(--vpm-nlcta-yellow)     50%,
+    var(--vpm-nlcta-yellow)     100%);
+}
+
+.vpm-nlcta .vpm-nlcta__row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--vpm-nlcta-space-4);
+  padding: var(--vpm-nlcta-space-5);
+}
+
+.vpm-nlcta .vpm-nlcta__copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vpm-nlcta-space-2);
+}
+
+.vpm-nlcta .vpm-nlcta__eyebrow {
+  margin: 0;
+  font-size: var(--vpm-nlcta-fs-eyebrow);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--vpm-nlcta-tracking-eyebrow);
+  color: var(--vpm-nlcta-yellow);
+  line-height: 1.3;
+}
+
+.vpm-nlcta .vpm-nlcta__title {
+  margin: 0;
+  font-family: var(--vpm-nlcta-font);
+  font-size: var(--vpm-nlcta-fs-h2);
+  font-weight: 800;
+  line-height: var(--vpm-nlcta-lh-snug);
+  letter-spacing: -0.01em;
+  color: var(--vpm-nlcta-white);
+  text-wrap: balance;
+  text-transform: none;
+}
+
+.vpm-nlcta .vpm-nlcta__body {
+  margin: 0;
+  max-width: 60ch;
+  font-size: var(--vpm-nlcta-fs-body);
+  font-weight: 400;
+  line-height: var(--vpm-nlcta-lh-loose);
+  color: var(--vpm-nlcta-on-dark-muted);
+  text-wrap: pretty;
+}
+
+.vpm-nlcta .vpm-nlcta__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--vpm-nlcta-space-2);
+  flex-shrink: 0;
+  padding: var(--vpm-nlcta-space-3) var(--vpm-nlcta-space-5);
+  background: var(--vpm-nlcta-light-blue);
+  color: var(--vpm-nlcta-blue-900) !important;
+  font-family: var(--vpm-nlcta-font);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-decoration: none !important;
+  border: 0;
+  border-radius: var(--vpm-nlcta-radius-md);
+  white-space: nowrap;
+  transition:
+    background-color var(--vpm-nlcta-dur-fast) var(--vpm-nlcta-ease),
+    transform var(--vpm-nlcta-dur-base) var(--vpm-nlcta-ease),
+    box-shadow var(--vpm-nlcta-dur-base) var(--vpm-nlcta-ease);
+}
+
+.vpm-nlcta .vpm-nlcta__link:hover,
+.vpm-nlcta .vpm-nlcta__link:focus-visible {
+  background: var(--vpm-nlcta-white);
+  color: var(--vpm-nlcta-blue-900) !important;
+  text-decoration: none !important;
+  transform: translateY(-2px);
+  box-shadow: var(--vpm-nlcta-shadow-md);
+}
+
+.vpm-nlcta .vpm-nlcta__link:focus-visible {
+  outline: 2px solid var(--vpm-nlcta-white);
+  outline-offset: 2px;
+  box-shadow: var(--vpm-nlcta-shadow-focus);
+}
+
+.vpm-nlcta .vpm-nlcta__arrow {
+  transition: transform var(--vpm-nlcta-dur-base) var(--vpm-nlcta-ease);
+}
+
+.vpm-nlcta .vpm-nlcta__link:hover .vpm-nlcta__arrow,
+.vpm-nlcta .vpm-nlcta__link:focus-visible .vpm-nlcta__arrow {
+  transform: translateX(3px);
+}
+
+@container vpm-nlcta (min-width: 640px) {
+  .vpm-nlcta .vpm-nlcta__row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--vpm-nlcta-space-6);
+  }
+}
+
+@supports not (container-type: inline-size) {
+  @media (min-width: 640px) {
+    .vpm-nlcta .vpm-nlcta__row {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--vpm-nlcta-space-6);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vpm-nlcta .vpm-nlcta__link,
+  .vpm-nlcta .vpm-nlcta__arrow {
+    transition: none;
+  }
+  .vpm-nlcta .vpm-nlcta__link:hover,
+  .vpm-nlcta .vpm-nlcta__link:focus-visible {
+    transform: none;
+  }
+  .vpm-nlcta .vpm-nlcta__link:hover .vpm-nlcta__arrow,
+  .vpm-nlcta .vpm-nlcta__link:focus-visible .vpm-nlcta__arrow {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .vpm-nlcta .vpm-nlcta__link { border: 1px solid currentColor; }
+}
+</style>
+</head>
+<body>
+
+<div class="preview-shell">
+  <p class="preview-label">Inline CTA — full width</p>
+<!-- VPM Newsletters — Inline CTA banner -->
+<!-- No id attributes anywhere: this block may be placed more than once on a
+     page, and duplicate ids are invalid and confuse screen readers. -->
+<section class="vpm-nlcta">
+  <div class="vpm-nlcta__bar" aria-hidden="true"></div>
+
+  <div class="vpm-nlcta__row">
+    <div class="vpm-nlcta__copy">
+      <p class="vpm-nlcta__eyebrow">VPM Newsletters</p>
+      <h2 class="vpm-nlcta__title">Get VPM stories in your inbox</h2>
+      <p class="vpm-nlcta__body">
+        Choose from Morning Monitor, Weekly Update, Virginia Home Grown and more —
+        local news and can't-miss content, delivered on your schedule.
+      </p>
+    </div>
+
+    <a class="vpm-nlcta__link" href="https://www.vpm.org/stay-connected-to-what-matters">
+      Sign up for newsletters
+      <span class="vpm-nlcta__arrow" aria-hidden="true">&rarr;</span>
+    </a>
+  </div>
+</section>
+
+</div>
+
+<div class="preview-shell preview-narrow">
+  <p class="preview-label">320px column</p>
+<!-- VPM Newsletters — Inline CTA banner -->
+<!-- No id attributes anywhere: this block may be placed more than once on a
+     page, and duplicate ids are invalid and confuse screen readers. -->
+<section class="vpm-nlcta">
+  <div class="vpm-nlcta__bar" aria-hidden="true"></div>
+
+  <div class="vpm-nlcta__row">
+    <div class="vpm-nlcta__copy">
+      <p class="vpm-nlcta__eyebrow">VPM Newsletters</p>
+      <h2 class="vpm-nlcta__title">Get VPM stories in your inbox</h2>
+      <p class="vpm-nlcta__body">
+        Choose from Morning Monitor, Weekly Update, Virginia Home Grown and more —
+        local news and can't-miss content, delivered on your schedule.
+      </p>
+    </div>
+
+    <a class="vpm-nlcta__link" href="https://www.vpm.org/stay-connected-to-what-matters">
+      Sign up for newsletters
+      <span class="vpm-nlcta__arrow" aria-hidden="true">&rarr;</span>
+    </a>
+  </div>
+</section>
+
+</div>
+
+</body>
+</html>
