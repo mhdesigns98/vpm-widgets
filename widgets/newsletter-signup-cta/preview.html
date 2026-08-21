@@ -12,6 +12,7 @@
   .preview-shell { max-width: 1000px; margin: 0 auto 48px; }
   .preview-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #7B8591; margin: 0 0 12px; }
   .preview-narrow { max-width: 320px; }
+  .preview-article { max-width: 700px; }
 /* ============================================
    VPM Newsletters — Inline CTA banner
    Namespace: vpm-nlcta-
@@ -89,6 +90,8 @@
 .vpm-nlcta .vpm-nlcta__copy {
   display: flex;
   flex-direction: column;
+  flex: 1 1 auto;
+  min-width: 0;
   gap: var(--vpm-nlcta-space-2);
 }
 
@@ -215,6 +218,33 @@
 
 <div class="preview-shell">
   <p class="preview-label">Inline CTA — full width</p>
+<!-- VPM Newsletters — Inline CTA banner -->
+<!-- No id attributes anywhere: this block may be placed more than once on a
+     page, and duplicate ids are invalid and confuse screen readers. -->
+<section class="vpm-nlcta">
+  <div class="vpm-nlcta__bar" aria-hidden="true"></div>
+
+  <div class="vpm-nlcta__row">
+    <div class="vpm-nlcta__copy">
+      <p class="vpm-nlcta__eyebrow">VPM Newsletters</p>
+      <h2 class="vpm-nlcta__title">Get VPM stories in your inbox</h2>
+      <p class="vpm-nlcta__body">
+        Choose from Morning Monitor, Weekly Update, Virginia Home Grown and more —
+        local news and can't-miss content, delivered on your schedule.
+      </p>
+    </div>
+
+    <a class="vpm-nlcta__link" href="https://www.vpm.org/stay-connected-to-what-matters">
+      Sign up for newsletters
+      <span class="vpm-nlcta__arrow" aria-hidden="true">&rarr;</span>
+    </a>
+  </div>
+</section>
+
+</div>
+
+<div class="preview-shell preview-article">
+  <p class="preview-label">700px column (typical article width)</p>
 <!-- VPM Newsletters — Inline CTA banner -->
 <!-- No id attributes anywhere: this block may be placed more than once on a
      page, and duplicate ids are invalid and confuse screen readers. -->
