@@ -1,309 +1,380 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PBS Show Playlist</title>
-<style>
-/* ── VPM tokens ────────────────────────────────────────────────── */
-:root {
-  --vpm-dark-blue:  #003865;
-  --vpm-light-blue: #6CACE4;
-  --vpm-yellow:     #E0E721;
-  --vpm-black:      #101820;
-  --vpm-white:      #FFFFFF;
-  --vpm-gray-600:   #5A6470;
-  --vpm-gray-300:   #D1D3D4;
-  --vpm-gray-100:   #F2F3F4;
-  --font-sans:      'Public Sans', 'Helvetica Neue', Arial, sans-serif;
-  --font-display:   'Oswald', Impact, sans-serif;
-  --radius-md:      4px;
-  --dur-base:       200ms;
-}
-
-/* ── Reset ─────────────────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-/* ── Widget shell ──────────────────────────────────────────────── */
-.vpm-psp {
-  font-family: var(--font-sans);
-  background: var(--vpm-dark-blue);
-  color: var(--vpm-white);
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-/* ── Main player ───────────────────────────────────────────────── */
-.vpm-psp__player-wrap {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background: #000;
-}
-.vpm-psp__player-wrap iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-}
-.vpm-psp__player-loading {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #000;
-  color: var(--vpm-gray-300);
-  font-size: 14px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  transition: opacity var(--dur-base);
-}
-.vpm-psp__player-loading[hidden] { display: none; }
-
-/* ── Now-playing label ─────────────────────────────────────────── */
-.vpm-psp__now-playing {
-  padding: 10px 16px 8px;
-  border-bottom: 1px solid rgba(255,255,255,0.12);
-}
-.vpm-psp__now-playing-label {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--vpm-yellow);
-  margin-bottom: 2px;
-}
-.vpm-psp__now-playing-title {
-  font-family: var(--font-display);
-  font-size: 17px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  color: var(--vpm-white);
-  line-height: 1.2;
-}
-
-/* ── Thumbnail strip ───────────────────────────────────────────── */
-.vpm-psp__strip {
-  display: flex;
-  gap: 0;
-  overflow-x: auto;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255,255,255,0.2) transparent;
-  -webkit-overflow-scrolling: touch;
-}
-.vpm-psp__strip::-webkit-scrollbar { height: 4px; }
-.vpm-psp__strip::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
-
-.vpm-psp__thumb {
-  flex: 0 0 20%;
-  min-width: 140px;
-  cursor: pointer;
-  background: none;
-  border: none;
-  border-right: 1px solid rgba(255,255,255,0.1);
-  border-top: 3px solid transparent;
-  padding: 0;
-  text-align: left;
-  transition: background var(--dur-base), border-top-color var(--dur-base);
-}
-.vpm-psp__thumb:last-child { border-right: 0; }
-.vpm-psp__thumb:hover { background: rgba(255,255,255,0.06); }
-.vpm-psp__thumb:focus-visible {
-  outline: 2px solid var(--vpm-yellow);
-  outline-offset: -2px;
-}
-.vpm-psp__thumb[aria-pressed="true"] {
-  border-top-color: var(--vpm-yellow);
-  background: rgba(255,255,255,0.08);
-}
-.vpm-psp__thumb-img {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  display: block;
-  background: #1a2532;
-}
-.vpm-psp__thumb-info {
-  padding: 8px 10px 10px;
-}
-.vpm-psp__thumb-date {
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--vpm-light-blue);
-  margin-bottom: 3px;
-}
-.vpm-psp__thumb-title {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--vpm-white);
-  line-height: 1.35;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* ── Error state ───────────────────────────────────────────────── */
-.vpm-psp__error {
-  padding: 32px 16px;
-  text-align: center;
-  color: rgba(255,255,255,0.5);
-  font-size: 14px;
-}
-.vpm-psp__error[hidden] { display: none; }
-
-/* ── Reduced motion ────────────────────────────────────────────── */
-@media (prefers-reduced-motion: reduce) {
-  .vpm-psp__thumb, .vpm-psp__player-loading { transition: none; }
-}
-</style>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=Oswald:wght@600&display=swap" rel="stylesheet">
-</head>
-<body style="margin:0;background:#003865;">
-
-<div class="vpm-psp" role="region" aria-label="Virginia Home Grown Episodes">
-
-  <div class="vpm-psp__player-wrap">
-    <div class="vpm-psp__player-loading" aria-live="polite">Loading…</div>
-    <!-- PBS partner player injected by JS -->
-  </div>
-
-  <div class="vpm-psp__now-playing" aria-live="polite">
-    <div class="vpm-psp__now-playing-label">Now Playing</div>
-    <div class="vpm-psp__now-playing-title" id="vpm-psp-title">—</div>
-  </div>
-
-  <div class="vpm-psp__strip" role="list" aria-label="Recent episodes"></div>
-
-  <div class="vpm-psp__error" hidden role="alert">
-    Episodes unavailable right now. Visit <a href="https://www.pbs.org/show/virginia-home-grown/" style="color:var(--vpm-light-blue)">PBS.org</a> to watch.
-  </div>
-
-</div>
-
-<script>
-(function () {
-  /* ── Config — update SHOW_ID and CALLSIGN before deploying ───── */
-  var WORKER_URL  = 'https://pbs-api.vpm-e01.workers.dev/episodes';
-  var SHOW_ID     = 'REPLACE_WITH_SHOW_ID';   /* PBS Media Manager show ID  */
-  var CALLSIGN    = 'VPM';                     /* PBS station callsign       */
-  var PAGE_SIZE   = 5;
-  /* ─────────────────────────────────────────────────────────────── */
-
-  var root        = document.querySelector('.vpm-psp');
-  var playerWrap  = root.querySelector('.vpm-psp__player-wrap');
-  var loadingEl   = root.querySelector('.vpm-psp__player-loading');
-  var strip       = root.querySelector('.vpm-psp__strip');
-  var titleEl     = document.getElementById('vpm-psp-title');
-  var errorEl     = root.querySelector('.vpm-psp__error');
-
-  var episodes    = [];
-  var currentIdx  = 0;
-  var playerIframe = null;
-
-  function buildPlayerUrl(mediaId, autoplay) {
-    return 'https://player.pbs.org/widget/partnerplayer/' + mediaId +
-           '/?callsign=' + CALLSIGN + (autoplay ? '&autoplay=1' : '');
-  }
-
-  function loadEpisode(idx, autoplay) {
-    if (!episodes[idx]) return;
-    currentIdx = idx;
-    var ep = episodes[idx];
-
-    titleEl.textContent = ep.title;
-
-    /* Swap player */
-    if (playerIframe) playerIframe.remove();
-    playerIframe = document.createElement('iframe');
-    playerIframe.src = buildPlayerUrl(ep.mediaId, autoplay);
-    playerIframe.title = ep.title;
-    playerIframe.allow = 'autoplay; fullscreen';
-    playerIframe.setAttribute('allowfullscreen', '');
-    playerWrap.appendChild(playerIframe);
-    loadingEl.hidden = true;
-
-    /* Update thumbnail states */
-    strip.querySelectorAll('.vpm-psp__thumb').forEach(function (btn, i) {
-      btn.setAttribute('aria-pressed', String(i === idx));
-    });
-  }
-
-  function buildStrip() {
-    strip.innerHTML = '';
-    episodes.forEach(function (ep, i) {
-      var btn = document.createElement('button');
-      btn.className = 'vpm-psp__thumb';
-      btn.setAttribute('role', 'listitem');
-      btn.setAttribute('aria-pressed', String(i === 0));
-      btn.setAttribute('aria-label', ep.title);
-      btn.innerHTML =
-        '<img class="vpm-psp__thumb-img" src="' + ep.image + '" alt="" loading="lazy">' +
-        '<div class="vpm-psp__thumb-info">' +
-          '<div class="vpm-psp__thumb-date">' + ep.date + '</div>' +
-          '<div class="vpm-psp__thumb-title">' + ep.title + '</div>' +
-        '</div>';
-      btn.addEventListener('click', function () { loadEpisode(i, false); });
-      strip.appendChild(btn);
-    });
-  }
-
-  function parseEpisodes(data) {
-    /* Adapts PBS Media Manager API v1 episode response */
-    var list = (data && data.data) ? data.data : (data && data.results ? data.results : []);
-    return list.slice(0, PAGE_SIZE).map(function (ep) {
-      var attrs = ep.attributes || ep;
-      var img   = '';
-      var images = attrs.images || [];
-      var mez = images.find(function (i) { return i.profile === 'asset-mezzanine-16x9'; });
-      img = (mez || images[0] || {}).image || '';
-      var rawDate = attrs.encored_on || attrs.premiered_on || '';
-      var date = rawDate ? new Date(rawDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
-      return {
-        title:   attrs.title || 'Untitled Episode',
-        mediaId: attrs.tp_media_object_id || ep.id,
-        image:   img,
-        date:    date,
-      };
-    });
-  }
-
-  /* PBS partner player fires postMessage on video end */
-  window.addEventListener('message', function (e) {
-    try {
-      var msg = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
-      var evt = msg && (msg.event || msg.type || '');
-      if (/complete|end|finish/i.test(evt)) {
-        var next = currentIdx + 1;
-        if (next < episodes.length) loadEpisode(next, true);
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PBS Show Playlist</title>
+    <style>
+      /* ── VPM tokens ────────────────────────────────────────────────── */
+      :root {
+        --vpm-dark-blue: #003865;
+        --vpm-light-blue: #6cace4;
+        --vpm-yellow: #e0e721;
+        --vpm-black: #101820;
+        --vpm-white: #ffffff;
+        --vpm-gray-600: #5a6470;
+        --vpm-gray-300: #d1d3d4;
+        --vpm-gray-100: #f2f3f4;
+        --font-sans: "Public Sans", "Helvetica Neue", Arial, sans-serif;
+        --font-display: "Oswald", Impact, sans-serif;
+        --radius-md: 4px;
+        --dur-base: 200ms;
       }
-    } catch (_) {}
-  });
 
-  /* Fetch from CF Worker */
-  fetch(WORKER_URL + '?show-id=' + encodeURIComponent(SHOW_ID) + '&page-size=' + PAGE_SIZE)
-    .then(function (r) {
-      if (!r.ok) throw new Error(r.status);
-      return r.json();
-    })
-    .then(function (data) {
-      episodes = parseEpisodes(data);
-      if (!episodes.length) throw new Error('empty');
-      buildStrip();
-      loadEpisode(0, false);
-    })
-    .catch(function () {
-      loadingEl.hidden = true;
-      errorEl.hidden = false;
-    });
-})();
-</script>
-</body>
+      /* ── Reset ─────────────────────────────────────────────────────── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* ── Widget shell ──────────────────────────────────────────────── */
+      .vpm-psp {
+        font-family: var(--font-sans);
+        background: var(--vpm-dark-blue);
+        color: var(--vpm-white);
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      /* ── Main player ───────────────────────────────────────────────── */
+      .vpm-psp__player-wrap {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: #000;
+      }
+      .vpm-psp__player-wrap iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+      .vpm-psp__player-loading {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+        color: var(--vpm-gray-300);
+        font-size: 14px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        transition: opacity var(--dur-base);
+      }
+      .vpm-psp__player-loading[hidden] {
+        display: none;
+      }
+
+      /* ── Now-playing label ─────────────────────────────────────────── */
+      .vpm-psp__now-playing {
+        padding: 10px 16px 8px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      }
+      .vpm-psp__now-playing-label {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--vpm-yellow);
+        margin-bottom: 2px;
+      }
+      .vpm-psp__now-playing-title {
+        font-family: var(--font-display);
+        font-size: 17px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        color: var(--vpm-white);
+        line-height: 1.2;
+      }
+
+      /* ── Thumbnail strip ───────────────────────────────────────────── */
+      .vpm-psp__strip {
+        display: flex;
+        gap: 0;
+        overflow-x: auto;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+        -webkit-overflow-scrolling: touch;
+      }
+      .vpm-psp__strip::-webkit-scrollbar {
+        height: 4px;
+      }
+      .vpm-psp__strip::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 2px;
+      }
+
+      .vpm-psp__thumb {
+        flex: 0 0 20%;
+        min-width: 140px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        border-top: 3px solid transparent;
+        padding: 0;
+        text-align: left;
+        transition:
+          background var(--dur-base),
+          border-top-color var(--dur-base);
+      }
+      .vpm-psp__thumb:last-child {
+        border-right: 0;
+      }
+      .vpm-psp__thumb:hover {
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .vpm-psp__thumb:focus-visible {
+        outline: 2px solid var(--vpm-yellow);
+        outline-offset: -2px;
+      }
+      .vpm-psp__thumb[aria-pressed="true"] {
+        border-top-color: var(--vpm-yellow);
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .vpm-psp__thumb-img {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        display: block;
+        background: #1a2532;
+      }
+      .vpm-psp__thumb-info {
+        padding: 8px 10px 10px;
+      }
+      .vpm-psp__thumb-date {
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--vpm-light-blue);
+        margin-bottom: 3px;
+      }
+      .vpm-psp__thumb-title {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--vpm-white);
+        line-height: 1.35;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      /* ── Error state ───────────────────────────────────────────────── */
+      .vpm-psp__error {
+        padding: 32px 16px;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 14px;
+      }
+      .vpm-psp__error[hidden] {
+        display: none;
+      }
+
+      /* ── Reduced motion ────────────────────────────────────────────── */
+      @media (prefers-reduced-motion: reduce) {
+        .vpm-psp__thumb,
+        .vpm-psp__player-loading {
+          transition: none;
+        }
+      }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=Oswald:wght@600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body style="margin: 0; background: #003865">
+    <div
+      class="vpm-psp"
+      role="region"
+      aria-label="Virginia Home Grown Episodes"
+    >
+      <div class="vpm-psp__player-wrap">
+        <div class="vpm-psp__player-loading" aria-live="polite">Loading…</div>
+        <!-- PBS partner player injected by JS -->
+      </div>
+
+      <div class="vpm-psp__now-playing" aria-live="polite">
+        <div class="vpm-psp__now-playing-label">Now Playing</div>
+        <div class="vpm-psp__now-playing-title" id="vpm-psp-title">—</div>
+      </div>
+
+      <div
+        class="vpm-psp__strip"
+        role="list"
+        aria-label="Recent episodes"
+      ></div>
+
+      <div class="vpm-psp__error" hidden role="alert">
+        Episodes unavailable right now. Visit
+        <a
+          href="https://www.pbs.org/show/virginia-home-grown/"
+          style="color: var(--vpm-light-blue)"
+          >PBS.org</a
+        >
+        to watch.
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        /* ── Config — update SHOW_ID and CALLSIGN before deploying ───── */
+        var WORKER_URL = "https://pbs-api.vpm-e01.workers.dev/episodes";
+        var SHOW_ID =
+          "678b37bf-6863-450d-9340-8bdf343f94eb"; /* PBS Media Manager show ID  */
+        var CALLSIGN = "WCVE"; /* PBS station callsign       */
+        var PAGE_SIZE = 5;
+        /* ─────────────────────────────────────────────────────────────── */
+
+        var root = document.querySelector(".vpm-psp");
+        var playerWrap = root.querySelector(".vpm-psp__player-wrap");
+        var loadingEl = root.querySelector(".vpm-psp__player-loading");
+        var strip = root.querySelector(".vpm-psp__strip");
+        var titleEl = document.getElementById("vpm-psp-title");
+        var errorEl = root.querySelector(".vpm-psp__error");
+
+        var episodes = [];
+        var currentIdx = 0;
+        var playerIframe = null;
+
+        function buildPlayerUrl(mediaId, autoplay) {
+          return (
+            "https://player.pbs.org/widget/partnerplayer/" +
+            mediaId +
+            "/?callsign=" +
+            CALLSIGN +
+            (autoplay ? "&autoplay=1" : "")
+          );
+        }
+
+        function loadEpisode(idx, autoplay) {
+          if (!episodes[idx]) return;
+          currentIdx = idx;
+          var ep = episodes[idx];
+
+          titleEl.textContent = ep.title;
+
+          /* Swap player */
+          if (playerIframe) playerIframe.remove();
+          playerIframe = document.createElement("iframe");
+          playerIframe.src = buildPlayerUrl(ep.mediaId, autoplay);
+          playerIframe.title = ep.title;
+          playerIframe.allow = "autoplay; fullscreen";
+          playerIframe.setAttribute("allowfullscreen", "");
+          playerWrap.appendChild(playerIframe);
+          loadingEl.hidden = true;
+
+          /* Update thumbnail states */
+          strip.querySelectorAll(".vpm-psp__thumb").forEach(function (btn, i) {
+            btn.setAttribute("aria-pressed", String(i === idx));
+          });
+        }
+
+        function buildStrip() {
+          strip.innerHTML = "";
+          episodes.forEach(function (ep, i) {
+            var btn = document.createElement("button");
+            btn.className = "vpm-psp__thumb";
+            btn.setAttribute("role", "listitem");
+            btn.setAttribute("aria-pressed", String(i === 0));
+            btn.setAttribute("aria-label", ep.title);
+            btn.innerHTML =
+              '<img class="vpm-psp__thumb-img" src="' +
+              ep.image +
+              '" alt="" loading="lazy">' +
+              '<div class="vpm-psp__thumb-info">' +
+              '<div class="vpm-psp__thumb-date">' +
+              ep.date +
+              "</div>" +
+              '<div class="vpm-psp__thumb-title">' +
+              ep.title +
+              "</div>" +
+              "</div>";
+            btn.addEventListener("click", function () {
+              loadEpisode(i, false);
+            });
+            strip.appendChild(btn);
+          });
+        }
+
+        function parseEpisodes(data) {
+          /* Adapts PBS Media Manager API v1 episode response */
+          var list =
+            data && data.data
+              ? data.data
+              : data && data.results
+                ? data.results
+                : [];
+          return list.slice(0, PAGE_SIZE).map(function (ep) {
+            var attrs = ep.attributes || ep;
+            var img = "";
+            var images = attrs.images || [];
+            var mez = images.find(function (i) {
+              return i.profile === "asset-mezzanine-16x9";
+            });
+            img = (mez || images[0] || {}).image || "";
+            var rawDate = attrs.encored_on || attrs.premiered_on || "";
+            var date = rawDate
+              ? new Date(rawDate).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })
+              : "";
+            return {
+              title: attrs.title || "Untitled Episode",
+              mediaId: attrs.tp_media_object_id || ep.id,
+              image: img,
+              date: date,
+            };
+          });
+        }
+
+        /* PBS partner player fires postMessage on video end */
+        window.addEventListener("message", function (e) {
+          try {
+            var msg = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
+            var evt = msg && (msg.event || msg.type || "");
+            if (/complete|end|finish/i.test(evt)) {
+              var next = currentIdx + 1;
+              if (next < episodes.length) loadEpisode(next, true);
+            }
+          } catch (_) {}
+        });
+
+        /* Fetch from CF Worker */
+        fetch(
+          WORKER_URL +
+            "?show-id=" +
+            encodeURIComponent(SHOW_ID) +
+            "&page-size=" +
+            PAGE_SIZE,
+        )
+          .then(function (r) {
+            if (!r.ok) throw new Error(r.status);
+            return r.json();
+          })
+          .then(function (data) {
+            episodes = parseEpisodes(data);
+            if (!episodes.length) throw new Error("empty");
+            buildStrip();
+            loadEpisode(0, false);
+          })
+          .catch(function () {
+            loadingEl.hidden = true;
+            errorEl.hidden = false;
+          });
+      })();
+    </script>
+  </body>
 </html>
