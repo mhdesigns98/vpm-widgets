@@ -30,3 +30,4 @@ so they don't collide. Kept out of `CLAUDE.md` so it isn't loaded into context o
 | `how-federal-funding-works/` | Federal funding explainer section for impact page |
 | `impact-testimonial/` | Testimonial component for impact/giving pages |
 | `impact-report-2025/` | 2025 Impact Report page as deployed — hero, sticky jump links, awards counters; consolidated page stylesheet + deferred behavior script (namespaces `vpm-impact25-`, `vpm-awards2025`, full page rather than a single block) |
+| `pbs-show-playlist/` | API-driven PBS show episode playlist — main PBS partner player + 5-episode thumbnail strip, autoplay to next; fetches from CF Worker proxy of PBS Media Manager API (namespace `vpm-psp-`, WordPress iframe embed) |
