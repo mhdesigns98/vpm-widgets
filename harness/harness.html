@@ -177,6 +177,33 @@
       slot.appendChild(sc); // re-executes on every re-render, like a hydrating CMS
     });
     log(`Injected into ${copyLabel} slot.`);
+    return slot.innerHTML; // caller can diff this later — see Scenario 9
+  }
+
+  // Scenario 9: two copies placed on one page must initialize INDEPENDENTLY,
+  // not just avoid literal duplicate ids/scripts. A widget that looks up its
+  // own root with a page-wide selector (document.querySelector('.widget-root')
+  // instead of scoping to its own injected container) silently wires the
+  // second copy's async init onto the FIRST copy's DOM — the tell is that one
+  // copy's markup changes after injection (its async fetch/render landed) while
+  // the other's never does. Compares relatively (one changed, one didn't)
+  // rather than requiring every widget to be async, so a static widget with
+  // no post-injection changes in either copy reads as neutral, not a failure.
+  function auditIndependentInit(snapshots) {
+    const results = {};
+    for (const [label, before] of Object.entries(snapshots)) {
+      const slot = document.getElementById(`hz-slot-${label}`);
+      if (slot) results[label] = slot.innerHTML !== before;
+    }
+    const changed = Object.keys(results).filter(k => results[k]);
+    const unchanged = Object.keys(results).filter(k => !results[k]);
+    if (changed.length && unchanged.length) {
+      log(`✗ "${unchanged.join(', ')}" slot's markup never changed after injection while "${changed.join(', ')}" did — its async init may be scoped to the wrong copy (check for a page-wide selector like document.querySelector('.widget-root') instead of one scoped to this instance).`, 'err');
+    } else if (changed.length) {
+      log('Both copies’ markup changed independently after injection — initialized separately.');
+    } else {
+      log('Neither copy’s markup changed after injection (static widget with no async render, or both share one issue — verify manually).');
+    }
   }
 
   let payload = null;
@@ -230,9 +257,13 @@
     status(`hydrating in ${HYDRATION_DELAY / 1000}s…`);
     log(`Simulating framework hydration: injecting after ${HYDRATION_DELAY}ms.`);
     setTimeout(() => {
-      inject(payload, document.getElementById('hz-slot-main'), 'main');
-      inject(payload, document.getElementById('hz-slot-sidebar'), 'sidebar'); // Scenario 5: narrow column
+      const snapshots = {
+        main: inject(payload, document.getElementById('hz-slot-main'), 'main'),
+        sidebar: inject(payload, document.getElementById('hz-slot-sidebar'), 'sidebar'), // Scenario 5: narrow column
+      };
       status('hydrated');
+      // Give async widget init (fetch, render) a beat before checking Scenario 9.
+      setTimeout(() => auditIndependentInit(snapshots), 2000);
 
       // Scenario 1b: one post-hydration re-render (detach + re-inject) 3s later
       setTimeout(() => {

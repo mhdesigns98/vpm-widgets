@@ -61,6 +61,7 @@ Every widget must pass the CMS test harness (`/harness/harness.html?widget=[name
 - [ ] Degrades gracefully in a 320px column
 - [ ] Keyboard accessible, visible focus, WCAG 2.1 AA contrast, `prefers-reduced-motion` respected
 - [ ] No `id` attributes, or none that duplicate when the block is placed twice on one page
+- [ ] Widget scopes itself to its own container (e.g. `document.currentScript.previousElementSibling`), not a page-wide selector — two copies on one page must initialize independently, not just avoid literal duplicate ids
 - [ ] Any third-party script (vendor embed, resizer, player SDK) loads **once per page** — guarded with a `querySelector` check, not a bare `<script src>` that re-appends on every re-render
 - [ ] No console errors in the harness log
 

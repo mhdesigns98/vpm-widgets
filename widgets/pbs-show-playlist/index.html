@@ -31,6 +31,13 @@
       }
 
       /* ── Widget shell ──────────────────────────────────────────────── */
+      .vpm-psp,
+      .vpm-psp * {
+        /* Resets a hostile host's `.some-scope * { letter-spacing: ... }`
+           rule, which applies directly to our descendants regardless of
+           what our own ancestor elements specify. */
+        letter-spacing: normal;
+      }
       .vpm-psp {
         font-family: var(--font-sans);
         background: var(--vpm-dark-blue);
@@ -187,11 +194,6 @@
         }
       }
     </style>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=Oswald:wght@600&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body style="margin: 0; background: #003865">
     <div
@@ -206,7 +208,7 @@
 
       <div class="vpm-psp__now-playing" aria-live="polite">
         <div class="vpm-psp__now-playing-label">Now Playing</div>
-        <div class="vpm-psp__now-playing-title" id="vpm-psp-title">—</div>
+        <div class="vpm-psp__now-playing-title">—</div>
       </div>
 
       <div
@@ -235,11 +237,14 @@
         var PAGE_SIZE = 5;
         /* ─────────────────────────────────────────────────────────────── */
 
-        var root = document.querySelector(".vpm-psp");
+        /* Scoped to this script's own preceding widget markup — a page-wide
+           querySelector(".vpm-psp") would always resolve to the first copy
+           if this widget is ever placed more than once inline. */
+        var root = document.currentScript.previousElementSibling;
         var playerWrap = root.querySelector(".vpm-psp__player-wrap");
         var loadingEl = root.querySelector(".vpm-psp__player-loading");
         var strip = root.querySelector(".vpm-psp__strip");
-        var titleEl = document.getElementById("vpm-psp-title");
+        var titleEl = root.querySelector(".vpm-psp__now-playing-title");
         var errorEl = root.querySelector(".vpm-psp__error");
 
         var episodes = [];
