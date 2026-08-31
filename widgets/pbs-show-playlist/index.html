@@ -228,11 +228,10 @@
 
     <script>
       (function () {
-        /* ── Config — update SHOW_ID and CALLSIGN before deploying ───── */
+        /* ── Config — update SHOW_ID before deploying ─────────────────── */
         var WORKER_URL = "https://pbs-api.vpm-e01.workers.dev/episodes";
         var SHOW_ID =
           "678b37bf-6863-450d-9340-8bdf343f94eb"; /* PBS Media Manager show ID  */
-        var CALLSIGN = "WCVE"; /* PBS station callsign       */
         var PAGE_SIZE = 5;
         /* ─────────────────────────────────────────────────────────────── */
 
@@ -247,14 +246,20 @@
         var currentIdx = 0;
         var playerIframe = null;
 
-        function buildPlayerUrl(mediaId, autoplay) {
-          return (
-            "https://player.pbs.org/widget/partnerplayer/" +
-            mediaId +
-            "/?callsign=" +
-            CALLSIGN +
-            (autoplay ? "&autoplay=1" : "")
-          );
+        function extractPlayerSrc(playerCodeHtml) {
+          /* PBS returns a ready iframe embed in attributes.player_code; pull its src. */
+          var m = /src=['"]([^'"]+)['"]/.exec(playerCodeHtml || "");
+          if (!m) return "";
+          var src = m[1];
+          return src.indexOf("//") === 0 ? "https:" + src : src;
+        }
+
+        function withAutoplay(src, autoplay) {
+          if (!src) return "";
+          var value = autoplay ? "true" : "false";
+          return /autoplay=/.test(src)
+            ? src.replace(/autoplay=[^&]*/, "autoplay=" + value)
+            : src + (src.indexOf("?") === -1 ? "?" : "&") + "autoplay=" + value;
         }
 
         function loadEpisode(idx, autoplay) {
@@ -267,7 +272,7 @@
           /* Swap player */
           if (playerIframe) playerIframe.remove();
           playerIframe = document.createElement("iframe");
-          playerIframe.src = buildPlayerUrl(ep.mediaId, autoplay);
+          playerIframe.src = withAutoplay(ep.playerSrc, autoplay);
           playerIframe.title = ep.title;
           playerIframe.allow = "autoplay; fullscreen";
           playerIframe.setAttribute("allowfullscreen", "");
@@ -333,7 +338,7 @@
               : "";
             return {
               title: attrs.title || "Untitled Episode",
-              mediaId: attrs.tp_media_object_id || ep.id,
+              playerSrc: extractPlayerSrc(attrs.player_code),
               image: img,
               date: date,
             };

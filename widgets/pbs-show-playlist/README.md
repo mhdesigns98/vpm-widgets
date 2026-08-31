@@ -13,20 +13,19 @@ Embed as an iframe in WordPress:
 
 For a different show, duplicate this widget folder and update `SHOW_ID` at the top of `index.html`.
 
-## Required: Cloudflare Worker
+## Cloudflare Worker
 
-Before deploying, create a CF Worker at `https://pbs-api.vpm-e01.workers.dev` (or update `WORKER_URL` in `index.html`) that:
+Live at `https://pbs-api.vpm-e01.workers.dev` (source: `~/Projects/vpm/pbs-api/`). It:
 
 1. Accepts `GET /episodes?show-id={id}&page-size={n}`
-2. Forwards the request to `https://media.services.pbs.org/api/v1/episodes/?show-id={id}&page-size={n}&sort=-encored_on` with `X-Api-Key: {PBS_API_KEY}` header
+2. Forwards to `https://media.services.pbs.org/api/v1/assets/?show-id={id}&type=full_length&page-size={n}&sort=-encored_on` with HTTP Basic Auth (`PBS_API_KEY:PBS_API_SECRET`)
 3. Returns the raw PBS JSON response
 4. Sets `Cache-Control: public, max-age=3600` and a permissive CORS header (`Access-Control-Allow-Origin: *`)
 
-Store the PBS API key as a CF Worker secret (never hard-code it).
+Credentials are stored as CF Worker secrets, never hard-coded.
 
 ## Config values to update
 
 In `index.html`:
 - `SHOW_ID` — PBS Media Manager show ID for the target show
-- `CALLSIGN` — PBS station callsign (e.g. `VPM`)
 - `WORKER_URL` — CF Worker URL once deployed
