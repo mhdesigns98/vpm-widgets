@@ -384,6 +384,28 @@
             loadingEl.hidden = true;
             errorEl.hidden = false;
           });
+
+        /* Report height to the parent page so the WordPress iframe can size
+           itself — an iframe has no natural aspect ratio, so without this it
+           renders at the browser default height and the widget scrolls
+           inside a tiny box. Measures the widget's own root, not
+           document.documentElement/body — those are floored by the iframe's
+           *current* viewport height, so they can grow but never shrink back
+           down once the iframe has already grown once. */
+        if (window.parent !== window) {
+          var reportHeight = function () {
+            window.parent.postMessage(
+              { vpmPspHeight: Math.ceil(root.getBoundingClientRect().height) },
+              "*",
+            );
+          };
+          if (window.ResizeObserver) {
+            new ResizeObserver(reportHeight).observe(root);
+          } else {
+            window.addEventListener("resize", reportHeight);
+            reportHeight();
+          }
+        }
       })();
     </script>
   </body>
