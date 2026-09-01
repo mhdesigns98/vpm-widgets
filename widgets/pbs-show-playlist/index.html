@@ -175,6 +175,22 @@
         overflow: hidden;
       }
 
+      /* ── Footer ────────────────────────────────────────────────────── */
+      .vpm-psp__footer {
+        padding: 6px 16px 10px;
+        text-align: right;
+      }
+      .vpm-psp__footer a {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.4);
+        text-decoration: none;
+      }
+      .vpm-psp__footer a:hover,
+      .vpm-psp__footer a:focus-visible {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: underline;
+      }
+
       /* ── Error state ───────────────────────────────────────────────── */
       .vpm-psp__error {
         padding: 32px 16px;
@@ -216,6 +232,10 @@
         role="list"
         aria-label="Recent episodes"
       ></div>
+
+      <div class="vpm-psp__footer">
+        <a href="https://www.pbs.org/about/policies/terms-of-use/" target="_blank" rel="noopener">PBS Terms of Use</a>
+      </div>
 
       <div class="vpm-psp__error" hidden role="alert">
         Episodes unavailable right now. Visit
@@ -350,8 +370,12 @@
           });
         }
 
-        /* PBS partner player fires postMessage on video end */
+        /* PBS partner player fires postMessage on video end. Scoped to the
+           current player iframe's own contentWindow — without this, any
+           other iframe on the host page (ads, unrelated widgets) whose
+           message happens to match the event regex would advance playback. */
         window.addEventListener("message", function (e) {
+          if (!playerIframe || e.source !== playerIframe.contentWindow) return;
           try {
             var msg = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
             var evt = msg && (msg.event || msg.type || "");
@@ -396,7 +420,7 @@
           var reportHeight = function () {
             window.parent.postMessage(
               { vpmPspHeight: Math.ceil(root.getBoundingClientRect().height) },
-              "*",
+              "https://www.vpm.org",
             );
           };
           if (window.ResizeObserver) {

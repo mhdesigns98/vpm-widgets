@@ -15,6 +15,7 @@ block:
 <script>
 (function () {
   window.addEventListener("message", function (e) {
+    if (e.origin !== "https://mhdesigns98.github.io") return;
     if (!e.data || typeof e.data.vpmPspHeight !== "number") return;
     document.querySelectorAll('iframe[src*="pbs-show-playlist"]').forEach(function (f) {
       if (f.contentWindow === e.source) f.style.height = e.data.vpmPspHeight + "px";
