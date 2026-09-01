@@ -151,6 +151,21 @@
       if (links.length) log(`⚠ widget links ${links.length} external stylesheet(s) — must be self-contained`, 'warn');
       const scripts = [...doc.querySelectorAll('script')].map(s => ({ src: s.src, text: s.textContent }));
       doc.querySelectorAll('style, script').forEach(n => n.remove());
+      // Scenario 10: a relative url(...) in CSS resolves against whatever
+      // document the browser thinks it's in. This harness injects the
+      // widget's markup straight into ITS OWN page (like a raw ACF HTML
+      // block), so a relative path resolves against the harness's own
+      // location — not the widget's. A real iframe-embedded widget (this
+      // widget's actual deploy shape) would get its own document and the
+      // same relative path would resolve correctly there, so this is a
+      // static lint, not a live pass/fail: it only flags widgets whose CSS
+      // assumes a document context this harness doesn't replicate. Use an
+      // absolute URL (see virginia-home-grown-signup, virginia-home-grown-
+      // playlist) for any asset a single-file widget loads via CSS.
+      const relativeAssets = [...css.matchAll(/url\(\s*(['"]?)(?!https?:|data:|#)([^'")]+)\1\s*\)/g)];
+      if (relativeAssets.length) {
+        log(`⚠ CSS references relative asset path(s) (${relativeAssets.map(m => m[2]).join(', ')}) — will resolve against the wrong document here; use an absolute URL if this widget is iframe-embedded`, 'warn');
+      }
       log('Loaded single-file widget (index.html).');
       return { kind: 'single', html: doc.body.innerHTML, css, scripts };
     } catch (e) {
