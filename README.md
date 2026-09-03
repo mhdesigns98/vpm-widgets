@@ -27,9 +27,11 @@ Pick the row that matches what you came for.
 
 ## Claude Code setup
 
-There isn't any. `.claude/skills/vpm-design/` is committed to this repo, so opening a Claude Code
-session here loads VPM brand tokens, voice, and conventions automatically. Every path in that
-skill is repo-relative, so it works on any machine that has the clone.
+Clone, `cd` in, run `claude`. `.claude/skills/vpm-design/` and `.claude/commands/` are both
+committed to this repo, so VPM brand tokens and the build/ship slash commands load automatically
+— no separate install beyond Claude Code itself. See
+[**"Using Claude Code on this repo"** in `CONTRIBUTING.md`](CONTRIBUTING.md#using-claude-code-on-this-repo)
+for install steps, what each command does, and a first-widget walkthrough.
 
 If you're building a **page** rather than a reusable block, that work lives in
 [`vpm-pages`](https://github.com/mhdesigns98/vpm-pages) and follows that repo's `CLAUDE.md`.

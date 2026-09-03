@@ -95,10 +95,49 @@ buttons in UPPERCASE bold. Exclamation marks only in Arts & Culture celebratory 
 
 ## Using Claude Code on this repo
 
-`.claude/skills/vpm-design/` is committed, so cloning this repo is all the setup there is — the
-brand system loads automatically in a Claude Code session opened here. It points at
-`tokens.css`, `BRAND_GUIDE.md`, `CLAUDE.md` and `INDEX.md` by repo-relative path, so it stays
-correct on anyone's machine.
+Claude Code is Anthropic's terminal-based AI coding assistant. If you don't have it yet:
+
+1. Install it — see [docs.claude.com](https://docs.claude.com) for the current install and login
+   steps for your OS.
+2. `git clone` this repo and `cd` into it.
+3. Run `claude`. That's it — `.claude/skills/vpm-design/` is committed here, so the VPM brand
+   system (tokens, voice, conventions) loads automatically in any session opened in this folder.
+   It points at `tokens.css`, `BRAND_GUIDE.md`, `CLAUDE.md` and `INDEX.md` by repo-relative path,
+   so it works the same on your machine as anyone else's.
 
 If you edit that skill, you're editing shared AI context for the whole team. Same PR rules as
 tokens.
+
+### Commands
+
+These are slash commands — type them at the Claude Code prompt, inside a session opened in this
+repo. They're committed at `.claude/commands/`, so they show up automatically; you don't install
+anything separately.
+
+| Command | What it does | When to use it |
+|---|---|---|
+| `/brief [idea]` | Asks you a handful of questions (who's it for, what does "done" look like, what's out of scope, where does it get deployed) and writes the answers to `widgets/[slug]/BRIEF.md`. | First, before any code — for anything beyond a trivial tweak. Saves a round trip where the shape of the widget gets renegotiated mid-build. |
+| `/new-widget [name]` | Creates `widgets/[slug]/` with the right file layout (single file or ACF split files), namespaces the CSS, inlines the brand tokens it needs, writes a `README.md` stub, and adds it to `INDEX.md`. Add `--from file.html` instead of a name if you already have a working file from earlier in the conversation. | Once you know what you're building — either to start a blank scaffold, or to file something you already built. |
+| `/save-component [file.html]` | Same as `/new-widget --from`, just shorter to type. | Interchangeable with the line above — pick whichever you remember. |
+| `/ship-widget [slug]` | Loads the widget into the CMS test harness and checks it against the things that have actually broken widgets in production before (a sticky player stealing focus, delayed hydration, hostile host CSS), then runs an accessibility pass and prints copy-paste-ready HTML/CSS/JS blocks for WordPress or Brightspot. | Required before pasting anything into a real CMS field. Not optional — see the Pre-Ship Checklist in `CLAUDE.md`. |
+
+### Building your first widget, start to finish
+
+```
+/brief pledge-drive-banner-2027
+  → answer the questions, review the brief it writes
+
+/new-widget pledge-drive-banner-2027
+  → scaffolds widgets/vpm-pledge27-banner/, ready to build in
+
+  (build the widget here — describe what you want, iterate in the session)
+
+/ship-widget vpm-pledge27-banner
+  → runs the harness, fixes anything it finds, prints the deploy-ready code blocks
+
+git add widgets/vpm-pledge27-banner INDEX.md index.html
+git commit -m "Add pledge-drive-banner-2027 widget"
+```
+
+Then open a PR — don't push straight to `main` (see "Working on a widget" above). Once it's
+merged, paste the blocks `/ship-widget` printed into the CMS.
