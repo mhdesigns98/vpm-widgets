@@ -5,7 +5,7 @@ Simulates the hostile parts of VPM's real CMS environments (Brightspot, WordPres
 ## Usage
 
 ```bash
-cd ~/Projects/vpm-widgets
+cd /path/to/vpm-widgets     # the repo root
 python3 -m http.server 8471
 # open http://localhost:8471/harness/harness.html?widget=SLUG
 ```

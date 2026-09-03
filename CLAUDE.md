@@ -24,6 +24,10 @@ Some widgets (e.g. `elections-2026-primary`) use a split-file format for WordPre
 ## Design Tokens
 `tokens.css` in the repo root is the **canonical VPM design token file** (migrated from the deprecated vpm-component-library). Widgets must stay self-contained, so copy the custom properties you need into the widget's scoped `<style>` — never link the file externally. No hard-coded hex values.
 
+Read the file rather than recalling values — the display face and body face have both been
+changed since the tokens were written. Proposing a *change* to a token is a reviewed process:
+see `CONTRIBUTING.md`.
+
 ## Style Conventions
 - All class names and IDs namespaced with a widget-specific prefix (e.g. `vpm-elec26-`, `vpm-mm-`)
 - BEM naming convention within namespace
@@ -42,12 +46,14 @@ Some widgets (e.g. `elections-2026-primary`) use a split-file format for WordPre
 3. When satisfied, add it under `/widgets/[name]/` following the structure above (`/save-component` does this)
 4. Write a one-paragraph `README.md` describing purpose, source, and usage
 5. **Pre-ship check** (`/ship-widget`) — required before pasting into any CMS, see checklist below
-6. Commit and push to `main`
+6. Add a row to `INDEX.md`, then open a PR — this repo is shared, don't push to `main`
 7. GitHub Pages preview: `https://mhdesigns98.github.io/vpm-widgets/widgets/[name]/`
 
 **If a `BRIEF.md` exists in the widget folder, read it before building** and flag requests that contradict or expand its scope.
 
-VPM brand tokens and voice load automatically via the `vpm-design` skill — no need to invoke anything.
+VPM brand tokens and voice load automatically via the `vpm-design` skill, which is committed to
+this repo at `.claude/skills/vpm-design/` — cloning the repo is the whole setup, no need to
+invoke anything.
 
 ## Pre-Ship Checklist
 **This checklist is canonical** — it's the list `/ship-widget` enforces. Don't restate it elsewhere; link here instead.
