@@ -4,6 +4,10 @@ The VPM web team's design system and CMS embed library. This repo is the **canon
 VPM design tokens, the brand guide, and every reusable HTML/CSS/JS block we paste into
 WordPress, Brightspot, or GTM.
 
+**Prerequisites:** GitHub access to this repo, and Claude Code installed with an active seat if
+you'll be building rather than just looking things up. Ask whoever handles your accounts if you
+don't have either yet — this repo assumes both are already in place.
+
 ## Start here
 
 Pick the row that matches what you came for.
