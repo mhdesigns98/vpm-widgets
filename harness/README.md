@@ -32,4 +32,15 @@ the widget.
 9. **Cross-instance independence** — each slot's `innerHTML` is snapshotted right after injection, then re-checked 2s later. A widget that finds its own root with a page-wide selector (`document.querySelector('.widget-root')` instead of scoping to its own injected container, e.g. `document.currentScript.previousElementSibling`) silently wires the second copy's async init onto the *first* copy's DOM — the tell is that one slot's markup changes (its fetch/render landed) while the other's never does. Compares relatively (one changed, one didn't) so a static widget with no async behavior in either copy reads as neutral, not a failure. First caught in `pbs-show-playlist` (2026-08-31): both copies passed the duplicate-id and duplicate-script checks while one was silently dead because of an unscoped `querySelector`.
 10. **Relative CSS asset paths (single-file mode, static lint)** — the harness injects a single-file widget's markup straight into its own page, the way a raw ACF HTML block would. A widget whose real deploy is an iframe embed gets its own document at runtime, so a relative `url(...)` in its CSS resolves fine there — but resolves against the *harness's* location here, which will 404. This is flagged as a lint warning, not a live pass/fail, since it depends on deploy shape. Use an absolute URL for any local asset instead. First caught in `virginia-home-grown-playlist` (2026-09-01): the leaf-pattern background 404'd in the harness even though it would have resolved correctly once actually iframe-embedded.
 
+## Known gap: CORS-locked live-data widgets
+
+The harness serves from `localhost`, so a widget that fetches from a first-party API locked
+to `https://www.vpm.org` via CORS (e.g. `most-popular-today` → `chartbeat-weekly`'s
+`/api/most-popular`) can never exercise its real success path here — the fetch is correctly
+rejected and the widget falls into its error state. First hit shipping `most-popular-today`
+(2026-09-08): verified the populated-state rendering by manually injecting real API data via
+a page-eval script instead. Not yet worth a generic harness mock/toggle for a single occurrence
+— revisit once more widgets share this pattern and the right mock shape (a fake endpoint? a
+`?mock=` query param the widget checks for?) is clearer.
+
 Toolbar buttons let you re-run any scenario manually. Run `/ship-widget SLUG` in Claude Code for the full guided pre-deploy check.
