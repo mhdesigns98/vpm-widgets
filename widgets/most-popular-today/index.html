@@ -32,6 +32,12 @@
       list-style: none;
       margin: 0;
       padding: 0;
+      /* Caps the widget's own height regardless of item count or placement —
+         at 8 items in a wide/main content area, an uncapped list could grow
+         tall enough to reach a page-level fixed element (e.g. a sticky
+         audio player bar) and make its last links unclickable underneath it. */
+      max-height: 340px;
+      overflow-y: auto;
     }
 
     .vpm-mpt__item {
@@ -110,7 +116,7 @@
       listEl.innerHTML = '<li class="vpm-mpt__status">No trending stories right now.</li>';
       return;
     }
-    listEl.innerHTML = stories.slice(0, 5).map(function (story, i) {
+    listEl.innerHTML = stories.slice(0, 8).map(function (story, i) {
       var rank = i + 1;
       var url = String(story.url || '#');
       var title = String(story.title || '');
