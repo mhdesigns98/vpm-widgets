@@ -2,12 +2,15 @@
   <style>
     .vpm-mpt {
       --vpm-dark-blue:  #003865;
+      --vpm-blue-700:   #003865;
+      --vpm-blue-900:   #002244;
       --vpm-yellow:     #E0E721;
       --vpm-gray-900:   #1A1F26;
       --vpm-gray-600:   #5A6470;
       --vpm-gray-200:   #E5E7E9;
       --font-sans:    'Public Sans', 'GT America', 'Helvetica Neue', Arial, sans-serif;
       --fs-eyebrow:   13px;
+      --fs-body:      16px;
       --fs-body-sm:   14px;
       --lh-normal:    1.45;
       --space-2: 8px;
@@ -49,15 +52,23 @@
       gap: var(--space-3);
       align-items: baseline;
       padding: var(--space-3) 0;
-      text-decoration: none !important;
-      color: var(--vpm-gray-900) !important;
       line-height: var(--lh-normal);
+    }
+
+    /* Link at rest reads as a link: VPM's own base <a> convention is
+       colored + underlined at rest, not just on hover (see tokens.css).
+       The widget previously hid this behind hover-only styling, which is
+       why the title read as plain text until interaction. */
+    .vpm-mpt.vpm-mpt .vpm-mpt__link .vpm-mpt__title {
+      color: var(--vpm-blue-700) !important;
+      text-decoration: underline !important;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
     }
 
     .vpm-mpt.vpm-mpt .vpm-mpt__link:hover .vpm-mpt__title,
     .vpm-mpt.vpm-mpt .vpm-mpt__link:focus-visible .vpm-mpt__title {
-      color: var(--vpm-dark-blue) !important;
-      text-decoration: underline !important;
+      color: var(--vpm-blue-900) !important;
     }
 
     .vpm-mpt__link:focus-visible {
@@ -73,7 +84,7 @@
     }
 
     .vpm-mpt__title {
-      font-size: var(--fs-body-sm);
+      font-size: var(--fs-body);
       font-weight: 600;
     }
 
