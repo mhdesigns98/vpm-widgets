@@ -32,12 +32,10 @@
       list-style: none;
       margin: 0;
       padding: 0;
-      /* Caps the widget's own height regardless of item count or placement —
-         at 8 items in a wide/main content area, an uncapped list could grow
-         tall enough to reach a page-level fixed element (e.g. a sticky
-         audio player bar) and make its last links unclickable underneath it. */
-      max-height: 340px;
-      overflow-y: auto;
+      /* No internal scroll: a nested scrollable list inside an already-
+         scrolling page traps mobile swipe gestures, which is worse than
+         occasionally sitting near a sticky element. Full height instead —
+         verify against the real page layout post-deploy (see HANDOFF.md). */
     }
 
     .vpm-mpt__item {

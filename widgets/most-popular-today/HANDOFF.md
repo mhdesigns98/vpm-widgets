@@ -36,21 +36,24 @@
 - [x] **Expanded from 5 to 8 stories** — tested live: needed `fetchLimit`
       floor raised to 100 (from 40) to reliably fill 8 slots given the
       VPM-first/NPR-backfill tiering above.
-- [x] Added `max-height: 340px; overflow-y: auto` to the list as a structural
-      safety net against runaway height at 8 items.
+- [x] Tried `max-height: 340px; overflow-y: auto` as a safety net against
+      the sticky-player collision (see below), then **reverted it on Mark's
+      call**: a nested scroll container inside an already-scrolling page
+      traps mobile swipe gestures at the widget's edges — worse UX than the
+      collision risk it was guarding against. The list is full-height again.
 - [ ] **Known open risk, not fully resolved**: testing the 8-item list in the
       CMS harness found the list's bottom edge can land behind the harness's
       fixed Stream Player bar (confirmed with `elementFromPoint` returning
-      `null` there — genuinely unclickable). The height cap above reduces
-      but doesn't eliminate this, because whether the widget's page position
-      ever falls behind a fixed bottom bar depends on the real WordPress
-      sidebar template's actual layout (article length, viewport height),
-      which isn't knowable from this synthetic harness. Decided not to chase
-      a harness-specific pixel fix for this — **verify directly on a real
-      vpm.org post page once deployed**, scrolling to where the sidebar
-      widget sits, and confirm all 8 links (especially the last 2-3) are
-      clickable and not obscured by VPM's real sticky player if one exists
-      on the live site.
+      `null` there — genuinely unclickable). Whether the widget's real page
+      position ever falls behind a fixed bottom bar depends on the actual
+      WordPress sidebar template's layout (article length, viewport height),
+      which isn't knowable from this synthetic harness, and a height cap was
+      ruled out as the fix (mobile scroll-trap tradeoff above). **Verify
+      directly on a real vpm.org post page once deployed**, scrolling to
+      where the sidebar widget sits, and confirm all 8 links (especially the
+      last 2-3) are clickable and not obscured by VPM's real sticky player
+      if one exists on the live site. If this turns out to be a real
+      problem, the fix should target the actual colliding element (e.g. the
+      player reserving its own space instead of overlaying), not capping the
+      widget's height again.
 - [ ] Not yet pasted into wp-admin → Widgets sidebar area
-- [ ] `chartbeat-weekly` NPR-tiering + 8-item changes not yet deployed
-- [ ] `vpm-widgets` height-cap change not yet committed
