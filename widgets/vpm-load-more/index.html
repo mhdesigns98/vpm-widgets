@@ -1,0 +1,108 @@
+<!-- VPM Load More — collapsible section with expand button.
+     Drop into a Custom HTML block right before the content to hide.
+     Close </div> after the last item you want collapsed. -->
+<div class="vpm-lm">
+  <div class="vpm-lm__inner">
+
+    <!-- Keep the first item or two above/outside this block so readers see
+         real content before the fade. Paste the rest of the section here. -->
+    <p>Replace this placeholder with the content to collapse.</p>
+
+  </div>
+  <button type="button" class="vpm-lm__btn" aria-expanded="false">
+    Continue reading
+  </button>
+</div>
+
+<style>
+.vpm-lm {
+  --vpm-dark-blue:  #003865;
+  --vpm-gray-300:   #D1D3D4;
+  --vpm-gray-050:   #F8F9FA;
+  --font-sans:      'Public Sans', 'GT America', 'Helvetica Neue', Arial, sans-serif;
+  --dur-base:       200ms;
+  --ease-standard:  cubic-bezier(0.2, 0, 0, 1);
+  --radius-md:      4px;
+}
+
+.vpm-lm__inner {
+  max-height: 340px;
+  overflow: hidden;
+  position: relative;
+  transition: max-height var(--dur-base) var(--ease-standard);
+}
+
+.vpm-lm__inner::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 90px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-standard);
+}
+
+.vpm-lm.is-expanded .vpm-lm__inner {
+  max-height: none;
+}
+
+.vpm-lm.is-expanded .vpm-lm__inner::after {
+  opacity: 0;
+}
+
+.vpm-lm__btn {
+  display: block;
+  margin: 16px auto 0;
+  padding: 10px 20px;
+  border: 1px solid var(--vpm-gray-300);
+  border-radius: var(--radius-md);
+  background: var(--vpm-gray-050);
+  color: var(--vpm-dark-blue);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--dur-base) var(--ease-standard);
+}
+
+.vpm-lm__btn:hover {
+  background: #eef1f2;
+}
+
+.vpm-lm__btn:focus-visible {
+  outline: 2px solid var(--vpm-dark-blue);
+  outline-offset: 2px;
+}
+
+.vpm-lm.is-expanded .vpm-lm__btn {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vpm-lm__inner,
+  .vpm-lm__inner::after,
+  .vpm-lm__btn {
+    transition: none;
+  }
+}
+</style>
+
+<script>
+(function () {
+  // Scope to the <div class="vpm-lm"> immediately before this script tag,
+  // so multiple copies on one page each initialize independently.
+  var script = document.currentScript;
+  var wrap = script.previousElementSibling;
+  while (wrap && !wrap.classList.contains('vpm-lm')) {
+    wrap = wrap.previousElementSibling;
+  }
+  if (!wrap || wrap.dataset.vpmLmInit) return;
+  wrap.dataset.vpmLmInit = 'true';
+
+  var btn = wrap.querySelector('.vpm-lm__btn');
+  btn.addEventListener('click', function () {
+    wrap.classList.add('is-expanded');
+    btn.setAttribute('aria-expanded', 'true');
+  });
+})();
+</script>
