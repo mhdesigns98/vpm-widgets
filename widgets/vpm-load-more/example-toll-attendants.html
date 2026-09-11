@@ -109,6 +109,12 @@ Powhite Expressway where there are no more TCAs).</p>
 steady all day long. We definitely went through some change back in those days, quite a
 bit.</p>
 
+  </div>
+  <button type="button" class="vpm-lm__btn" aria-expanded="false">
+    Continue reading Tommy's interview
+  </button>
+</div>
+
 <h3>MICHAEL | 20 years old | 2 years on the job | Toll attendant</h3>
 
 <p><strong>What brought you to the job?</strong></p>
@@ -117,6 +123,10 @@ still get to talk to people coming through. It was like the perfect little middl
 and it seemed like the right fit for me. It’s not an easy job by any means. No job is. But
 I was just like, you know what? Seems like a chill change of pace. Just got out of fast
 food. I need to have a relaxing job next.</p>
+
+<!-- LOAD MORE: Michael's remaining answers, collapsed independently of Tommy's block above. -->
+<div class="vpm-lm">
+  <div class="vpm-lm__inner">
 
 <p>When I clock in, I don't really say anything. I usually pull up, go into the office,
 clock in, and go right to the booth. Even if I’m early, because I just feel like I should
@@ -162,7 +172,7 @@ the change.</p>
 
   </div>
   <button type="button" class="vpm-lm__btn" aria-expanded="false">
-    Continue reading the interview
+    Continue reading Michael's interview
   </button>
 </div>
 
@@ -241,18 +251,21 @@ the change.</p>
 
 <script>
 (function () {
-  var script = document.currentScript;
-  var wrap = script.previousElementSibling;
-  while (wrap && !wrap.classList.contains('vpm-lm')) {
-    wrap = wrap.previousElementSibling;
-  }
-  if (!wrap || wrap.dataset.vpmLmInit) return;
-  wrap.dataset.vpmLmInit = 'true';
+  // Initializes every .vpm-lm block on the page (not just the nearest one),
+  // so multiple interview sections can each collapse/expand independently
+  // from one shared script tag.
+  var wraps = document.querySelectorAll('.vpm-lm');
+  for (var i = 0; i < wraps.length; i++) {
+    (function (wrap) {
+      if (wrap.dataset.vpmLmInit) return;
+      wrap.dataset.vpmLmInit = 'true';
 
-  var btn = wrap.querySelector('.vpm-lm__btn');
-  btn.addEventListener('click', function () {
-    wrap.classList.add('is-expanded');
-    btn.setAttribute('aria-expanded', 'true');
-  });
+      var btn = wrap.querySelector('.vpm-lm__btn');
+      btn.addEventListener('click', function () {
+        wrap.classList.add('is-expanded');
+        btn.setAttribute('aria-expanded', 'true');
+      });
+    })(wraps[i]);
+  }
 })();
 </script>

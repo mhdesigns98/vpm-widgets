@@ -15,8 +15,12 @@ directly before the content to hide.
    (e.g. remaining interview Q&As).
 4. Content stays in the DOM at page load (not `display:none`) so it's still indexable by
    search engines and screen readers — only the max-height + fade hides it visually.
-5. Duplicate the whole block (copy/paste) for a second collapsible section on the same
-   page — the script scopes itself to its own `.vpm-lm` wrapper, so multiple copies
-   initialize independently.
+5. For more than one collapsible section on the same page (e.g. one per interviewee),
+   paste the full block again for each section — the script initializes every `.vpm-lm`
+   block on the page, so each one collapses/expands independently even from duplicate
+   `<style>`/`<script>` tags.
+
+See `example-toll-attendants.html` for a two-interviewee reference layout with each
+person's intro Q&A visible and the rest of their answers collapsed separately.
 
 No external dependencies. No plugin required.

@@ -1,6 +1,9 @@
 <!-- VPM Load More — collapsible section with expand button.
      Drop into a Custom HTML block right before the content to hide.
-     Close </div> after the last item you want collapsed. -->
+     Close </div> after the last item you want collapsed.
+     To collapse more than one section on the same page (e.g. one per
+     interviewee), paste this whole block again for each section — the
+     <style> and <script> only need to appear once per page. -->
 <div class="vpm-lm">
   <div class="vpm-lm__inner">
 
@@ -89,20 +92,21 @@
 
 <script>
 (function () {
-  // Scope to the <div class="vpm-lm"> immediately before this script tag,
-  // so multiple copies on one page each initialize independently.
-  var script = document.currentScript;
-  var wrap = script.previousElementSibling;
-  while (wrap && !wrap.classList.contains('vpm-lm')) {
-    wrap = wrap.previousElementSibling;
-  }
-  if (!wrap || wrap.dataset.vpmLmInit) return;
-  wrap.dataset.vpmLmInit = 'true';
+  // Initializes every .vpm-lm block on the page, so pasting this widget
+  // more than once (e.g. one per interviewee) works from a single script tag
+  // without double-initializing or only wiring up the nearest block.
+  var wraps = document.querySelectorAll('.vpm-lm');
+  for (var i = 0; i < wraps.length; i++) {
+    (function (wrap) {
+      if (wrap.dataset.vpmLmInit) return;
+      wrap.dataset.vpmLmInit = 'true';
 
-  var btn = wrap.querySelector('.vpm-lm__btn');
-  btn.addEventListener('click', function () {
-    wrap.classList.add('is-expanded');
-    btn.setAttribute('aria-expanded', 'true');
-  });
+      var btn = wrap.querySelector('.vpm-lm__btn');
+      btn.addEventListener('click', function () {
+        wrap.classList.add('is-expanded');
+        btn.setAttribute('aria-expanded', 'true');
+      });
+    })(wraps[i]);
+  }
 })();
 </script>
