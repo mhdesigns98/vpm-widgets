@@ -6,14 +6,17 @@
    ================================================ */
 
 /* Defined on :root, not .vpm-mm-widget — if only one inner variant div (e.g. just
-   .vpm-mm__sidebar) gets pasted without the outer wrapper, these still resolve. */
+   .vpm-mm__sidebar) gets pasted without the outer wrapper, these still resolve.
+   --mm-bg/--mm-circle map the Figma comp's off-palette blues (#C1E2FF, #0952A2 —
+   neither exists in vpm-widgets/tokens.css) to the nearest real brand tokens,
+   matching the popup widget's mapping (see vpm-morning-monitor-popup). */
 :root {
   --vpm-dark-blue: #003865;
   --vpm-yellow:    #E0E721;
   --vpm-black:     #101820;
   --vpm-grey:      #B2B4B2;
-  --mm-bg:     #C1E2FF;
-  --mm-circle: #0952A2;
+  --mm-bg:     #D6E8F6; /* --vpm-blue-100 */
+  --mm-circle: #0B4F85; /* --vpm-blue-600 */
   --radius-md: 4px;
   --shadow-md: 0 8px 24px rgba(0,0,0,0.12);
 }
@@ -104,13 +107,14 @@
   justify-content: center;
   gap: 14px;
 }
+/* Sentence case per VPM voice canon — uppercase is reserved for eyebrows
+   and CTA buttons, not headlines. */
 .vpm-mm__full-right h2 {
   font-family: 'IBM Plex Sans Condensed', Arial, sans-serif;
   font-weight: 700;
   font-size: 28px;
   color: var(--vpm-dark-blue);
   line-height: 1.15;
-  text-transform: uppercase;
 }
 .vpm-mm__full-row { display: flex; gap: 10px; }
 .vpm-mm__full-row .vpm-mm__btn { width: auto; }
@@ -134,13 +138,14 @@
   align-items: center;
 }
 .vpm-mm__inline-badge img { width: 100%; max-width: 150px; }
+/* Sentence case per VPM voice canon — uppercase is reserved for eyebrows
+   and CTA buttons, not headlines. */
 .vpm-mm__inline h3 {
   font-family: 'IBM Plex Sans Condensed', Arial, sans-serif;
   font-weight: 700;
   font-size: 22px;
   color: var(--vpm-dark-blue);
   margin-bottom: 4px;
-  text-transform: uppercase;
 }
 .vpm-mm__inline p { font-size: 14px; color: var(--vpm-dark-blue); margin-bottom: 12px; font-weight: 600; }
 .vpm-mm__inline-row { display: flex; gap: 10px; }
