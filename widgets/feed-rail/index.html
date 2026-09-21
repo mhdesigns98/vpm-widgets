@@ -101,6 +101,9 @@
     overflow: hidden;
     flex-shrink: 0;
     background: var(--vpm-gray-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .vpm-feedrail__thumb--video {
@@ -114,6 +117,12 @@
     height: 100%;
     object-fit: cover;
     display: block;
+  }
+
+  .vpm-feedrail__thumb-icon {
+    width: 22px;
+    height: 22px;
+    color: var(--vpm-gray-600);
   }
 
   .vpm-feedrail__play {
@@ -146,6 +155,8 @@
   }
 
   .vpm-feedrail__kicker--video { color: var(--vpm-dark-blue); }
+  .vpm-feedrail__kicker--audio { color: var(--vpm-light-blue); }
+  .vpm-feedrail__kicker--text  { color: var(--vpm-gray-600); }
 
   .vpm-feedrail__headline {
     font-size: 13px;
@@ -156,12 +167,25 @@
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
   }
 
   .vpm-feedrail__meta {
     font-size: 11px;
     color: var(--vpm-gray-600);
+  }
+
+  .vpm-feedrail__snippet {
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--vpm-gray-600);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 
   .vpm-feedrail__empty {
@@ -191,14 +215,30 @@
 //  CONFIGURATION — edit this list to update the feed. No other code changes
 //  needed. Newest item first.
 //
-//  Each item:
-//    type    : 'video' | 'link'
+//  Every item needs: type, title, source, url (text items may omit url).
+//
+//    type = 'video'
+//      videoId : the YouTube video/Short ID (from youtube.com/shorts/<id> or
+//                ?v=<id>) — pulls the thumbnail automatically, no API key
+//
+//    type = 'article'  (alias: 'link')
+//      image   : optional thumbnail URL — falls back to a plain text row
+//                with no image if left out
+//      kicker  : optional label shown above the headline (default "Article")
+//
+//    type = 'audio'
+//      image   : optional thumbnail URL — falls back to a headphone icon
+//                tile if left out
+//
+//    type = 'text'
+//      body    : one or two sentences shown under the headline
+//      url     : optional — if omitted, the item isn't clickable, just a
+//                plain note in the feed (e.g. an internal status update)
+//
+//  Shared, all types:
 //    title   : headline text
-//    source  : small label under the headline (e.g. "YouTube Short", "VPM News")
-//    url     : where the item links to
-//    videoId : (video only) the YouTube video/short ID — used to pull the
-//              thumbnail automatically, no API key required
-//    image   : (link only, optional) thumbnail image URL
+//    source  : small label under the headline/body (e.g. "YouTube Short",
+//              "VPM News", "Weekly Update")
 // ─────────────────────────────────────────────────────────────────────────────
 var FEED_ITEMS = [
   {
@@ -207,6 +247,26 @@ var FEED_ITEMS = [
     source: 'YouTube Short',
     url: 'https://www.youtube.com/shorts/RAu42-tykzk',
     videoId: 'RAu42-tykzk'
+  },
+  {
+    type: 'article',
+    title: 'Five Virginia House seats rated as competitive heading into the fall',
+    source: 'VPM News',
+    url: 'https://www.vpm.org/news',
+    image: 'https://img.youtube.com/vi/RAu42-tykzk/hqdefault.jpg',
+    kicker: 'Congress'
+  },
+  {
+    type: 'audio',
+    title: 'Election night preview with VPM News reporters',
+    source: 'VPM Radio · 12 min',
+    url: 'https://www.vpm.org/listen'
+  },
+  {
+    type: 'text',
+    title: 'Polling locations confirmed for all 133 Richmond precincts',
+    body: 'The city registrar finalized this year’s polling map Friday afternoon — no last-minute changes expected before November 3.',
+    source: 'VPM News desk'
   }
 ];
 
@@ -229,12 +289,9 @@ var FEED_TITLE = 'Latest Updates';
   if (titleEl && FEED_TITLE) titleEl.textContent = FEED_TITLE;
 
   var playIcon = '<svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+  var audioIcon = '<svg class="vpm-feedrail__thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 14a2 2 0 0 1 2-2h1v6H6a2 2 0 0 1-2-2v-2Zm17 0a2 2 0 0 0-2-2h-1v6h1a2 2 0 0 0 2-2v-2ZM6 12a6 6 0 0 1 12 0"/></svg>';
 
-  function escapeHtml(str) {
-    var div = document.createElement('div');
-    div.textContent = str == null ? '' : str;
-    return div.innerHTML;
-  }
+  var KICKERS = { video: 'Video', article: 'Article', link: 'Article', audio: 'Audio', text: 'Update' };
 
   if (!FEED_ITEMS.length) {
     var empty = document.createElement('li');
@@ -246,44 +303,56 @@ var FEED_TITLE = 'Latest Updates';
 
   FEED_ITEMS.forEach(function (item) {
     var li = document.createElement('li');
+    var type = item.type || 'article';
+    var hasUrl = !!item.url;
 
-    var a = document.createElement('a');
+    var a = document.createElement(hasUrl ? 'a' : 'div');
     a.className = 'vpm-feedrail__item';
-    a.href = item.url || '#';
-    a.target = '_blank';
-    a.rel = 'noopener';
-
-    var isVideo = item.type === 'video';
-
-    var thumbWrap = document.createElement('div');
-    thumbWrap.className = 'vpm-feedrail__thumb' + (isVideo ? ' vpm-feedrail__thumb--video' : '');
-
-    var thumbSrc = isVideo && item.videoId
-      ? 'https://img.youtube.com/vi/' + encodeURIComponent(item.videoId) + '/hqdefault.jpg'
-      : (item.image || '');
-
-    if (thumbSrc) {
-      var img = document.createElement('img');
-      img.src = thumbSrc;
-      img.alt = '';
-      img.loading = 'lazy';
-      thumbWrap.appendChild(img);
+    if (hasUrl) {
+      a.href = item.url;
+      a.target = '_blank';
+      a.rel = 'noopener';
     }
 
-    if (isVideo) {
-      var overlay = document.createElement('span');
-      overlay.className = 'vpm-feedrail__play';
-      overlay.setAttribute('aria-hidden', 'true');
-      overlay.innerHTML = playIcon;
-      thumbWrap.appendChild(overlay);
+    var isVideo = type === 'video';
+    var isAudio = type === 'audio';
+    var isText = type === 'text';
+
+    if (!isText) {
+      var thumbWrap = document.createElement('div');
+      thumbWrap.className = 'vpm-feedrail__thumb' + (isVideo ? ' vpm-feedrail__thumb--video' : '');
+
+      var thumbSrc = isVideo && item.videoId
+        ? 'https://img.youtube.com/vi/' + encodeURIComponent(item.videoId) + '/hqdefault.jpg'
+        : (item.image || '');
+
+      if (thumbSrc) {
+        var img = document.createElement('img');
+        img.src = thumbSrc;
+        img.alt = '';
+        img.loading = 'lazy';
+        thumbWrap.appendChild(img);
+      } else if (isAudio) {
+        thumbWrap.innerHTML = audioIcon;
+      }
+
+      if (isVideo) {
+        var overlay = document.createElement('span');
+        overlay.className = 'vpm-feedrail__play';
+        overlay.setAttribute('aria-hidden', 'true');
+        overlay.innerHTML = playIcon;
+        thumbWrap.appendChild(overlay);
+      }
+
+      a.appendChild(thumbWrap);
     }
 
     var body = document.createElement('div');
     body.className = 'vpm-feedrail__body';
 
     var kicker = document.createElement('span');
-    kicker.className = 'vpm-feedrail__kicker' + (isVideo ? ' vpm-feedrail__kicker--video' : '');
-    kicker.textContent = isVideo ? 'Video' : (item.kicker || 'Link');
+    kicker.className = 'vpm-feedrail__kicker vpm-feedrail__kicker--' + type;
+    kicker.textContent = item.kicker || KICKERS[type] || 'Update';
 
     var headline = document.createElement('span');
     headline.className = 'vpm-feedrail__headline';
@@ -292,6 +361,13 @@ var FEED_TITLE = 'Latest Updates';
     body.appendChild(kicker);
     body.appendChild(headline);
 
+    if (isText && item.body) {
+      var snippet = document.createElement('span');
+      snippet.className = 'vpm-feedrail__snippet';
+      snippet.textContent = item.body;
+      body.appendChild(snippet);
+    }
+
     if (item.source) {
       var meta = document.createElement('span');
       meta.className = 'vpm-feedrail__meta';
@@ -299,7 +375,6 @@ var FEED_TITLE = 'Latest Updates';
       body.appendChild(meta);
     }
 
-    a.appendChild(thumbWrap);
     a.appendChild(body);
     li.appendChild(a);
     listEl.appendChild(li);
