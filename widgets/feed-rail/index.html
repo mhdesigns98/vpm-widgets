@@ -15,8 +15,10 @@
   :root {
     --vpm-dark-blue:  #003865;
     --vpm-light-blue: #6CACE4;
+    --vpm-blue-500:   #1A6AA8;
     --vpm-yellow:     #E0E721;
     --vpm-red:        #EE2737;
+    --vpm-red-700:    #B81E2A;
     --vpm-black:      #101820;
     --vpm-white:      #FFFFFF;
     --vpm-gray-600:   #5A6470;
@@ -107,9 +109,7 @@
   }
 
   .vpm-feedrail__thumb--video {
-    width: 96px;
-    aspect-ratio: 9 / 16;
-    height: auto;
+    width: 64px;
   }
 
   .vpm-feedrail__thumb img {
@@ -135,8 +135,8 @@
   }
 
   .vpm-feedrail__play svg {
-    width: 28px;
-    height: 28px;
+    width: 20px;
+    height: 20px;
   }
 
   .vpm-feedrail__body {
@@ -151,11 +151,11 @@
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--vpm-red);
+    color: var(--vpm-red-700);
   }
 
   .vpm-feedrail__kicker--video { color: var(--vpm-dark-blue); }
-  .vpm-feedrail__kicker--audio { color: var(--vpm-light-blue); }
+  .vpm-feedrail__kicker--audio { color: var(--vpm-blue-500); }
   .vpm-feedrail__kicker--text  { color: var(--vpm-gray-600); }
 
   .vpm-feedrail__headline {
