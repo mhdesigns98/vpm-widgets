@@ -12,7 +12,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>VPM Feed Rail</title>
 <style>
-  :root {
+  .vpm-feedrail {
     --vpm-dark-blue:  #003865;
     --vpm-light-blue: #6CACE4;
     --vpm-blue-500:   #1A6AA8;
@@ -29,7 +29,9 @@
     --font-display:   'IBM Plex Sans Condensed', 'Oswald', 'GT America Condensed', 'Arial Narrow', sans-serif;
   }
 
-  *, *::before, *::after { box-sizing: border-box; }
+  .vpm-feedrail, .vpm-feedrail *, .vpm-feedrail *::before, .vpm-feedrail *::after {
+    box-sizing: border-box;
+  }
 
   .vpm-feedrail {
     font-family: var(--font-sans);
@@ -106,10 +108,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  .vpm-feedrail__thumb--video {
-    width: 64px;
   }
 
   .vpm-feedrail__thumb img {
@@ -205,9 +203,9 @@
 <div class="vpm-feedrail" aria-label="Latest updates">
   <div class="vpm-feedrail__header">
     <span class="vpm-feedrail__dot" aria-hidden="true"></span>
-    <span class="vpm-feedrail__title" id="vpm-feedrail-title">Latest Updates</span>
+    <span class="vpm-feedrail__title">Latest Updates</span>
   </div>
-  <ul class="vpm-feedrail__list" id="vpm-feedrail-list"></ul>
+  <ul class="vpm-feedrail__list"></ul>
 </div>
 
 <script>
@@ -282,8 +280,8 @@ var FEED_TITLE = 'Latest Updates';
   }
   if (!root) return;
 
-  var titleEl = root.querySelector('#vpm-feedrail-title') || root.querySelector('.vpm-feedrail__title');
-  var listEl = root.querySelector('#vpm-feedrail-list') || root.querySelector('.vpm-feedrail__list');
+  var titleEl = root.querySelector('.vpm-feedrail__title');
+  var listEl = root.querySelector('.vpm-feedrail__list');
   if (!listEl) return;
 
   if (titleEl && FEED_TITLE) titleEl.textContent = FEED_TITLE;
@@ -318,13 +316,15 @@ var FEED_TITLE = 'Latest Updates';
     var isAudio = type === 'audio';
     var isText = type === 'text';
 
-    if (!isText) {
-      var thumbWrap = document.createElement('div');
-      thumbWrap.className = 'vpm-feedrail__thumb' + (isVideo ? ' vpm-feedrail__thumb--video' : '');
+    var thumbSrc = isVideo && item.videoId
+      ? 'https://img.youtube.com/vi/' + encodeURIComponent(item.videoId) + '/hqdefault.jpg'
+      : (item.image || '');
 
-      var thumbSrc = isVideo && item.videoId
-        ? 'https://img.youtube.com/vi/' + encodeURIComponent(item.videoId) + '/hqdefault.jpg'
-        : (item.image || '');
+    var showThumb = !isText && (thumbSrc || isAudio || isVideo);
+
+    if (showThumb) {
+      var thumbWrap = document.createElement('div');
+      thumbWrap.className = 'vpm-feedrail__thumb';
 
       if (thumbSrc) {
         var img = document.createElement('img');
