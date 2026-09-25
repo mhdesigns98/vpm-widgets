@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AP Election Results Embed — preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Fonts are loaded here in the PREVIEW ONLY, to approximate vpm.org.
+     The widget itself never imports webfonts — see README. -->
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    padding: 32px 24px 96px;
+    background: #F2F3F4;
+    font-family: 'Public Sans', system-ui, sans-serif;
+    color: #101820;
+  }
+  .pv-hd {
+    max-width: 1200px;
+    margin: 0 auto 32px;
+  }
+  .pv-hd h1 { font-size: 22px; margin: 0 0 6px; }
+  .pv-hd p  { font-size: 14px; color: #5A6470; margin: 0; line-height: 1.5; }
+  .pv-case {
+    max-width: 1200px;
+    margin: 0 auto 48px;
+  }
+  .pv-label {
+    font: 700 12px/1 'Public Sans', system-ui, sans-serif;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #5A6470;
+    margin: 0 0 10px;
+  }
+  .pv-stage {
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+    overflow: hidden;
+  }
+  /* Heights are generous on purpose: AP's resizer grows the inner iframe to
+     fit the races, and a short stage would clip the note block. */
+  .pv-stage iframe {
+    display: block;
+    border: 0;
+    width: 100%;
+    height: 2100px;
+  }
+  .pv-stage--720 { max-width: 720px; }
+  .pv-stage--320 { max-width: 320px; }
+  .pv-stage--720 iframe { height: 2600px; }
+  .pv-stage--320 iframe { height: 3400px; }
+</style>
+</head>
+<body>
+
+<div class="pv-hd">
+  <h1>AP Election Results Embed — <code>vpm-apres-</code></h1>
+  <p>
+    Each stage below is an iframe at a fixed width, so the widget's container queries
+    react to the real container width — the same way they will inside a Brightspot
+    column. The full-width case shows the panel overlapping up into the hero; at 320px
+    the overlap is dropped and the panel stacks.
+  </p>
+</div>
+
+<div class="pv-case">
+  <p class="pv-label">Full width (1200px) — hero pad-bottom 120px, panel offset −96px</p>
+  <div class="pv-stage">
+    <iframe src="index.html" title="Widget preview at full width"></iframe>
+  </div>
+</div>
+
+<div class="pv-case">
+  <p class="pv-label">Article column (720px) — hero pad-bottom 72px, panel offset −56px</p>
+  <div class="pv-stage pv-stage--720">
+    <iframe src="index.html" title="Widget preview at 720px"></iframe>
+  </div>
+</div>
+
+<div class="pv-case">
+  <p class="pv-label">Narrow column (320px) — no overlap, panel stacks flush</p>
+  <div class="pv-stage pv-stage--320">
+    <iframe src="index.html" title="Widget preview at 320px"></iframe>
+  </div>
+</div>
+
+</body>
+</html>

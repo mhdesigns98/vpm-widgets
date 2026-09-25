@@ -48,18 +48,27 @@ Live visual version: [`brand-guide.html`](brand-guide.html)
 
 | Role | Family | CSS Variable | Notes |
 |---|---|---|---|
-| Brand / Display | GT America → Oswald (web) | `--font-display` | `'Oswald', Impact, sans-serif` |
-| UI / Body | Inter | `--font-sans` | `'Inter', 'Helvetica Neue', Arial, sans-serif` |
+| Brand / Display | GT America → **IBM Plex Sans Condensed** (web) | `--font-display` | `'IBM Plex Sans Condensed', 'Oswald', 'GT America Condensed', 'Arial Narrow', sans-serif` |
+| UI / Body | Public Sans | `--font-sans` | `'Public Sans', 'GT America', 'Helvetica Neue', Arial, sans-serif` |
 | Print Fallbacks | Arial, Helvetica, Calibri, Times New Roman | — | Office/print environments only |
+
+**Display weight caps at 700.** IBM Plex Sans Condensed ships no 800; asking for
+it gets a synthesized face. Anything previously set at 800 should be 700.
+
+The display face changed from Oswald on **2026-08-07** — IBM Plex Sans Condensed
+is closer to GT America in weight and has a real condensed cut. Oswald stays
+second in the stack so pages render correctly until the host theme loads IBM
+Plex. Copies of `--font-display` already pasted into widget and page files are
+**stale** until re-synced; see `tokens.css` for the canonical value.
 
 ### Type Scale
 
 | Token | Value | Usage |
 |---|---|---|
-| `--fs-h1` | `clamp(28px, 3.2vw, 44px)` | Page headlines (Oswald 700, uppercase) |
-| `--fs-body` | `16px` | Body copy (Inter 400) |
+| `--fs-h1` | `clamp(28px, 3.2vw, 44px)` | Page headlines (display 700, uppercase) |
+| `--fs-body` | `16px` | Body copy (Public Sans 400) |
 | `--fs-sm` | `14px` | Supporting text, card descriptions |
-| `--fs-eyebrow` | `13px` | Eyebrow labels (Inter 700, uppercase, tracked) |
+| `--fs-eyebrow` | `13px` | Eyebrow labels (Public Sans 700, uppercase, tracked) |
 | `--fs-xs` | `12px` | Captions, metadata, fine print |
 | `--tracking-eyebrow` | `0.12em` | Letter-spacing for eyebrow labels |
 
@@ -67,14 +76,14 @@ Live visual version: [`brand-guide.html`](brand-guide.html)
 
 | Level | Font | Size | Weight | Treatment |
 |---|---|---|---|---|
-| Display / H1 | Oswald | `--fs-h1` | 700 | Uppercase |
-| Section Title | Oswald | 20px | 700 | Uppercase, `letter-spacing: 0.06em` |
-| Card Title | Oswald | 17px | 700 | Uppercase, `letter-spacing: 0.04em` |
-| Body | Inter | 16px | 400 | `line-height: 1.45` |
-| Small / Desc | Inter | 14px | 400 | `color: --vpm-gray-600` |
-| Eyebrow | Inter | 13px | 700 | Uppercase, `letter-spacing: 0.12em`, yellow on dark |
-| Caption / XS | Inter | 12px | 400 | `color: --vpm-gray-500` |
-| Button Label | Inter | 10px | 700 | Uppercase, `letter-spacing: 0.08em` |
+| Display / H1 | IBM Plex Sans Condensed | `--fs-h1` | 700 | Uppercase |
+| Section Title | IBM Plex Sans Condensed | 20px | 700 | Uppercase, `letter-spacing: 0.06em` |
+| Card Title | IBM Plex Sans Condensed | 17px | 700 | Uppercase, `letter-spacing: 0.04em` |
+| Body | Public Sans | 16px | 400 | `line-height: 1.45` |
+| Small / Desc | Public Sans | 14px | 400 | `color: --vpm-gray-600` |
+| Eyebrow | Public Sans | 13px | 700 | Uppercase, `letter-spacing: 0.12em`, yellow on dark |
+| Caption / XS | Public Sans | 12px | 400 | `color: --vpm-gray-500` |
+| Button Label | Public Sans | 10px | 700 | Uppercase, `letter-spacing: 0.08em` |
 
 ---
 
@@ -83,7 +92,7 @@ Live visual version: [`brand-guide.html`](brand-guide.html)
 **Primary tagline:** `EDUCATE. ENTERTAIN. INSPIRE.`
 
 - Always three words, each ending with a period. Never truncate.
-- All caps when set in Oswald/display type.
+- All caps when set in display type.
 - Eyebrow labels: "VPM News" — yellow, uppercase, `letter-spacing: 0.12em`.
 - Brand voice: direct, local, public service. Avoid corporate jargon.
 - CTAs: strong imperatives — *Keep Me Informed*, *Watch Live*, *Read More*.
@@ -190,8 +199,8 @@ Paste into the `<style>` block of any new widget:
   --vpm-gray-500: #7B8591;
   --vpm-gray-600: #5A6470;
 
-  --font-sans:    'Inter', 'Helvetica Neue', Arial, sans-serif;
-  --font-display: 'Oswald', Impact, sans-serif;
+  --font-sans:    'Public Sans', 'GT America', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'IBM Plex Sans Condensed', 'Oswald', 'GT America Condensed', 'Arial Narrow', sans-serif;
 
   --fs-h1:      clamp(28px, 3.2vw, 44px);
   --fs-body:    16px;

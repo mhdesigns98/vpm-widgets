@@ -25,7 +25,7 @@ promote it to a widget here and have both pages consume a copy.
     README.md        ← description, source, usage notes
 ```
 
-Some widgets (e.g. `elections-2026-primary`) use a split-file format for WordPress ACF:
+Some widgets (e.g. `vpm-banner`) use a split-file format for WordPress ACF:
 
 ```
 /widgets/[widget-name]
@@ -56,7 +56,7 @@ disagreed about VPM blue. Widgets must stay self-contained, so copy the custom p
 ## Workflow
 1. Write a brief first (`/brief`) — done criteria, out-of-scope, deploy target
 2. Scaffold with `/new-widget`, then build in a Claude Code conversation
-3. When satisfied, add it under `/widgets/[name]/` following the structure above (`/save-component` does this)
+3. When satisfied, add it under `/widgets/[name]/` following the structure above (`/new-widget --from file.html` does this; `/save-component` is an alias)
 4. Write a one-paragraph `README.md` describing purpose, source, and usage
 5. **Pre-ship check** (`/ship-widget`) — required before pasting into any CMS, see checklist below
 6. Commit and push to `main`
@@ -82,7 +82,10 @@ Every widget must pass the CMS test harness (`/harness/harness.html?widget=[name
 - [ ] Degrades gracefully in a 320px column
 - [ ] Keyboard accessible, visible focus, WCAG 2.1 AA contrast, `prefers-reduced-motion` respected
 - [ ] No `id` attributes, or none that duplicate when the block is placed twice on one page
+- [ ] Widget scopes itself to its own container (e.g. `document.currentScript.previousElementSibling`), not a page-wide selector — two copies on one page must initialize independently, not just avoid literal duplicate ids
+- [ ] Any third-party script (vendor embed, resizer, player SDK) loads **once per page** — guarded with a `querySelector` check, not a bare `<script src>` that re-appends on every re-render
 - [ ] No console errors in the harness log
+- [ ] A single-file widget's CSS uses absolute URLs (not relative `url(...)`) for any local asset — a relative path resolves against whichever document the browser thinks it's in, which breaks for an iframe-embedded widget the moment its markup gets tested by injection (as this harness does) rather than by a real iframe
 
 ## Repo Consolidation
 When asked to consolidate, audit existing repos and Gists, identify widget/embed code, and migrate it into the structure above. Archive source repos after migration.

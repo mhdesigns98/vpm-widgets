@@ -1,0 +1,464 @@
+<!-- ============================================================ -->
+<!-- VPM — AP Election Results Embed                              -->
+<!-- Namespace: vpm-apres-                                        -->
+<!-- Optimized for the Brightspot HTML Embed module               -->
+<!-- No id attributes: this block may appear twice on one page.   -->
+<!-- ============================================================ -->
+
+<section class="vpm-apres">
+<style>
+/* ============================================
+   Tokens inlined from tokens.css — the widget must stay self-contained.
+   Namespaced so host custom properties can't leak in.
+   ============================================ */
+.vpm-apres {
+  /* Brand core */
+  --vpm-apres-blue-900:      #002244;
+  --vpm-apres-dark-blue:     #003865;
+  --vpm-apres-light-blue:    #6CACE4;
+  --vpm-apres-yellow:        #E0E721;
+  --vpm-apres-red:           #EE2737;
+  --vpm-apres-white:         #FFFFFF;
+  --vpm-apres-blue-050:      #EEF4FB;
+  --vpm-apres-gray-700:      #3D4652;
+  --vpm-apres-gray-600:      #5A6470;
+  --vpm-apres-gray-200:      #E5E7E9;
+  --vpm-apres-on-dark-muted: #C8D5E2;
+
+  /* Type — canonical VPM stacks. No @import: a webfont fetch would be a
+     second external dependency and a render-blocker. If the host page
+     already serves Public Sans / Oswald, they apply automatically. */
+  --vpm-apres-font:         'Public Sans', 'GT America', 'Helvetica Neue', Arial, sans-serif;
+  --vpm-apres-font-display: 'Oswald', 'GT America Condensed', 'Helvetica Neue', Arial, sans-serif;
+
+  --vpm-apres-fs-title:   clamp(32px, 6cqi, 64px);
+  --vpm-apres-fs-dek:     clamp(16px, 1.6cqi, 18px);
+  --vpm-apres-fs-kicker:  15px;
+  --vpm-apres-fs-label:   13px;
+  --vpm-apres-fs-body-sm: 13px;
+  --vpm-apres-fs-caption: 12px;
+
+  --vpm-apres-lh-tight:  1.02;
+  --vpm-apres-lh-normal: 1.45;
+  --vpm-apres-lh-loose:  1.6;
+
+  --vpm-apres-tracking-kicker: 0.14em;
+  --vpm-apres-tracking-label:  0.12em;
+  --vpm-apres-tracking-title:  -0.01em;
+
+  /* Space */
+  --vpm-apres-space-2: 8px;
+  --vpm-apres-space-3: 12px;
+  --vpm-apres-space-4: 16px;
+  --vpm-apres-space-5: 24px;
+  --vpm-apres-space-6: 32px;
+
+  /* Layout — mobile-first defaults, raised by the container queries below.
+     Note those queries target `.vpm-apres__inner`, not `.vpm-apres`: a
+     @container rule styles a container's DESCENDANTS, never the container
+     element itself. The vars are inherited, so overriding them one level in
+     reaches everything that consumes them. */
+  --vpm-apres-hero-pad-x:   24px;
+  --vpm-apres-hero-pad-top: 32px;
+  --vpm-apres-hero-pad-bot: 32px;
+  --vpm-apres-panel-offset: 0px;
+  --vpm-apres-panel-inset:  0px;
+
+  --vpm-apres-shadow-panel: 0 18px 48px rgba(16, 24, 32, 0.14);
+  --vpm-apres-shadow-focus: 0 0 0 3px rgba(108, 172, 228, 0.65);
+  --vpm-apres-frame-min:    520px;
+
+  /* ---- Reset against hostile host CSS ---- */
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: var(--vpm-apres-font);
+  color: var(--vpm-apres-gray-700);
+  background: transparent;
+  position: relative;
+  isolation: isolate;
+
+  /* Layout responds to the widget's own width, not the viewport's, so it
+     lays out correctly inside a narrow column on a wide page. */
+  container-type: inline-size;
+  container-name: vpm-apres;
+}
+
+.vpm-apres *,
+.vpm-apres *::before,
+.vpm-apres *::after { box-sizing: border-box; }
+
+/* Host themes routinely ship `!important` rules on headings and links.
+   Every selector below is prefixed, and these neutralize the common ones. */
+.vpm-apres h2,
+.vpm-apres p,
+.vpm-apres span,
+.vpm-apres div {
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.vpm-apres a {
+  font-family: inherit;
+  text-decoration: none;
+  background: none;
+  border: 0;
+}
+
+/* Uncomment to break the hero out of a constrained Brightspot content column.
+   Leave commented unless you have checked it: it fails if any ancestor sets
+   `overflow: hidden`, and it introduces horizontal scroll if the page has a
+   visible scrollbar counted in `100vw`. See README. */
+/*
+.vpm-apres {
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  width: 100vw;
+}
+*/
+
+/* ============================================
+   Hero
+   ============================================ */
+.vpm-apres .vpm-apres__hero {
+  background: var(--vpm-apres-blue-900);
+  padding:
+    var(--vpm-apres-hero-pad-top)
+    var(--vpm-apres-hero-pad-x)
+    var(--vpm-apres-hero-pad-bot);
+}
+
+.vpm-apres .vpm-apres__heroinner {
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.vpm-apres .vpm-apres__kicker {
+  display: flex;
+  align-items: center;
+  gap: var(--vpm-apres-space-3);
+  flex-wrap: wrap;
+}
+
+.vpm-apres .vpm-apres__eyebrow {
+  font-family: var(--vpm-apres-font-display);
+  font-size: var(--vpm-apres-fs-kicker);
+  font-weight: 600;
+  letter-spacing: var(--vpm-apres-tracking-kicker);
+  text-transform: uppercase;
+  color: var(--vpm-apres-light-blue);
+}
+
+.vpm-apres .vpm-apres__sep {
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--vpm-apres-light-blue);
+  opacity: 0.5;
+  flex: none;
+}
+
+.vpm-apres .vpm-apres__status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: var(--vpm-apres-fs-caption);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--vpm-apres-white);
+}
+
+.vpm-apres .vpm-apres__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--vpm-apres-red);
+  flex: none;
+  animation: vpmApresPulse 2s infinite;
+}
+
+@keyframes vpmApresPulse {
+  0%   { box-shadow: 0 0 0 0   rgba(238, 39, 55, 0.65); }
+  70%  { box-shadow: 0 0 0 7px rgba(238, 39, 55, 0); }
+  100% { box-shadow: 0 0 0 0   rgba(238, 39, 55, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vpm-apres .vpm-apres__dot { animation: none !important; }
+}
+
+.vpm-apres .vpm-apres__title {
+  font-family: var(--vpm-apres-font-display);
+  font-size: var(--vpm-apres-fs-title);
+  font-weight: 700;
+  line-height: var(--vpm-apres-lh-tight);
+  letter-spacing: var(--vpm-apres-tracking-title);
+  text-transform: uppercase;
+  color: var(--vpm-apres-white);
+}
+
+.vpm-apres .vpm-apres__dek {
+  font-size: var(--vpm-apres-fs-dek);
+  line-height: var(--vpm-apres-lh-loose);
+  color: var(--vpm-apres-on-dark-muted);
+  max-width: 640px;
+  text-wrap: pretty;
+}
+
+/* ============================================
+   Results panel
+   ============================================ */
+.vpm-apres .vpm-apres__panel {
+  background: var(--vpm-apres-white);
+  box-shadow: var(--vpm-apres-shadow-panel);
+  margin:
+    var(--vpm-apres-panel-offset)
+    var(--vpm-apres-panel-inset)
+    0;
+  position: relative;
+}
+
+/* 3-stripe accent bar */
+.vpm-apres .vpm-apres__bar {
+  height: 6px;
+  width: 100%;
+  background: linear-gradient(90deg,
+    var(--vpm-apres-light-blue) 0%,
+    var(--vpm-apres-light-blue) 30%,
+    var(--vpm-apres-yellow)     30%,
+    var(--vpm-apres-yellow)     70%,
+    var(--vpm-apres-red)        70%,
+    var(--vpm-apres-red)        100%);
+}
+
+.vpm-apres .vpm-apres__panelhd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--vpm-apres-space-4);
+  flex-wrap: wrap;
+  padding: var(--vpm-apres-space-4) var(--vpm-apres-space-5);
+  border-bottom: 1px solid var(--vpm-apres-gray-200);
+}
+
+.vpm-apres .vpm-apres__panellabel {
+  font-size: var(--vpm-apres-fs-label);
+  font-weight: 700;
+  letter-spacing: var(--vpm-apres-tracking-label);
+  text-transform: uppercase;
+  color: var(--vpm-apres-dark-blue);
+}
+
+.vpm-apres .vpm-apres__source {
+  font-size: var(--vpm-apres-fs-caption);
+  color: var(--vpm-apres-gray-600);
+}
+
+.vpm-apres .vpm-apres__source strong {
+  font-weight: 600;
+  color: var(--vpm-apres-dark-blue);
+}
+
+.vpm-apres .vpm-apres__framewrap {
+  padding: var(--vpm-apres-space-2) var(--vpm-apres-space-4) var(--vpm-apres-space-5);
+}
+
+/* min-height is the floor: if AP's resizer is blocked or fails, the panel
+   still holds its shape rather than collapsing to nothing. */
+.vpm-apres .vpm-apres__frame {
+  display: block;
+  border: 0;
+  width: 100%;
+  min-height: var(--vpm-apres-frame-min);
+}
+
+/* ============================================
+   Disclosure note
+   ============================================ */
+.vpm-apres .vpm-apres__note {
+  margin: var(--vpm-apres-space-5) var(--vpm-apres-panel-inset) 0;
+  padding: var(--vpm-apres-space-4) 18px;
+  background: var(--vpm-apres-blue-050);
+  border-left: 3px solid var(--vpm-apres-light-blue);
+  font-size: var(--vpm-apres-fs-body-sm);
+  line-height: 1.55;
+  color: var(--vpm-apres-gray-700);
+}
+
+/* !important only where hostile host CSS uses it too — CMS themes routinely
+   ship `.article-body a { color: … !important }`, which otherwise repaints
+   this link and destroys its contrast against the pale note background. */
+.vpm-apres .vpm-apres__notelink {
+  color: var(--vpm-apres-dark-blue) !important;
+  font-weight: 600;
+  text-decoration: none !important;
+  border-bottom: 2px solid var(--vpm-apres-yellow);
+  padding-bottom: 1px;
+  white-space: nowrap;
+  letter-spacing: normal;
+}
+
+.vpm-apres .vpm-apres__notelink:hover,
+.vpm-apres .vpm-apres__notelink:focus-visible {
+  color: var(--vpm-apres-blue-900) !important;
+}
+
+.vpm-apres .vpm-apres__notelink:focus-visible {
+  outline: 2px solid transparent;
+  box-shadow: var(--vpm-apres-shadow-focus);
+  border-radius: 2px;
+}
+
+/* ============================================
+   Responsive — driven by the widget's own width.
+   The panel/hero overlap is decoration: it is dropped entirely below 600px,
+   where it would otherwise eat the dek.
+   ============================================ */
+@container vpm-apres (min-width: 600px) {
+  .vpm-apres .vpm-apres__inner {
+    --vpm-apres-hero-pad-x:   40px;
+    --vpm-apres-hero-pad-top: 40px;
+    --vpm-apres-hero-pad-bot: 72px;
+    --vpm-apres-panel-offset: -56px;
+    --vpm-apres-panel-inset:  24px;
+  }
+}
+
+@container vpm-apres (min-width: 900px) {
+  .vpm-apres .vpm-apres__inner {
+    --vpm-apres-hero-pad-x:   56px;
+    --vpm-apres-hero-pad-top: 44px;
+    --vpm-apres-hero-pad-bot: 120px;
+    --vpm-apres-panel-offset: -96px;
+    --vpm-apres-panel-inset:  40px;
+  }
+  .vpm-apres .vpm-apres__framewrap {
+    padding: var(--vpm-apres-space-2) var(--vpm-apres-space-5) var(--vpm-apres-space-5);
+  }
+  .vpm-apres .vpm-apres__panelhd {
+    padding: var(--vpm-apres-space-4) var(--vpm-apres-space-6);
+  }
+}
+
+/* Viewport fallback for engines without container queries. Approximate only:
+   it keys off the window, so a narrow sidebar on a wide page gets the wide
+   treatment. Acceptable degradation — the layout still holds. */
+@supports not (container-type: inline-size) {
+  @media (min-width: 600px) {
+    .vpm-apres .vpm-apres__inner {
+      --vpm-apres-hero-pad-x:   40px;
+      --vpm-apres-hero-pad-top: 40px;
+      --vpm-apres-hero-pad-bot: 72px;
+      --vpm-apres-panel-offset: -56px;
+      --vpm-apres-panel-inset:  24px;
+      --vpm-apres-fs-title:     44px;
+    }
+  }
+  @media (min-width: 900px) {
+    .vpm-apres .vpm-apres__inner {
+      --vpm-apres-hero-pad-x:   56px;
+      --vpm-apres-hero-pad-top: 44px;
+      --vpm-apres-hero-pad-bot: 120px;
+      --vpm-apres-panel-offset: -96px;
+      --vpm-apres-panel-inset:  40px;
+      --vpm-apres-fs-title:     64px;
+    }
+  }
+  @media (max-width: 599px) {
+    .vpm-apres .vpm-apres__inner { --vpm-apres-fs-title: 32px; }
+  }
+}
+</style>
+
+  <!-- __inner exists so the container queries have something to target:
+       a @container rule cannot style its own container element. -->
+  <div class="vpm-apres__inner">
+
+  <div class="vpm-apres__hero">
+    <div class="vpm-apres__heroinner">
+
+      <div class="vpm-apres__kicker">
+        <span class="vpm-apres__eyebrow">2026 Virginia Primary</span>
+        <span class="vpm-apres__sep" aria-hidden="true"></span>
+        <span class="vpm-apres__status">
+          <span class="vpm-apres__dot" aria-hidden="true"></span>
+          Polls closed 7 p.m.
+        </span>
+      </div>
+
+      <!-- h2, not h1: the Brightspot page template renders its own page
+           headline above this module. Promote to h1 only if it does not. -->
+      <h2 class="vpm-apres__title">Election results</h2>
+
+      <p class="vpm-apres__dek">
+        Returns from every Virginia county and independent city, tabulated by the
+        Associated Press and refreshed automatically. Numbers are unofficial until
+        certified.
+      </p>
+
+    </div>
+  </div>
+
+  <div class="vpm-apres__panel">
+    <div class="vpm-apres__bar" aria-hidden="true"></div>
+
+    <div class="vpm-apres__panelhd">
+      <span class="vpm-apres__panellabel">Results by race</span>
+      <span class="vpm-apres__source">Source: <strong>Associated Press</strong></span>
+    </div>
+
+    <!-- `ap-embed` is the ONLY un-namespaced class here, and it is required:
+         AP's resizeClient.js selects `iframe.ap-embed` to find frames to size.
+         Renaming or namespacing it silently breaks auto-resize. -->
+    <div class="vpm-apres__framewrap">
+      <iframe
+        class="vpm-apres__frame ap-embed"
+        title="Live election results via the Associated Press"
+        src="https://interactives.apelections.org/election-results/customers/layouts/organization-layouts/published/57278/30777.html"
+        width="100%"
+        height="520"
+        frameborder="0"
+        scrolling="no"
+        marginheight="0"
+        loading="lazy"
+      ></iframe>
+    </div>
+  </div>
+
+  <p class="vpm-apres__note">
+    Results provided by the Associated Press. VPM News does not call races
+    independently; AP declares a winner only when it determines the trailing
+    candidates cannot catch up.
+    <a class="vpm-apres__notelink"
+       href="https://apnews.com/hub/how-ap-counts-the-vote"
+       target="_blank"
+       rel="noopener">How AP counts the vote &rarr;</a>
+  </p>
+
+  </div><!-- /.vpm-apres__inner -->
+
+<script>
+/* AP's resizeClient.js keeps the iframe sized to its contents as races expand.
+   It is an approved external dependency (see README) — the widget degrades to a
+   fixed 520px floor if it is blocked.
+
+   Loaded via this guard rather than a bare <script src>: Brightspot may detach
+   and re-inject the block, and a bare tag would append a second copy each time. */
+(function () {
+  var SRC = 'https://interactives.apelections.org/election-results/assets/microsite/resizeClient.js';
+  if (document.querySelector('script[src*="microsite/resizeClient.js"]')) return;
+  var s = document.createElement('script');
+  s.src = SRC;
+  s.defer = true;
+  document.head.appendChild(s);
+})();
+</script>
+</section>

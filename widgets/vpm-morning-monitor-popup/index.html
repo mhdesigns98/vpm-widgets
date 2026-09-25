@@ -1,13 +1,34 @@
 <!-- ============================================================
-  VPM Morning Monitor — Newsletter Banner
-  GTM Custom HTML Tag (Shadow DOM — Production)
+  VPM Morning Monitor — Newsletter Popup (REFERENCE COPY)
 
-  HOW TO DEPLOY:
-  1. GTM → Tags → New → Custom HTML
-  2. Paste this entire file
-  3. Trigger: All Pages (or scoped page rules)
-  4. Save → Submit
+  THIS IS NOT THE DEPLOY SOURCE. The live popup is hosted on Cloudflare
+  Pages and version-controlled at:
+    ~/Projects/vpm/newsletter-signup/public/assets/morning-monitor-popup.js
+  It's loaded into WordPress via a one-line <script src> tag, not by
+  pasting this file. Edit the file above and
+  `npx wrangler pages deploy public --project-name=newsletter-signup` to
+  ship a change — editing this copy does nothing in production.
 
+  This file exists only so the Widget Lab has an accurate, current
+  reference/backup of the popup's design and behavior. Keep it in sync
+  manually when the real script changes; it will drift silently
+  otherwise (it did, for weeks, before 2026-09-16).
+
+  Design: https://www.figma.com/proto/yyLeqHn6VbNWYrENmi0w6m/vpm-option-c-leadontop?node-id=1-478
+  Figma: Left panel = light-blue + dark-blue pill oval + MM logo + tagline (white)
+         Right panel = light-blue + dark-blue condensed headline + centered input/button
+
+  Deploy target: WordPress header/footer snippet plugin loads a
+  <script src> pointing at the hosted file above — this popup does NOT
+  get pasted into Brightspot or WordPress directly.
+
+  Submission: posts to the newsletter-signup Cloudflare Pages Function
+  (https://newsletter-signup-8kv.pages.dev/api/subscribe), not directly to
+  Mailchimp — a prior JSONP-to-Mailchimp version was silently blocked by
+  Firefox Enhanced Tracking Protection and similar ad-blockers. Requires a
+  Cloudflare Turnstile token, rendered via explicit mode into a shadow-DOM
+  container. Colors are inlined VPM brand tokens (see vpm-widgets/tokens.css)
+  scoped to :host, not hard-coded hex.
   ============================================================ -->
 
 <script>
@@ -15,9 +36,8 @@
   'use strict';
 
   // ── Guard: only run once ───────────────────────────────────
-  function init() {
-    if (window.__mmBannerInit) return;
-    window.__mmBannerInit = true;
+  if (window.__mmBannerInit) return;
+  window.__mmBannerInit = true;
 
   // ── Config ─────────────────────────────────────────────────
   var CONFIG = {
@@ -34,13 +54,18 @@
     exitIntentFired: false
   };
 
-
   // ── Storage helpers ────────────────────────────────────────
   function getStorage(key) {
     try { return localStorage.getItem(key); } catch (e) { return null; }
   }
   function setStorage(key, val) {
     try { localStorage.setItem(key, val); } catch (e) {}
+  }
+  function getSession(key) {
+    try { return sessionStorage.getItem(key); } catch (e) { return null; }
+  }
+  function setSession(key, val) {
+    try { sessionStorage.setItem(key, val); } catch (e) {}
   }
   function daysSince(ts) {
     if (!ts) return Infinity;
@@ -53,7 +78,7 @@
   // ── Suppression ────────────────────────────────────────────
   function shouldShow() {
     if (getStorage('mm_banner_converted') === 'true') return false;
-    if (sessionStorage.getItem('mm_banner_shown_session') === 'true') return false;
+    if (getSession('mm_banner_shown_session') === 'true') return false;
     var n = parseInt(getStorage('mm_banner_close_count') || '0', 10);
     var last = getStorage('mm_banner_last_closed');
     if (n === 0) return true;
@@ -61,14 +86,26 @@
     return daysSince(last) >= CONFIG.secondCloseCooldown;
   }
 
+  var LOGO_URL = 'https://mhdesigns98.github.io/vpm-widgets/widgets/morning-monitor-signup/assets/morning-monitor-lockup.svg';
+
   // ── CSS (lives inside shadow root — zero bleed) ────────────
+  // Brand values inlined from vpm-widgets/tokens.css — a shadow-DOM widget
+  // can't link the token stylesheet externally, so custom properties are
+  // scoped to :host instead of hard-coding hex throughout.
   var CSS = '\
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }\
     \
     :host {\
       all: initial;\
       display: block;\
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;\
+      font-family: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;\
+      --vpm-dark-blue: #003865;\
+      --vpm-blue-600: #0B4F85;\
+      --vpm-blue-100: #D6E8F6;\
+      --vpm-blue-900: #002244;\
+      --vpm-red: #EE2737;\
+      --vpm-black: #101820;\
+      --vpm-gray-600: #5A6470;\
     }\
     \
     #host {\
@@ -79,10 +116,8 @@
       width: 100vw;\
       height: 100vh;\
     }\
-    \
     #host.show { display: block; }\
     \
-    /* ── Backdrop ── */\
     #backdrop {\
       position: absolute;\
       inset: 0;\
@@ -100,144 +135,208 @@
       flex-direction: row;\
       width: 90%;\
       max-width: 900px;\
-      max-height: 90vh;\
-      border-radius: 12px;\
+      border-radius: 4px;\
       overflow: hidden;\
       box-shadow: 0 20px 60px rgba(0,0,0,0.35);\
-      background: white;\
+      background: var(--vpm-blue-100);\
+      min-height: 260px;\
     }\
     \
     /* ── Left panel ── */\
     #panel-left {\
-      flex: 1 1 50%;\
-      min-width: 0;\
-      background: #003865;\
-      color: white;\
-      padding: 48px 40px;\
+      flex: 0 0 44%;\
+      position: relative;\
+      overflow: hidden;\
+      background: var(--vpm-blue-100);\
       display: flex;\
       flex-direction: column;\
-      justify-content: center;\
       align-items: center;\
+      justify-content: center;\
+      padding: 32px 24px;\
+    }\
+    \
+    /* Dark blue pill oval — Figma spec was #0952A2, mapped to the nearest\
+       brand token (--vpm-blue-600); border-radius 230px, positioned so its\
+       right edge aligns with the left panel edge and it bleeds ~58% off\
+       the left side. */\
+    #panel-left::before {\
+      content: "";\
+      position: absolute;\
+      left: -58%;\
+      top: 10%;\
+      width: 158%;\
+      height: 78%;\
+      background: var(--vpm-blue-600);\
+      border-radius: 230px;\
+    }\
+    \
+    #logo {\
+      position: relative;\
+      z-index: 1;\
+      max-width: 160px;\
+      height: auto;\
+      display: block;\
+      margin-bottom: 12px;\
+    }\
+    \
+    #tagline {\
+      position: relative;\
+      z-index: 1;\
+      font-size: 13px;\
+      font-weight: 500;\
+      color: white;\
       text-align: center;\
+      line-height: 1.5;\
+      letter-spacing: 0.03em;\
+      max-width: 220px;\
     }\
     \
     /* ── Right panel ── */\
     #panel-right {\
-      flex: 1 1 50%;\
-      min-width: 0;\
-      background: white;\
-      padding: 72px 48px 48px;\
+      flex: 1;\
+      background: var(--vpm-blue-100);\
       display: flex;\
       flex-direction: column;\
-      justify-content: flex-start;\
+      align-items: center;\
+      justify-content: center;\
+      padding: 48px 40px 40px;\
     }\
     \
     /* ── Close button ── */\
-    #close-btn { position: absolute; top: 8px; right: 8px; width: 44px; height: 44px; border-radius: 4px; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s; z-index: 10; padding: 0; opacity: 0.7; }\
+    #close-btn {\
+      position: absolute;\
+      top: 8px;\
+      right: 8px;\
+      width: 44px;\
+      height: 44px;\
+      border-radius: 4px;\
+      border: none;\
+      background: transparent;\
+      cursor: pointer;\
+      display: flex;\
+      align-items: center;\
+      justify-content: center;\
+      z-index: 10;\
+      padding: 0;\
+      opacity: 0.5;\
+    }\
     #close-btn:hover { opacity: 1; }\
-    #close-btn::before, #close-btn::after { content: ""; position: absolute; width: 16px; height: 2px; background: #333; border-radius: 1px; }\
+    #close-btn::before, #close-btn::after {\
+      content: "";\
+      position: absolute;\
+      width: 16px;\
+      height: 2px;\
+      background: var(--vpm-dark-blue);\
+      border-radius: 1px;\
+    }\
     #close-btn::before { transform: rotate(45deg); }\
     #close-btn::after  { transform: rotate(-45deg); }\
     \
-    /* ── Logo ── */\
-    #logo { max-width: 160px; height: auto; margin-bottom: 20px; display: block; }\
-    \
-    /* ── Typography ── */\
+    /* ── Headline ── */\
+    /* Sentence case per VPM voice canon — uppercase is reserved for\
+       eyebrows and CTA buttons, not headlines. */\
     #headline {\
-      font-size: 30px;\
+      font-family: "IBM Plex Sans", sans-serif;\
       font-weight: 700;\
-      line-height: 1.2;\
-      color: white;\
-      margin: 0 0 16px 0;\
-    }\
-    #subhead {\
-      font-size: 15px;\
-      line-height: 1.6;\
-      color: #555;\
+      font-size: clamp(18px, 2.2vw, 24px);\
+      color: var(--vpm-dark-blue);\
+      text-align: center;\
+      line-height: 1.1;\
+      letter-spacing: 0.02em;\
       margin: 0 0 20px 0;\
+      width: 100%;\
     }\
     \
-    /* ── Form ── */\
+    /* ── Form elements ── */\
     #email-input {\
       width: 100%;\
       padding: 14px 16px;\
-      font-size: 16px;\
+      font-size: 14px;\
       font-family: inherit;\
-      border: 2px solid #e0e0e0;\
-      border-radius: 8px;\
+      border: 1.5px solid var(--vpm-gray-600);\
+      border-radius: 4px;\
       outline: none;\
+      background: white;\
+      color: var(--vpm-black);\
       transition: border-color 0.2s;\
       margin-bottom: 12px;\
       display: block;\
+      text-align: center;\
     }\
-    #email-input:focus  { border-color: #6CACE4; }\
-    #email-input.error  { border-color: #EE2737; }\
+    #email-input::placeholder { color: var(--vpm-gray-600); }\
+    #email-input:focus { border-color: var(--vpm-blue-600); text-align: left; }\
+    #email-input.error { border-color: var(--vpm-red); }\
     \
     #submit-btn {\
-      width: 100%;\
-      padding: 16px;\
-      font-size: 15px;\
+      width: auto;\
+      padding: 14px 28px;\
+      white-space: nowrap;\
+      font-family: "IBM Plex Sans", sans-serif;\
       font-weight: 700;\
-      font-family: inherit;\
+      font-size: 14px;\
       letter-spacing: 0.5px;\
       text-transform: uppercase;\
       color: white;\
-      background: #003865;\
+      background: var(--vpm-dark-blue);\
       border: none;\
-      border-radius: 8px;\
+      border-radius: 4px;\
       cursor: pointer;\
       transition: background 0.2s;\
       display: block;\
     }\
-    #submit-btn:hover:not(:disabled) { background: #002647; }\
+    #submit-btn:hover:not(:disabled) { background: var(--vpm-blue-900); }\
     #submit-btn:disabled { background: #aaa; cursor: not-allowed; }\
     \
-    /* ── Loading spinner ── */\
     #submit-btn.loading::after {\
       content: "";\
       display: inline-block;\
-      width: 14px;\
-      height: 14px;\
+      width: 12px;\
+      height: 12px;\
       border: 2px solid rgba(255,255,255,0.3);\
       border-top-color: white;\
       border-radius: 50%;\
       animation: spin 0.6s linear infinite;\
       vertical-align: middle;\
+      margin-left: 6px;\
     }\
     @keyframes spin { to { transform: rotate(360deg); } }\
+    @media (prefers-reduced-motion: reduce) {\
+      #submit-btn.loading::after { animation: none; }\
+    }\
     \
-    /* ── Error + privacy ── */\
     #error-msg {\
       display: none;\
-      color: #EE2737;\
-      font-size: 13px;\
+      color: var(--vpm-red);\
+      font-size: 12px;\
       margin-top: -6px;\
       margin-bottom: 10px;\
+      text-align: center;\
     }\
     #error-msg.show { display: block; }\
     \
     #privacy {\
-      font-size: 12px;\
-      color: #888;\
+      font-size: 10px;\
+      color: var(--vpm-black);\
       line-height: 1.5;\
       text-align: center;\
-      margin-top: 16px;\
+      margin-top: 14px;\
     }\
     \
-    /* ── Status message ── */\
     #status-msg {\
       display: none;\
-      padding: 14px;\
-      border-radius: 8px;\
-      font-size: 14px;\
+      padding: 12px;\
+      border-radius: 4px;\
+      font-size: 13px;\
       font-weight: 600;\
       line-height: 1.5;\
       text-align: center;\
       margin-bottom: 16px;\
+      width: 100%;\
     }\
-    #status-msg.show   { display: block; }\
+    #status-msg.show    { display: block; }\
     #status-msg.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }\
     #status-msg.error   { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }\
+    #status-msg.notice  { background: #e8f0f8; color: var(--vpm-dark-blue); border: 1px solid var(--vpm-blue-100); font-weight: 500; }\
     \
     /* ════════════════════════════\
        MOBILE BOTTOM SHEET\
@@ -252,43 +351,49 @@
         flex-direction: column;\
         width: 100%;\
         max-width: 100%;\
-        max-height: none;\
+        min-height: 0;\
         border-radius: 12px 12px 0 0;\
         animation: slideUp 0.3s ease-out;\
-        background: #003865;\
+        background: var(--vpm-blue-600);\
       }\
       @keyframes slideUp {\
         from { transform: translateY(100%); }\
         to   { transform: translateY(0); }\
       }\
+      @media (prefers-reduced-motion: reduce) {\
+        #modal { animation: none; }\
+      }\
       #panel-left {\
-        padding: 20px 20px 12px;\
-        align-items: center;\
-        text-align: center;\
         flex: none;\
+        background: transparent;\
+        overflow: visible;\
+        padding: 24px 20px 8px;\
       }\
-      #logo    { max-width: 100px; margin-bottom: 10px; }\
-      #headline { font-size: 18px; margin-bottom: 0; }\
-      #subhead  { font-size: 13px; color: rgba(255,255,255,1); margin-bottom: 14px; text-align: center; }\
+      #panel-left::before { display: none; }\
+      #logo    { max-width: 110px; margin-bottom: 8px; }\
+      #tagline { color: rgba(255,255,255,0.85); font-size: 12px; max-width: none; }\
       #panel-right {\
-        background: #003865;\
-        padding: 12px 20px 24px;\
+        background: transparent;\
         flex: none;\
+        padding: 12px 24px 28px;\
+        align-items: stretch;\
       }\
-      #email-input {\
-        font-size: 14px;\
-        padding: 12px 14px;\
-        background: white;\
-        margin-bottom: 10px;\
+      #headline { color: white; font-size: 18px; margin-bottom: 16px; }\
+      #email-input { text-align: left; }\
+      #submit-btn {\
+        width: 100%;\
+        background: transparent;\
+        border: 2px solid white;\
+        color: white;\
       }\
-      #submit-btn  { font-size: 13px; padding: 13px; background: transparent; border: 2px solid white; color: white; }\
       #submit-btn:hover:not(:disabled) { background: rgba(255,255,255,0.15); }\
-      #privacy     { color: rgba(255,255,255,0.7); font-size: 11px; }\
-      #error-msg   { color: #ffaaaa; }\
-      #close-btn   { top: 8px; right: 8px; opacity: 0.85; }\
+      #privacy { color: rgba(255,255,255,0.65); font-size: 10px; }\
+      #error-msg { color: #ffb3b3; }\
+      #close-btn { top: 8px; right: 8px; opacity: 0.8; }\
       #close-btn::before, #close-btn::after { background: white; }\
-      #status-msg.success { background: #d4edda; color: #155724; }\
-      #status-msg.error   { background: rgba(255,255,255,0.15); color: white; }\
+      #status-msg.success { background: rgba(212,237,218,0.9); color: #155724; }\
+      #status-msg.error   { background: rgba(255,255,255,0.1); color: white; border-color: rgba(255,255,255,0.3); }\
+      #status-msg.notice  { background: rgba(255,255,255,0.15); color: white; border-color: rgba(255,255,255,0.35); }\
     }\
   ';
 
@@ -296,23 +401,22 @@
   var HTML = '\
     <div id="host">\
       <div id="backdrop">\
-        <div id="modal" role="dialog" aria-modal="true" aria-label="Newsletter signup">\
-          <button id="close-btn" aria-label="Close newsletter banner"></button>\
+        <div id="modal" role="dialog" aria-modal="true" aria-label="VPM Morning Monitor newsletter signup">\
+          <button id="close-btn" aria-label="Close newsletter signup"></button>\
           <div id="panel-left">\
-            <img id="logo"\
-              src="https://assets.vpm.org/cb/90/6566081547ebb236cc40dcac73c4/vpm-mm-logo-web-rev.png"\
-              alt="VPM News Morning Monitor">\
-            <h2 id="headline">Start Your Day with Virginia\'s Top Stories</h2>\
+            <img id="logo" src="' + LOGO_URL + '" alt="VPM News Morning Monitor">\
+            <p id="tagline">News from across the Commonwealth every weekday morning.</p>\
           </div>\
           <div id="panel-right">\
             <div id="status-msg" role="alert" aria-live="polite"></div>\
-            <p id="subhead">News from across the commonwealth every weekday morning.</p>\
+            <h2 id="headline">Start Your Day with Virginia\'s Top Stories</h2>\
             <input type="email" id="email-input"\
               placeholder="Enter your email address"\
               autocomplete="email"\
               aria-label="Email address"\
               aria-required="true">\
             <div id="error-msg" role="alert">Please enter a valid email address</div>\
+            <div id="turnstile-container"></div>\
             <button id="submit-btn">Keep Me Informed</button>\
             <p id="privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>\
           </div>\
@@ -322,33 +426,134 @@
   ';
 
   // ── Build shadow root ──────────────────────────────────────
-  var hostEl = document.createElement('div');
-  hostEl.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:2147483647;pointer-events:none;';
-  document.body.appendChild(hostEl);
+  // Deferred to init() so this is safe whether the loader <script src> tag
+  // is placed in <head> (before document.body exists) or right before </body>.
+  var hostEl, shadow, host, backdrop, closeBtn, emailInput, submitBtn, errorMsg, statusMsg, turnstileContainer;
 
-  var shadow = hostEl.attachShadow({ mode: 'open' });
+  var TURNSTILE_SITEKEY = '0x4AAAAAAEMMxbT7t6Mb3D7z';
+  var turnstileWidgetId = null;
+  var turnstileReady = false;
+  var turnstileFailed = false;
 
-  var styleEl = document.createElement('style');
-  styleEl.textContent = CSS;
-  shadow.appendChild(styleEl);
+  function loadTurnstileScript(onReady, onFail) {
+    if (window.turnstile) { onReady(); return; }
+    // window.__turnstileLoading is a synchronous flag set the instant a loader
+    // starts, so a second Turnstile consumer on the same page (e.g. the WP
+    // sidebar signup widget) sees "a load is already in flight" even before
+    // this script tag lands in the DOM. Checking for an existing <script> tag
+    // alone isn't enough — two loaders racing at page-init both run before
+    // either script tag exists, and Turnstile's api.js does not support being
+    // loaded twice on one page (produces error 110200).
+    if (window.__turnstileLoading) {
+      window.__turnstileLoading.push(onReady, onFail);
+      return;
+    }
+    window.__turnstileLoading = [onReady, onFail];
+    function notifyReady() {
+      var queue = window.__turnstileLoading;
+      window.__turnstileLoading = null;
+      for (var i = 0; i < queue.length; i += 2) queue[i]();
+    }
+    function notifyFail() {
+      var queue = window.__turnstileLoading;
+      window.__turnstileLoading = null;
+      for (var i = 0; i < queue.length; i += 2) queue[i + 1]();
+    }
+    var cbName = 'mmTurnstileOnLoad_' + Date.now();
+    window[cbName] = function () {
+      delete window[cbName];
+      notifyReady();
+    };
+    var s = document.createElement('script');
+    s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=' + cbName + '&render=explicit';
+    s.async = true;
+    s.defer = true;
+    // The <script> tag itself can fail to load (blocked by an extension,
+    // network error, challenges.cloudflare.com unreachable) — without this,
+    // that failure is silent and the popup gets stuck with a dead security
+    // check and no way to submit.
+    s.onerror = function () {
+      delete window[cbName];
+      notifyFail();
+    };
+    document.head.appendChild(s);
+  }
 
-  var wrapper = document.createElement('div');
-  wrapper.innerHTML = HTML;
-  shadow.appendChild(wrapper);
+  function init() {
+    hostEl = document.createElement('div');
+    hostEl.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:2147483647;pointer-events:none;';
+    document.body.appendChild(hostEl);
 
-  // ── Shadow DOM element refs ────────────────────────────────
-  function $$(id) { return shadow.getElementById(id); }
+    shadow = hostEl.attachShadow({ mode: 'open' });
 
-  var host       = $$('host');
-  var backdrop   = $$('backdrop');
-  var closeBtn   = $$('close-btn');
-  var emailInput = $$('email-input');
-  var submitBtn  = $$('submit-btn');
-  var errorMsg   = $$('error-msg');
-  var statusMsg  = $$('status-msg');
+    var styleEl = document.createElement('style');
+    styleEl.textContent = CSS;
+    shadow.appendChild(styleEl);
+
+    var wrapper = document.createElement('div');
+    wrapper.innerHTML = HTML;
+    shadow.appendChild(wrapper);
+
+    // ── Shadow DOM element refs ────────────────────────────────
+    function $$(id) { return shadow.getElementById(id); }
+
+    host       = $$('host');
+    backdrop   = $$('backdrop');
+    closeBtn   = $$('close-btn');
+    emailInput = $$('email-input');
+    submitBtn  = $$('submit-btn');
+    errorMsg   = $$('error-msg');
+    statusMsg  = $$('status-msg');
+    turnstileContainer = $$('turnstile-container');
+
+    // Turnstile's explicit-render API accepts a direct element reference,
+    // so it can target a container inside a shadow root — its auto-render
+    // (class="cf-turnstile") convention cannot, since that only scans
+    // document, not shadow roots.
+    loadTurnstileScript(
+      function onTurnstileScriptReady() {
+        try {
+          turnstileWidgetId = window.turnstile.render(turnstileContainer, {
+            sitekey: TURNSTILE_SITEKEY,
+            action: 'turnstile-spin-v2',
+            callback: function () { turnstileReady = true; },
+            'expired-callback': function () { turnstileReady = false; },
+            'error-callback': function () {
+              turnstileReady = false;
+              turnstileFailed = true;
+              showTurnstileFailureNotice();
+            }
+          });
+        } catch (err) {
+          turnstileFailed = true;
+          showTurnstileFailureNotice();
+        }
+      },
+      function onTurnstileScriptFail() {
+        turnstileFailed = true;
+        showTurnstileFailureNotice();
+      }
+    );
+
+    function showTurnstileFailureNotice() {
+      // Deliberately calm, not an error banner: this happens to legitimate
+      // visitors whose own browser/ad-blocker settings blocked a bot-check
+      // widget, not something they did wrong. Shown only when the popup is
+      // actually visible (not the instant the background script fails,
+      // which would surface it before the visitor has done anything) and
+      // uses the 'notice' style (brand navy/light-blue) rather than the red
+      // 'error' style reserved for real submission failures.
+      if (statusMsg && host && host.classList.contains('show')) {
+        setStatus('notice', 'One quick step: your browser blocked part of our signup form (common with ad blockers or strict privacy settings). Allow it for this site, then reload to finish subscribing.');
+      }
+      if (submitBtn) {
+        submitBtn.disabled = true;
+      }
+    }
 
   // ── Show / hide ────────────────────────────────────────────
   var previousFocus = null;
+  var prevBodyOverflow = '';
 
   function showBanner() {
     if (state.bannerShown) return;
@@ -357,67 +562,25 @@
     host.classList.add('show');
     hostEl.style.pointerEvents = 'auto';
     state.bannerShown = true;
-    window.addEventListener('pointerdown', handleWindowClick, { capture: true });
+    window.addEventListener('click', handleWindowClick, { capture: true });
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({ event: 'mm_popup_view', popup_name: 'morning_monitor' });
-    sessionStorage.setItem('mm_banner_shown_session', 'true');
+    setSession('mm_banner_shown_session', 'true');
+    prevBodyOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     setTimeout(function () { if (emailInput) emailInput.focus(); }, 150);
-
-    // ── FIX: Disable the Brightspot player overlay so it doesn't
-    //    intercept clicks meant for our banner.
-    //
-    //    Why this works: the radio player injects a div called
-    //    .BrightspotPersistentPlayer-drawerOverlay into the main DOM.
-    //    Even though it sits at a lower z-index (51) than our banner
-    //    (2147483647), it still receives pointer events because our
-    //    banner lives inside a Shadow DOM — and Shadow DOM doesn't
-    //    automatically protect against sibling elements in the main
-    //    DOM intercepting clicks.
-    //
-    //    Setting pointer-events: none on the overlay while our banner
-    //    is open makes all clicks pass straight through it to our
-    //    banner. We store a reference so we can cleanly restore it
-    //    when the banner closes.
-    // ──────────────────────────────────────────────────────────
-    var playerOverlay = document.querySelector('.BrightspotPersistentPlayer-drawerOverlay');
-    if (playerOverlay) {
-      playerOverlay.dataset.mmPointerEventsOverride = playerOverlay.style.pointerEvents;
-      playerOverlay.style.pointerEvents = 'none';
-    }
-
-    // Disable focus() on Stream player buttons — the player's focus management
-    // script grabs focus back to its button whenever focus moves to our input.
-    document.querySelectorAll('button.Stream').forEach(function(btn) {
-      if (!btn._mmFocusDisabled) {
-        btn._mmOrigFocus = btn.focus;
-        btn.focus = function() {};
-        btn._mmFocusDisabled = true;
-      }
-    });
+    // Turnstile may have failed in the background before the popup ever
+    // opened — surface the calm notice now instead of leaving the visitor
+    // to discover the blocked submit button with no explanation.
+    if (turnstileFailed) showTurnstileFailureNotice();
   }
 
   function hideBanner() {
     host.classList.remove('show');
     hostEl.style.pointerEvents = 'none';
-    window.removeEventListener('pointerdown', handleWindowClick, { capture: true });
-    document.body.style.overflow = '';
+    window.removeEventListener('click', handleWindowClick, { capture: true });
+    document.body.style.overflow = prevBodyOverflow;
     if (previousFocus) previousFocus.focus();
-
-    var playerOverlay = document.querySelector('.BrightspotPersistentPlayer-drawerOverlay');
-    if (playerOverlay) {
-      playerOverlay.style.pointerEvents = playerOverlay.dataset.mmPointerEventsOverride || '';
-      delete playerOverlay.dataset.mmPointerEventsOverride;
-    }
-
-    // Restore Stream player button focus
-    document.querySelectorAll('button.Stream').forEach(function(btn) {
-      if (btn._mmFocusDisabled) {
-        btn.focus = btn._mmOrigFocus;
-        delete btn._mmOrigFocus;
-        delete btn._mmFocusDisabled;
-      }
-    });
   }
 
   function handleClose() {
@@ -475,22 +638,19 @@
   }
 
   // ── Window-level click handler ─────────────────────────────
-  // Something on the page calls stopPropagation() at window capture,
-  // preventing clicks from reaching shadow DOM listeners normally.
-  // composedPath()[0] gives us the real shadow target directly.
+  // composedPath()[0] gives us the real shadow target, bypassing
+  // any stopPropagation() calls on the host page.
   function handleWindowClick(e) {
     var path = e.composedPath();
     if (!path || !path.length) return;
     var t = path[0];
     if (t === closeBtn || closeBtn.contains(t)) { handleClose(); return; }
     if (t === submitBtn || submitBtn.contains(t)) { handleSubmit(); return; }
-    if (t === emailInput) {
-      e.stopImmediatePropagation();
-      emailInput.focus({ preventScroll: true });
-      return;
-    }
+    if (t === emailInput) { emailInput.focus(); return; }
     if (t === backdrop) { handleClose(); return; }
   }
+
+  var API_BASE_URL = 'https://newsletter-signup-8kv.pages.dev/api/subscribe';
 
   function handleSubmit(e) {
     if (submitBtn.disabled) return;
@@ -505,47 +665,67 @@
       return;
     }
 
+    if (turnstileFailed) {
+      showTurnstileFailureNotice();
+      return;
+    }
+
+    if (!turnstileReady) {
+      setStatus('error', 'Please complete the security check above.');
+      return;
+    }
+
     emailInput.classList.remove('error');
     errorMsg.classList.remove('show');
     submitBtn.disabled = true;
     submitBtn.classList.add('loading');
     submitBtn.textContent = 'Subscribing';
 
-    // ── Mailchimp JSONP submission ─────────────────────────
-    var callbackName = 'mm_cb_' + Date.now();
-    var timeout = setTimeout(function () {
-      window[callbackName] = null;
-      onError();
+    // ── Server-side Mailchimp subscription (avoids third-party JSONP
+    //    calls that ad-blockers / tracking protection can silently drop) ──
+    var turnstileToken = window.turnstile ? window.turnstile.getResponse(turnstileWidgetId) : '';
+
+    // Same 8s budget as the retired JSONP path — without this, a hung
+    // request leaves the button on "Subscribing" indefinitely.
+    var abortController = ('AbortController' in window) ? new AbortController() : null;
+    var fetchTimeout = setTimeout(function () {
+      if (abortController) abortController.abort();
     }, 8000);
 
-    window[callbackName] = function (res) {
-      clearTimeout(timeout);
-      window[callbackName] = null;
-      var s = document.getElementById('mm-jsonp-script');
-      if (s) s.parentNode.removeChild(s);
-      if (res.result === 'success') {
-        onSuccess();
-      } else {
-        if (res.msg && res.msg.toLowerCase().indexOf('already subscribed') > -1) {
+    fetch(API_BASE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: email,
+        newsletters: ['morning-monitor'],
+        turnstileToken: turnstileToken,
+        source: 'morning_monitor_popup'
+      }),
+      signal: abortController ? abortController.signal : undefined
+    })
+      .then(function (response) {
+        clearTimeout(fetchTimeout);
+        return response.json().then(function (data) {
+          return { ok: response.ok, data: data };
+        });
+      })
+      .then(function (result) {
+        var results = result.data && result.data.results;
+        if (result.ok && results && results.every(function (r) { return r.ok; })) {
           onSuccess();
+        } else {
+          onError(result.data && result.data.error);
+        }
+      })
+      .catch(function (err) {
+        clearTimeout(fetchTimeout);
+        if (err && err.name === 'AbortError') {
+          onError('Request timed out. Please check your connection and try again.');
         } else {
           onError();
         }
-      }
-    };
-
-    var script = document.createElement('script');
-    script.id = 'mm-jsonp-script';
-    script.src = 'https://vpm.us3.list-manage.com/subscribe/post-json' +
-      '?u=6fe41b3055c403be08140ec95' +
-      '&id=26497cf3ad' +
-      '&f_id=0097cee1f0' +
-      '&tags=1620245%2C10170514' +
-      '&EMAIL=' + encodeURIComponent(email) +
-      '&b_6fe41b3055c403be08140ec95_26497cf3ad=' +
-      '&c=' + callbackName;
-    document.head.appendChild(script);
-    // ── END Mailchimp ──────────────────────────────────────
+      });
+    // ── END subscription ────────────────────────────────────
 
     function onSuccess() {
       setStorage('mm_banner_converted', 'true');
@@ -557,57 +737,60 @@
       setTimeout(hideBanner, 3000);
     }
 
-    function onError() {
-      setStatus('error', 'Something went wrong. Please try again.');
+    function onError(detail) {
+      setStatus('error', detail || 'Something went wrong. Please try again.');
       submitBtn.disabled = false;
       submitBtn.classList.remove('loading');
       submitBtn.textContent = 'Keep Me Informed';
+      // Turnstile tokens are single-use — reset so retry gets a fresh one.
+      if (window.turnstile && turnstileWidgetId !== null) {
+        window.turnstile.reset(turnstileWidgetId);
+        turnstileReady = false;
+      }
     }
   }
 
   // ── Event listeners ────────────────────────────────────────
-  closeBtn.addEventListener('click', handleClose);
+  // Note: close button and backdrop clicks are handled by handleWindowClick
+  // (window capture listener). No direct element listeners here — that would
+  // call handleClose() twice and double-increment the cooldown counter.
 
-  // Click backdrop to close (desktop)
-  backdrop.addEventListener('click', function (e) {
-    if (e.target === backdrop) handleClose();
+  // The sidebar/combined-form embeds are iframes on the CF Pages origin, not
+  // this page's origin, so a subscribe there can't set this page's
+  // localStorage directly — they broadcast via postMessage instead.
+  window.addEventListener('message', function (e) {
+    if (e.origin !== 'https://newsletter-signup-8kv.pages.dev') return;
+    if (!e.data || e.data.type !== 'vpm-nl-subscribed') return;
+    if ((e.data.newsletters || []).indexOf('morning-monitor') === -1) return;
+    setStorage('mm_banner_converted', 'true');
+    if (state.bannerShown) hideBanner();
   });
 
-  // Escape key
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && state.bannerShown) handleClose();
   });
 
-  // Submit on button click (no form element needed)
   submitBtn.addEventListener('click', handleSubmit);
 
-  // Clear error on typing
   emailInput.addEventListener('input', function () {
     emailInput.classList.remove('error');
     errorMsg.classList.remove('show');
   });
 
-  // Enter key submits
   emailInput.addEventListener('keydown', function (e) {
     if (e.key === 'Enter') handleSubmit();
   });
 
-  window.__mmBannerState = {
-    state: state,
-    show: function () { showBanner(); },
-    hide: function () { hideBanner(); },
-    shouldShow: function () { return shouldShow(); },
-    checkTriggers: function () { checkTriggers(); }
-  };
+  console.log('[MM Banner] Initialized');
+  }
 
-  console.log('[MM Banner] Initialized. shouldShow:', shouldShow());
-
-  } // end init()
-
-  if (document.readyState === 'complete') {
+  // ── Run init() once document.body exists ──────────────────
+  // Safe whether the loader tag is placed in <head> (before <body> is
+  // parsed) or right before </body>.
+  if (document.body) {
     init();
   } else {
-    window.addEventListener('load', init);
+    document.addEventListener('DOMContentLoaded', init);
   }
 
 })();

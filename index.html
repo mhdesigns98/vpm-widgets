@@ -436,6 +436,13 @@ body {
 
   const WIDGETS = [
     {
+      slug: 'ap-election-results',
+      name: 'AP Election Results',
+      desc: 'AP live election results embed — dark hero over a white results panel, AP iframe with auto-resizer, race-call disclosure note. Brightspot HTML embed.',
+      preview: 'preview.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+    {
       slug: 'elections-2026-primary-cta',
       name: 'Elections 2026 Primary CTA',
       desc: 'Homepage CTA for 2026 primary coverage — photo beside a dark-blue panel linking to vpm.org/elections. WordPress ACF split-file format.',
@@ -548,6 +555,51 @@ body {
         { label: 'HTML', file: 'html.html' },
         { label: 'CSS',  file: 'css.css'  },
       ],
+    },
+    {
+      slug: 'newsletter-signup-cta',
+      name: 'Newsletter Signup CTA',
+      desc: 'Compact inline CTA banner linking to the combined newsletter signup page. WordPress ACF split-file format.',
+      preview: 'preview.html',
+      files: [
+        { label: 'HTML', file: 'html.html' },
+        { label: 'CSS',  file: 'css.css'  },
+      ],
+    },
+    {
+      slug: 'pbs-show-playlist',
+      name: 'PBS Show Playlist',
+      desc: 'API-driven episode playlist — main PBS partner player + 5-episode thumbnail strip with autoplay. Fetches from PBS Media Manager API via CF Worker. WordPress iframe embed.',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+    {
+      slug: 'virginia-home-grown-playlist',
+      name: 'Virginia Home Grown Playlist',
+      desc: 'Same as PBS Show Playlist, restyled to Virginia Home Grown\'s green sub-brand (leaf-pattern background). Replaces PBS Show Playlist on the live VHG show page. WordPress iframe embed.',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+    {
+      slug: 'most-popular-today',
+      name: 'Most Popular Today',
+      desc: 'Post-page sidebar widget showing top 5 trending stories (trailing 24h) from Chartbeat. Stub pending a real data endpoint. WordPress Custom HTML widget.',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+    {
+      slug: 'vpm-load-more',
+      name: 'Load More',
+      desc: 'Collapsible content section with "Continue reading" expand button, for hiding most of a long section (e.g. an interview transcript) behind a click. Content stays in the DOM for SEO/a11y. WordPress Custom HTML block.',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+    {
+      slug: 'feed-rail',
+      name: 'Feed Rail',
+      desc: 'Reusable vertical rail of short updates (video, articles, audio, text notes) for a sidebar or beside a main story. Content is a hand-edited FEED_ITEMS array in-file — no backend. WordPress ACF single-file.',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
     },
   ];
 

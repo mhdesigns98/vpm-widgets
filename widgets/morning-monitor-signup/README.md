@@ -23,3 +23,17 @@ The JS is a single inline `<script>` at the bottom of `index.html` (IIFE, no dep
 A real WordPress test (2026-07-17) using an earlier, unsplit version (one file with an inline `<style>` tag, pasted into a single "HTML" field) showed the widget's structure/copy rendering but its styling missing (no button background, no decorative shapes) while the rest of the host page looked untouched — consistent with WordPress stripping the inline `<style>` tag from that field. The fix is this proper three-field split; the unscoped-reset risk above was a separate, related issue fixed proactively at the same time, not confirmed as the cause of that specific screenshot.
 
 **Source:** VPM Newsletter Design & Strategy (Figma, June 22 2026)
+
+## Design tokens and voice (2026-09-16 audit)
+
+`--mm-bg`/`--mm-circle` map the Figma comp's off-palette blues (`#C1E2FF`, `#0952A2` — neither
+exists in `tokens.css`) to the nearest real brand tokens (`--vpm-blue-100`, `--vpm-blue-600`),
+matching the same mapping used on the Morning Monitor popup
+(`vpm-morning-monitor-popup`). The full-width and inline headlines (`h2`/`h3`) are sentence case —
+VPM voice canon reserves uppercase for eyebrows and CTA buttons, not headlines; the section labels
+and "Keep Me Informed" buttons correctly stay uppercase. Also added `aria-label="Email address"`
+to all three email inputs — a placeholder isn't a substitute for a label.
+
+Ran through `/ship-widget`'s harness (ACF split-file mode) after these fixes — hydration,
+re-render, sidebar/main slot injection, and click-interception all passed clean; the harness's
+`js.js` 404 is expected for this static (no-JS) widget, not a real error.
