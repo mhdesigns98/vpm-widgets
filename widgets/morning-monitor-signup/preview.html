@@ -11,8 +11,8 @@
     --vpm-yellow:    #E0E721;
     --vpm-black:     #101820;
     --vpm-grey:      #B2B4B2;
-    --mm-bg:     #C1E2FF;
-    --mm-circle: #0952A2;
+    --mm-bg:     #D6E8F6; /* --vpm-blue-100 */
+    --mm-circle: #0B4F85; /* --vpm-blue-600 */
     --radius-md: 4px;
     --shadow-md: 0 8px 24px rgba(0,0,0,0.12);
   }
@@ -108,7 +108,6 @@
     font-size: 28px;
     color: var(--vpm-dark-blue);
     line-height: 1.15;
-    text-transform: uppercase;
   }
   .vpm-mm__full-row { display: flex; gap: 10px; }
   .vpm-mm__full-row .vpm-mm__btn { width: auto; }
@@ -138,7 +137,6 @@
     font-size: 22px;
     color: var(--vpm-dark-blue);
     margin-bottom: 4px;
-    text-transform: uppercase;
   }
   .vpm-mm__inline p { font-size: 14px; color: var(--vpm-dark-blue); margin-bottom: 12px; font-weight: 600; }
   .vpm-mm__inline-row { display: flex; gap: 10px; }
@@ -187,7 +185,7 @@
   <div class="vpm-mm__full-right">
     <h2>Start Your Day with Virginia's Top Stories</h2>
     <form class="vpm-mm__full-row" data-mc-form="full" action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=26497cf3ad" method="post" target="_blank" novalidate>
-      <input type="email" class="vpm-mm__input" name="EMAIL" placeholder="Enter your email address" required>
+      <input type="email" class="vpm-mm__input" name="EMAIL" placeholder="Enter your email address" aria-label="Email address" required>
       <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_26497cf3ad" tabindex="-1" value=""></div>
       <button type="submit" class="vpm-mm__btn">Keep Me Informed</button>
     </form>
@@ -204,7 +202,7 @@
     <h3>Start Your Day with Virginia's Top Stories</h3>
     <p>News from across the Commonwealth every weekday morning.</p>
     <form class="vpm-mm__inline-row" data-mc-form="inline" action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=26497cf3ad" method="post" target="_blank" novalidate>
-      <input type="email" class="vpm-mm__input" name="EMAIL" placeholder="Enter your email address" required>
+      <input type="email" class="vpm-mm__input" name="EMAIL" placeholder="Enter your email address" aria-label="Email address" required>
       <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_26497cf3ad" tabindex="-1" value=""></div>
       <button type="submit" class="vpm-mm__btn">Keep Me Informed</button>
     </form>
@@ -222,7 +220,7 @@
   </div>
   <div class="vpm-mm__sidebar-bottom">
     <form data-mc-form="sidebar" action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=26497cf3ad" method="post" target="_blank" novalidate style="display:flex;flex-direction:column;gap:12px;">
-      <input type="email" class="vpm-mm__input" name="EMAIL" placeholder="Enter your email address" required>
+      <input type="email" class="vpm-mm__input" name="EMAIL" placeholder="Enter your email address" aria-label="Email address" required>
       <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_26497cf3ad" tabindex="-1" value=""></div>
       <button type="submit" class="vpm-mm__btn">Keep Me Informed</button>
     </form>

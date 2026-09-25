@@ -4,6 +4,13 @@ The VPM web team's design system and CMS embed library. This repo is the **canon
 VPM design tokens, the brand guide, and every reusable HTML/CSS/JS block we paste into
 WordPress, Brightspot, or GTM.
 
+**Looking for a full page build?** Those live in the sibling repo,
+[vpm-pages](https://github.com/mhdesigns98/vpm-pages).
+
+> **A widget is used on more than one page. A page build is used on exactly one.**
+
+The test is reuse, not size. A small block that only ever appears on one URL belongs in `vpm-pages`.
+
 **Prerequisites:** GitHub access to this repo, and Claude Code installed with an active seat if
 you'll be building rather than just looking things up. Ask whoever handles your accounts if you
 don't have either yet — this repo assumes both are already in place.
@@ -15,7 +22,7 @@ Pick the row that matches what you came for.
 | I want to… | Go to |
 |---|---|
 | See VPM colors, type, and spacing | **[Brand guide (rendered)](https://mhdesigns98.github.io/vpm-widgets/brand-guide.html)** — swatches, type scale, copyable CSS blocks. No git required. |
-| Look up an exact token value | [`tokens.css`](tokens.css) — the source of truth. [`BRAND_GUIDE.md`](BRAND_GUIDE.md) has the same values as tables plus a paste-ready `:root` block. |
+| Look up an exact token value | [`tokens.css`](tokens.css) — the source of truth **for both this repo and `vpm-pages`** (there is deliberately no copy there). [`BRAND_GUIDE.md`](BRAND_GUIDE.md) has the same values as tables plus a paste-ready `:root` block. |
 | Find or reuse an existing widget | [`INDEX.md`](INDEX.md) — every widget, what it does, its namespace. Live previews at [mhdesigns98.github.io/vpm-widgets](https://mhdesigns98.github.io/vpm-widgets/). |
 | Build or change something | [`CONTRIBUTING.md`](CONTRIBUTING.md), then [`CLAUDE.md`](CLAUDE.md) for conventions and the pre-ship checklist. |
 | Use Claude Code on VPM work | Just clone this repo and open a session in it. See below. |
@@ -37,8 +44,7 @@ committed to this repo, so VPM brand tokens and the build/ship slash commands lo
 [**"Using Claude Code on this repo"** in `CONTRIBUTING.md`](CONTRIBUTING.md#using-claude-code-on-this-repo)
 for install steps, what each command does, and a first-widget walkthrough.
 
-If you're building a **page** rather than a reusable block, that work lives in
-[`vpm-pages`](https://github.com/mhdesigns98/vpm-pages) and follows that repo's `CLAUDE.md`.
+Page builds follow `vpm-pages`' own `CLAUDE.md` and commands, not this repo's.
 
 ## Structure
 
@@ -83,10 +89,13 @@ single list — check it before picking a new slug so prefixes don't collide.
 
 ## Adding a new widget
 
-1. Read [`CONTRIBUTING.md`](CONTRIBUTING.md) and check `INDEX.md` for slug/prefix collisions
-2. Create `widgets/[short-name]/` with `index.html` (or the ACF split files) and a `README.md`
-3. Namespace all classes and ids (e.g. `vpm-pledge26-`)
-4. Test in the harness and work the pre-ship checklist in [`CLAUDE.md`](CLAUDE.md) — required
-   before it goes near a CMS
-5. Add a row to `INDEX.md`
-6. Open a PR. Pages preview: `https://mhdesigns98.github.io/vpm-widgets/widgets/[name]/`
+1. Confirm it's actually a widget — if it will only ever appear on one page, it belongs in
+   `vpm-pages` instead
+2. Read [`CONTRIBUTING.md`](CONTRIBUTING.md) and check `INDEX.md` for slug/prefix collisions
+3. `/new-widget [short-name]` — scaffolds `widgets/[short-name]/` with tokens inlined, or create
+   `index.html` (or the ACF split files) and a `README.md` by hand
+4. Namespace all classes and ids (e.g. `vpm-pledge26-`)
+5. `/ship-widget [name]` — runs the harness and the pre-ship checklist in [`CLAUDE.md`](CLAUDE.md);
+   required before it goes near a CMS
+6. Add a row to [`INDEX.md`](INDEX.md) (`/new-widget` does this for you)
+7. Open a PR. Pages preview: `https://mhdesigns98.github.io/vpm-widgets/widgets/[name]/`
