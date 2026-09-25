@@ -4,7 +4,7 @@ Lookup table for existing widgets — check here before picking a new slug or na
 so they don't collide. Kept out of `CLAUDE.md` so it isn't loaded into context on every session.
 
 Full page builds live in the sibling repo and are indexed at
-`~/Projects/vpm/vpm-pages/INDEX.md`. **Check both** — the two repos share one namespace convention,
+`vpm-pages`' `INDEX.md`. **Check both** — the two repos share one namespace convention,
 so a prefix collision across them is still a collision.
 
 `/new-widget` adds a row here when scaffolding.
@@ -35,6 +35,6 @@ so a prefix collision across them is still a collision.
 
 ## Moved to vpm-pages
 
-These were here and are now full page builds in `~/Projects/vpm/vpm-pages/pages/`:
+These were here and are now full page builds in `vpm-pages` (under `pages/`):
 `annual-report-2025`, `basics-virginia`, `ecp-partners-team`, `elections-2026-primary`,
 `how-federal-funding-works`, `impact-report-2025`, `unwined-episode`.

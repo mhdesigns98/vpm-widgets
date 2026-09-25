@@ -8,7 +8,7 @@ This project is for building standalone HTML/CSS/JS embeds and web components fo
 > **A widget is used on more than one page. A page build is used on exactly one.**
 > If it only ever appears on one URL, it belongs in `vpm-pages` — even if it is block-shaped.
 
-Full page builds live in the sibling repo, `~/Projects/vpm/vpm-pages`
+Full page builds live in the sibling repo, `vpm-pages`
 (https://github.com/mhdesigns98/vpm-pages). The test is **reuse, not size**: `elections-2026-primary`
 was a small ACF split-file block and still moved to pages, because it only ever appeared on the
 primary page. Its sibling `elections-2026-primary-cta` stayed here, because it's a homepage CTA
@@ -41,6 +41,10 @@ Some widgets (e.g. `vpm-banner`) use a split-file format for WordPress ACF:
 `vpm-pages` — two token files would drift, and the drift would stay invisible until two pages
 disagreed about VPM blue. Widgets must stay self-contained, so copy the custom properties you need into the widget's scoped `<style>` — never link the file externally. No hard-coded hex values.
 
+Read the file rather than recalling values — the display face and body face have both been
+changed since the tokens were written. Proposing a *change* to a token is a reviewed process:
+see `CONTRIBUTING.md`.
+
 ## Style Conventions
 - All class names and IDs namespaced with a widget-specific prefix (e.g. `vpm-elec26-`, `vpm-mm-`)
 - BEM naming convention within namespace
@@ -59,17 +63,19 @@ disagreed about VPM blue. Widgets must stay self-contained, so copy the custom p
 3. When satisfied, add it under `/widgets/[name]/` following the structure above (`/new-widget --from file.html` does this; `/save-component` is an alias)
 4. Write a one-paragraph `README.md` describing purpose, source, and usage
 5. **Pre-ship check** (`/ship-widget`) — required before pasting into any CMS, see checklist below
-6. Commit and push to `main`
+6. Add a row to `INDEX.md`, then open a PR — this repo is shared, don't push to `main`
 7. GitHub Pages preview: `https://mhdesigns98.github.io/vpm-widgets/widgets/[name]/`
 
 **If a `BRIEF.md` exists in the widget folder, read it before building** and flag requests that contradict or expand its scope.
 
-VPM brand tokens and voice load automatically via the `vpm-design` skill — no need to invoke anything.
+VPM brand tokens and voice load automatically via the `vpm-design` skill, which is committed to
+this repo at `.claude/skills/vpm-design/` — cloning the repo is the whole setup, no need to
+invoke anything.
 
 ## Pre-Ship Checklist
 **This checklist is canonical for widgets** — it's the list `/ship-widget` enforces. Don't restate it elsewhere; link here instead.
 
-Page builds use `/ship-page` and a **different** checklist, in `~/Projects/vpm/vpm-pages/CLAUDE.md`.
+Page builds use `/ship-page` and a **different** checklist, in `vpm-pages`' own `CLAUDE.md`.
 The two are separate on purpose: several items below exist only because a widget can be dropped into
 a hostile page more than once, which is not the situation a page build faces. Don't merge them.
 
@@ -96,6 +102,6 @@ See `INDEX.md` in the repo root — it lists every widget and its purpose. Read 
 new slug or checking a namespace prefix for collisions. It lives outside this file so it isn't
 loaded into context on every session.
 
-Page builds are indexed separately in `~/Projects/vpm/vpm-pages/INDEX.md`. Check both when picking a
+Page builds are indexed separately in `vpm-pages`' `INDEX.md`. Check both when picking a
 slug or namespace prefix — the two repos share one namespace convention, so a prefix collision across
 them is still a collision.
