@@ -15,7 +15,7 @@
   --vpm-elec26cta-on-dark-muted: #B9C8D8;
 
   /* Type */
-  --vpm-elec26cta-font: 'Inter', 'GT America', 'Helvetica Neue', Arial, sans-serif;
+  --vpm-elec26cta-font: 'Public Sans', 'GT America', 'Helvetica Neue', Arial, sans-serif;
   --vpm-elec26cta-fs-h2: clamp(24px, 2.4vw, 32px);
   --vpm-elec26cta-fs-body: 16px;
   --vpm-elec26cta-fs-eyebrow: 13px;

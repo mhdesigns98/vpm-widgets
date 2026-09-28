@@ -14,7 +14,7 @@
   --vpm-nlcta-on-dark-muted: #B9C8D8;
 
   /* Type */
-  --vpm-nlcta-font: 'Inter', 'GT America', 'Helvetica Neue', Arial, sans-serif;
+  --vpm-nlcta-font: 'Public Sans', 'GT America', 'Helvetica Neue', Arial, sans-serif;
   --vpm-nlcta-fs-h2: clamp(20px, 2vw, 26px);
   --vpm-nlcta-fs-body: 15px;
   --vpm-nlcta-fs-eyebrow: 12px;
