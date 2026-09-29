@@ -1,0 +1,37 @@
+name = "vpm-donate-failover"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+workers_dev = true
+
+[triggers]
+crons = ["*/2 * * * *"]
+
+# Create with: npx wrangler kv namespace create DONATE_STATUS
+# then paste the id it prints here. `wrangler dev` uses a local simulated
+# namespace, so the placeholder is fine until the first deploy.
+[[kv_namespaces]]
+binding = "DONATE_STATUS"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+[vars]
+PRIMARY_URL = "https://www.pledgecart.org/home?campaign=2A50A7BF-91BB-4915-BB14-DD98974F6DBD"
+# Empty = failover disabled; donors always go to PledgeCart and /__status reports unhealthy.
+BACKUP_URL = ""
+# A string that only appears on the real, working donation form (view-source it
+# in a browser). Without it, any HTTP 200 counts as "up" — including a PledgeCart
+# "campaign not found" page.
+HEALTH_MARKER = ""
+
+[observability]
+enabled = true
+
+# --- vpm.org routes: DISABLED for the first deploy (workers.dev only). ---
+# Exact patterns on purpose. `vpm.org/donate*` would also capture /donations,
+# /donate-a-car, /donate/planned-giving, etc. Query strings aren't part of
+# route matching, so /donate?utm_source=x still matches `vpm.org/donate`.
+# routes = [
+#   { pattern = "vpm.org/donate", zone_name = "vpm.org" },
+#   { pattern = "vpm.org/donate/", zone_name = "vpm.org" },
+#   { pattern = "www.vpm.org/donate", zone_name = "vpm.org" },
+#   { pattern = "www.vpm.org/donate/", zone_name = "vpm.org" },
+# ]

@@ -1,0 +1,17 @@
+{
+  "name": "vpm-donate-failover",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --test-scheduled",
+    "dev:down": "wrangler dev --test-scheduled --var PRIMARY_URL:http://127.0.0.1:9/down --var BACKUP_URL:https://example.org/backup-form",
+    "test": "node --test test/*.test.js",
+    "failover-test": "bash scripts/failover-test.sh",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail"
+  },
+  "devDependencies": {
+    "wrangler": "^4.143.0"
+  }
+}
