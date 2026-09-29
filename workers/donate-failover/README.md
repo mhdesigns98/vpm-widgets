@@ -17,7 +17,7 @@ npm run dev              # wrangler dev against the real PledgeCart
 ```
 
 Before the first deploy:
-1. Set `BACKUP_URL` in `wrangler.toml` (empty = failover disabled).
+1. `BACKUP_URL` is the PBS donation form for WCVE (set in `wrangler.toml`; empty = failover disabled).
 2. Set `HEALTH_MARKER`: a string that only appears on the working form. Without it, any
    HTTP 200 counts as "up", including a "campaign not found" page.
 3. `npx wrangler login`, then `npx wrangler kv namespace create DONATE_STATUS`, then paste the id into `wrangler.toml`.

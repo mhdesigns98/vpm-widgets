@@ -15,8 +15,8 @@ id = "REPLACE_WITH_KV_NAMESPACE_ID"
 
 [vars]
 PRIMARY_URL = "https://www.pledgecart.org/home?campaign=2A50A7BF-91BB-4915-BB14-DD98974F6DBD"
-# Empty = failover disabled; donors always go to PledgeCart and /__status reports unhealthy.
-BACKUP_URL = ""
+# PBS donation form for WCVE. Empty = failover disabled.
+BACKUP_URL = "https://www.pbs.org/donation/?station_id=86532025-6a98-4ed7-87ef-cce5615bfcf0&campaign=standard-station-passport-web-wcve&referrer=https://www.pbs.org/"
 # A string that only appears on the real, working donation form (view-source it
 # in a browser). Without it, any HTTP 200 counts as "up" — including a PledgeCart
 # "campaign not found" page.

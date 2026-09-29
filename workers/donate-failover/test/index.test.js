@@ -180,3 +180,14 @@ test("fetch: /donate/?x=1 302s with no-store and query preserved", async () => {
   assert.equal(r.headers.get("location"), PRIMARY + "&utm_source=x");
   assert.match(r.headers.get("cache-control"), /no-store/);
 });
+
+test("real PBS backup URL: its params are kept, donor UTMs appended", () => {
+  const pbs =
+    "https://www.pbs.org/donation/?station_id=86532025-6a98-4ed7-87ef-cce5615bfcf0&campaign=standard-station-passport-web-wcve&referrer=https://www.pbs.org/";
+  const out = new URL(buildRedirectURL(pbs, "?utm_source=email&campaign=spring&referrer=evil"));
+  assert.equal(out.searchParams.get("station_id"), "86532025-6a98-4ed7-87ef-cce5615bfcf0");
+  assert.equal(out.searchParams.get("campaign"), "standard-station-passport-web-wcve");
+  assert.equal(out.searchParams.get("referrer"), "https://www.pbs.org/");
+  assert.equal(out.searchParams.get("utm_source"), "email");
+  assert.equal(out.searchParams.getAll("campaign").length, 1);
+});
