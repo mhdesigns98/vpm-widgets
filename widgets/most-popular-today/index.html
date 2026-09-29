@@ -47,6 +47,11 @@
 
     .vpm-mpt__item:last-child { border-bottom: none; }
 
+    .vpm-mpt__item--top {
+      border-bottom: 2px solid var(--vpm-yellow);
+      padding-bottom: var(--space-2);
+    }
+
     .vpm-mpt.vpm-mpt .vpm-mpt__link {
       display: flex;
       gap: var(--space-3);
@@ -88,6 +93,10 @@
       font-weight: 600;
     }
 
+    .vpm-mpt__item--top .vpm-mpt__title {
+      font-weight: 700;
+    }
+
     .vpm-mpt__status {
       font-size: var(--fs-body-sm);
       color: var(--vpm-gray-600);
@@ -125,11 +134,12 @@
       listEl.innerHTML = '<li class="vpm-mpt__status">No trending stories right now.</li>';
       return;
     }
-    listEl.innerHTML = stories.slice(0, 8).map(function (story, i) {
+    listEl.innerHTML = stories.slice(0, 5).map(function (story, i) {
       var rank = i + 1;
       var url = String(story.url || '#');
       var title = String(story.title || '');
-      return '<li class="vpm-mpt__item">' +
+      var itemClass = rank === 1 ? 'vpm-mpt__item vpm-mpt__item--top' : 'vpm-mpt__item';
+      return '<li class="' + itemClass + '">' +
         '<a class="vpm-mpt__link" href="' + encodeURI(url) + '">' +
           '<span class="vpm-mpt__rank" aria-hidden="true">' + rank + '</span>' +
           '<span class="vpm-mpt__title">' + title.replace(/</g, '&lt;') + '</span>' +

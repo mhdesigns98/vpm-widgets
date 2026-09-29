@@ -41,19 +41,22 @@
       call**: a nested scroll container inside an already-scrolling page
       traps mobile swipe gestures at the widget's edges — worse UX than the
       collision risk it was guarding against. The list is full-height again.
-- [ ] **Known open risk, not fully resolved**: testing the 8-item list in the
-      CMS harness found the list's bottom edge can land behind the harness's
-      fixed Stream Player bar (confirmed with `elementFromPoint` returning
-      `null` there — genuinely unclickable). Whether the widget's real page
-      position ever falls behind a fixed bottom bar depends on the actual
-      WordPress sidebar template's layout (article length, viewport height),
-      which isn't knowable from this synthetic harness, and a height cap was
-      ruled out as the fix (mobile scroll-trap tradeoff above). **Verify
-      directly on a real vpm.org post page once deployed**, scrolling to
-      where the sidebar widget sits, and confirm all 8 links (especially the
-      last 2-3) are clickable and not obscured by VPM's real sticky player
-      if one exists on the live site. If this turns out to be a real
-      problem, the fix should target the actual colliding element (e.g. the
-      player reserving its own space instead of overlaying), not capping the
-      widget's height again.
+- [x] **Design review (2026-09-21)**: reverted from 8 items back to top 5,
+      per design critique — 8 full headlines with no visual break points
+      read as too dense for a sidebar "what to read next" module, and the
+      NPR-backfill inventory problem that motivated 8 was a data-fill
+      concern, not a reading-experience one. Also gave rank #1 extra visual
+      weight so the list reads as an actual ranking rather than a plain
+      numbered list. First attempt (larger, blue rank numeral) was too
+      subtle against wrapped multi-line headlines — Mark flagged it as
+      reading like a bug. Replaced with a yellow bottom divider under #1
+      plus a bolder title weight (`vpm-mpt__item--top`), which separates it
+      as its own visual block instead of just tweaking one glyph. Verified
+      in the harness with mock data both times.
+- [x] **Sticky-player collision risk (resolved by the above)**: the 8-item
+      list's bottom edge could land behind the harness's fixed Stream Player
+      bar (confirmed unclickable via `elementFromPoint`). At 5 items the
+      list is short enough it no longer reaches the player in harness
+      testing. Still worth a quick visual confirmation on the real vpm.org
+      post page once deployed, but no longer a known blocker.
 - [ ] Not yet pasted into wp-admin → Widgets sidebar area

@@ -7,15 +7,14 @@ content is the same site-wide list on every post rather than per-post data.
 
 **Namespace:** `vpm-mpt-`
 
-**Status:** stub — the widget's fetch/render/cache logic is built, but `ENDPOINT` in the
-`<script>` block is a placeholder. It needs a real data source before this can ship:
+**Status:** built and `/ship-widget`-passed. Data source is a `GET /api/most-popular` route on
+the `chartbeat-weekly` Cloudflare Worker, calling Chartbeat's `toppages` API server-side
+(CORS-locked to `https://www.vpm.org`) so the API key never reaches the browser. Response shape:
+`{ "stories": [{ "title": "...", "url": "..." }, ...] }`. Client-side cache is 5 minutes via
+`sessionStorage`, matching the Worker's own in-isolate cache.
 
-- Likely a small Cloudflare Worker proxying the Chartbeat API (reusing or extending
-  `chartbeat-weekly`'s existing integration), so the Chartbeat API key isn't exposed in the
-  pasted wp-admin widget HTML.
-- Expected response shape: `{ "stories": [{ "title": "...", "url": "..." }, ...] }`.
-- Cache interval currently set to 15 minutes via `sessionStorage`; not yet confirmed against
-  the brief's open question.
+Shows the top 5 stories, ranked, with the #1 story given extra visual weight (larger, blue rank
+numeral) so the list reads as an actual ranking rather than a plain bulleted list.
 
-See `BRIEF.md` for full requirements and open questions. Run `/ship-widget most-popular-today`
-before deploying, once the endpoint is real.
+See `BRIEF.md` for original requirements and `HANDOFF.md` for build history and open items.
+Not yet pasted into wp-admin → Widgets sidebar area.
