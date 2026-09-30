@@ -27,13 +27,16 @@ invented quotes attributed to actual candidates. Those were replaced with generi
 names/quotes in this filed version — don't paste real names back in without real, sourced
 copy behind them.
 
-**Display variants:**
-- Default (no `data-variant`) — vertical rail. Works for both the sidebar and mobile "Updates
-  tab" placements from the original design; same markup, just narrower.
-- `data-variant="homepage"` — condensed 3-card grid on the dark-blue brand field (the design's
-  homepage module placement). Set the attribute on the `.vpm-lur` root; `js.js` renders this
-  variant's markup itself from the same `POSTS` data, so `html.html`'s inner markup is ignored
-  in this mode and can be left as-is or stripped when pasting into the homepage ACF block. No
-  share/copy-link/audio-scrub chrome in this variant, matching the original design.
+**Display variants:** all three read from the same `POSTS` array — set `data-variant` on the
+`.vpm-lur` root; `js.js` renders the `homepage` and `mobile` variants' markup itself, so
+`html.html`'s inner markup is ignored in either of those modes.
+- Default (no `data-variant`) — vertical sidebar/desktop rail.
+- `data-variant="homepage"` — condensed 3-card grid on the dark-blue brand field. Shows only
+  posts flagged `homepageFeatured: true` in `js.js` (a hand-picked text/image/embed trio, matching
+  the original design — it does **not** just take the first 3 posts). No share/copy-link/
+  audio-scrub chrome, matching the original.
+- `data-variant="mobile"` — adds a two-tab bar ("The story" / "Updates · N") above the rail and
+  swaps the icon+text share/copy-link row for full-width 44px touch buttons. The "The story" tab
+  is a visual placeholder — this widget only owns the updates feed, not the article beside it.
 
 Run `/ship-widget live-updates-rail` before deploying to the CMS.

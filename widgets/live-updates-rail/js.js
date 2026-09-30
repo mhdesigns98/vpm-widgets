@@ -19,6 +19,10 @@
               real <audio> element) until a real audio src is wired in
      embed    ({handle, source, quote}, optional; type "embed")
      hidden   (boolean, optional) — starts hidden, revealed by "Load more"
+     homepageFeatured (boolean, optional) — included in the homepage variant's
+              3-card grid (data-variant="homepage"); the original design
+              hand-picks a text/image/embed trio there rather than just
+              taking the first 3 posts, so this is opt-in per post
    ============================================ */
 (function () {
   var POSTS = [
@@ -30,7 +34,8 @@
       category: 'Politics',
       type: 'text',
       body: '<strong>Placeholder headline for a short dispatch.</strong> Replace this with a real short update — a sentence or two on what just happened, written the way a reporter would text a desk editor.',
-      link: { label: 'Read the full story', href: '#' }
+      link: { label: 'Read the full story', href: '#' },
+      homepageFeatured: true
     },
     {
       id: '2',
@@ -51,7 +56,8 @@
       type: 'image',
       body: '<strong>Placeholder headline for an image update.</strong> Short caption-style text describing the photo below.',
       image: { alt: '' },
-      caption: 'Photo credit placeholder.'
+      caption: 'Photo credit placeholder.',
+      homepageFeatured: true
     },
     {
       id: '4',
@@ -61,7 +67,8 @@
       category: 'Government',
       type: 'embed',
       body: '<strong>Placeholder headline for an imported social post.</strong> One line of context before the embed.',
-      embed: { handle: '@placeholder', source: 'bsky.social', quote: 'Placeholder quote text imported from a social post — replace with the real quote and source before publishing.' }
+      embed: { handle: '@placeholder', source: 'bsky.social', quote: 'Placeholder quote text imported from a social post — replace with the real quote and source before publishing.' },
+      homepageFeatured: true
     },
     {
       id: '5',
@@ -101,18 +108,29 @@
     return Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0');
   }
 
-  function renderActions(post) {
+  // `touch` renders the mobile variant's full-width 44px buttons (no icons,
+  // matching the original design's 1c placement) instead of the sidebar's
+  // small icon+text row. Both modes share the same share-menu/copy-link
+  // handlers in initRail's click delegation.
+  function renderActions(post, touch) {
+    var actions = touch
+      ? '<div class="vpm-lur__actions vpm-lur__actions--touch">' +
+          '<button type="button" class="vpm-lur__action vpm-lur__action--touch" data-lur-share-toggle>Share</button>' +
+          '<button type="button" class="vpm-lur__action vpm-lur__action--touch" data-lur-copy><span data-lur-copy-label>Copy link</span></button>' +
+        '</div>'
+      : '<div class="vpm-lur__actions">' +
+          '<button type="button" class="vpm-lur__action" data-lur-share-toggle>' +
+            '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12v8h16v-8"></path><path d="M12 16V3"></path><path d="M7 8l5-5 5 5"></path></svg>' +
+            'Share' +
+          '</button>' +
+          '<button type="button" class="vpm-lur__action" data-lur-copy>' +
+            '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 15l6-6"></path><path d="M11 6l1-1a4 4 0 016 6l-1 1"></path><path d="M13 18l-1 1a4 4 0 01-6-6l1-1"></path></svg>' +
+            '<span data-lur-copy-label>Copy link</span>' +
+          '</button>' +
+        '</div>';
+
     return (
-      '<div class="vpm-lur__actions">' +
-        '<button type="button" class="vpm-lur__action" data-lur-share-toggle>' +
-          '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12v8h16v-8"></path><path d="M12 16V3"></path><path d="M7 8l5-5 5 5"></path></svg>' +
-          'Share' +
-        '</button>' +
-        '<button type="button" class="vpm-lur__action" data-lur-copy>' +
-          '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 15l6-6"></path><path d="M11 6l1-1a4 4 0 016 6l-1 1"></path><path d="M13 18l-1 1a4 4 0 01-6-6l1-1"></path></svg>' +
-          '<span data-lur-copy-label>Copy link</span>' +
-        '</button>' +
-      '</div>' +
+      actions +
       '<div class="vpm-lur__sharemenu" data-lur-sharemenu>' +
         '<span class="vpm-lur__sharemenu-label">Share to</span>' +
         '<div class="vpm-lur__sharemenu-links">' +
@@ -124,7 +142,7 @@
     );
   }
 
-  function renderPost(post) {
+  function renderPost(post, touch) {
     var byline =
       '<div class="vpm-lur__byline">' +
         '<span class="vpm-lur__avatar" aria-hidden="true">' + post.initials + '</span>' +
@@ -189,7 +207,7 @@
         body +
         extra +
         readmore +
-        renderActions(post) +
+        renderActions(post, touch) +
       '</article>'
     );
   }
@@ -237,7 +255,7 @@
     if (!root || root.hasAttribute('data-lur-initialized')) return;
     root.setAttribute('data-lur-initialized', 'true');
 
-    var visible = POSTS.filter(function (p) { return !p.hidden; }).slice(0, 3);
+    var visible = POSTS.filter(function (p) { return p.homepageFeatured; }).slice(0, 3);
     root.innerHTML =
       '<div class="vpm-lur__hp-top">' +
         '<div>' +
@@ -250,22 +268,55 @@
       '<div class="vpm-lur__bar" aria-hidden="true"></div>';
   }
 
+  // Mobile variant: its own "Updates" tab above the rail (the "The story"
+  // tab is a visual placeholder — this widget only owns the updates feed,
+  // not the article it sits beside) and full-width 44px touch buttons
+  // instead of the sidebar's icon+text share/copy-link row, matching the
+  // original design's 1c placement.
+  function initMobile(root) {
+    if (!root || root.hasAttribute('data-lur-initialized')) return;
+    root.setAttribute('data-lur-initialized', 'true');
+
+    var count = POSTS.length;
+    root.innerHTML =
+      '<div class="vpm-lur__tabs" role="tablist">' +
+        '<button type="button" class="vpm-lur__tab" role="tab" aria-selected="false">The story</button>' +
+        '<button type="button" class="vpm-lur__tab vpm-lur__tab--active" role="tab" aria-selected="true">Updates &middot; ' + count + '</button>' +
+      '</div>' +
+      '<div class="vpm-lur__header">' +
+        '<h3 class="vpm-lur__title">Latest Updates</h3>' +
+        '<p class="vpm-lur__updated">' + formatUpdated() + '</p>' +
+      '</div>' +
+      '<div class="vpm-lur__bar" aria-hidden="true"></div>' +
+      '<div class="vpm-lur__list" data-lur-list></div>' +
+      '<div class="vpm-lur__footer">' +
+        '<button type="button" class="vpm-lur__loadmore" data-lur-loadmore hidden>Load more updates</button>' +
+      '</div>';
+
+    initRailBehavior(root, true);
+  }
+
   function initRail(root) {
     if (!root || root.hasAttribute('data-lur-initialized')) return;
 
-    if (root.getAttribute('data-variant') === 'homepage') {
-      initHomepage(root);
-      return;
-    }
+    var variant = root.getAttribute('data-variant');
+    if (variant === 'homepage') { initHomepage(root); return; }
+    if (variant === 'mobile') { initMobile(root); return; }
 
     root.setAttribute('data-lur-initialized', 'true');
+    initRailBehavior(root, false);
+  }
 
+  // Shared behavior (render posts + wire up interactions) for both the
+  // default sidebar/desktop rail and the mobile variant — they differ only
+  // in wrapper markup (tab bar) and button style (touch vs icon).
+  function initRailBehavior(root, touch) {
     var list = root.querySelector('[data-lur-list]');
     var updatedEl = root.querySelector('[data-lur-updated]');
     var loadMoreBtn = root.querySelector('[data-lur-loadmore]');
     if (!list) return;
 
-    list.innerHTML = POSTS.map(renderPost).join('');
+    list.innerHTML = POSTS.map(function (p) { return renderPost(p, touch); }).join('');
     if (updatedEl) updatedEl.textContent = formatUpdated();
 
     var hasHidden = POSTS.some(function (p) { return p.hidden; });
