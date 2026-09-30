@@ -588,6 +588,64 @@
   }
 }
 
+/* ============================================
+   Mobile variant — data-variant="mobile"
+   Same rail markup/behavior, plus a tab bar above it and full-width 44px
+   touch buttons instead of the icon+text share/copy-link row.
+   ============================================ */
+
+.vpm-lur[data-variant="mobile"] .vpm-lur__tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--vpm-lur-gray-200);
+}
+
+.vpm-lur[data-variant="mobile"] .vpm-lur__tab {
+  padding: 14px 8px;
+  background: var(--vpm-lur-white);
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-family: var(--vpm-lur-font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--vpm-lur-gray-600);
+}
+
+.vpm-lur[data-variant="mobile"] .vpm-lur__tab:focus-visible {
+  outline: 2px solid var(--vpm-lur-light-blue);
+  outline-offset: -2px;
+}
+
+.vpm-lur[data-variant="mobile"] .vpm-lur__tab--active {
+  border-bottom-color: var(--vpm-lur-red);
+  color: var(--vpm-lur-dark-blue);
+}
+
+.vpm-lur[data-variant="mobile"] .vpm-lur__title { font-size: 22px; }
+
+.vpm-lur[data-variant="mobile"] .vpm-lur__body { font-size: 16px; }
+
+.vpm-lur .vpm-lur__actions--touch {
+  gap: var(--vpm-lur-space-2);
+  margin-top: 14px;
+}
+
+.vpm-lur .vpm-lur__action--touch {
+  flex: 1;
+  min-height: 44px;
+  justify-content: center;
+  background: var(--vpm-lur-white);
+  border: 1px solid var(--vpm-lur-gray-300, var(--vpm-lur-gray-200));
+  color: var(--vpm-lur-dark-blue);
+}
+
+.vpm-lur .vpm-lur__action--touch:hover,
+.vpm-lur .vpm-lur__action--touch:focus-visible { color: var(--vpm-lur-dark-blue); background: var(--vpm-lur-gray-050); }
+
 /* ---- Layout tightens further in a narrow sidebar ---- */
 @container vpm-lur (max-width: 340px) {
   .vpm-lur .vpm-lur__title { font-size: 20px; }
