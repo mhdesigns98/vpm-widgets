@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Live Updates Rail — Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=IBM+Plex+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css.css">
+<style>
+  body { margin: 0; padding: 40px 24px; background: #F2F3F4; font-family: 'Public Sans', system-ui, sans-serif; }
+  .preview-shell { max-width: 420px; margin: 0 auto 48px; }
+  .preview-shell--wide { max-width: 720px; }
+  .preview-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #7B8591; margin: 0 0 12px; }
+</style>
+</head>
+<body>
+
+<div class="preview-shell">
+  <p class="preview-label">Sidebar width (~400px) &mdash; two instances, to confirm independent init</p>
+
+  <div class="vpm-lur" data-density="comfortable">
+
+    <div class="vpm-lur__header">
+      <h3 class="vpm-lur__title">Latest Updates</h3>
+      <p class="vpm-lur__dek">Short dispatches from VPM reporters — the things we're watching before there's a full story.</p>
+      <p class="vpm-lur__updated" data-lur-updated>Updated just now</p>
+    </div>
+    <div class="vpm-lur__bar" aria-hidden="true"></div>
+
+    <div class="vpm-lur__list" data-lur-list></div>
+
+    <div class="vpm-lur__footer">
+      <button type="button" class="vpm-lur__loadmore" data-lur-loadmore hidden>Load more updates</button>
+      <a class="vpm-lur__seeall" href="#" data-lur-seeall>See all updates</a>
+    </div>
+
+  </div>
+  <script src="js.js"></script>
+</div>
+
+<div class="preview-shell">
+  <p class="preview-label">Second instance, same page</p>
+
+  <div class="vpm-lur" data-density="compact">
+
+    <div class="vpm-lur__header">
+      <h3 class="vpm-lur__title">Latest Updates</h3>
+      <p class="vpm-lur__dek">Short dispatches from VPM reporters — the things we're watching before there's a full story.</p>
+      <p class="vpm-lur__updated" data-lur-updated>Updated just now</p>
+    </div>
+    <div class="vpm-lur__bar" aria-hidden="true"></div>
+
+    <div class="vpm-lur__list" data-lur-list></div>
+
+    <div class="vpm-lur__footer">
+      <button type="button" class="vpm-lur__loadmore" data-lur-loadmore hidden>Load more updates</button>
+      <a class="vpm-lur__seeall" href="#" data-lur-seeall>See all updates</a>
+    </div>
+
+  </div>
+  <script src="js.js"></script>
+</div>
+
+</body>
+</html>
