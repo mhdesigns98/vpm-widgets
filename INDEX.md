@@ -15,6 +15,7 @@ so a prefix collision across them is still a collision.
 | `elections-2026-primary-cta/` | 2026 Virginia Primary homepage CTA — photo + dark-blue panel linking to vpm.org/elections (WordPress ACF split-file format) |
 | `feed-rail/` | Reusable vertical rail of short updates (video, articles, audio, text notes) for a sidebar or beside a main story; content is a hand-edited `FEED_ITEMS` array in-file, no backend — video thumbnails pulled from YouTube's static thumbnail endpoint (namespace `vpm-feedrail-`, WordPress ACF single-file) |
 | `impact-testimonial/` | Testimonial component for impact/giving pages |
+| `live-updates-rail/` | Vertical rail of short reporter dispatches (text/image/audio/embed posts) with per-post share + copy-link, expandable long bodies, and a "Load more" reveal for older items; for a sidebar, topic page, or mobile "Updates" tab (namespace `vpm-lur-`, WordPress ACF split-file) |
 | `links-with-map/` | Reusable map-beside-directory block — Google My Maps embed + multi-column outbound link list; first instance is Virginia wineries A–Z (WordPress ACF split-file format, no JS). Consumed by the `unwined-episode` page |
 | `listen-stream-bar/` | Quick-access audio stream bar for the Listen page — eyebrow label + four stream/podcast buttons on VPM dark blue (WordPress HTML block) |
 | `morning-monitor-signup/` | Morning Monitor newsletter signup embed (Full/Inline/Sidebar), POSTs directly to Mailchimp via JSONP with in-page confirmation — no backend |
