@@ -95,6 +95,16 @@
   /* Widget's own border looks odd inside a screen edge */
   .phone-frame__screen .vpm-lur { border: none; border-radius: 26px 26px 0 0; }
 
+  .phone-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+  .phone-col { text-align: center; }
+  .phone-col .placement-label { text-align: left; }
+
   @media (max-width: 480px) {
     .phone-frame { width: 100%; max-width: 375px; }
   }
@@ -150,14 +160,30 @@
 <section class="showcase-section">
   <div class="showcase-section__head">
     <h2>Mobile</h2>
-    <span>Its own "Updates" tab</span>
+    <span>Its own "Updates" tab &amp; a stacked homepage module</span>
   </div>
 
-  <div class="phone-frame">
-    <div class="phone-frame__notch"></div>
-    <div class="phone-frame__screen">
-      <div class="vpm-lur" data-variant="mobile"></div>
-      <script src="js.js"></script>
+  <div class="phone-row">
+    <div class="phone-col">
+      <p class="placement-label">Mobile rail &mdash; tab bar + touch buttons</p>
+      <div class="phone-frame">
+        <div class="phone-frame__notch"></div>
+        <div class="phone-frame__screen">
+          <div class="vpm-lur" data-variant="mobile"></div>
+          <script src="js.js"></script>
+        </div>
+      </div>
+    </div>
+
+    <div class="phone-col">
+      <p class="placement-label">Homepage module &mdash; same 3-card grid, stacked automatically</p>
+      <div class="phone-frame">
+        <div class="phone-frame__notch"></div>
+        <div class="phone-frame__screen">
+          <div class="vpm-lur" data-variant="homepage"></div>
+          <script src="js.js"></script>
+        </div>
+      </div>
     </div>
   </div>
 </section>
