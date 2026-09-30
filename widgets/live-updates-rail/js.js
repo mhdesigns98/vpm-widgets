@@ -198,8 +198,66 @@
     return 'Updated just now';
   }
 
+  // Homepage variant: condensed 3-card grid on the dark-blue field, no
+  // share/audio/copy-link chrome — matches the original design's "1b"
+  // placement. Renders fully from scratch rather than relying on the
+  // data-lur-list/header markup the sidebar rail expects.
+  function renderHomepageCard(post) {
+    var byline =
+      '<div class="vpm-lur__byline">' +
+        '<span class="vpm-lur__avatar" aria-hidden="true">' + post.initials + '</span>' +
+        '<div class="vpm-lur__byline-text">' +
+          '<span class="vpm-lur__author">' + post.author + '</span>' +
+          '<span class="vpm-lur__meta">' + post.time + ' &middot; ' + post.category + '</span>' +
+        '</div>' +
+      '</div>';
+
+    var body = '<p class="vpm-lur__body">' + post.body + '</p>';
+
+    var extra = '';
+    if (post.type === 'image') {
+      extra = '<div class="vpm-lur__image">Photo</div>';
+    } else if (post.type === 'embed' && post.embed) {
+      extra =
+        '<div class="vpm-lur__embed">' +
+          '<span class="vpm-lur__embed-head">' + post.embed.handle + '</span>' +
+          '<p class="vpm-lur__embed-quote">"' + post.embed.quote + '"</p>' +
+          '<p class="vpm-lur__embed-note">Imported from social</p>' +
+        '</div>';
+    }
+
+    var readmore = post.link
+      ? '<a class="vpm-lur__hp-readmore" href="' + post.link.href + '">&rarr; ' + post.link.label + '</a>'
+      : '';
+
+    return '<article class="vpm-lur__hp-card">' + byline + body + extra + readmore + '</article>';
+  }
+
+  function initHomepage(root) {
+    if (!root || root.hasAttribute('data-lur-initialized')) return;
+    root.setAttribute('data-lur-initialized', 'true');
+
+    var visible = POSTS.filter(function (p) { return !p.hidden; }).slice(0, 3);
+    root.innerHTML =
+      '<div class="vpm-lur__hp-top">' +
+        '<div>' +
+          '<p class="vpm-lur__updated">Updated just now</p>' +
+          '<h3 class="vpm-lur__title">Latest Updates</h3>' +
+        '</div>' +
+        '<a href="#" class="vpm-lur__seeall--inline">See all updates</a>' +
+      '</div>' +
+      '<div class="vpm-lur__hp-grid">' + visible.map(renderHomepageCard).join('') + '</div>' +
+      '<div class="vpm-lur__bar" aria-hidden="true"></div>';
+  }
+
   function initRail(root) {
     if (!root || root.hasAttribute('data-lur-initialized')) return;
+
+    if (root.getAttribute('data-variant') === 'homepage') {
+      initHomepage(root);
+      return;
+    }
+
     root.setAttribute('data-lur-initialized', 'true');
 
     var list = root.querySelector('[data-lur-list]');

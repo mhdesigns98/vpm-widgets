@@ -27,8 +27,13 @@ invented quotes attributed to actual candidates. Those were replaced with generi
 names/quotes in this filed version — don't paste real names back in without real, sourced
 copy behind them.
 
-**Scope note:** the design mock also showed a distinct homepage 3-column dark-blue treatment of
-the same feed. That's a visually different layout (not just a narrower rail) and wasn't built
-here — flagged as an open question in `HANDOFF.md` rather than guessed at.
+**Display variants:**
+- Default (no `data-variant`) — vertical rail. Works for both the sidebar and mobile "Updates
+  tab" placements from the original design; same markup, just narrower.
+- `data-variant="homepage"` — condensed 3-card grid on the dark-blue brand field (the design's
+  homepage module placement). Set the attribute on the `.vpm-lur` root; `js.js` renders this
+  variant's markup itself from the same `POSTS` data, so `html.html`'s inner markup is ignored
+  in this mode and can be left as-is or stripped when pasting into the homepage ACF block. No
+  share/copy-link/audio-scrub chrome in this variant, matching the original design.
 
 Run `/ship-widget live-updates-rail` before deploying to the CMS.

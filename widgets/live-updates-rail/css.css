@@ -486,6 +486,108 @@
 .vpm-lur .vpm-lur__seeall:focus-visible { background: var(--vpm-lur-blue-900); }
 .vpm-lur .vpm-lur__seeall:focus-visible { outline: 2px solid var(--vpm-lur-white); outline-offset: 2px; box-shadow: var(--vpm-lur-shadow-focus); }
 
+/* ============================================
+   Homepage variant — data-variant="homepage"
+   Same POSTS data, rendered as a 3-across grid of condensed cards on the
+   dark-blue brand field, for the homepage module placement.
+   ============================================ */
+
+.vpm-lur[data-variant="homepage"] {
+  background: var(--vpm-lur-dark-blue);
+  border: none;
+  padding: var(--vpm-lur-space-6, 32px) var(--vpm-lur-space-6, 32px) 0;
+}
+
+.vpm-lur[data-variant="homepage"] .vpm-lur__hp-top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--vpm-lur-space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--vpm-lur-space-5, 24px);
+}
+
+.vpm-lur[data-variant="homepage"] .vpm-lur__updated {
+  margin: 0 0 8px;
+  color: var(--vpm-lur-yellow);
+}
+
+.vpm-lur[data-variant="homepage"] .vpm-lur__title {
+  font-size: 34px;
+  line-height: 1;
+  color: var(--vpm-lur-white);
+  margin: 0;
+}
+
+.vpm-lur[data-variant="homepage"] .vpm-lur__seeall--inline {
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--vpm-lur-white) !important;
+  text-decoration: none !important;
+  border-bottom: 2px solid var(--vpm-lur-yellow);
+  padding-bottom: 4px;
+  white-space: nowrap;
+}
+
+.vpm-lur[data-variant="homepage"] .vpm-lur__seeall--inline:hover,
+.vpm-lur[data-variant="homepage"] .vpm-lur__seeall--inline:focus-visible {
+  color: var(--vpm-lur-on-dark-muted, #B9C8D8) !important;
+}
+
+.vpm-lur[data-variant="homepage"] .vpm-lur__hp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--vpm-lur-space-5, 24px);
+}
+
+.vpm-lur[data-variant="homepage"] .vpm-lur__hp-card {
+  background: var(--vpm-lur-white);
+  padding: var(--vpm-lur-space-4);
+  display: flex;
+  flex-direction: column;
+}
+
+.vpm-lur[data-variant="homepage"] .vpm-lur__hp-card .vpm-lur__body {
+  -webkit-line-clamp: 3;
+  color: var(--vpm-lur-gray-700);
+}
+
+.vpm-lur[data-variant="homepage"] .vpm-lur__hp-card .vpm-lur__image {
+  height: 110px;
+  margin: 0;
+}
+
+.vpm-lur[data-variant="homepage"] .vpm-lur__hp-card .vpm-lur__embed {
+  padding: var(--vpm-lur-space-3);
+}
+
+.vpm-lur[data-variant="homepage"] .vpm-lur__hp-readmore {
+  display: block;
+  margin-top: var(--vpm-lur-space-3);
+  padding-top: var(--vpm-lur-space-3);
+  border-top: 1px solid var(--vpm-lur-gray-200);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--vpm-lur-dark-blue) !important;
+  text-decoration: none !important;
+}
+
+.vpm-lur[data-variant="homepage"] .vpm-lur__hp-readmore:hover,
+.vpm-lur[data-variant="homepage"] .vpm-lur__hp-readmore:focus-visible { text-decoration: underline !important; }
+
+.vpm-lur[data-variant="homepage"] .vpm-lur__bar {
+  margin-top: var(--vpm-lur-space-6, 32px);
+}
+
+/* Homepage grid collapses to a single column in a narrow placement */
+@container vpm-lur (max-width: 720px) {
+  .vpm-lur[data-variant="homepage"] .vpm-lur__hp-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ---- Layout tightens further in a narrow sidebar ---- */
 @container vpm-lur (max-width: 340px) {
   .vpm-lur .vpm-lur__title { font-size: 20px; }
