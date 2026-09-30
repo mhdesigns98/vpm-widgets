@@ -103,6 +103,18 @@
 
   var LOAD_MORE_BATCH = 2;
 
+  // Placeholder content for the mobile variant's "Stories" tab — the main
+  // article list this widget sits beside on a real page. Schema per story:
+  //   title    (string, required)
+  //   category (string, required)
+  //   time     (string, required)
+  var STORIES = [
+    { title: 'Placeholder story headline goes here', category: 'Politics', time: '3 hours ago' },
+    { title: 'Another placeholder story headline', category: 'Elections', time: '6 hours ago' },
+    { title: 'A third placeholder story headline for the list', category: 'Government', time: '1 day ago' },
+    { title: 'Placeholder story headline, fourth item', category: 'Education', time: '2 days ago' }
+  ];
+
   function fmtTime(sec) {
     sec = Math.max(0, Math.floor(sec));
     return Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0');
@@ -268,11 +280,23 @@
       '<div class="vpm-lur__bar" aria-hidden="true"></div>';
   }
 
-  // Mobile variant: its own "Updates" tab above the rail (the "The story"
-  // tab is a visual placeholder — this widget only owns the updates feed,
-  // not the article it sits beside) and full-width 44px touch buttons
-  // instead of the sidebar's icon+text share/copy-link row, matching the
-  // original design's 1c placement.
+  function renderStory(story) {
+    return (
+      '<a class="vpm-lur__story" href="#">' +
+        '<div class="vpm-lur__story-thumb" aria-hidden="true"></div>' +
+        '<div class="vpm-lur__story-text">' +
+          '<span class="vpm-lur__story-title">' + story.title + '</span>' +
+          '<span class="vpm-lur__meta">' + story.time + ' &middot; ' + story.category + '</span>' +
+        '</div>' +
+      '</a>'
+    );
+  }
+
+  // Mobile variant: a real two-tab switcher above the rail — "Stories" (the
+  // main article list this widget sits beside, placeholder content below)
+  // and "Updates" (this widget's own feed) — plus full-width 44px touch
+  // buttons instead of the sidebar's icon+text share/copy-link row,
+  // matching the original design's 1c placement.
   function initMobile(root) {
     if (!root || root.hasAttribute('data-lur-initialized')) return;
     root.setAttribute('data-lur-initialized', 'true');
@@ -280,18 +304,40 @@
     var count = POSTS.length;
     root.innerHTML =
       '<div class="vpm-lur__tabs" role="tablist">' +
-        '<button type="button" class="vpm-lur__tab" role="tab" aria-selected="false">The story</button>' +
-        '<button type="button" class="vpm-lur__tab vpm-lur__tab--active" role="tab" aria-selected="true">Updates &middot; ' + count + '</button>' +
+        '<button type="button" class="vpm-lur__tab" role="tab" aria-selected="false" data-lur-tab="stories">Stories</button>' +
+        '<button type="button" class="vpm-lur__tab vpm-lur__tab--active" role="tab" aria-selected="true" data-lur-tab="updates">Updates &middot; ' + count + '</button>' +
       '</div>' +
-      '<div class="vpm-lur__header">' +
-        '<h3 class="vpm-lur__title">Latest Updates</h3>' +
-        '<p class="vpm-lur__updated">' + formatUpdated() + '</p>' +
+      '<div class="vpm-lur__panel" data-lur-panel="stories" hidden>' +
+        '<div class="vpm-lur__stories" data-lur-stories></div>' +
       '</div>' +
-      '<div class="vpm-lur__bar" aria-hidden="true"></div>' +
-      '<div class="vpm-lur__list" data-lur-list></div>' +
-      '<div class="vpm-lur__footer">' +
-        '<button type="button" class="vpm-lur__loadmore" data-lur-loadmore hidden>Load more updates</button>' +
+      '<div class="vpm-lur__panel" data-lur-panel="updates">' +
+        '<div class="vpm-lur__header">' +
+          '<h3 class="vpm-lur__title">Latest Updates</h3>' +
+          '<p class="vpm-lur__updated">' + formatUpdated() + '</p>' +
+        '</div>' +
+        '<div class="vpm-lur__bar" aria-hidden="true"></div>' +
+        '<div class="vpm-lur__list" data-lur-list></div>' +
+        '<div class="vpm-lur__footer">' +
+          '<button type="button" class="vpm-lur__loadmore" data-lur-loadmore hidden>Load more updates</button>' +
+        '</div>' +
       '</div>';
+
+    var storiesEl = root.querySelector('[data-lur-stories]');
+    if (storiesEl) storiesEl.innerHTML = STORIES.map(renderStory).join('');
+
+    root.addEventListener('click', function (e) {
+      var tab = e.target.closest('[data-lur-tab]');
+      if (!tab) return;
+      var name = tab.getAttribute('data-lur-tab');
+      root.querySelectorAll('[data-lur-tab]').forEach(function (t) {
+        var active = t === tab;
+        t.classList.toggle('vpm-lur__tab--active', active);
+        t.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      root.querySelectorAll('[data-lur-panel]').forEach(function (p) {
+        p.hidden = p.getAttribute('data-lur-panel') !== name;
+      });
+    });
 
     initRailBehavior(root, true);
   }

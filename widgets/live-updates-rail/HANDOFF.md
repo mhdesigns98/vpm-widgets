@@ -19,5 +19,8 @@ Open follow-ups before this is fully done:
       design's simpler card look. Since it now only ever shows `homepageFeatured` posts, make
       sure editors know **not** to flag an audio post `homepageFeatured: true` — there's still
       no player there.
-- [ ] "The story" tab in the mobile variant is inert (no destination) — wire it to the actual
-      article URL once this is embedded on a real page.
+- [x] "Stories" tab (renamed from "The story") now shows a placeholder story list instead of
+      being inert — see `STORIES` in `js.js`.
+- [ ] `STORIES` is generic placeholder content (no real headlines, no real links) and isn't wired
+      to any actual article feed — replace with real data, or a real feed source, before this
+      ships on a real page. Story links currently point to `#`.

@@ -35,8 +35,10 @@ copy behind them.
   posts flagged `homepageFeatured: true` in `js.js` (a hand-picked text/image/embed trio, matching
   the original design — it does **not** just take the first 3 posts). No share/copy-link/
   audio-scrub chrome, matching the original.
-- `data-variant="mobile"` — adds a two-tab bar ("The story" / "Updates · N") above the rail and
-  swaps the icon+text share/copy-link row for full-width 44px touch buttons. The "The story" tab
-  is a visual placeholder — this widget only owns the updates feed, not the article beside it.
+- `data-variant="mobile"` — adds a two-tab bar ("Stories" / "Updates · N") above the rail and
+  swaps the icon+text share/copy-link row for full-width 44px touch buttons. "Stories" shows a
+  placeholder list (`STORIES` array in `js.js`) standing in for the main article list this widget
+  sits beside — real content, and a real relationship to the actual article feed, is still an
+  open follow-up (see `HANDOFF.md`).
 
 Run `/ship-widget live-updates-rail` before deploying to the CMS.
