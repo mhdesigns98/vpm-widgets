@@ -9,74 +9,158 @@
 <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=IBM+Plex+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="css.css">
 <style>
-  body { margin: 0; padding: 40px 24px; background: #F2F3F4; font-family: 'Public Sans', system-ui, sans-serif; }
-  .preview-shell { max-width: 420px; margin: 0 auto 48px; }
-  .preview-shell--wide { max-width: 720px; }
-  .preview-shell--mobile { max-width: 390px; }
-  .preview-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #7B8591; margin: 0 0 12px; }
+  body {
+    margin: 0;
+    padding: 56px 24px 80px;
+    background: #F2F3F4;
+    font-family: 'Public Sans', system-ui, sans-serif;
+  }
+
+  .showcase-intro { max-width: 720px; margin: 0 auto 56px; text-align: center; }
+  .showcase-intro h1 {
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+    font-size: 28px;
+    text-transform: uppercase;
+    color: #003865;
+    margin: 0 0 8px;
+  }
+  .showcase-intro p { font-size: 14px; color: #5A6470; margin: 0; line-height: 1.5; }
+
+  .showcase-section { max-width: 1040px; margin: 0 auto 72px; }
+  .showcase-section__head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 28px;
+    padding-left: 16px;
+    border-left: 3px solid #E0E721;
+  }
+  .showcase-section__head h2 {
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #003865;
+    margin: 0;
+  }
+  .showcase-section__head span {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #7B8591;
+  }
+
+  /* ---- Desktop section: sidebar + homepage side by side ---- */
+  .desktop-grid {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .desktop-grid__item { flex: 1 1 380px; min-width: 0; }
+  .desktop-grid__item--homepage { flex-basis: 560px; }
+  .placement-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #7B8591;
+    margin: 0 0 12px;
+  }
+
+  /* ---- Mobile section: phone-frame mockup ---- */
+  .phone-frame {
+    width: 375px;
+    margin: 0 auto;
+    padding: 14px 10px;
+    background: #1A1F26;
+    border-radius: 40px;
+    box-shadow: 0 24px 48px rgba(16, 24, 32, 0.25);
+  }
+  .phone-frame__notch {
+    width: 120px;
+    height: 22px;
+    margin: 0 auto 10px;
+    background: #1A1F26;
+    border-radius: 0 0 16px 16px;
+  }
+  .phone-frame__screen {
+    height: 720px;
+    overflow-y: auto;
+    background: #fff;
+    border-radius: 26px;
+    -webkit-overflow-scrolling: touch;
+  }
+  /* Widget's own border looks odd inside a screen edge */
+  .phone-frame__screen .vpm-lur { border: none; border-radius: 26px 26px 0 0; }
+
+  @media (max-width: 480px) {
+    .phone-frame { width: 100%; max-width: 375px; }
+  }
 </style>
 </head>
 <body>
 
-<div class="preview-shell">
-  <p class="preview-label">1a &mdash; Sidebar rail (~400px), comfortable density</p>
+<div class="showcase-intro">
+  <h1>Live Updates Rail</h1>
+  <p>Same reporter-dispatch feed, rendered for its two placement contexts: a desktop page
+    (sidebar rail and homepage module) and its own tab on mobile.</p>
+</div>
 
-  <div class="vpm-lur" data-density="comfortable">
-
-    <div class="vpm-lur__header">
-      <h3 class="vpm-lur__title">Latest Updates</h3>
-      <p class="vpm-lur__dek">Short dispatches from VPM reporters — the things we're watching before there's a full story.</p>
-      <p class="vpm-lur__updated" data-lur-updated>Updated just now</p>
-    </div>
-    <div class="vpm-lur__bar" aria-hidden="true"></div>
-
-    <div class="vpm-lur__list" data-lur-list></div>
-
-    <div class="vpm-lur__footer">
-      <button type="button" class="vpm-lur__loadmore" data-lur-loadmore hidden>Load more updates</button>
-      <a class="vpm-lur__seeall" href="#" data-lur-seeall>See all updates</a>
-    </div>
-
+<section class="showcase-section">
+  <div class="showcase-section__head">
+    <h2>Desktop</h2>
+    <span>Sidebar rail &amp; homepage module</span>
   </div>
-  <script src="js.js"></script>
-</div>
 
-<div class="preview-shell preview-shell--wide">
-  <p class="preview-label">Desktop &mdash; same rail, wider column, compact density (confirms independent init alongside 1a)</p>
+  <div class="desktop-grid">
+    <div class="desktop-grid__item">
+      <p class="placement-label">Sidebar rail &mdash; topic/section page</p>
 
-  <div class="vpm-lur" data-density="compact">
+      <div class="vpm-lur" data-density="comfortable">
 
-    <div class="vpm-lur__header">
-      <h3 class="vpm-lur__title">Latest Updates</h3>
-      <p class="vpm-lur__dek">Short dispatches from VPM reporters — the things we're watching before there's a full story.</p>
-      <p class="vpm-lur__updated" data-lur-updated>Updated just now</p>
+        <div class="vpm-lur__header">
+          <h3 class="vpm-lur__title">Latest Updates</h3>
+          <p class="vpm-lur__dek">Short dispatches from VPM reporters — the things we're watching before there's a full story.</p>
+          <p class="vpm-lur__updated" data-lur-updated>Updated just now</p>
+        </div>
+        <div class="vpm-lur__bar" aria-hidden="true"></div>
+
+        <div class="vpm-lur__list" data-lur-list></div>
+
+        <div class="vpm-lur__footer">
+          <button type="button" class="vpm-lur__loadmore" data-lur-loadmore hidden>Load more updates</button>
+          <a class="vpm-lur__seeall" href="#" data-lur-seeall>See all updates</a>
+        </div>
+
+      </div>
+      <script src="js.js"></script>
     </div>
-    <div class="vpm-lur__bar" aria-hidden="true"></div>
 
-    <div class="vpm-lur__list" data-lur-list></div>
+    <div class="desktop-grid__item desktop-grid__item--homepage">
+      <p class="placement-label">Homepage module &mdash; dark-blue, 3-across</p>
 
-    <div class="vpm-lur__footer">
-      <button type="button" class="vpm-lur__loadmore" data-lur-loadmore hidden>Load more updates</button>
-      <a class="vpm-lur__seeall" href="#" data-lur-seeall>See all updates</a>
+      <div class="vpm-lur" data-variant="homepage"></div>
+      <script src="js.js"></script>
     </div>
-
   </div>
-  <script src="js.js"></script>
-</div>
+</section>
 
-<div class="preview-shell preview-shell--wide">
-  <p class="preview-label">1b &mdash; Homepage module (dark-blue, 3-across)</p>
+<section class="showcase-section">
+  <div class="showcase-section__head">
+    <h2>Mobile</h2>
+    <span>Its own "Updates" tab</span>
+  </div>
 
-  <div class="vpm-lur" data-variant="homepage"></div>
-  <script src="js.js"></script>
-</div>
-
-<div class="preview-shell preview-shell--mobile">
-  <p class="preview-label">1c &mdash; Mobile, its own "Updates" tab</p>
-
-  <div class="vpm-lur" data-variant="mobile"></div>
-  <script src="js.js"></script>
-</div>
+  <div class="phone-frame">
+    <div class="phone-frame__notch"></div>
+    <div class="phone-frame__screen">
+      <div class="vpm-lur" data-variant="mobile"></div>
+      <script src="js.js"></script>
+    </div>
+  </div>
+</section>
 
 </body>
 </html>
