@@ -1,4 +1,7 @@
-# newsletter-signup-cta
+# Newsletter Signup Banner
+
+A small banner that sends readers to VPM's newsletter signup page, for article and section pages
+that shouldn't carry the full signup form.
 
 Compact inline CTA banner linking to the full newsletter signup page
 (https://www.vpm.org/stay-connected-to-what-matters — the combined multi-newsletter

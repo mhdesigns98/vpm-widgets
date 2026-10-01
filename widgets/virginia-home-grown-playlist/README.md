@@ -1,5 +1,8 @@
 # Virginia Home Grown Playlist
 
+Plays the latest Virginia Home Grown episodes on the show's vpm.org page: a video player above a
+strip of the five newest episodes, in the show's green look.
+
 Same widget as `pbs-show-playlist` — API-driven video playlist loading the 5 most recent
 episodes from the PBS Media Manager API (via the shared `pbs-api` Cloudflare Worker proxy),
 rendered as a thumbnail strip with an embedded PBS partner player, autoplay to next episode
