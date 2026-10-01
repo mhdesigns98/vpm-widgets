@@ -17,6 +17,7 @@
 
 ## In progress / next steps
 
+- [x] Removed the vestigial **Workers Build** (2026-10-01): deleted the `vpm-widgets` Worker on the old account; see Gotchas
 - [ ] Confirm access to the new (Free-plan) Cloudflare account works, then create a Pages project for `vpm-widgets` there
 - [ ] Add `widgets.vpm.org` via that Pages project's **Custom domains** tab — not the DNS tab directly (manual CNAME first = 522 error)
 - [ ] Set `PBS_API_KEY` / `PBS_API_SECRET` as Pages secrets (`wrangler pages secret put <NAME> --project-name=vpm-widgets`)
@@ -30,6 +31,7 @@
 
 ## Gotchas / things that will bite you
 
+- **The "Workers Builds: vpm-widgets" check was vestigial; removed 2026-10-01.** A Worker named `vpm-widgets` on the *old* account (`e017b19d…`) was Git-connected to this repo. It redeployed the whole repo as static assets to `vpm-widgets.vpm-e01.workers.dev` on every PR push, but still reported a 0s failure to GitHub. Dashboard disconnect/delete attempts didn't take; `wrangler delete --name vpm-widgets` (logged in as `mhayes@vpm.org`, `CLOUDFLARE_ACCOUNT_ID=e017b19d…`) did. Don't recreate it by adding a wrangler config: the plan is a **Pages** project in the *new* account. The PBS proxy is the separate `pbs-api` Worker, untouched.
 - The two iframe widgets' READMEs also document a `postMessage` origin check (`e.origin !== "https://mhdesigns98.github.io"`) that's pasted directly into the **live Brightspot page**, outside any repo — grep can't find that. Confirm what's actually live in the CMS before any domain cutover.
 - Cloudflare Pages custom domains require the Pages project and the DNS zone to be in the *same* account — don't create the project in the old "VPM" account by habit.
 - `functions/api/pbs-episodes.js` first draft had an unvalidated `page-size` param (non-numeric → `NaN` forwarded to PBS) — Codex caught it, now fixed. Left as-is, matching the original Worker's behavior: no `show-id` format validation, wildcard CORS, `cache.put()` failures aren't caught, missing secrets fail as an opaque upstream error rather than a clear config error. Worth hardening later, not blocking.
