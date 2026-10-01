@@ -6,11 +6,11 @@
     /vpm-widgets/share/?w=feed-rail                     a widget from this repo
     /vpm-widgets/share/?p=voter-guide-2026              a page build from vpm-pages
     &note=Looking+for+feedback+on+mobile                optional note shown above the preview
-    &view=mobile                                        start in mobile (or tablet) width
+    &view=mobile                                        start at mobile, tablet, desktop (1280px) or wide (1920px)
 
   Title and summary come from the folder's README.md (the H1 and first paragraph), so there's
-  nothing extra to maintain. The preview is the folder's preview.html, or index.html if there
-  isn't one. Both repos are on the same GitHub Pages origin, so this one page serves both.
+  nothing extra to maintain. The preview is the folder's preview.html, else index.html, else
+  demo/index.html. Both repos are on the same GitHub Pages origin, so this one page serves both.
 -->
 <html lang="en">
 <head>
@@ -56,7 +56,7 @@ body {
 .sh-accent { height: 5px; background: var(--accent-bar); }
 
 .sh-head { background: var(--vpm-dark-blue); color: var(--vpm-white); padding: 28px 16px 24px; }
-.sh-head__inner { max-width: 1100px; margin: 0 auto; }
+.sh-head__inner { max-width: 1280px; margin: 0 auto; }
 .sh-eyebrow {
   margin: 0 0 6px;
   font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
@@ -76,14 +76,14 @@ body {
 .sh-chip--draft { background: var(--vpm-yellow); color: var(--vpm-black); }
 
 .sh-note {
-  max-width: 1100px; margin: 20px auto 0; padding: 14px 16px;
+  max-width: 1280px; margin: 20px auto 0; padding: 14px 16px;
   background: var(--vpm-yellow-200); border-left: 4px solid var(--vpm-yellow);
   font-size: 15px; white-space: pre-line;
 }
 .sh-note strong { display: block; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 2px; }
 
 .sh-bar {
-  max-width: 1100px; margin: 20px auto 12px; padding: 0 16px;
+  max-width: 1280px; margin: 20px auto 12px; padding: 0 16px;
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
 }
 .sh-devices { display: inline-flex; border: 1px solid var(--vpm-gray-300); border-radius: 6px; overflow: hidden; background: var(--vpm-white); }
@@ -92,6 +92,8 @@ body {
 }
 .sh-devices button + button { border-left: 1px solid var(--vpm-gray-300); }
 .sh-devices button[aria-pressed="true"] { background: var(--vpm-dark-blue); color: var(--vpm-white); }
+.sh-bar__left { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.sh-scale { font-size: 13px; color: var(--vpm-gray-600); }
 .sh-actions { display: flex; gap: 16px; font-size: 14px; }
 .sh-actions a, .sh-actions button {
   font: 600 14px var(--font-sans); color: var(--vpm-dark-blue); background: none; border: 0; padding: 0; cursor: pointer;
@@ -100,21 +102,19 @@ body {
 :focus-visible { outline: 3px solid var(--vpm-light-blue); outline-offset: 2px; }
 
 .sh-stage { padding: 0 16px 48px; }
+/* The iframe renders at the chosen width (real breakpoints apply) and is scaled down to fit
+   when the viewer's screen is narrower. JS sets the sizes; the wrap clips to the scaled box. */
 .sh-frame-wrap {
-  margin: 0 auto; max-width: 1100px; background: var(--vpm-white);
+  margin: 0 auto; overflow: hidden; background: var(--vpm-white);
   border: 1px solid var(--vpm-gray-200); box-shadow: 0 8px 24px rgba(16,24,32,.08);
-  transition: max-width .2s ease;
 }
-.sh-frame-wrap[data-view="tablet"] { max-width: 768px; }
-.sh-frame-wrap[data-view="mobile"] { max-width: 390px; }
-.sh-frame { display: block; width: 100%; height: 600px; border: 0; }
+.sh-frame { display: block; width: 100%; height: 400px; border: 0; transform-origin: 0 0; }
 
-.sh-error { max-width: 1100px; margin: 32px auto; padding: 24px 16px; font-size: 16px; }
+.sh-error { max-width: 1280px; margin: 32px auto; padding: 24px 16px; font-size: 16px; }
 .sh-error code { background: var(--vpm-white); padding: 1px 6px; border-radius: 4px; }
 .sh-foot { text-align: center; font-size: 13px; color: var(--vpm-gray-600); padding: 0 16px 32px; }
 [hidden] { display: none !important; }
-@media (max-width: 600px) { .sh-devices { display: none; } }
-@media (prefers-reduced-motion: reduce) { .sh-frame-wrap { transition: none; } }
+@media (max-width: 600px) { .sh-devices, .sh-scale { display: none; } }
 </style>
 </head>
 <body>
@@ -134,10 +134,14 @@ body {
 
 <main id="sh-main" hidden>
   <div class="sh-bar">
-    <div class="sh-devices" role="group" aria-label="Preview width">
-      <button type="button" data-view="desktop" aria-pressed="true">Desktop</button>
-      <button type="button" data-view="tablet" aria-pressed="false">Tablet</button>
-      <button type="button" data-view="mobile" aria-pressed="false">Mobile</button>
+    <div class="sh-bar__left">
+      <div class="sh-devices" role="group" aria-label="Preview width">
+        <button type="button" data-view="wide" aria-pressed="false">Wide</button>
+        <button type="button" data-view="desktop" aria-pressed="true">Desktop</button>
+        <button type="button" data-view="tablet" aria-pressed="false">Tablet</button>
+        <button type="button" data-view="mobile" aria-pressed="false">Mobile</button>
+      </div>
+      <span class="sh-scale" id="sh-scale" aria-live="polite"></span>
     </div>
     <div class="sh-actions">
       <button type="button" id="sh-copy">Copy link</button>
@@ -226,7 +230,7 @@ body {
 
   async function load() {
     var previewUrl = null;
-    for (var name of ["preview.html", "index.html"]) {
+    for (var name of ["preview.html", "index.html", "demo/index.html"]) {
       var u = new URL(name, base).href;
       if (await exists(u)) { previewUrl = u; break; }
     }
@@ -265,38 +269,93 @@ body {
     setView(params.get("view") || "desktop");
   }
 
-  // ── Device widths ──
+  // ── Preview width and height ──
+  var VIEWS = { wide: 1920, desktop: 1280, tablet: 768, mobile: 390 };
+  var frame = $("sh-frame"), wrap = $("sh-wrap");
+  var current = "desktop", contentH = 400;
+
+  function layout() {
+    var avail = $("sh-main").clientWidth - 32 - 2; // stage padding + wrap border
+    var phone = window.innerWidth <= 600;          // too small to scale a desktop layout legibly
+    var target = phone ? avail : VIEWS[current];
+    var scale = phone ? 1 : Math.min(1, avail / target);
+    frame.style.width = target + "px";
+    frame.style.height = contentH + "px";
+    frame.style.transform = scale < 1 ? "scale(" + scale + ")" : "";
+    wrap.style.width = Math.floor(target * scale) + 2 + "px";
+    wrap.style.height = Math.ceil(contentH * scale) + 2 + "px";
+    $("sh-scale").textContent = phone ? "" : scale < 1
+      ? "Shown at " + target + "px wide, scaled to " + Math.round(scale * 100) + "% to fit your screen"
+      : target + "px wide";
+  }
+
   function setView(view) {
-    if (!/^(desktop|tablet|mobile)$/.test(view)) view = "desktop";
-    $("sh-wrap").dataset.view = view;
+    if (!VIEWS[view]) view = "desktop";
+    current = view;
     document.querySelectorAll(".sh-devices button").forEach(function (b) {
       b.setAttribute("aria-pressed", String(b.dataset.view === view));
     });
+    layout();
   }
   document.querySelectorAll(".sh-devices button").forEach(function (b) {
     b.addEventListener("click", function () { setView(b.dataset.view); });
   });
+  window.addEventListener("resize", layout);
 
-  // ── Fit the iframe to its content (same origin, so we can measure it) ──
-  var frame = $("sh-frame");
+  // Height of what's actually on the page, not of the iframe's viewport. scrollHeight never
+  // reports less than the viewport, which left short widgets sitting on a tall white box.
+  function contentHeight(doc) {
+    var win = doc.defaultView, body = doc.body;
+    if (!body) return doc.documentElement.scrollHeight;
+    var bottom = 0;
+    for (var el of body.children) {
+      if (/^(SCRIPT|STYLE|TEMPLATE|LINK|META|NOSCRIPT)$/.test(el.tagName)) continue;
+      var cs = win.getComputedStyle(el);
+      if (cs.display === "none" || cs.position === "fixed") continue;
+      var r = el.getBoundingClientRect();
+      if (!r.width && !r.height) continue;
+      bottom = Math.max(bottom, r.bottom + (parseFloat(cs.marginBottom) || 0));
+    }
+    if (!bottom) return doc.documentElement.scrollHeight;
+    var bcs = win.getComputedStyle(body);
+    bottom += (parseFloat(bcs.paddingBottom) || 0) + (parseFloat(bcs.borderBottomWidth) || 0) + (parseFloat(bcs.marginBottom) || 0);
+    return Math.ceil(bottom + win.scrollY);
+  }
+
   frame.addEventListener("load", function () {
     var doc;
     try { doc = frame.contentDocument; } catch (e) { return; }
     if (!doc) return;
-    var lastDelta = 0, sameDelta = 0;
+    var lastDelta = 0, sameDelta = 0, queued = false;
     function fit() {
-      var h = Math.max(doc.documentElement.scrollHeight, doc.body ? doc.body.scrollHeight : 0);
-      var delta = h - frame.offsetHeight;
+      queued = false;
+      var h = Math.max(40, contentHeight(doc));
+      var delta = h - contentH;
       if (Math.abs(delta) < 2) return;
       // Content sized in vh grows with the frame; stop chasing it after a few identical steps.
       sameDelta = delta === lastDelta ? sameDelta + 1 : 0;
       lastDelta = delta;
       if (sameDelta >= 3) return;
-      frame.style.height = Math.max(200, h) + "px";
+      contentH = h;
+      layout();
     }
+    function schedule() { if (!queued) { queued = true; requestAnimationFrame(fit); } }
     fit();
-    if (window.ResizeObserver) new ResizeObserver(fit).observe(doc.documentElement);
-    setTimeout(fit, 800);
+    // The body and <html> stay as tall as the frame, so watch the top-level content itself.
+    // Created from the frame's own window: a ResizeObserver only reports on its own document.
+    var RO = doc.defaultView.ResizeObserver;
+    var ro = RO ? new RO(schedule) : null;
+    function watchChildren() {
+      if (ro && doc.body) for (var el of doc.body.children) ro.observe(el);
+    }
+    if (ro) ro.observe(doc.documentElement);
+    watchChildren();
+    if (doc.body) new MutationObserver(function () { watchChildren(); schedule(); })
+      .observe(doc.body, { childList: true, subtree: true, attributes: true, characterData: true });
+    // Images and media finish late; expand/collapse animations finish after the class change.
+    ["load", "transitionend", "animationend"].forEach(function (t) { doc.addEventListener(t, schedule, true); });
+    if (doc.fonts) doc.fonts.ready.then(schedule);
+    setTimeout(schedule, 800);
   });
 
   // ── Copy link ──
