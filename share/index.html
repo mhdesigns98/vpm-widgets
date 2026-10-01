@@ -196,23 +196,36 @@ body {
 
   function readme(md) {
     var lines = md.split(/\r?\n/);
-    var title = "", summary = [], deploy = "";
+    var title = "", summary = "", deploy = "";
     var i = 0;
     for (; i < lines.length; i++) {
       var h = lines[i].match(/^#\s+(.+)/);
       if (h) { title = stripMd(h[1]); i++; break; }
     }
-    // First prose paragraph after the H1: skip blanks, headings, lists, tables, quotes, code.
-    for (; i < lines.length; i++) {
-      var l = lines[i];
-      if (!l.trim()) { if (summary.length) break; continue; }
-      if (/^\s*(#|[-*+]\s|\d+\.\s|\||>|```|<)/.test(l) || /^\s*\*\*[^*]+:\*\*/.test(l)) { if (summary.length) break; continue; }
-      summary.push(l.trim());
+    // First prose paragraph after the H1. Works on whole paragraphs, so a paragraph that opens as
+    // a list, table, quote, HTML or a "**Label:** value" line is skipped together with its
+    // wrapped lines. (Skipping line by line once picked up the second line of a wrapped
+    // "**Also seen at:**" entry as the summary.) Headings and code fences are skipped too.
+    var para = [], inFence = false;
+    function take() {
+      if (para.length && !summary &&
+          !/^\s*([-*+]\s|\d+\.\s|\||>|<)/.test(para[0]) && !/^\s*\*\*[^*]+:\*\*/.test(para[0])) {
+        summary = para.join(" ");
+      }
+      para = [];
     }
+    for (; i < lines.length && !summary; i++) {
+      var l = lines[i];
+      if (/^\s*```/.test(l)) { take(); inFence = !inFence; continue; }
+      if (inFence) continue;
+      if (!l.trim() || /^\s*#/.test(l)) { take(); continue; }
+      para.push(l.trim());
+    }
+    take();
     var d = md.match(/deploy target:?\**:?\s*(.+)/i);
     if (d) deploy = stripMd(d[1]).replace(/[.,]$/, "");
     // Only the first sentence: later ones in these READMEs tend to be notes for the team.
-    var text = stripMd(summary.join(" "));
+    var text = stripMd(summary);
     var first = text.match(/^.+?[.!?](?=\s+[A-Z(]|$)/);
     return { title: title, summary: first ? first[0] : text, deploy: deploy };
   }
