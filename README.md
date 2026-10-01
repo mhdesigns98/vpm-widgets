@@ -24,6 +24,7 @@ Pick the row that matches what you came for.
 | See VPM colors, type, and spacing | **[Brand guide (rendered)](https://mhdesigns98.github.io/vpm-widgets/brand-guide.html)** — swatches, type scale, copyable CSS blocks. No git required. |
 | Look up an exact token value | [`tokens.css`](tokens.css) — the source of truth **for both this repo and `vpm-pages`** (there is deliberately no copy there). [`BRAND_GUIDE.md`](BRAND_GUIDE.md) has the same values as tables plus a paste-ready `:root` block. |
 | Find or reuse an existing widget | [`INDEX.md`](INDEX.md) — every widget, what it does, its namespace. Live previews at [mhdesigns98.github.io/vpm-widgets](https://mhdesigns98.github.io/vpm-widgets/). |
+| Send someone a link to one widget or page | `https://mhdesigns98.github.io/vpm-widgets/share/?w=<widget>` or `?p=<page>`. Opens with a title, a plain-language summary, where it goes, and a desktop/tablet/mobile toggle, so they don't have to find it in the gallery. Add `&note=…` for what you want from them. `/share` builds the link. |
 | Build or change something | [`CONTRIBUTING.md`](CONTRIBUTING.md), then [`CLAUDE.md`](CLAUDE.md) for conventions and the pre-ship checklist. |
 | Use Claude Code on VPM work | Just clone this repo and open a session in it. See below. |
 
