@@ -265,7 +265,9 @@ body {
     $("sh-open").href = previewUrl;
     $("sh-main").hidden = false;
     $("sh-frame").title = "Preview of " + info.title;
-    $("sh-frame").src = previewUrl;
+    // GitHub Pages lets browsers and its CDN reuse a page for 10 minutes, so a just-merged change
+    // could show the old version. A one-off query string forces a fresh copy of the preview page.
+    $("sh-frame").src = previewUrl + (previewUrl.indexOf("?") === -1 ? "?" : "&") + "fresh=" + Date.now();
     setView(params.get("view") || "desktop");
   }
 
