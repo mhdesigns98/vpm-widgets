@@ -5,7 +5,7 @@ description: Give a direct share link for a widget or page build. Usage: /share 
 Produce a link that can go straight to someone who has never seen the Widget Lab: a coworker,
 an editor, a stakeholder. It opens `share/` in this repo, a context page (title, one-line
 summary, where it'll be deployed, a "not live" badge, and an optional note) wrapped around the
-live preview. They don't need to find anything in the gallery.
+live preview, at wide/desktop/tablet/mobile width. They don't need to find anything in the gallery.
 
 **Arguments:** $ARGUMENTS
 
@@ -45,8 +45,9 @@ Optional parameters:
 
 - `&note=<text>`: URL-encode it. Use it for what you want from the viewer, e.g. "Feedback on the
   mobile layout by Friday."
-- `&view=mobile` or `&view=tablet`: the width the preview opens at. Use it when the note is about
-  that width.
+- `&view=wide` (1920px), `desktop` (1280px, the default), `tablet` (768px) or `mobile` (390px):
+  the width the preview opens at. It renders at that true width, so the widget's own breakpoints
+  apply, and scales down to fit smaller screens. Use it when the note is about one width.
 
 Output the link on its own line, ready to paste, with a one-line summary of what the viewer will
 see. Don't open a PR or commit anything for this command.
