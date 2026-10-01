@@ -17,7 +17,7 @@
 
 ## In progress / next steps
 
-- [ ] Disconnect the vestigial **Workers Build** on the old account (Workers & Pages → `vpm-widgets` → Settings → Builds). It fails every PR in 0s with no wrangler config; see Gotchas
+- [x] Removed the vestigial **Workers Build** (2026-10-01): deleted the `vpm-widgets` Worker on the old account; see Gotchas
 - [ ] Confirm access to the new (Free-plan) Cloudflare account works, then create a Pages project for `vpm-widgets` there
 - [ ] Add `widgets.vpm.org` via that Pages project's **Custom domains** tab — not the DNS tab directly (manual CNAME first = 522 error)
 - [ ] Set `PBS_API_KEY` / `PBS_API_SECRET` as Pages secrets (`wrangler pages secret put <NAME> --project-name=vpm-widgets`)
@@ -31,7 +31,7 @@
 
 ## Gotchas / things that will bite you
 
-- **The "Workers Builds: vpm-widgets" check is vestigial (found 2026-09-30).** A Workers Build named `vpm-widgets` is connected to this repo in the *old* account (`e017b19d…`). The repo has no `wrangler.toml`/`wrangler.jsonc`, so it fails instantly on every PR. Don't "fix" it by adding a wrangler config: that would deploy into the wrong account, and the plan is a **Pages** project in the *new* account. The PBS proxy currently runs as the standalone `pbs-api` Worker (`pbs-api.vpm-e01.workers.dev/episodes`, verified 200); `functions/api/pbs-episodes.js` isn't deployed anywhere yet. Disconnect the build in the dashboard; it can't be removed from the repo.
+- **The "Workers Builds: vpm-widgets" check was vestigial; removed 2026-10-01.** A Worker named `vpm-widgets` on the *old* account (`e017b19d…`) was Git-connected to this repo. It redeployed the whole repo as static assets to `vpm-widgets.vpm-e01.workers.dev` on every PR push, but still reported a 0s failure to GitHub. Dashboard disconnect/delete attempts didn't take; `wrangler delete --name vpm-widgets` (logged in as `mhayes@vpm.org`, `CLOUDFLARE_ACCOUNT_ID=e017b19d…`) did. Don't recreate it by adding a wrangler config: the plan is a **Pages** project in the *new* account. The PBS proxy is the separate `pbs-api` Worker, untouched.
 - The two iframe widgets' READMEs also document a `postMessage` origin check (`e.origin !== "https://mhdesigns98.github.io"`) that's pasted directly into the **live Brightspot page**, outside any repo — grep can't find that. Confirm what's actually live in the CMS before any domain cutover.
 - Cloudflare Pages custom domains require the Pages project and the DNS zone to be in the *same* account — don't create the project in the old "VPM" account by habit.
 - `functions/api/pbs-episodes.js` first draft had an unvalidated `page-size` param (non-numeric → `NaN` forwarded to PBS) — Codex caught it, now fixed. Left as-is, matching the original Worker's behavior: no `show-id` format validation, wildcard CORS, `cache.put()` failures aren't caught, missing secrets fail as an opaque upstream error rather than a clear config error. Worth hardening later, not blocking.
