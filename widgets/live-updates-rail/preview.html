@@ -108,6 +108,19 @@
   @media (max-width: 480px) {
     .phone-frame { width: 100%; max-width: 375px; }
   }
+
+  /* ---- Wide screens: rail at sidebar width, homepage module at homepage width ----
+     Below this the homepage module gets ~600px, under its own 720px container breakpoint,
+     so it falls back to stacked cards. Here it gets ~1080px and shows its real 3-across grid. */
+  @media (min-width: 1500px) {
+    .showcase-intro { max-width: 860px; }
+    .showcase-section { max-width: 1480px; }
+    .desktop-grid {
+      display: grid;
+      grid-template-columns: 360px minmax(0, 1fr);
+      gap: 48px;
+    }
+  }
 </style>
 </head>
 <body>
