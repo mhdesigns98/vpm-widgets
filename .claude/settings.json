@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PROJECT_DIR:-.}\"/.claude/hooks/check-index.sh --json 2>/dev/null || true",
+            "statusMessage": "Checking INDEX.md and README coverage",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // \"\"' | { read -r f; case \"$f\" in */vpm-widgets/tokens.css) jq -nc '{hookSpecificOutput:{hookEventName:\"PreToolUse\",permissionDecision:\"deny\",permissionDecisionReason:\"tokens.css is the canonical token source. Per CLAUDE.md, copy the properties this widget needs into its own style block rather than editing the source. To change a token deliberately, edit tokens.css outside a Claude session or temporarily disable this hook.\"}}' ;; esac; } 2>/dev/null || true",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

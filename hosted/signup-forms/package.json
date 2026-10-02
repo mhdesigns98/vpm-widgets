@@ -1,0 +1,10 @@
+{
+  "name": "vpm-signup-forms",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "npm run build && npx wrangler pages dev public",
+    "deploy": "npm run build && CLOUDFLARE_ACCOUNT_ID=e017b19d2e3e1827adbd6f5907d81aac npx wrangler pages deploy public --project-name=vpm-signup-forms"
+  }
+}

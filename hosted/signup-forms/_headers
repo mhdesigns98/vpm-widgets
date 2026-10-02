@@ -1,0 +1,4 @@
+/*
+  Content-Security-Policy: frame-ancestors 'self' https://vpm.org https://*.vpm.org
+  X-Content-Type-Options: nosniff
+  Cache-Control: public, max-age=300, must-revalidate
