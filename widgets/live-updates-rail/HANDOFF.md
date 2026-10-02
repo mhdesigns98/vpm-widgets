@@ -1,7 +1,7 @@
 # Live Updates Rail — Handoff
 *Status: parked — waiting on more newsroom feedback before any new build work*
-*Last updated: 2026-10-02 · First team feature feedback mapped against current widget; no code changed · Last verified: unverified (no render check this session)*
-*Live vs repo: n/a — never pasted into a CMS. Widget merged to main (PRs #3–#7, #12); PR #8 (mobile tab → "Stories") still open*
+*Last updated: 2026-10-02 · First team feedback mapped; PR #8 closed; no code changed · Last verified: unverified (no render check this session)*
+*Live vs repo: n/a — never pasted into a CMS. Widget merged to main (PRs #3–#7, #12); no open PRs*
 
 ## Current state
 Split-file ACF widget (`vpm-lur-`) with three variants (sidebar rail, `homepage` 3-card grid,
@@ -50,17 +50,17 @@ Requested content types, mapped against what exists:
       (nearly free).
 - [ ] Threading open questions: does a thread move to the top on a new reply; collapsed or open;
       shareable link to a single reply; how homepage/mobile show threads.
-- [ ] Resolve PR #8 (mobile "The story" tab → "Stories", functional). It may close the inert-tab item below.
 - [ ] Replace hardcoded `time` strings and the static "Updated just now" with ISO timestamps + relative formatting.
 - [ ] Sanitize post content. `renderPost()` injects `body` as raw HTML, which is unsafe once a CMS feeds it.
 - [ ] Each new post type needs a homepage-variant card, or a rule that it can't be `homepageFeatured`.
 - [ ] Wire real audio (no `<audio>` element exists yet).
 - [ ] "See all updates" links point to `#` and need a real destination (threading/archive page too).
-- [ ] Mobile variant "The story" tab is inert (see PR #8).
+- [ ] Mobile variant "The story" tab is inert. Decide (with team feedback) whether mobile keeps tabs at all.
 - [ ] Replace placeholder `POSTS` with real editorial content.
 - [ ] Run `/ship-widget live-updates-rail` before any CMS paste.
 
 ## Gotchas / things that will bite you
+- PR #8 (closed, branch kept) made the mobile tab a "Stories" switcher with a placeholder article list. Closed because it conflicted with this handoff, used `#` links for content the widget doesn't own, and lacked `tabpanel`/`aria-controls`/arrow keys. Reopen as a starting point only if mobile keeps tabs.
 - Homepage variant drops share/copy-link/audio chrome. Never flag an audio post `homepageFeatured: true`.
 - The original design mock had real reporter bylines and invented candidate quotes. Don't restore
   real names without real, sourced copy.
@@ -74,6 +74,6 @@ Requested content types, mapped against what exists:
 - `README.md` — post types, variants, placeholder-content note
 
 ## Session log
-- 2026-10-02: Mapped the first team feedback (new content types + threading) against the widget; no code changes; parked pending more feedback.
+- 2026-10-02: Closed PR #8 (reasons in Gotchas). Mapped the first team feedback (new content types + threading) against the widget; no code changes; parked pending more feedback.
 - 2026-10-01: Wide-screen preview layout (PR #12); explored follow-up posts (`followUpOn`), not built.
 - 2026-09-30: Widget filed + homepage and mobile variants + preview showcase (PRs #3–#7); PR #8 opened.

@@ -1,11 +1,11 @@
 # VPM Widgets — Handoff
 *Status: active — share page finished and merged; Cloudflare/`widgets.vpm.org` move parked (no access to the vpm.org domain account right now)*
-*Last updated: 2026-10-02 · fixed the `&live=` host check, committed local tooling (#19) · Last verified: 2026-10-02 — `share/index.html` served locally in headless Chrome: 3 vpm.org URLs show the Live badge, 7 spoofed/invalid ones (`www.vpm.org@evil.example`, `user:pw@`, `evilvpm.org`, `vpm.org.evil.example`, `javascript:`, `ftp:`, garbage) keep "not live"; no page errors. Not yet checked on the live GitHub Pages URL (not merged).*
+*Last updated: 2026-10-02 · fixed the `&live=` host check (#20), committed local tooling (#19), closed live-updates-rail PR #8 · Last verified: 2026-10-02 — `share/index.html` served locally in headless Chrome: 3 vpm.org URLs show the Live badge, 7 spoofed/invalid ones (`www.vpm.org@evil.example`, `user:pw@`, `evilvpm.org`, `vpm.org.evil.example`, `javascript:`, `ftp:`, garbage) keep "not live"; no page errors. Same 10 cases re-run against the live GitHub Pages URL after #20 merged: all passed.*
 *Live vs repo: in sync (`origin/main` = what Pages serves). `hosted/signup-forms/` is in the repo but has never been deployed (2026-10-02: `vpm-signup-forms` Pages project does not exist on the VPM account).*
 
 ## Current state
 
-`share/index.html` is a static page that wraps one widget (`?w=<slug>`) or page build (`?p=<slug>`) in context: title and first sentence from the folder's README, a "Goes into" chip from its `Deploy target`, optional `&note=`, optional `&live=<url>` (swaps the "not live" badge for a link), and the preview at wide/desktop/tablet/mobile true widths. `/share` (`.claude/commands/share.md`) builds the link and warns that links are public. Served from GitHub Pages on the personal account (`mhdesigns98.github.io/vpm-widgets/`). Onboarding PR #2 is merged. Open: PR #8 (`live-updates-rail` Stories tab).
+`share/index.html` is a static page that wraps one widget (`?w=<slug>`) or page build (`?p=<slug>`) in context: title and first sentence from the folder's README, a "Goes into" chip from its `Deploy target`, optional `&note=`, optional `&live=<url>` (swaps the "not live" badge for a link), and the preview at wide/desktop/tablet/mobile true widths. `/share` (`.claude/commands/share.md`) builds the link and warns that links are public. Served from GitHub Pages on the personal account (`mhdesigns98.github.io/vpm-widgets/`). Onboarding PR #2 is merged. No open PRs.
 
 ## Decisions made (and why)
 
@@ -17,7 +17,6 @@
 ## In progress / next steps
 
 - [ ] Before the first `hosted/signup-forms` deploy: pick the Cloudflare account. `npm run deploy` targets the old VPM account (`e017b19d…`), which can't serve a `vpm.org` subdomain (see Gotchas). Then replace `SIGNUP-HOST` in its README embed snippet with the real host.
-- [ ] Merge or close PR #8 (`live-updates-rail` Stories tab).
 - [ ] Nice-to-haves from the review, not started: plain-language width labels ("Desktop" instead of "1280px wide, scaled to 40%"), "Note from the sender" label on the note box.
 - [ ] When vpm.org domain access exists: Cloudflare Pages project, `widgets.vpm.org`, `PBS_API_KEY`/`PBS_API_SECRET` as Pages secrets, verify `/api/pbs-episodes?show-id=...`, then update the 4 hardcoded `pbs-api.vpm-e01.workers.dev` references (`widgets/pbs-show-playlist/index.html`, its README, `widgets/virginia-home-grown-playlist/index.html`, its README), retire the old `pbs-api` Worker (`~/Projects/vpm/pbs-api/`), and fix the `mhdesigns98.github.io` doc references.
 
@@ -45,6 +44,6 @@
 
 ## Session log
 
-- 2026-10-02: Fixed the `&live=` host check in `share/index.html` (now requires http(s) on vpm.org or a subdomain, no `user:pass@`); 10 accept/reject cases passed in headless Chrome. Committed local tooling (PR #19) and refreshed this handoff (PR #18).
+- 2026-10-02: Fixed the `&live=` host check in `share/index.html` (now requires http(s) on vpm.org or a subdomain, no `user:pass@`); 10 accept/reject cases passed in headless Chrome. Verified live. Committed local tooling (PR #19), refreshed this handoff (PR #18), closed live-updates-rail PR #8 (see that widget's handoff). Codex review of #20: no issues; Gemini returned a 503, no review.
 - 2026-10-01: Reviewed the share page with /critique (Codex) and web-team-review; shipped PR #16 (width kept in link, `&live=` badge, darker focus ring + copy announcement, fresh URL on "Open on its own", public-link warning). Reverted the Slack-post `/share` redesign. Earlier the same day: PRs #9–#15 built the share page and fixed its sizing, caching, and README parsing; removed the vestigial Workers Build.
 - 2026-09-04: Onboarding branch (PR #2, since merged), scoped Cloudflare migration, drafted `pbs-episodes.js`.
