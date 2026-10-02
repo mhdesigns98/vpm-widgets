@@ -242,6 +242,18 @@ body {
     $("sh-meta").appendChild(li);
   }
 
+  // Returns the normalized URL if it's http(s) on vpm.org or a subdomain, otherwise null.
+  function vpmUrl(raw) {
+    if (!raw) return null;
+    var u;
+    try { u = new URL(raw); } catch (e) { return null; }
+    if (u.protocol !== "https:" && u.protocol !== "http:") return null;
+    if (u.username || u.password) return null;
+    var host = u.hostname;
+    if (host !== "vpm.org" && !host.endsWith(".vpm.org")) return null;
+    return u.href;
+  }
+
   async function exists(url) {
     try { return (await fetch(url, { method: "HEAD", cache: "no-store" })).ok; } catch (e) { return false; }
   }
@@ -277,10 +289,11 @@ body {
     chip(kind === "page" ? "Full page build" : "Reusable widget: can appear on several pages");
     if (info.deploy) chip("Goes into: " + info.deploy);
 
-    // A build that's already published shouldn't be labelled "not live". http(s) only, so the
-    // parameter can't smuggle in a javascript: URL.
-    var live = params.get("live");
-    if (live && /^https?:\/\//i.test(live)) {
+    // A build that's already published shouldn't be labelled "not live". The badge says "Live on
+    // vpm.org", so only accept an http(s) URL whose host really is vpm.org or a subdomain, with no
+    // user:pass@ part: a prefix test alone lets https://www.vpm.org@evil.example/ through.
+    var live = vpmUrl(params.get("live"));
+    if (live) {
       var status = $("sh-status");
       status.className = "sh-chip";
       status.textContent = "Live on vpm.org: ";

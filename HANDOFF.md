@@ -1,6 +1,6 @@
 # VPM Widgets — Handoff
 *Status: active — share page finished and merged; Cloudflare/`widgets.vpm.org` move parked (no access to the vpm.org domain account right now)*
-*Last updated: 2026-10-01 · reviewed the share page (/critique + web-team-review), shipped 5 fixes as PR #16, dropped the Slack-post redesign of `/share` · Last verified: 2026-10-01 — PR #16 merged; on the live GitHub Pages URL the `&live=` chip, `view=` written to the URL on width click, and `fresh=` on "Open on its own" all confirmed in a browser; Codex review of the PR #16 diff returned one finding (below); Gemini did not run (`timeout` doesn't exist on macOS)*
+*Last updated: 2026-10-02 · fixed the `&live=` host check, committed local tooling (#19) · Last verified: 2026-10-02 — `share/index.html` served locally in headless Chrome: 3 vpm.org URLs show the Live badge, 7 spoofed/invalid ones (`www.vpm.org@evil.example`, `user:pw@`, `evilvpm.org`, `vpm.org.evil.example`, `javascript:`, `ftp:`, garbage) keep "not live"; no page errors. Not yet checked on the live GitHub Pages URL (not merged).*
 *Live vs repo: in sync (`origin/main` = what Pages serves). `hosted/signup-forms/` is in the repo but has never been deployed (2026-10-02: `vpm-signup-forms` Pages project does not exist on the VPM account).*
 
 ## Current state
@@ -16,7 +16,6 @@
 
 ## In progress / next steps
 
-- [ ] **Fix `&live=` host check** (`share/index.html`, the `live` block in `load()`): it accepts any http(s) URL, so `https://www.vpm.org@evil.example/` shows "Live on vpm.org" but links elsewhere. Parse with `new URL`, require hostname `vpm.org` or `*.vpm.org`, reject credentials. Found by Codex review of PR #16; confirmed by reading the code, not yet fixed.
 - [ ] Before the first `hosted/signup-forms` deploy: pick the Cloudflare account. `npm run deploy` targets the old VPM account (`e017b19d…`), which can't serve a `vpm.org` subdomain (see Gotchas). Then replace `SIGNUP-HOST` in its README embed snippet with the real host.
 - [ ] Merge or close PR #8 (`live-updates-rail` Stories tab).
 - [ ] Nice-to-haves from the review, not started: plain-language width labels ("Desktop" instead of "1280px wide, scaled to 40%"), "Note from the sender" label on the note box.
@@ -46,5 +45,6 @@
 
 ## Session log
 
+- 2026-10-02: Fixed the `&live=` host check in `share/index.html` (now requires http(s) on vpm.org or a subdomain, no `user:pass@`); 10 accept/reject cases passed in headless Chrome. Committed local tooling (PR #19) and refreshed this handoff (PR #18).
 - 2026-10-01: Reviewed the share page with /critique (Codex) and web-team-review; shipped PR #16 (width kept in link, `&live=` badge, darker focus ring + copy announcement, fresh URL on "Open on its own", public-link warning). Reverted the Slack-post `/share` redesign. Earlier the same day: PRs #9–#15 built the share page and fixed its sizing, caching, and README parsing; removed the vestigial Workers Build.
 - 2026-09-04: Onboarding branch (PR #2, since merged), scoped Cloudflare migration, drafted `pbs-episodes.js`.

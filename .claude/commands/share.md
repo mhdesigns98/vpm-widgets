@@ -51,6 +51,7 @@ Optional parameters:
 
 - `&live=<vpm.org URL>`: add it when the build is already published. The page then shows a "Live
   on vpm.org" link instead of the "not live" badge. Without it, every preview is labelled not live.
+  Only vpm.org and its subdomains are accepted; any other URL is ignored and the badge stays "not live".
 
 Share links are public: anyone with the URL can open them, and the repo's Pages site is on a
 personal GitHub account. Don't send embargoed, unpublished-news or otherwise sensitive builds this
