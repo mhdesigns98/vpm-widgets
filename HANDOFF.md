@@ -1,52 +1,47 @@
 # VPM Widgets — Handoff
-*Status: active — team onboarding (PR #2, open/unmerged) + Cloudflare account migration planning*
-*Last updated: 2026-09-04 · onboarding docs/commands finished and pushed; Cloudflare migration scoped and one piece drafted · Last verified: 2026-09-04 — GitHub Pages API confirmed no custom domain (`cname: null`); grepped both repos for every `mhdesigns98.github.io`/`vpm-e01.workers.dev` reference; multi-model review run on the new Pages Function (Codex returned and found a real bug, now fixed; Gemini hit a 429 quota error; Ollama gave a non-review twice)*
-*Live vs repo: diverged — `team-onboarding` branch is fully pushed but **not merged** (PR #2 open against `main`); `functions/api/pbs-episodes.js` exists only in the local working tree on `main`, uncommitted, not deployed anywhere*
+*Status: active — share page finished and merged; Cloudflare/`widgets.vpm.org` move parked (no access to the vpm.org domain account right now)*
+*Last updated: 2026-10-01 · reviewed the share page (/critique + web-team-review), shipped 5 fixes as PR #16, dropped the Slack-post redesign of `/share` · Last verified: 2026-10-01 — PR #16 merged; on the live GitHub Pages URL the `&live=` chip, `view=` written to the URL on width click, and `fresh=` on "Open on its own" all confirmed in a browser; Codex review of the PR #16 diff returned one finding (below); Gemini did not run (`timeout` doesn't exist on macOS)*
+*Live vs repo: in sync for everything committed (`origin/main` = what Pages serves). Local only, untracked: `hosted/signup-forms/`, `.claude/agents/`, `.claude/hooks/`, `.claude/settings.json`, `.playwright-mcp/`. (The `live-updates-rail` handoff note merged 2026-10-02 as PR #17.)*
 
 ## Current state
 
-`vpm-widgets` is still served from GitHub Pages (`mhdesigns98.github.io`, personal account, no custom domain). Two widgets (`pbs-show-playlist`, `virginia-home-grown-playlist`) are deployed as **iframes pointing straight at that URL** — their entire hosting depends on it, not just an asset link. The repo's onboarding work (shared skill + 4 slash commands + docs) is done and pushed to `team-onboarding`, PR #2 open, not yet merged. Separately, we scoped moving the three VPM Cloudflare projects (`pbs-api`, `newsletter-signup`, `chartbeat-weekly`) plus this repo's hosting to a *different* Cloudflare account than the one they're on now — because `vpm.org`'s DNS got moved to a new account during the WordPress migration, and Mark just got access to it.
+`share/index.html` is a static page that wraps one widget (`?w=<slug>`) or page build (`?p=<slug>`) in context: title and first sentence from the folder's README, a "Goes into" chip from its `Deploy target`, optional `&note=`, optional `&live=<url>` (swaps the "not live" badge for a link), and the preview at wide/desktop/tablet/mobile true widths. `/share` (`.claude/commands/share.md`) builds the link and warns that links are public. Served from GitHub Pages on the personal account (`mhdesigns98.github.io/vpm-widgets/`). Onboarding PR #2 is merged. Open: PR #8 (`live-updates-rail` Stories tab).
 
 ## Decisions made (and why)
 
-- **Custom domain on Cloudflare Pages (`widgets.vpm.org`), not a GitHub org transfer, comes first.** The urgent risk is the live iframe widgets depending on `mhdesigns98.github.io` — a GitHub Pages URL doesn't auto-redirect if the repo is ever transferred to an org, so those two widgets would go dark. Decoupling the *hosting URL* from GitHub account ownership fixes that immediately; the GitHub repo ownership question becomes a separate, lower-stakes cleanup.
-- **The Pages project must be created in the account that owns the `vpm.org` DNS zone** (confirmed via Cloudflare's own docs — cross-account custom domains aren't supported without a manual-CNAME workaround that risks a 522). That's the *new*, Free-plan account Mark just got access to — not the older "VPM" account (`e017b19d2e3e1827adbd6f5907d81aac`) that already hosts `chartbeat-weekly`/`newsletter-signup`/`pbs-api`. Confirmed Free plan is not a blocker for this (100 custom domains/project, 500 builds/mo, 20k files — all far above what this needs).
-- **One subdomain per independently-deployed codebase, not one for everything.** Landed on three (`widgets.vpm.org`, `newsletter.vpm.org`, `chartbeat.vpm.org`), not four, because `pbs-api` specifically folds into `vpm-widgets` rather than getting its own.
-- **`pbs-api` folds into `vpm-widgets` as a Cloudflare Pages Function**, not migrated as its own Worker — it's stateless (no D1/KV), and its only callers are the two widgets in this repo. `newsletter-signup` stays separate — different repo, different secrets (Turnstile, Mailchimp), independent deploy cadence; merging it would couple two independently-changing codebases just to save one subdomain.
-- **`chartbeat-weekly` stays fully separate** — different audience (internal staff dashboard vs. public embeds), and it's the one project with real state: an accumulating D1 database that needs an actual export/import, not just a redeploy.
+- **No Slack integration for `/share`.** Mark writes his own questions and replies and has no Slack access set up. A drafted Slack-post + `/share log` version was reverted; the diff is not kept in the repo (only in a session scratchpad, now gone).
+- **Phones show the real mobile layout and hide the width toggle.** Deliberate: scaling a desktop layout down on a phone is illegible. `?view=wide` on a phone is silently ignored.
+- **Cloudflare move parked.** Needs access to the account that owns the `vpm.org` DNS zone. Plan unchanged (below).
+- **Cloudflare plan, for when access exists:** Pages project in the *new* account (same account as the DNS zone), `widgets.vpm.org` added via the Pages Custom domains tab (never a manual CNAME first, that gives a 522); `pbs-api` folds into this repo as `functions/api/pbs-episodes.js` (already on `main`); `newsletter-signup` and `chartbeat-weekly` stay separate repos with their own subdomains.
 
 ## In progress / next steps
 
-- [x] Removed the vestigial **Workers Build** (2026-10-01): deleted the `vpm-widgets` Worker on the old account; see Gotchas
-- [ ] Confirm access to the new (Free-plan) Cloudflare account works, then create a Pages project for `vpm-widgets` there
-- [ ] Add `widgets.vpm.org` via that Pages project's **Custom domains** tab — not the DNS tab directly (manual CNAME first = 522 error)
-- [ ] Set `PBS_API_KEY` / `PBS_API_SECRET` as Pages secrets (`wrangler pages secret put <NAME> --project-name=vpm-widgets`)
-- [ ] Confirm `GET widgets.vpm.org/api/pbs-episodes?show-id=...` returns real data
-- [ ] Update the 4 hardcoded `pbs-api.vpm-e01.workers.dev` references once verified: `widgets/pbs-show-playlist/index.html:254`, `widgets/pbs-show-playlist/README.md:33,35,36`, `widgets/virginia-home-grown-playlist/index.html:260`, `widgets/virginia-home-grown-playlist/README.md:38-39`
-- [ ] Retire the old `pbs-api` Worker (`~/Projects/vpm/pbs-api/`) once cutover is confirmed
-- [ ] Commit `functions/api/pbs-episodes.js` (currently untracked on `main`)
-- [ ] Merge PR #2 — ideally after a dry-run by someone other than Mark (new hire or existing teammate) walks clone → `claude` → `/brief` → `/new-widget` → `/ship-widget` end to end
-- [ ] Same custom-domain treatment for `newsletter-signup` (`newsletter.vpm.org`) and `chartbeat-weekly` (`chartbeat.vpm.org`), including chartbeat's D1 export/import and its 5-way cron trigger recreation
-- [ ] Update the Tier-3 doc-only `mhdesigns98.github.io` references in both `vpm-widgets` and `vpm-pages` (README/CLAUDE.md/index.html footers) — not urgent, just dead links until fixed
+- [ ] **Fix `&live=` host check** (`share/index.html`, the `live` block in `load()`): it accepts any http(s) URL, so `https://www.vpm.org@evil.example/` shows "Live on vpm.org" but links elsewhere. Parse with `new URL`, require hostname `vpm.org` or `*.vpm.org`, reject credentials. Found by Codex review of PR #16; confirmed by reading the code, not yet fixed.
+- [ ] Decide what to do with the untracked folders (`hosted/signup-forms/`, `.claude/agents/`, `.claude/hooks/`, `.claude/settings.json`, `.playwright-mcp/`); none are part of the share work.
+- [ ] Merge or close PR #8 (`live-updates-rail` Stories tab).
+- [ ] Nice-to-haves from the review, not started: plain-language width labels ("Desktop" instead of "1280px wide, scaled to 40%"), "Note from the sender" label on the note box.
+- [ ] When vpm.org domain access exists: Cloudflare Pages project, `widgets.vpm.org`, `PBS_API_KEY`/`PBS_API_SECRET` as Pages secrets, verify `/api/pbs-episodes?show-id=...`, then update the 4 hardcoded `pbs-api.vpm-e01.workers.dev` references (`widgets/pbs-show-playlist/index.html`, its README, `widgets/virginia-home-grown-playlist/index.html`, its README), retire the old `pbs-api` Worker (`~/Projects/vpm/pbs-api/`), and fix the `mhdesigns98.github.io` doc references.
 
 ## Gotchas / things that will bite you
 
-- **The "Workers Builds: vpm-widgets" check was vestigial; removed 2026-10-01.** A Worker named `vpm-widgets` on the *old* account (`e017b19d…`) was Git-connected to this repo. It redeployed the whole repo as static assets to `vpm-widgets.vpm-e01.workers.dev` on every PR push, but still reported a 0s failure to GitHub. Dashboard disconnect/delete attempts didn't take; `wrangler delete --name vpm-widgets` (logged in as `mhayes@vpm.org`, `CLOUDFLARE_ACCOUNT_ID=e017b19d…`) did. Don't recreate it by adding a wrangler config: the plan is a **Pages** project in the *new* account. The PBS proxy is the separate `pbs-api` Worker, untouched.
-- The two iframe widgets' READMEs also document a `postMessage` origin check (`e.origin !== "https://mhdesigns98.github.io"`) that's pasted directly into the **live Brightspot page**, outside any repo — grep can't find that. Confirm what's actually live in the CMS before any domain cutover.
-- Cloudflare Pages custom domains require the Pages project and the DNS zone to be in the *same* account — don't create the project in the old "VPM" account by habit.
-- `functions/api/pbs-episodes.js` first draft had an unvalidated `page-size` param (non-numeric → `NaN` forwarded to PBS) — Codex caught it, now fixed. Left as-is, matching the original Worker's behavior: no `show-id` format validation, wildcard CORS, `cache.put()` failures aren't caught, missing secrets fail as an opaque upstream error rather than a clear config error. Worth hardening later, not blocking.
-- Multi-model review notes: Codex ran clean. Gemini hit a 429 quota error, no review. Ollama (`qwen2.5-coder:7b`) described the code instead of critiquing it, twice, even after a sharper retry — treat as no usable review.
-- The `.claude/commands/*.md` files only exist on `team-onboarding` — merging `main` today does not include them yet.
+- **Share links are public and unauthenticated** (public repo on a personal GitHub account). Don't send embargoed or sensitive builds this way.
+- GitHub Pages serves `main` only: a widget on a branch or open PR gives "Preview not found". Pages caches for 10 minutes, so the page appends `?fresh=<timestamp>` to the preview URL.
+- The two iframe widgets (`pbs-show-playlist`, `virginia-home-grown-playlist`) depend on `mhdesigns98.github.io` URLs, and a `postMessage` origin check for it is pasted in the live Brightspot page, outside any repo. Confirm what's live in the CMS before any domain cutover.
+- Cloudflare Pages custom domains need the project and the DNS zone in the same account. The old "VPM" account (`e017b19d2e3e1827adbd6f5907d81aac`) is the wrong one for this.
+- The vestigial "Workers Builds: vpm-widgets" check was deleted 2026-10-01 (`wrangler delete`). Don't recreate it.
+- `functions/api/pbs-episodes.js` known gaps left as-is to match the old Worker: no `show-id` validation, wildcard CORS, uncaught `cache.put()` failures, opaque error on missing secrets.
+- `second-opinion` / save-progress background reviews use `timeout`, which isn't installed on macOS; Gemini silently never runs. Use `gtimeout` or a plain background job.
+- Local testing of the share page: `python3 -m http.server` from the repo root, then `/share/?w=<slug>`. The PBS widgets log ad/tracker network errors there; that's the player, not the share page.
 
 ## Key files
 
-- `~/Projects/vpm/vpm-widgets` — repo root; `team-onboarding` branch has the onboarding work (PR #2), `main` has the uncommitted `pbs-episodes.js` draft
-- `.claude/commands/{brief,new-widget,ship-widget,save-component}.md` — repo-relative slash commands (`team-onboarding` only)
-- `CONTRIBUTING.md`, `README.md` — onboarding docs (`team-onboarding`)
-- `functions/api/pbs-episodes.js` — Pages Function draft, uncommitted on `main`
-- `~/Projects/vpm/pbs-api/` — the standalone Worker this replaces; keep until cutover confirmed
-- `~/Projects/vpm/chartbeat-weekly/wrangler.jsonc`, `~/Projects/vpm/newsletter-signup/wrangler.jsonc` — the other two projects queued for the same migration
+- `share/index.html` — the share page (all logic inline)
+- `.claude/commands/share.md` — `/share` command; `.claude/commands/` also has brief, new-widget, ship-widget, save-component, critique
+- `functions/api/pbs-episodes.js` — Pages Function, on `main`, not deployed anywhere
+- `widgets/live-updates-rail/HANDOFF.md` — that widget's own state (parked pending newsroom feedback)
+- `CLAUDE.md`, `CONTRIBUTING.md`, `INDEX.md` — conventions, onboarding, widget index
 
 ## Session log
 
-- 2026-09-04: Filled the gap in an already-in-flight onboarding branch (PR #2): added the missing `.claude/commands/*.md` (rewritten to repo-relative paths, de-personalized `/brief`), a commands table + first-widget walkthrough in `CONTRIBUTING.md`, a prerequisites line in `README.md`. Pushed, opened PR #2. Found the live-production risk in the two iframe-embedded PBS widgets. Confirmed Cloudflare Pages custom domains need same-account DNS. Discovered `vpm.org`'s DNS moved to a different (Free-plan) Cloudflare account during the WordPress migration; confirmed Free plan isn't a blocker. Scoped the `pbs-api`/`newsletter-signup`/`chartbeat-weekly` migration; decided to fold `pbs-api` into this repo as a Pages Function instead of migrating it separately. Drafted `functions/api/pbs-episodes.js`, ran a multi-model review, fixed the one real bug it found.
+- 2026-10-01: Reviewed the share page with /critique (Codex) and web-team-review; shipped PR #16 (width kept in link, `&live=` badge, darker focus ring + copy announcement, fresh URL on "Open on its own", public-link warning). Reverted the Slack-post `/share` redesign. Earlier the same day: PRs #9–#15 built the share page and fixed its sizing, caching, and README parsing; removed the vestigial Workers Build.
+- 2026-09-04: Onboarding branch (PR #2, since merged), scoped Cloudflare migration, drafted `pbs-episodes.js`.
