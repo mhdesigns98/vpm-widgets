@@ -49,5 +49,12 @@ Optional parameters:
   the width the preview opens at. It renders at that true width, so the widget's own breakpoints
   apply, and scales down to fit smaller screens. Use it when the note is about one width.
 
+- `&live=<vpm.org URL>`: add it when the build is already published. The page then shows a "Live
+  on vpm.org" link instead of the "not live" badge. Without it, every preview is labelled not live.
+
+Share links are public: anyone with the URL can open them, and the repo's Pages site is on a
+personal GitHub account. Don't send embargoed, unpublished-news or otherwise sensitive builds this
+way; say so to the user if the content looks like that.
+
 Output the link on its own line, ready to paste, with a one-line summary of what the viewer will
 see. Don't open a PR or commit anything for this command.

@@ -7,6 +7,7 @@
     /vpm-widgets/share/?p=voter-guide-2026              a page build from vpm-pages
     &note=Looking+for+feedback+on+mobile                optional note shown above the preview
     &view=mobile                                        start at mobile, tablet, desktop (1280px) or wide (1920px)
+    &live=https://www.vpm.org/some-page                 already live: swaps the "not live" badge for a link
 
   Title and summary come from the folder's README.md (the H1 and first paragraph), so there's
   nothing extra to maintain. The preview is the folder's preview.html, else index.html, else
@@ -99,7 +100,10 @@ body {
   font: 600 14px var(--font-sans); color: var(--vpm-dark-blue); background: none; border: 0; padding: 0; cursor: pointer;
   text-decoration: underline; text-underline-offset: 3px;
 }
-:focus-visible { outline: 3px solid var(--vpm-light-blue); outline-offset: 2px; }
+:focus-visible { outline: 3px solid var(--vpm-dark-blue); outline-offset: 2px; }
+.sh-head :focus-visible { outline-color: var(--vpm-yellow); }
+.sh-chip a { color: inherit; text-underline-offset: 2px; }
+.sh-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 .sh-stage { padding: 0 16px 48px; }
 /* The iframe renders at the chosen width (real breakpoints apply) and is scaled down to fit
@@ -125,7 +129,7 @@ body {
     <h1 class="sh-title" id="sh-title">Loading…</h1>
     <p class="sh-summary" id="sh-summary"></p>
     <ul class="sh-meta" id="sh-meta">
-      <li class="sh-chip sh-chip--draft">Preview: not live on vpm.org</li>
+      <li class="sh-chip sh-chip--draft" id="sh-status">Preview: not live on vpm.org</li>
     </ul>
   </div>
 </header>
@@ -156,7 +160,8 @@ body {
 </main>
 
 <div class="sh-error" id="sh-error" hidden></div>
-<p class="sh-foot">Shared from the VPM Widget Lab. This is a work-in-progress preview, not the published page.</p>
+<p class="sh-sr" id="sh-announce" role="status"></p>
+<p class="sh-foot" id="sh-foot">Shared from the VPM Widget Lab. This is a work-in-progress preview, not the published page.</p>
 
 <script>
 (function () {
@@ -272,15 +277,30 @@ body {
     chip(kind === "page" ? "Full page build" : "Reusable widget: can appear on several pages");
     if (info.deploy) chip("Goes into: " + info.deploy);
 
+    // A build that's already published shouldn't be labelled "not live". http(s) only, so the
+    // parameter can't smuggle in a javascript: URL.
+    var live = params.get("live");
+    if (live && /^https?:\/\//i.test(live)) {
+      var status = $("sh-status");
+      status.className = "sh-chip";
+      status.textContent = "Live on vpm.org: ";
+      var a = document.createElement("a");
+      a.href = live; a.target = "_blank"; a.rel = "noopener"; a.textContent = "view the published version";
+      status.appendChild(a);
+      $("sh-foot").textContent = "Shared from the VPM Widget Lab. This preview shows the latest version, which may differ from what is published.";
+    }
+
     var note = params.get("note");
     if (note) { $("sh-note-text").textContent = note; $("sh-note").hidden = false; }
 
-    $("sh-open").href = previewUrl;
+    // GitHub Pages lets browsers and its CDN reuse a page for 10 minutes, so a just-merged change
+    // could show the old version. A one-off query string forces a fresh copy of the preview page,
+    // for the embedded frame and for "Open on its own" alike.
+    var freshUrl = previewUrl + (previewUrl.indexOf("?") === -1 ? "?" : "&") + "fresh=" + Date.now();
+    $("sh-open").href = freshUrl;
     $("sh-main").hidden = false;
     $("sh-frame").title = "Preview of " + info.title;
-    // GitHub Pages lets browsers and its CDN reuse a page for 10 minutes, so a just-merged change
-    // could show the old version. A one-off query string forces a fresh copy of the preview page.
-    $("sh-frame").src = previewUrl + (previewUrl.indexOf("?") === -1 ? "?" : "&") + "fresh=" + Date.now();
+    $("sh-frame").src = freshUrl;
     setView(params.get("view") || "desktop");
   }
 
@@ -304,16 +324,23 @@ body {
       : target + "px wide";
   }
 
-  function setView(view) {
+  function setView(view, fromClick) {
     if (!VIEWS[view]) view = "desktop";
     current = view;
+    // Keep the chosen width in the address, so "Copy link" and the browser's own copy both
+    // reopen at the width the sender was looking at.
+    if (fromClick) {
+      var u = new URL(location.href);
+      u.searchParams.set("view", view);
+      history.replaceState(null, "", u);
+    }
     document.querySelectorAll(".sh-devices button").forEach(function (b) {
       b.setAttribute("aria-pressed", String(b.dataset.view === view));
     });
     layout();
   }
   document.querySelectorAll(".sh-devices button").forEach(function (b) {
-    b.addEventListener("click", function () { setView(b.dataset.view); });
+    b.addEventListener("click", function () { setView(b.dataset.view, true); });
   });
   window.addEventListener("resize", layout);
 
@@ -376,9 +403,12 @@ body {
   // ── Copy link ──
   $("sh-copy").addEventListener("click", async function () {
     var btn = this;
-    try { await navigator.clipboard.writeText(location.href); btn.textContent = "Copied"; }
-    catch (e) { btn.textContent = "Copy failed. Use the address bar"; }
-    setTimeout(function () { btn.textContent = "Copy link"; }, 2000);
+    var msg;
+    try { await navigator.clipboard.writeText(location.href); msg = "Copied"; }
+    catch (e) { msg = "Copy failed. Use the address bar"; }
+    btn.textContent = msg;
+    $("sh-announce").textContent = msg === "Copied" ? "Link copied" : msg;
+    setTimeout(function () { btn.textContent = "Copy link"; $("sh-announce").textContent = ""; }, 2000);
   });
 
   load();
