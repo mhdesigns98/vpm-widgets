@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Related Stories</title>
+</head>
+<body>
+
+<!-- ===== Paste from here into the article template Code Block =====
+     Placement: 2nd item in the article aside, directly ABOVE the 300x600 ad.
+     The block takes the top half of the aside and the ad takes over the
+     sticky slot for the bottom half (see the hand-off rules in <style>). -->
+<aside class="vpm-rel" aria-label="Related stories" data-state="loading">
+  <h2 class="vpm-rel__heading">Related stories</h2>
+  <ul class="vpm-rel__list" role="list" aria-busy="true">
+    <li class="vpm-rel__skeleton" aria-hidden="true"></li>
+    <li class="vpm-rel__skeleton" aria-hidden="true"></li>
+    <li class="vpm-rel__skeleton" aria-hidden="true"></li>
+    <li class="vpm-rel__skeleton" aria-hidden="true"></li>
+  </ul>
+</aside>
+
+<style>
+  .vpm-rel {
+    /* Tokens copied from tokens.css (scoped, not :root) */
+    --vpm-rel-dark-blue: #003865;
+    --vpm-rel-blue-900: #002244;
+    --vpm-rel-black: #101820;
+    --vpm-rel-gray-600: #5A6470;
+    --vpm-rel-gray-200: #E5E7E9;
+    --vpm-rel-gray-100: #F2F3F4;
+    --vpm-rel-white: #FFFFFF;
+    --vpm-rel-font-sans: 'Public Sans', 'GT America', 'Helvetica Neue', Arial, sans-serif;
+    --vpm-rel-fs-body: 16px;
+    --vpm-rel-fs-caption: 12px;
+    --vpm-rel-fs-eyebrow: 13px;
+    --vpm-rel-lh-snug: 1.2;
+    --vpm-rel-lh-normal: 1.45;
+    --vpm-rel-tracking-eyebrow: 0.12em;
+    --vpm-rel-space-1: 4px;
+    --vpm-rel-space-2: 8px;
+    --vpm-rel-space-3: 12px;
+    --vpm-rel-space-4: 16px;
+    --vpm-rel-radius-sm: 2px;
+    --vpm-rel-ease: cubic-bezier(0.2, 0, 0, 1);
+    --vpm-rel-dur-fast: 120ms;
+    /* Matches the theme's sticky ad offset (article.css: top 20px). The site
+       header is static, so nothing else needs clearing. */
+    --vpm-rel-sticky-top: 20px;
+
+    box-sizing: border-box;
+    display: block;
+    max-width: 100%;
+    margin: 0;
+    padding: var(--vpm-rel-space-4) 0 0;
+    font-family: var(--vpm-rel-font-sans);
+    color: var(--vpm-rel-black);
+    background: var(--vpm-rel-white);
+    border-top: 3px solid var(--vpm-rel-dark-blue);
+    letter-spacing: normal;
+  }
+  .vpm-rel *, .vpm-rel *::before, .vpm-rel *::after { box-sizing: inherit; letter-spacing: inherit; }
+  .vpm-rel[data-state="hidden"] { display: none; }
+
+  /* Sticky only where the theme has a side column (>= 768px). */
+  @media (min-width: 768px) {
+    .vpm-rel {
+      position: sticky;
+      top: var(--vpm-rel-sticky-top);
+    }
+  }
+
+  .vpm-rel.vpm-rel .vpm-rel__heading {
+    margin: 0 0 var(--vpm-rel-space-2) !important;
+    padding: 0;
+    font-family: var(--vpm-rel-font-sans) !important;
+    font-size: var(--vpm-rel-fs-eyebrow) !important;
+    font-weight: 700;
+    line-height: var(--vpm-rel-lh-snug) !important;
+    letter-spacing: var(--vpm-rel-tracking-eyebrow) !important;
+    text-transform: uppercase;
+    color: var(--vpm-rel-dark-blue);
+  }
+
+  .vpm-rel .vpm-rel__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .vpm-rel .vpm-rel__item {
+    margin: 0;
+    padding: var(--vpm-rel-space-3) 0;
+    border-bottom: 1px solid var(--vpm-rel-gray-200);
+  }
+  .vpm-rel .vpm-rel__item:last-child { border-bottom: 0; }
+
+  .vpm-rel.vpm-rel .vpm-rel__link {
+    display: block;
+    font-family: var(--vpm-rel-font-sans);
+    font-size: var(--vpm-rel-fs-body) !important;
+    font-weight: 600;
+    line-height: var(--vpm-rel-lh-normal) !important;
+    color: var(--vpm-rel-dark-blue) !important;
+    text-decoration: underline !important;
+    text-decoration-thickness: 1px !important;
+    text-underline-offset: 3px;
+    border-radius: var(--vpm-rel-radius-sm);
+    transition: color var(--vpm-rel-dur-fast) var(--vpm-rel-ease);
+  }
+  .vpm-rel.vpm-rel .vpm-rel__link:hover {
+    color: var(--vpm-rel-blue-900) !important;
+    text-decoration-thickness: 2px !important;
+  }
+  .vpm-rel.vpm-rel .vpm-rel__link:focus-visible {
+    outline: 2px solid var(--vpm-rel-dark-blue);
+    outline-offset: 2px;
+  }
+
+  .vpm-rel.vpm-rel .vpm-rel__date {
+    display: block;
+    margin: var(--vpm-rel-space-1) 0 0 !important;
+    font-family: var(--vpm-rel-font-sans);
+    font-size: var(--vpm-rel-fs-caption) !important;
+    line-height: var(--vpm-rel-lh-normal) !important;
+    color: var(--vpm-rel-gray-600);
+  }
+
+  /* Loading placeholders: same rhythm as real items to avoid layout shift */
+  .vpm-rel .vpm-rel__skeleton {
+    height: 58px;
+    margin: var(--vpm-rel-space-3) 0;
+    background: var(--vpm-rel-gray-100);
+    border-radius: var(--vpm-rel-radius-sm);
+    animation: vpm-rel-pulse 1.4s var(--vpm-rel-ease) infinite alternate;
+  }
+  @keyframes vpm-rel-pulse { from { opacity: 1; } to { opacity: 0.55; } }
+
+  /* ---- Hand-off with the sticky ad on vpm.org article pages ----
+     The theme (wpp-base article.css) makes `.ArtP-aside-content > :nth-child(2)`
+     sticky and sizes that flex column to the full article height. Our block's
+     wrapper takes the 2nd slot, so instead:
+       1. our wrapper is NOT sticky, but is stretched to half the aside, and
+          the list sticks inside it, scrolling away at the halfway point;
+       2. the next widget (the ad) gets the theme's sticky rule for the rest.
+     These match nothing off vpm.org, so the block works anywhere else.
+     Not sticky at any width: on mobile the theme rule would slide our
+     wrapper down over the ad. */
+  .ArtP-aside .ArtP-aside-content > :has(.vpm-rel) { position: static; }
+  @media (min-width: 768px) {
+    .ArtP-aside .ArtP-aside-content > :has(.vpm-rel) {
+      flex: 0 0 50%;
+      display: flex;
+      flex-direction: column;
+      align-self: stretch;
+    }
+    .ArtP-aside .ArtP-aside-content > :has(.vpm-rel) :has(.vpm-rel) {
+      flex: 1 0 auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .ArtP-aside .ArtP-aside-content > :has(.vpm-rel) + * {
+      position: sticky;
+      top: 20px;
+      align-self: flex-start;
+    }
+    /* Nothing related to show: give the space back to the ad. */
+    .ArtP-aside .ArtP-aside-content > :has(.vpm-rel[data-state="hidden"]) {
+      flex: 0 0 auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vpm-rel, .vpm-rel * { transition: none !important; animation: none !important; }
+  }
+</style>
+
+<script>
+(function () {
+  var COUNT = 4;
+  // Tags that describe format, source or scope rather than topic, so they
+  // make poor matches. Audited 2026-10-06 from /wp/v2/tags?orderby=count.
+  // Show/series tags (Un-Wine'd, Focal Point...) are kept on purpose.
+  var IGNORE_TAGS = [
+    1058, 1057, 2114, 1055, // NPR News, Morning Edition, NPR, NPR Article
+    1054, 905, 1740,        // Article, VPM Daily Newscast, VPM News Video
+    881, 962, 930,          // National, Announcements, Human Interest
+    967, 921, 897,          // Special Reports (x2), Analysis
+    919, 966                // Pressroom, Local News Feature
+  ];
+  // Ranking: query the article's most specific tags, then score each
+  // candidate by how rare its shared tags are, so one "Abortion" (62 posts)
+  // match outranks "Elections" (801) + "Health" (1,049) together.
+  // weight = log(SPECIFICITY_BASE / tag count)^2; newest breaks ties.
+  var MAX_TAGS = 5;
+  var SPECIFICITY_BASE = 20000;
+  // Results are VPM's own stories only. NPR imports also live in standard
+  // posts (44k under /npr-news/). Most are in the "NPR News" category or
+  // carry the NPR News / Morning Edition / NPR Article tags; a few carry
+  // neither, so the /npr-news/ URL is checked as a last line.
+  var NPR_CATEGORY = 867;
+  var NPR_TAGS = [1058, 1057, 1055];
+  var NPR_PATH = /\/npr-news\//;
+  // Over-fetch so the URL filter still leaves COUNT stories.
+  var FETCH = COUNT * 2;
+  // Used only off WordPress; see currentItemURL().
+  var PREVIEW_POST_ID = 490549;
+
+  function findRoots() {
+    var roots = [];
+    var s = document.currentScript;
+    for (var el = s && s.previousElementSibling; el; el = el.previousElementSibling) {
+      if (el.classList.contains('vpm-rel')) { roots.push(el); break; }
+    }
+    // Fallback if currentScript isn't available: any copy not yet started.
+    if (!roots.length) roots = [].slice.call(document.querySelectorAll('.vpm-rel:not([data-vpm-rel-init])'));
+    return roots;
+  }
+
+  // WordPress advertises its own REST root and the current item's REST URL in
+  // <head>. Using them keeps staging on staging's API, and works for any post
+  // type (standard posts, npr_story_post, ...), not just /posts/.
+  function headLink(selector) {
+    var el = document.querySelector(selector);
+    return el && el.href;
+  }
+
+  var WP_ROOT = headLink('link[rel="https://api.w.org/"]');
+  var API = (WP_ROOT || 'https://www.vpm.org/wp-json/').replace(/\/?$/, '/') + 'wp/v2/';
+
+  // Off WordPress (Widget Lab preview, CMS harness) there's no current item,
+  // so preview against a real vpm.org article.
+  function currentItemURL() {
+    var self = headLink('link[rel="alternate"][type="application/json"]');
+    if (self && /\/wp\/v2\/[\w-]+\/\d+\/?$/.test(self)) return self;
+    var m = /(?:^|\s)postid-(\d+)(?:\s|$)/.exec(document.body.className);
+    if (m) return API + 'posts/' + m[1];
+    return WP_ROOT ? null : API + 'posts/' + PREVIEW_POST_ID;
+  }
+
+  function getJSON(url) {
+    return fetch(url, { credentials: 'omit' }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status + ' for ' + url);
+      return r.json();
+    });
+  }
+
+  var POST_FIELDS = '&categories_exclude=' + NPR_CATEGORY + '&tags_exclude=' + NPR_TAGS.join(',') +
+    '&_fields=id,title,link,date,tags';
+
+  function vpmOnly(list) {
+    return list.filter(function (p) { return !NPR_PATH.test(p.link || ''); });
+  }
+
+  function tagWeight(count) {
+    var idf = Math.log(SPECIFICITY_BASE / Math.max(count, 1));
+    return idf > 0 ? idf * idf : 0;
+  }
+
+  // Candidates from each tag's newest posts, merged and ranked by the summed
+  // weight of the tags they share with the article.
+  function rankedByTags(id, tags) {
+    if (!tags.length) return Promise.resolve([]);
+    return getJSON(API + 'tags?include=' + tags.join(',') + '&per_page=100&_fields=id,count').then(function (list) {
+      var weight = {};
+      list.forEach(function (t) { weight[t.id] = tagWeight(t.count); });
+      list.sort(function (a, b) { return a.count - b.count; });
+      var queried = list.slice(0, MAX_TAGS);
+
+      return Promise.all(queried.map(function (t) {
+        return getJSON(API + 'posts?per_page=' + FETCH + '&tags=' + t.id + '&exclude=' + id + POST_FIELDS)
+          .catch(function () { return []; }); // one bad tag query shouldn't sink the rest
+      })).then(function (lists) {
+        var seen = {};
+        var pool = [];
+        lists.forEach(function (posts) {
+          vpmOnly(posts).forEach(function (p) {
+            if (seen[p.id]) return;
+            seen[p.id] = true;
+            p.score = (p.tags || []).reduce(function (sum, t) { return sum + (weight[t] || 0); }, 0);
+            pool.push(p);
+          });
+        });
+        pool.sort(function (a, b) { return (b.score - a.score) || (a.date < b.date ? 1 : -1); });
+        return pool.slice(0, COUNT);
+      });
+    });
+  }
+
+  // Related results are always standard posts (VPM's own stories), whatever
+  // type the current page is.
+  function relatedPosts(itemURL) {
+    return getJSON(itemURL + '?_fields=id,tags,categories').then(function (post) {
+      var id = post.id;
+      var tags = (post.tags || []).filter(function (t) { return IGNORE_TAGS.indexOf(t) === -1; });
+      var cats = (post.categories || []).filter(function (c) { return c !== NPR_CATEGORY; });
+
+      return rankedByTags(id, tags).then(function (found) {
+        if (found.length >= COUNT || !cats.length) return found;
+        // Top up from the article's most specific (smallest) category.
+        return getJSON(API + 'categories?include=' + cats.join(',') + '&_fields=id,count').then(function (list) {
+          if (!list.length) return found;
+          list.sort(function (a, b) { return a.count - b.count; });
+          var exclude = [id].concat(found.map(function (p) { return p.id; }));
+          return getJSON(API + 'posts?per_page=' + FETCH + '&categories=' + list[0].id +
+            '&exclude=' + exclude.join(',') + POST_FIELDS).then(function (more) {
+            return found.concat(vpmOnly(more));
+          });
+        });
+      });
+    });
+  }
+
+  // title.rendered is HTML with entities (&#8217; etc.); parse inertly to text.
+  function toText(html) {
+    return new DOMParser().parseFromString(String(html || ''), 'text/html').body.textContent || '';
+  }
+
+  function safeLink(href) {
+    try {
+      var u = new URL(href);
+      return (u.protocol === 'https:' || u.protocol === 'http:') ? u.href : null;
+    } catch (e) { return null; }
+  }
+
+  var dateFmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+  function render(root, posts) {
+    var list = root.querySelector('.vpm-rel__list');
+    list.textContent = '';
+    posts.forEach(function (p) {
+      var href = safeLink(p.link);
+      var title = toText(p.title && p.title.rendered).trim();
+      if (!href || !title) return;
+
+      var li = document.createElement('li');
+      li.className = 'vpm-rel__item';
+      var a = document.createElement('a');
+      a.className = 'vpm-rel__link';
+      a.href = href;
+      a.textContent = title;
+      li.appendChild(a);
+
+      var d = new Date(p.date);
+      if (!isNaN(d)) {
+        var t = document.createElement('time');
+        t.className = 'vpm-rel__date';
+        t.dateTime = p.date;
+        t.textContent = dateFmt.format(d);
+        li.appendChild(t);
+      }
+      list.appendChild(li);
+    });
+    list.removeAttribute('aria-busy');
+    root.setAttribute('data-state', list.children.length ? 'ready' : 'hidden');
+  }
+
+  function init(root) {
+    if (root.hasAttribute('data-vpm-rel-init')) return;
+    root.setAttribute('data-vpm-rel-init', '');
+
+    var itemURL = currentItemURL();
+    if (!itemURL) { root.setAttribute('data-state', 'hidden'); return; }
+
+    relatedPosts(itemURL).then(function (posts) {
+      if (root.isConnected) render(root, posts.slice(0, COUNT));
+    }).catch(function (err) {
+      // No broken box for readers: hide, and leave a trail for whoever debugs it.
+      root.setAttribute('data-state', 'hidden');
+      if (window.console) console.warn('[vpm-rel] related stories unavailable:', err && err.message);
+    });
+  }
+
+  findRoots().forEach(init);
+})();
+</script>
+<!-- ===== End paste ===== -->
+
+</body>
+</html>
