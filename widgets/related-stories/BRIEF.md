@@ -30,7 +30,8 @@ WordPress Code Block inside the article widget template → **single-file** (one
 - Harness/preview runs off vpm.org, so the widget needs a mock data path for testing.
 
 ## Open questions
-- **Tag noise:** audit during build. Pull tag usage counts from the REST API, flag any too broad to be useful (very high post counts), and decide whether to ship a small ignore-list.
-- **Sticky viability:** confirm no ancestor of `ArtP-aside` has `overflow: hidden` and the aside column stretches the full article height — otherwise `position: sticky` silently fails. First thing to test on a live article.
-- Exact sticky `top` offset (site header height; Stream Player position).
+- ~~Tag noise~~ Resolved 2026-10-06: ignore-list of 5 format/source tags (see README).
+- ~~Sticky viability~~ Resolved 2026-10-06: aside stretches full height, no overflow. Theme already sticks the 2nd aside widget (the ad); Mark chose a hand-off: Related Stories sticky for the top half, ad for the bottom half.
+- ~~Sticky offset~~ 20px, matching the ad; site header is static.
 - Who has access to edit the article widget template, and is it the same template for all article types?
+- Ad hand-off gives the ad less sticky time than today; confirm with whoever owns ad revenue.
