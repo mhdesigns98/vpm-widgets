@@ -25,6 +25,7 @@ so a prefix collision across them is still a collision.
 | `video-promo-section/` | Two-column video promo — poster with optional LIVE bug, click-to-load Vimeo player, title + CTA links (namespace `vpm-ls`) |
 | `virginia-home-grown-playlist/` | Same as `pbs-show-playlist` but restyled to VHG's green sub-brand (leaf-pattern background, `--vhg-green`); replaces `pbs-show-playlist` on the live VHG show page (namespace `vpm-vhgp-`, WordPress iframe embed) |
 | `virginia-home-grown-signup/` | Virginia Home Grown newsletter signup embed (Full/Inline/Sidebar), POSTs directly to Mailchimp via JSONP with in-page confirmation — no backend |
+| `related-stories/` | Article-aside list of 4 recent stories sharing a tag with the current article (category fallback), sticky on desktop; fetches from the vpm.org WP REST API, post ID from the `postid-` body class (namespace `vpm-rel-`, WordPress Code Block in the article template) |
 | `vpm-banner/` | General-purpose promotional banner component |
 | `vpm-load-more/` | Collapsible content section with "Continue reading" expand button, for hiding most of a long-form section (e.g. an interview transcript) behind a click; content stays in the DOM for SEO/a11y (namespace `vpm-lm-`, WordPress Custom HTML block) |
 | `vpm-morning-monitor-popup/` | Morning Monitor signup popup — Shadow DOM modal with time / scroll / exit-intent triggers and localStorage cooldowns, POSTs to Mailchimp via JSONP (GTM-deployed, not a CMS block) |
