@@ -35,3 +35,4 @@ WordPress Code Block inside the article widget template → **single-file** (one
 - ~~Sticky offset~~ 20px, matching the ad; site header is static.
 - Who has access to edit the article widget template, and is it the same template for all article types?
 - Ad hand-off gives the ad less sticky time than today; confirm with whoever owns ad revenue.
+- **2026-10-06 direction change:** load time (~4s on staging, ~1.2s est. on prod) led Mark to hand production to WPP for a server-side theme build (spec: `WPP-SPEC.md`). A Cloudflare Worker cache was considered and dropped. The client-side widget stays as the staging prototype/reference.

@@ -15,4 +15,6 @@ Article-aside widget that lists the 4 VPM stories most related to the current ar
 - Off WordPress (Widget Lab preview, CMS harness) it previews against vpm.org post 490549 using live API data; vpm.org's API allows cross-origin reads.
 - Leave the WordPress widget's **Title** field empty; the block has its own "Related stories" heading.
 
+**Status (2026-10-06):** working prototype on Kinsta staging only. Because it's slow (6 uncached REST calls from the browser), the production version is going to WPP to build server-side in the `wpp-base` theme. See `WPP-SPEC.md`. This file stays as the behavior reference.
+
 **Namespace:** `vpm-rel-`
