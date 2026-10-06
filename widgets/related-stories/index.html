@@ -184,8 +184,16 @@
   // NPR News (44k posts), Morning Edition (6k), Article (1.5k),
   // VPM Daily Newscast (1.1k), NPR (0.9k).
   var IGNORE_TAGS = [1058, 1057, 1054, 905, 2114];
-  // Off vpm.org (Widget Lab preview, CMS harness) there's no post to read,
-  // so preview against a real article. Never used on vpm.org itself.
+  // Results are VPM's own stories only. NPR imports also live in standard
+  // posts (44k under /npr-news/). Most are in the "NPR News" category or
+  // carry the NPR News / Morning Edition / NPR Article tags; a few carry
+  // neither, so the /npr-news/ URL is checked as a last line.
+  var NPR_CATEGORY = 867;
+  var NPR_TAGS = [1058, 1057, 1055];
+  var NPR_PATH = /\/npr-news\//;
+  // Over-fetch so the URL filter still leaves COUNT stories.
+  var FETCH = COUNT * 2;
+  // Used only off WordPress; see currentItemURL().
   var PREVIEW_POST_ID = 490549;
 
   function findRoots() {
@@ -199,44 +207,63 @@
     return roots;
   }
 
-  function onVpm() { return /(^|\.)vpm\.org$/.test(location.hostname); }
-
-  function apiBase() {
-    return (onVpm() ? location.origin : 'https://www.vpm.org') + '/wp-json/wp/v2/';
+  // WordPress advertises its own REST root and the current item's REST URL in
+  // <head>. Using them keeps staging on staging's API, and works for any post
+  // type (standard posts, npr_story_post, ...), not just /posts/.
+  function headLink(selector) {
+    var el = document.querySelector(selector);
+    return el && el.href;
   }
 
-  function currentPostId() {
+  var WP_ROOT = headLink('link[rel="https://api.w.org/"]');
+  var API = (WP_ROOT || 'https://www.vpm.org/wp-json/').replace(/\/?$/, '/') + 'wp/v2/';
+
+  // Off WordPress (Widget Lab preview, CMS harness) there's no current item,
+  // so preview against a real vpm.org article.
+  function currentItemURL() {
+    var self = headLink('link[rel="alternate"][type="application/json"]');
+    if (self && /\/wp\/v2\/[\w-]+\/\d+\/?$/.test(self)) return self;
     var m = /(?:^|\s)postid-(\d+)(?:\s|$)/.exec(document.body.className);
-    if (m) return +m[1];
-    return onVpm() ? null : PREVIEW_POST_ID;
+    if (m) return API + 'posts/' + m[1];
+    return WP_ROOT ? null : API + 'posts/' + PREVIEW_POST_ID;
   }
 
-  function getJSON(path) {
-    return fetch(apiBase() + path, { credentials: 'omit' }).then(function (r) {
-      if (!r.ok) throw new Error('HTTP ' + r.status + ' for ' + path);
+  function getJSON(url) {
+    return fetch(url, { credentials: 'omit' }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status + ' for ' + url);
       return r.json();
     });
   }
 
-  var POST_FIELDS = '&_fields=id,title,link,date';
+  var POST_FIELDS = '&categories_exclude=' + NPR_CATEGORY + '&tags_exclude=' + NPR_TAGS.join(',') +
+    '&_fields=id,title,link,date';
 
-  function relatedPosts(id) {
-    return getJSON('posts/' + id + '?_fields=tags,categories').then(function (post) {
+  function vpmOnly(list) {
+    return list.filter(function (p) { return !NPR_PATH.test(p.link || ''); });
+  }
+
+  // Related results are always standard posts (VPM's own stories), whatever
+  // type the current page is.
+  function relatedPosts(itemURL) {
+    return getJSON(itemURL + '?_fields=id,tags,categories').then(function (post) {
+      var id = post.id;
       var tags = (post.tags || []).filter(function (t) { return IGNORE_TAGS.indexOf(t) === -1; });
-      var cats = post.categories || [];
+      var cats = (post.categories || []).filter(function (c) { return c !== NPR_CATEGORY; });
       var byTag = tags.length
-        ? getJSON('posts?per_page=' + COUNT + '&tags=' + tags.join(',') + '&exclude=' + id + POST_FIELDS)
+        ? getJSON(API + 'posts?per_page=' + FETCH + '&tags=' + tags.join(',') + '&exclude=' + id + POST_FIELDS)
         : Promise.resolve([]);
 
-      return byTag.then(function (found) {
+      return byTag.then(vpmOnly).then(function (found) {
+        found = found.slice(0, COUNT);
         if (found.length >= COUNT || !cats.length) return found;
         // Top up from the article's most specific (smallest) category.
-        return getJSON('categories?include=' + cats.join(',') + '&_fields=id,count').then(function (list) {
+        return getJSON(API + 'categories?include=' + cats.join(',') + '&_fields=id,count').then(function (list) {
+          if (!list.length) return found;
           list.sort(function (a, b) { return a.count - b.count; });
           var exclude = [id].concat(found.map(function (p) { return p.id; }));
-          return getJSON('posts?per_page=' + (COUNT - found.length) + '&categories=' + list[0].id +
+          return getJSON(API + 'posts?per_page=' + FETCH + '&categories=' + list[0].id +
             '&exclude=' + exclude.join(',') + POST_FIELDS).then(function (more) {
-            return found.concat(more);
+            return found.concat(vpmOnly(more));
           });
         });
       });
@@ -291,10 +318,10 @@
     if (root.hasAttribute('data-vpm-rel-init')) return;
     root.setAttribute('data-vpm-rel-init', '');
 
-    var id = currentPostId();
-    if (!id) { root.setAttribute('data-state', 'hidden'); return; }
+    var itemURL = currentItemURL();
+    if (!itemURL) { root.setAttribute('data-state', 'hidden'); return; }
 
-    relatedPosts(id).then(function (posts) {
+    relatedPosts(itemURL).then(function (posts) {
       if (root.isConnected) render(root, posts.slice(0, COUNT));
     }).catch(function (err) {
       // No broken box for readers: hide, and leave a trail for whoever debugs it.
