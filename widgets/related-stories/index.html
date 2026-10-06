@@ -179,11 +179,22 @@
 <script>
 (function () {
   var COUNT = 4;
-  // Format/source tags that match almost everything, so they say nothing
-  // about topic. Audited 2026-10-06 from /wp/v2/tags?orderby=count:
-  // NPR News (44k posts), Morning Edition (6k), Article (1.5k),
-  // VPM Daily Newscast (1.1k), NPR (0.9k).
-  var IGNORE_TAGS = [1058, 1057, 1054, 905, 2114];
+  // Tags that describe format, source or scope rather than topic, so they
+  // make poor matches. Audited 2026-10-06 from /wp/v2/tags?orderby=count.
+  // Show/series tags (Un-Wine'd, Focal Point...) are kept on purpose.
+  var IGNORE_TAGS = [
+    1058, 1057, 2114, 1055, // NPR News, Morning Edition, NPR, NPR Article
+    1054, 905, 1740,        // Article, VPM Daily Newscast, VPM News Video
+    881, 962, 930,          // National, Announcements, Human Interest
+    967, 921, 897,          // Special Reports (x2), Analysis
+    919, 966                // Pressroom, Local News Feature
+  ];
+  // Ranking: query the article's most specific tags, then score each
+  // candidate by how rare its shared tags are, so one "Abortion" (62 posts)
+  // match outranks "Elections" (801) + "Health" (1,049) together.
+  // weight = log(SPECIFICITY_BASE / tag count)^2; newest breaks ties.
+  var MAX_TAGS = 5;
+  var SPECIFICITY_BASE = 20000;
   // Results are VPM's own stories only. NPR imports also live in standard
   // posts (44k under /npr-news/). Most are in the "NPR News" category or
   // carry the NPR News / Morning Edition / NPR Article tags; a few carry
@@ -236,10 +247,45 @@
   }
 
   var POST_FIELDS = '&categories_exclude=' + NPR_CATEGORY + '&tags_exclude=' + NPR_TAGS.join(',') +
-    '&_fields=id,title,link,date';
+    '&_fields=id,title,link,date,tags';
 
   function vpmOnly(list) {
     return list.filter(function (p) { return !NPR_PATH.test(p.link || ''); });
+  }
+
+  function tagWeight(count) {
+    var idf = Math.log(SPECIFICITY_BASE / Math.max(count, 1));
+    return idf > 0 ? idf * idf : 0;
+  }
+
+  // Candidates from each tag's newest posts, merged and ranked by the summed
+  // weight of the tags they share with the article.
+  function rankedByTags(id, tags) {
+    if (!tags.length) return Promise.resolve([]);
+    return getJSON(API + 'tags?include=' + tags.join(',') + '&per_page=100&_fields=id,count').then(function (list) {
+      var weight = {};
+      list.forEach(function (t) { weight[t.id] = tagWeight(t.count); });
+      list.sort(function (a, b) { return a.count - b.count; });
+      var queried = list.slice(0, MAX_TAGS);
+
+      return Promise.all(queried.map(function (t) {
+        return getJSON(API + 'posts?per_page=' + FETCH + '&tags=' + t.id + '&exclude=' + id + POST_FIELDS)
+          .catch(function () { return []; }); // one bad tag query shouldn't sink the rest
+      })).then(function (lists) {
+        var seen = {};
+        var pool = [];
+        lists.forEach(function (posts) {
+          vpmOnly(posts).forEach(function (p) {
+            if (seen[p.id]) return;
+            seen[p.id] = true;
+            p.score = (p.tags || []).reduce(function (sum, t) { return sum + (weight[t] || 0); }, 0);
+            pool.push(p);
+          });
+        });
+        pool.sort(function (a, b) { return (b.score - a.score) || (a.date < b.date ? 1 : -1); });
+        return pool.slice(0, COUNT);
+      });
+    });
   }
 
   // Related results are always standard posts (VPM's own stories), whatever
@@ -249,12 +295,8 @@
       var id = post.id;
       var tags = (post.tags || []).filter(function (t) { return IGNORE_TAGS.indexOf(t) === -1; });
       var cats = (post.categories || []).filter(function (c) { return c !== NPR_CATEGORY; });
-      var byTag = tags.length
-        ? getJSON(API + 'posts?per_page=' + FETCH + '&tags=' + tags.join(',') + '&exclude=' + id + POST_FIELDS)
-        : Promise.resolve([]);
 
-      return byTag.then(vpmOnly).then(function (found) {
-        found = found.slice(0, COUNT);
+      return rankedByTags(id, tags).then(function (found) {
         if (found.length >= COUNT || !cats.length) return found;
         // Top up from the article's most specific (smallest) category.
         return getJSON(API + 'categories?include=' + cats.join(',') + '&_fields=id,count').then(function (list) {

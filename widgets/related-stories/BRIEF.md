@@ -16,7 +16,7 @@ A reader lands on an elections article from social or search. Halfway down, they
 - Passes `/ship-widget`
 
 ## Out of scope (v1)
-- Ranking by number of shared tags (any shared tag, newest first)
+- ~~Ranking by shared tags~~ Pulled into v1 on 2026-10-06 after staging showed broad tags (Elections, Health) crowding out on-topic stories. Ranked by tag specificity.
 - Personalization or "most read" signals
 - Sticky behavior on mobile (stacks below the article, static)
 - Click tracking beyond existing site analytics
