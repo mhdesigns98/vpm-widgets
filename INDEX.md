@@ -34,6 +34,7 @@ so a prefix collision across them is still a collision.
 | `watch-page-header/` | Channel selector header for the Watch live page |
 | `weekly-update-signup/` | Weekly Update newsletter signup embed (Full/Inline/Sidebar), POSTs directly to Mailchimp via JSONP with in-page confirmation — no backend |
 | `youtube-shorts-embed/` | VPM News Shorts carousel embed |
+| `youtube-shorts-row/` | Horizontal row of 9:16 VPM News Shorts cards (click to play in place, one at a time) with a button to the YouTube Shorts playlist; hand-edited `SHORTS` array (namespace `vpm-shortsrow-`, single-file embed) |
 
 ## Moved to vpm-pages
 
