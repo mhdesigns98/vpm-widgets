@@ -1,0 +1,203 @@
+<!--
+  VPM News Shorts, horizontal row
+  Side-by-side 9:16 Shorts in a scrolling row. Click a card to play it in place.
+  Edit SHORTS (the video list) and the copy/links in the markup. Playlist feed for refreshing IDs:
+  https://www.youtube.com/feeds/videos.xml?playlist_id=PLDpD9qYyo0hJUThx2RuUgE_TH9LN05ua3
+  Namespace: vpm-shortsrow-
+-->
+<section class="vpm-shortsrow" data-vpm-shortsrow aria-label="VPM News Shorts">
+<style>
+  .vpm-shortsrow {
+    --vpm-shortsrow-navy: #003865;
+    --vpm-shortsrow-blue: #6CACE4;
+    --vpm-shortsrow-yellow: #E0E721;
+    --vpm-shortsrow-black: #101820;
+    --vpm-shortsrow-white: #FFFFFF;
+    --vpm-shortsrow-card: 200px;
+    box-sizing: border-box;
+    min-width: 0; max-width: 100%; contain: inline-size; /* keep the scrolling row from widening a grid/flex column */
+    background: var(--vpm-shortsrow-navy);
+    color: var(--vpm-shortsrow-white);
+    font-family: 'Public Sans', 'GT America', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.45;
+    padding: 40px 0 36px;
+    text-align: left;
+  }
+  .vpm-shortsrow *, .vpm-shortsrow *::before, .vpm-shortsrow *::after { box-sizing: border-box; }
+  .vpm-shortsrow__inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .vpm-shortsrow__head {
+    display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+    gap: 16px 24px; margin-bottom: 24px;
+  }
+  .vpm-shortsrow__eyebrow {
+    display: block; margin: 0 0 8px; font-size: 13px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--vpm-shortsrow-yellow);
+  }
+  .vpm-shortsrow .vpm-shortsrow__title {
+    margin: 0; padding: 0; color: var(--vpm-shortsrow-white);
+    font-family: 'IBM Plex Sans Condensed', 'Oswald', 'GT America Condensed', 'Arial Narrow', sans-serif;
+    font-size: clamp(28px, 3.2vw, 40px); font-weight: 700; line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  .vpm-shortsrow .vpm-shortsrow__btn {
+    display: inline-block; padding: 12px 22px; border: 2px solid var(--vpm-shortsrow-yellow);
+    border-radius: 4px; background: var(--vpm-shortsrow-yellow); color: var(--vpm-shortsrow-navy) !important; /* !important: hosts force link colors */
+    font-size: 13px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+    text-decoration: none !important; transition: background 0.2s, border-color 0.2s;
+  }
+  .vpm-shortsrow .vpm-shortsrow__btn:hover { background: #F2F5A2; border-color: #F2F5A2; color: var(--vpm-shortsrow-navy) !important; }
+  .vpm-shortsrow .vpm-shortsrow__btn:focus-visible,
+  .vpm-shortsrow__card:focus-visible,
+  .vpm-shortsrow__nav:focus-visible { outline: 3px solid var(--vpm-shortsrow-blue); outline-offset: 3px; }
+
+  .vpm-shortsrow__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  .vpm-shortsrow__rail { position: relative; }
+  .vpm-shortsrow__track {
+    display: flex; gap: 16px; margin: 0; padding: 4px 24px 12px; list-style: none;
+    overflow-x: auto; scroll-snap-type: x proximity; scroll-padding-inline: 24px;
+    scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.35) transparent;
+  }
+  @media (min-width: 1248px) { .vpm-shortsrow__track { padding-inline: calc((100% - 1200px) / 2 + 24px); scroll-padding-inline: calc((100% - 1200px) / 2 + 24px); } }
+  .vpm-shortsrow__item { flex: 0 0 var(--vpm-shortsrow-card); margin: 0; padding: 0; scroll-snap-align: start; }
+  .vpm-shortsrow__card {
+    position: relative; display: block; width: 100%; aspect-ratio: 9 / 16; margin: 0; padding: 0;
+    border: 0; border-radius: 8px; overflow: hidden; background: var(--vpm-shortsrow-black);
+    color: var(--vpm-shortsrow-white); cursor: pointer; text-align: left; font: inherit;
+  }
+  .vpm-shortsrow .vpm-shortsrow__thumb { border: 0; margin: 0; max-width: none; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+  .vpm-shortsrow__card:hover .vpm-shortsrow__thumb { transform: scale(1.03); }
+  .vpm-shortsrow__scrim {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(16,24,32,0.92) 0%, rgba(16,24,32,0) 55%);
+  }
+  .vpm-shortsrow__play {
+    position: absolute; top: 12px; right: 12px; width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(16,24,32,0.7); display: flex; align-items: center; justify-content: center;
+  }
+  .vpm-shortsrow__play::before {
+    content: ''; margin-left: 3px; border-style: solid; border-width: 7px 0 7px 11px;
+    border-color: transparent transparent transparent var(--vpm-shortsrow-white);
+  }
+  .vpm-shortsrow__label {
+    position: absolute; left: 12px; right: 12px; bottom: 12px; font-size: 14px; font-weight: 700; line-height: 1.25;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .vpm-shortsrow__frame { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+
+  .vpm-shortsrow__nav {
+    display: none; position: absolute; top: calc(50% - 22px); width: 44px; height: 44px; margin: 0; padding: 0;
+    border: 0; border-radius: 50%; background: var(--vpm-shortsrow-white); color: var(--vpm-shortsrow-navy);
+    font-size: 22px; line-height: 1; cursor: pointer; z-index: 2; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .vpm-shortsrow__nav[hidden] { display: none; }
+  .vpm-shortsrow__nav--prev { left: 12px; }
+  .vpm-shortsrow__nav--next { right: 12px; }
+  @media (hover: hover) and (min-width: 700px) { .vpm-shortsrow__nav:not([hidden]) { display: block; } }
+
+  @media (max-width: 480px) {
+    .vpm-shortsrow { --vpm-shortsrow-card: 160px; padding: 32px 0 28px; }
+    .vpm-shortsrow__inner { padding: 0 16px; }
+    .vpm-shortsrow__track { padding-inline: 16px; scroll-padding-inline: 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vpm-shortsrow *, .vpm-shortsrow *::before { transition: none !important; }
+    .vpm-shortsrow__track { scroll-behavior: auto; }
+  }
+</style>
+
+  <div class="vpm-shortsrow__inner">
+    <div class="vpm-shortsrow__head">
+      <div>
+        <span class="vpm-shortsrow__eyebrow">Shorts</span>
+        <h2 class="vpm-shortsrow__title">VPM on YouTube</h2>
+      </div>
+      <a class="vpm-shortsrow__btn" href="https://www.youtube.com/playlist?list=PLDpD9qYyo0hJUThx2RuUgE_TH9LN05ua3" target="_blank" rel="noopener">Watch all Shorts on YouTube<span class="vpm-shortsrow__sr"> (opens in a new tab)</span></a>
+    </div>
+  </div>
+
+  <div class="vpm-shortsrow__rail">
+    <button type="button" class="vpm-shortsrow__nav vpm-shortsrow__nav--prev" aria-label="Previous Shorts" hidden>&#8249;</button>
+    <ul class="vpm-shortsrow__track" role="list"></ul>
+    <button type="button" class="vpm-shortsrow__nav vpm-shortsrow__nav--next" aria-label="Next Shorts">&#8250;</button>
+  </div>
+</section>
+<script>
+(function () {
+  // Videos shown, in order. id = YouTube video ID, title = card label.
+  var SHORTS = [
+    { id: "01qLFMHoR5w", title: "Patches, The 40-pound cat" },
+    { id: "vckPzAZDOB0", title: "Fun Questions at Shalom Farms" },
+    { id: "8pzYza2R0rg", title: "Great American Recipe Host Alejandra Ramos Says What Food She Thinks Best Embody Each Judge" },
+    { id: "x82CNyD_lIc", title: "How To Change Hydrangea Color" },
+    { id: "GEnU1bVC0Ds", title: "The Great American Recipe Contestants: Do They Prefer Hot or Cold Beverages?" },
+    { id: "b7X_mto-bKY", title: "Chocolate Cake Recipe" },
+    { id: "L3NGd2B53-k", title: "How to Make Gardening Easier for People with Limited Mobility" },
+    { id: "tsjM1QNc44g", title: "How to Keep Your Flowers Fresh for Longer" },
+    { id: "dv8AgcAHjl0", title: "Gardening For Kids" },
+    { id: "U6TQCrAo07o", title: "Do you Know the State Foods?" }
+  ];
+
+  var roots = document.querySelectorAll('[data-vpm-shortsrow]:not([data-vpm-shortsrow-init])');
+  Array.prototype.forEach.call(roots, init);
+
+  function init(root) {
+    root.setAttribute('data-vpm-shortsrow-init', '');
+    var track = root.querySelector('.vpm-shortsrow__track');
+    var prev = root.querySelector('.vpm-shortsrow__nav--prev');
+    var next = root.querySelector('.vpm-shortsrow__nav--next');
+    if (!track) return;
+
+    SHORTS.forEach(function (v) {
+      var li = document.createElement('li');
+      li.className = 'vpm-shortsrow__item';
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'vpm-shortsrow__card';
+      btn.setAttribute('aria-label', 'Play: ' + v.title);
+      btn.innerHTML =
+        '<img class="vpm-shortsrow__thumb" alt="" loading="lazy" src="https://i.ytimg.com/vi/' + v.id + '/hq720.jpg">' +
+        '<span class="vpm-shortsrow__scrim"></span><span class="vpm-shortsrow__play" aria-hidden="true"></span>' +
+        '<span class="vpm-shortsrow__label"></span>';
+      btn.querySelector('.vpm-shortsrow__label').textContent = v.title;
+      btn.addEventListener('click', function () { play(li, btn, v); });
+      li.appendChild(btn);
+      track.appendChild(li);
+    });
+
+    function play(li, btn, v) {
+      var open = track.querySelector('.vpm-shortsrow__frame');
+      if (open) { // one player at a time: restore the previous card
+        var oldLi = open.parentNode.parentNode;
+        oldLi._restore && oldLi._restore();
+      }
+      var wrap = btn.parentNode;
+      var frame = document.createElement('iframe');
+      frame.className = 'vpm-shortsrow__frame';
+      frame.src = 'https://www.youtube.com/embed/' + v.id + '?autoplay=1&playsinline=1&rel=0';
+      frame.title = v.title;
+      frame.allow = 'autoplay; encrypted-media; picture-in-picture; web-share';
+      frame.allowFullscreen = true;
+      var holder = document.createElement('div');
+      holder.style.cssText = 'position:relative;width:100%;aspect-ratio:9/16;border-radius:8px;overflow:hidden;background:#101820';
+      holder.appendChild(frame);
+      li._restore = function () { wrap.replaceChild(btn, holder); li._restore = null; };
+      wrap.replaceChild(holder, btn);
+      frame.focus();
+    }
+
+    function step() { return (track.querySelector('.vpm-shortsrow__item') || {}).offsetWidth * 2 + 32 || 400; }
+    function sync() {
+      var max = track.scrollWidth - track.clientWidth - 2;
+      prev.hidden = track.scrollLeft <= 2;
+      next.hidden = track.scrollLeft >= max;
+    }
+    prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
+    track.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync);
+    sync();
+  }
+})();
+</script>
