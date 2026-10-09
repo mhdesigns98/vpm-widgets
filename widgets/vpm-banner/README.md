@@ -1,6 +1,6 @@
 # VPM Banner
 
-Dismissible sitewide alert banner. Dark-blue strip with a message and a yellow CTA button. Closing it hides the banner for 3 days via `localStorage`.
+Dismissible sitewide alert banner. Dark-blue strip with a message and a yellow CTA button. Closing it hides the banner for 3 days via `localStorage`. Safe to place more than once on a page: it has no ids and each copy initializes on its own.
 
 ## Files
 
@@ -13,8 +13,8 @@ Dismissible sitewide alert banner. Dark-blue strip with a message and a yellow C
 
 ## Customizing
 
-- **Message:** Edit the `<p>` text inside `.vpm-banner-content`
+- **Message:** Edit the `<p>` text inside `.vpm-banner__content`
 - **CTA label:** Change "Donate now" in the `<a>` tag
-- **CTA URL:** Update the `href` on the `.vpm-button` link
+- **CTA URL:** Update the `href` on the `.vpm-banner__button` link
 - **Dismiss duration:** Change `hideDurationDays` in `js.js` (default: 3 days)
 - **Reset dismiss:** Clear `vpmBannerDismissed` from `localStorage` in DevTools to show the banner again during testing

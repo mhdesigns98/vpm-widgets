@@ -5,82 +5,149 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VPM Banner — Preview</title>
   <style>
-    body { margin: 0; background: #f0f2f4; font-family: system-ui, sans-serif; padding: 2rem 0; }
+    body { margin: 0; background: #f0f2f4; font-family: system-ui, sans-serif; padding: 32px 0; }
     .preview-label {
       text-align: center;
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: #888;
-      margin-bottom: 1rem;
+      color: #6b6b6b;
+      margin-bottom: 16px;
     }
-
-    /* Banner wrapper */
+    /* Tokens copied from tokens.css (scoped, not linked) */
     .vpm-banner {
-      background-color: #0c234b;
-      color: white;
-      padding: 1rem;
-      font-family: system-ui, sans-serif;
+      --vpm-dark-blue: #003865;
+      --vpm-yellow: #E0E721;
+      --vpm-yellow-200: #F2F5A2;
+      --vpm-black: #101820;
+      --vpm-white: #FFFFFF;
+      --vpm-light-blue: #6CACE4;
+      --font-sans: 'Public Sans', 'GT America', 'Helvetica Neue', Arial, sans-serif;
+      --radius-md: 4px;
+      --shadow-xs: 0 1px 2px rgba(16, 24, 32, 0.06);
+      --dur-base: 200ms;
+      --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+      box-sizing: border-box;
       position: relative;
       z-index: 40;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-
       display: flex;
       align-items: center;
       justify-content: center;
       min-height: 96px;
+      margin: 0 0 32px;
+      padding: 16px 56px;
+      background-color: var(--vpm-dark-blue);
+      color: var(--vpm-white);
+      font-family: var(--font-sans);
+      box-shadow: var(--shadow-xs);
     }
 
-    .vpm-banner-content {
-      text-align: center;
-      max-width: 960px;
+    .vpm-banner *,
+    .vpm-banner *::before,
+    .vpm-banner *::after {
+      box-sizing: border-box;
+    }
+
+    .vpm-banner[hidden] {
+      display: none !important;
+    }
+
+    .vpm-banner .vpm-banner__content {
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      align-items: center;
+      gap: 12px;
+      max-width: 960px;
+      text-align: center;
     }
 
-    .vpm-banner-content p {
+    .vpm-banner .vpm-banner__text {
       margin: 0;
-      font-size: 1rem;
+      color: var(--vpm-white);
+      font-family: var(--font-sans);
+      font-size: 16px;
       line-height: 1.6;
     }
 
-    .vpm-button {
+    /* !important on the link: host themes commonly force color/underline on every `a` */
+    .vpm-banner a.vpm-banner__button {
       display: inline-block;
-      background-color: #fcd34d;
-      color: #0c234b;
-      font-weight: bold;
-      text-decoration: none;
-      padding: 0.5rem 1.25rem;
-      font-size: 1rem;
-      border-radius: 0.375rem;
-      transition: background-color 0.2s ease, color 0.2s ease;
+      padding: 8px 20px;
+      border-radius: var(--radius-md);
+      background-color: var(--vpm-yellow);
+      color: var(--vpm-black) !important;
+      font-family: var(--font-sans);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.4;
+      text-decoration: none !important;
+      transition: background-color var(--dur-base) var(--ease-standard);
     }
-    .vpm-button:hover { background-color: #fde68a; color: #000; }
 
-    .vpm-close {
-      position: absolute;
-      right: 1rem;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 1.5rem;
-      font-weight: bold;
-      background: none;
-      border: none;
-      color: white;
-      cursor: pointer;
-      line-height: 1;
-      transition: color 0.2s ease;
+    .vpm-banner a.vpm-banner__button:hover {
+      background-color: var(--vpm-yellow-200);
+      color: var(--vpm-black) !important;
     }
-    .vpm-close:hover { color: #fde68a; }
+
+    .vpm-banner .vpm-banner__close {
+      position: absolute;
+      top: 50%;
+      right: 8px;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      border-radius: var(--radius-md);
+      background: none;
+      color: var(--vpm-white);
+      font-family: var(--font-sans);
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1;
+      cursor: pointer;
+      transition: color var(--dur-base) var(--ease-standard);
+    }
+
+    .vpm-banner .vpm-banner__close:hover {
+      color: var(--vpm-yellow-200);
+    }
+
+    .vpm-banner .vpm-banner__close:focus-visible,
+    .vpm-banner a.vpm-banner__button:focus-visible {
+      outline: 3px solid var(--vpm-light-blue);
+      outline-offset: 2px;
+    }
+
+    .vpm-banner .vpm-banner__sr {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
 
     @media (min-width: 640px) {
-      .vpm-banner-content {
+      .vpm-banner .vpm-banner__content {
         flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
+        gap: 16px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .vpm-banner a.vpm-banner__button,
+      .vpm-banner .vpm-banner__close {
+        transition: none;
       }
     }
   </style>
@@ -89,47 +156,60 @@
 
 <p class="preview-label">VPM Banner — dismisses for 3 days via localStorage</p>
 
-<div id="vpm-banner" class="vpm-banner">
-  <button id="vpm-banner-close" class="vpm-close" aria-label="Close banner">×</button>
-  <div class="vpm-banner-content">
-    <p>
+<div class="vpm-banner" role="region" aria-label="Support VPM">
+  <button type="button" class="vpm-banner__close" aria-label="Close banner">×</button>
+  <div class="vpm-banner__content">
+    <p class="vpm-banner__text">
       <strong>Federal funding was revoked.</strong> Your support keeps VPM strong.
     </p>
     <a
       href="https://www.pledgecart.org/?campaign=5D84E787-B482-4661-A488-C988BEEB0773"
-      class="vpm-button"
+      class="vpm-banner__button"
       target="_blank"
       rel="noopener noreferrer"
     >
-      Donate now
+      Donate now<span class="vpm-banner__sr"> (opens in a new tab)</span>
     </a>
   </div>
 </div>
 
 <script>
 (function () {
-  var banner = document.getElementById("vpm-banner");
-  var closeBtn = document.getElementById("vpm-banner-close");
   var bannerKey = "vpmBannerDismissed";
   var hideDurationDays = 3;
 
-  if (!banner || !closeBtn) return;
-
-  var dismissedAt = localStorage.getItem(bannerKey);
-  if (dismissedAt) {
-    var now = new Date().getTime();
-    var expiry = parseInt(dismissedAt) + hideDurationDays * 24 * 60 * 60 * 1000;
-    if (now < expiry) {
-      banner.style.display = "none";
+  function dismissedRecently() {
+    try {
+      var dismissedAt = parseInt(localStorage.getItem(bannerKey), 10);
+      return !isNaN(dismissedAt) &&
+        new Date().getTime() < dismissedAt + hideDurationDays * 24 * 60 * 60 * 1000;
+    } catch (e) {
+      return false;
     }
   }
 
-  closeBtn.addEventListener("click", function () {
-    banner.style.display = "none";
-    localStorage.setItem(bannerKey, new Date().getTime());
-  });
+  function init(banner) {
+    if (banner.getAttribute("data-vpm-banner-ready")) return;
+    banner.setAttribute("data-vpm-banner-ready", "1");
+
+    if (dismissedRecently()) {
+      banner.hidden = true;
+      return;
+    }
+
+    var closeBtn = banner.querySelector(".vpm-banner__close");
+    if (!closeBtn) return;
+    closeBtn.addEventListener("click", function () {
+      banner.hidden = true;
+      try {
+        localStorage.setItem(bannerKey, String(new Date().getTime()));
+      } catch (e) {}
+    });
+  }
+
+  var banners = document.querySelectorAll(".vpm-banner");
+  for (var i = 0; i < banners.length; i++) init(banners[i]);
 })();
 </script>
-
 </body>
 </html>
