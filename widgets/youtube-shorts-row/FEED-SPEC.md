@@ -9,7 +9,7 @@ The row always shows the playlist's latest videos with no edit or re-paste.
 YouTube's playlist feed (`https://www.youtube.com/feeds/videos.xml?playlist_id=PLDpD9qYyo0hJUThx2RuUgE_TH9LN05ua3`) sends no CORS headers, so the browser can't read it from vpm.org. It needs a server in between. The feed needs no API key, but it returns only the latest ~15 videos.
 
 ## Proposed shape
-1. **Cloudflare Worker** (same pattern as the `pbs-show-playlist` proxy): fetches the feed, parses it, returns JSON `[{ id, title }]`, with CORS locked to `https://www.vpm.org`, like `chartbeat-weekly`.
+1. **Cloudflare Worker** (same pattern as the `pbs-show-playlist` proxy): fetches the feed, parses it, returns JSON `[{ id, title }]`, with CORS locked to `https://www.vpm.org` (vpm.org is the only place it will run for now), like `chartbeat-weekly`.
 2. **Caching:** cache the response at the edge for about 10 minutes. This keeps YouTube traffic low and the widget fast.
 3. **Widget:** on load, fetch the Worker URL. On success, replace the `SHORTS` array with the response. On failure or timeout, keep the hard-coded `SHORTS` array as a fallback, so the row never renders empty.
 4. **Dead videos:** the existing thumbnail check already drops deleted or private videos.
@@ -18,7 +18,7 @@ YouTube's playlist feed (`https://www.youtube.com/feeds/videos.xml?playlist_id=P
 - ~~Cloudflare account~~: confirmed, VPM owns it. Still open: where Workers get deployed (the `pbs-show-playlist` Worker is the template).
 - A Worker route/domain and an agreed CORS origin list. The preview site and staging also need allowing.
 - ~~Playlist public~~: confirmed, it stays public.
-- Decide whether editors need to hide a video (an exclusion list in the Worker, or unlist it on YouTube).
+- ~~Hiding a video~~: decided, no exclusion list. YouTube managers unlist or remove it on YouTube's side.
 - Localhost CORS gap: the harness can't hit the live Worker (see `harness/README.md`, "Known gap"), so the success path needs a manual or mock test.
 
 ## Risks
