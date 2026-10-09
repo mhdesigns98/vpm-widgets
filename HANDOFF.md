@@ -22,6 +22,9 @@
 
 ## Gotchas / things that will bite you
 
+- The old `mhdesigns98.github.io/vpm-pages/...` previews still serve from the old repo; new links must use `.../vpm-widgets/pages/<slug>/`. Old branches `claude/rich-text-sections-acf` (on origin) and `claude/consolidate-page` (local only) hold unmerged work.
+- `vpm-banner` fails the widget checklist (duplicate ids, hard-coded hex, generic `vpm-button`/`vpm-close` classes); found in the post-merge audit, not fixed.
+
 - **Share links are public and unauthenticated** (public repo on a personal GitHub account). Don't send embargoed or sensitive builds this way.
 - GitHub Pages serves `main` only: a widget on a branch or open PR gives "Preview not found". Pages caches for 10 minutes, so the page appends `?fresh=<timestamp>` to the preview URL.
 - The two iframe widgets (`pbs-show-playlist`, `virginia-home-grown-playlist`) depend on `mhdesigns98.github.io` URLs, and a `postMessage` origin check for it is pasted in the live Brightspot page, outside any repo. Confirm what's live in the CMS before any domain cutover.
@@ -34,10 +37,11 @@
 ## Key files
 
 - `share/index.html` — the share page (all logic inline)
-- `.claude/commands/share.md` — `/share` command; `.claude/commands/` also has brief, new-widget, ship-widget, save-component, critique
+- `.claude/commands/share.md` — `/share` command; `.claude/commands/` also has brief, new-widget, ship-widget, save-component, new-page, ship-page, consolidate-page, critique
 - `functions/api/pbs-episodes.js` — Pages Function, on `main`, not deployed anywhere
 - `widgets/live-updates-rail/HANDOFF.md` — that widget's own state (parked pending newsroom feedback)
-- `CLAUDE.md`, `CONTRIBUTING.md`, `INDEX.md` — conventions, onboarding, widget index
+- `CLAUDE.md`, `CONTRIBUTING.md`, `INDEX.md` — conventions, onboarding, widget and page index
+- `pages/` — full page builds, merged in from the old `vpm-pages` repo on 2026-10-09 (PR #25) with history; the old repo is left up and unarchived
 - `hosted/signup-forms/` — builds iframe pages from the three signup widgets for a Cloudflare Pages project (not deployed); widgets stay the source
 - `.claude/settings.json` + `.claude/hooks/check-index.sh` — shared hooks: INDEX/README drift warning on Stop, block edits to `tokens.css`
 - `.claude/agents/harness-runner.md` — read-only subagent that runs a widget through the CMS harness (needs the chrome-devtools MCP)
