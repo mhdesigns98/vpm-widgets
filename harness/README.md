@@ -43,4 +43,4 @@ a page-eval script instead. Not yet worth a generic harness mock/toggle for a si
 — revisit once more widgets share this pattern and the right mock shape (a fake endpoint? a
 `?mock=` query param the widget checks for?) is clearer.
 
-Toolbar buttons let you re-run any scenario manually. Run `/ship-widget SLUG` in Claude Code for the full guided pre-deploy check.
+Toolbar buttons let you re-run any scenario manually. Run `/ship SLUG` in Claude Code for the full guided pre-deploy check.

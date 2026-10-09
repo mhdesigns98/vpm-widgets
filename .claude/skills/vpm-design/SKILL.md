@@ -67,7 +67,7 @@ A widget is used on more than one page; a page build on exactly one. Both live i
 (`widgets/` and `pages/`) and are indexed in `INDEX.md` with a **Used on** column. Page builds
 follow the page checklist in `CLAUDE.md`.
 
-`/ship-widget` (blocks) and `/ship-page` (pages) are the only pre-CMS gates. A generic
+`/ship` (aliases `/ship-widget`, `/ship-page`) is the only pre-CMS gate. A generic
 accessibility review does not substitute for either. Every widget must pass the CMS test
 harness (`harness/harness.html?widget=SLUG`) before deploying — see `harness/README.md`.
 
