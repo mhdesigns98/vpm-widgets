@@ -1,0 +1,23 @@
+{
+  "morning-monitor": {
+    "key": "mm",
+    "name": "Morning Monitor",
+    "legacySlug": "morning-monitor-signup",
+    "mailchimp": { "u": "6fe41b3055c403be08140ec95", "id": "26497cf3ad" },
+    "googleFonts": "IBM+Plex+Sans+Condensed:wght@500;600;700"
+  },
+  "weekly-update": {
+    "key": "wu",
+    "name": "Weekly Update",
+    "legacySlug": "weekly-update-signup",
+    "mailchimp": { "u": "6fe41b3055c403be08140ec95", "id": "e675e6efd6" },
+    "googleFonts": "Oswald:wght@500;600;700"
+  },
+  "virginia-home-grown": {
+    "key": "vhg",
+    "name": "Virginia Home Grown",
+    "legacySlug": "virginia-home-grown-signup",
+    "mailchimp": { "u": "6fe41b3055c403be08140ec95", "id": "05042abff2" },
+    "googleFonts": "Oswald:wght@500;600;700"
+  }
+}

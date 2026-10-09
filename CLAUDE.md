@@ -62,6 +62,15 @@ Some widgets (e.g. `vpm-banner`) use a split-file format for WordPress ACF:
     js.js            ← ACF JS field
 ```
 
+### Generated widgets (pilot)
+
+`newsletter-signup-embed` is the one widget with a build step: shared `src/` (form engine, base
+CSS, per-brand theme and layouts) → `node build.mjs` → one split-file set per brand. Its output is
+still plain, self-contained paste files, so CMS rules are unchanged; only the *source* is shared.
+Never hand-edit its generated files (each says so at the top); edit `src/` and rebuild, and commit
+both. It's a pilot for merging look-alike widgets. Don't add a build step to another widget
+without asking.
+
 ## Design Tokens
 `tokens.css` in the repo root is the **canonical VPM design token file** for widgets and pages (migrated from the deprecated vpm-component-library). There is deliberately only one — two token files would drift, and the drift would stay invisible until two pages disagreed about VPM blue. Widgets and pages must stay self-contained, so copy the custom properties you need into the widget's scoped `<style>` — never link the file externally. No hard-coded hex values.
 
