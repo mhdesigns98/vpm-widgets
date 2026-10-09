@@ -60,6 +60,8 @@
       align-items: center;
       gap: 12px;
       max-width: 960px;
+      margin: 0;
+      padding: 0;
       text-align: center;
     }
 
@@ -73,8 +75,11 @@
 
     /* !important on the link: host themes commonly force color/underline on every `a` */
     .vpm-banner a.vpm-banner__button {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
       padding: 8px 20px;
+      white-space: nowrap;
       border-radius: var(--radius-md);
       background-color: var(--vpm-yellow);
       color: var(--vpm-black) !important;
@@ -157,7 +162,6 @@
 <p class="preview-label">VPM Banner — dismisses for 3 days via localStorage</p>
 
 <div class="vpm-banner" role="region" aria-label="Support VPM">
-  <button type="button" class="vpm-banner__close" aria-label="Close banner">×</button>
   <div class="vpm-banner__content">
     <p class="vpm-banner__text">
       <strong>Federal funding was revoked.</strong> Your support keeps VPM strong.
@@ -171,6 +175,7 @@
       Donate now<span class="vpm-banner__sr"> (opens in a new tab)</span>
     </a>
   </div>
+  <button type="button" class="vpm-banner__close" aria-label="Close banner">×</button>
 </div>
 
 <script>

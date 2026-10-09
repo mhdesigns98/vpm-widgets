@@ -114,17 +114,19 @@ the Page items exist because a page owns its URL. Don't move items between them 
       `span`). Host `!important` element rules can't be beaten by a class selector, so the exception is
       a **link**: a CTA must hold its color and underline against a host `a { … !important }` rule
       (use `!important` on the link's color and text-decoration only)
-- [ ] No focus loss or overlap with the sticky Stream Player; nothing important in the bottom ~90px
+- [ ] Decorative separators and inline `em`/`span` set their own `font-size`, and inner wrapper `div`s reset `margin`/`padding`, so ordinary host rules on those elements don't move them
+- [ ] No focus loss or overlap with the sticky Stream Player; nothing important in the bottom ~90px. Fails are a focus trap or content hidden behind the player; the player grabbing focus is the simulation, not a defect
 - [ ] Degrades gracefully at 320px: no horizontal scroll, no clipped text, tap targets ≥44px
-- [ ] Keyboard accessible (real Tab order matches visual order, no traps), visible focus, WCAG 2.1 AA
-      contrast in every state including hover and focus, `prefers-reduced-motion` respected
+- [ ] Keyboard accessible (DOM order matches visual order, including absolutely positioned controls such
+      as a close button; no traps), visible focus, WCAG 2.1 AA contrast in every state including hover
+      and focus (focus outlines need 3:1 against the colors next to them), `prefers-reduced-motion` respected
 - [ ] Semantics: images have real `alt` (or `alt=""` if decorative), iframes have `title`, headings
       don't skip levels. Don't require an `<h1>`: a block pasted into a CMS page sits under that
       page's own title
 - [ ] No hard-coded hex (values inlined from the root `tokens.css`, never a second token file);
       `px` not `rem` for font-size and spacing
-- [ ] No console errors (ignore the dev server's `favicon.ico` 404 and the Quirks Mode notice a
-      doctype-less fragment always gets)
+- [ ] No console errors (ignore the dev server's `favicon.ico` 404, the Quirks Mode notice a
+      doctype-less fragment always gets, and warnings from third-party embeds such as the PBS player)
 - [ ] Dated content is current: no past event dates, "TBD" live URLs, or expired deadlines
 
 ### Widget only (run in the CMS harness: `/harness/harness.html?widget=[name]`, see `/harness/README.md`)
@@ -148,7 +150,7 @@ Not on the Page list, because they're block-in-CMS artifacts: duplicate-`id` col
 a block twice, detach/re-inject double-init, and click-interceptor overlay timing. If a page build
 ever faces one, add it to the Page list with a note explaining why. `scroll-margin-top` is also not
 required: vpm.org's header isn't sticky and the theme's `pjax.js` ignores `#` links (see
-`~/Projects/research/vpm-theme-anchor-links.md`).
+`~/Projects/research/vpm-theme-anchor-links.md`). Older page READMEs still prescribe it; it's harmless.
 
 ## Repo Consolidation
 When asked to consolidate, audit existing repos and Gists, identify widget/embed code, and migrate it into the structure above. Archive source repos after migration.
