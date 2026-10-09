@@ -4,7 +4,7 @@
   never seen the Widget Lab knows what they're looking at.
 
     /vpm-widgets/share/?w=feed-rail                     a widget from this repo
-    /vpm-widgets/share/?p=voter-guide-2026              a page build from vpm-pages
+    /vpm-widgets/share/?p=voter-guide-2026              a page build
     &note=Looking+for+feedback+on+mobile                optional note shown above the preview
     &view=mobile                                        start at mobile, tablet, desktop (1280px) or wide (1920px)
     &live=https://www.vpm.org/some-page                 already live: swaps the "not live" badge for a link
@@ -180,14 +180,14 @@ body {
     $("sh-error").hidden = false;
   }
 
-  // Only plain folder names, so a link can't point anywhere outside the two repos.
+  // Only plain folder names, so a link can't point anywhere outside widgets/ and pages/.
   if (!/^[a-z0-9][a-z0-9-]*$/.test(slug)) {
     fail("This link is missing the name of what to preview. It should end in <code>?w=widget-name</code> or <code>?p=page-name</code>.");
     return;
   }
 
   var base = kind === "page"
-    ? new URL("../../vpm-pages/pages/" + slug + "/", location.href)
+    ? new URL("../pages/" + slug + "/", location.href)
     : new URL("../widgets/" + slug + "/", location.href);
 
   function stripMd(s) {

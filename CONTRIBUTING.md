@@ -43,7 +43,7 @@ find-and-replace, not an archaeology project.
 
 ## Changing a token or the brand guide
 
-Tokens are shared by every widget, every page in `vpm-pages`, and the AI context in
+Tokens are shared by every widget, every page build, and the AI context in
 `.claude/skills/vpm-design/`. A change here propagates everywhere, so:
 
 - **Open a PR, never push to `main`.** Say what's changing, why, and who asked for it.

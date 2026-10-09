@@ -1,11 +1,11 @@
 ---
-description: Create a widget in the Widget Lab — scaffold a new one, or file one already built in this conversation. Usage: /new-widget <name> | /new-widget --from <file.html> — creates the folder, single-file or ACF split-file structure, namespaced CSS prefix, inlined brand tokens, README stub, and Widgets Index entry.
+description: Create a widget in the Widget Lab — scaffold a new one, or file one already built in this conversation. Usage: /new-widget <name> | /new-widget --from <file.html> — creates the folder, single-file or ACF split-file structure, namespaced CSS prefix, inlined brand tokens, README stub, and `INDEX.md` entry.
 effort: low
 ---
 
 Create a widget in this repo following its conventions (read `CLAUDE.md` in the repo root first).
 
-**First, confirm it's actually a widget.** A widget is used on more than one page; a page build is used on exactly one. If this will only ever appear on one URL, it belongs in the `vpm-pages` repo instead — that repo has its own `/new-page` command. The test is reuse, not size.
+**First, confirm it's actually a widget.** A widget is used on more than one page; a page build is used on exactly one. If this will only ever appear on one URL, it's a page build: use `/new-page` (it goes under `pages/`). The test is reuse, not size.
 
 **This command is the single owner of widget naming, folder creation, and index registration.** Nothing else should re-derive that logic — `/save-component` is an alias that lands here.
 
@@ -54,11 +54,11 @@ State the assumption in one line rather than asking a full question. `/brief` al
 ## Step 3 — Slug and namespace
 
 - Slug: lowercase, hyphenated (e.g. `vpm-spring-drive-banner`).
-- CSS namespace prefix: short, derived from the name (e.g. `vpm-sdb-`). Check it doesn't collide with an existing widget here, or with a page build in a sibling `vpm-pages` checkout if one exists on this machine — both repos share one namespace convention:
+- CSS namespace prefix: short, derived from the name (e.g. `vpm-sdb-`). Check it doesn't collide with an existing widget or page build:
   ```bash
-  grep -rl "PREFIX" widgets/ ../vpm-pages/pages/ 2>/dev/null
+  grep -rl "PREFIX" widgets/ pages/
   ```
-  and check `INDEX.md` in both repos if both are present locally. If `vpm-pages` isn't cloned alongside this repo, just check this repo's `INDEX.md` and note the cross-repo check wasn't possible.
+  and check `INDEX.md`.
 
 In import mode, if the source's classes aren't namespaced, namespace them now — don't file un-namespaced markup and leave it for `/ship-widget` to catch.
 
@@ -87,7 +87,7 @@ Conventions checklist (from `CLAUDE.md` in the repo root), verified before commi
 
 ## Step 5 — Register
 
-Add a row for the widget to the table in `INDEX.md` (repo root), keeping the existing ordering.
+Add a row for the widget to the table in `INDEX.md` (repo root), as `widgets/SLUG/` with Shape `widget` and Used on `multiple`, keeping the existing ordering.
 
 Also add it to the `WIDGETS` array in `index.html` (repo root) so it shows in the gallery — slug, name, desc, `preview`, and one `files` entry per copyable file.
 

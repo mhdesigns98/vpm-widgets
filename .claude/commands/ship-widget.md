@@ -13,7 +13,7 @@ Verify a widget is ready to paste into a real CMS. This exists because widgets t
 
 `$ARGUMENTS` is a widget slug under `widgets/` in the repo root. If empty, infer from the current working directory; if ambiguous, list the widgets and ask.
 
-If the slug is a full page build in the `vpm-pages` repo, that repo has its own `/ship-page` command — this harness simulates a block dropped into a hostile host page, which is not what a page build faces, so the two checklists are separate on purpose.
+If the slug is a full page build under `pages/`, use `/ship-page` — this harness simulates a block dropped into a hostile host page, which is not what a page build faces, so the two checklists are separate on purpose.
 
 ## Step 2 — Run it in the CMS harness
 

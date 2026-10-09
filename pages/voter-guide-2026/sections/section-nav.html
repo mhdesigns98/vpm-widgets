@@ -1,0 +1,106 @@
+<!--
+  VPM Voter Guide — Sticky Section Nav (ACF)
+  =========================================
+  Paste order: this fragment goes directly AFTER the live "Featured Stories"
+  Article List block and BEFORE Video Coverage. See acf-sections/README.md.
+
+  Why it's its own Code Block: in the original design the sticky nav sits
+  below the Featured Stories cards. Those cards are now a live CMS Article
+  List block, and a Code Block can't contain one — so the nav had to move out
+  of header-section.html into its own fragment on the far side of the split.
+
+  Requires the shared <style> block from header-section.html (or
+  _shared-styles.html) to be present on the page — this fragment carries no
+  CSS of its own.
+
+  The links target #video / #elections / #regional / #faq by id;
+  those ids must exist on the final page (they live in the Video Coverage,
+  Key Virginia Elections, Key Regional Races and Voting FAQ fragments)
+  for the links and the scrollspy highlight to work. Remove a <li> if you drop
+  that section.
+-->
+<div class="vpm-vg">
+  <nav class="vg-section-nav" aria-label="Page sections">
+    <div class="vg-wrap vg-section-nav-inner">
+      <span class="vg-section-nav-label">On this page</span>
+      <ul>
+        <li><a href="#video">Video Coverage</a></li>
+        <li><a href="#elections">Key Elections</a></li>
+        <li><a href="#regional">Regional Races</a></li>
+        <li><a href="#faq">Voting FAQ</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<script>
+  // Scrollspy: highlight the current section in the on-page nav
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll('.vg-section-nav a'));
+    if (!links.length) return;
+
+    // Smooth scroll on click. This replaces a global `html{scroll-behavior:smooth}`
+    // rule, which would have leaked out of the fragment and changed scrolling for
+    // the whole site.
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+    links.forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var target = document.getElementById(a.getAttribute('href').slice(1));
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({
+          behavior: (reduce && reduce.matches) ? 'auto' : 'smooth',
+          block: 'start'
+        });
+      });
+    });
+
+    if (!('IntersectionObserver' in window)) return;
+
+    // The sections this nav points at live in LATER Code Blocks, so they don't
+    // exist yet while this inline script runs. Wait for the full page before
+    // wiring the scrollspy, or it observes nothing and never highlights.
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initScrollspy);
+    } else {
+      initScrollspy();
+    }
+
+    function initScrollspy() {
+    var byId = {};
+    links.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
+
+    var sections = links
+      .map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); })
+      .filter(Boolean);
+
+    var visible = {};
+    function setActive() {
+      var current = null;
+      // pick the LAST section overlapping the activation band: when one section
+      // is scrolling out just as the next arrives, the incoming one is the one
+      // the reader is now in
+      sections.forEach(function (s) {
+        if (visible[s.id] && (!current || s.offsetTop > current.offsetTop)) current = s;
+      });
+      links.forEach(function (a) { a.classList.remove('vg-active'); });
+      if (current && byId[current.id]) byId[current.id].classList.add('vg-active');
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      // require real overlap: a section whose bottom edge exactly meets the top
+      // of the activation band reports isIntersecting with zero height, which
+      // would keep the previous section highlighted
+      entries.forEach(function (e) {
+        visible[e.target.id] = e.isIntersecting && e.intersectionRect.height > 0;
+      });
+      setActive();
+    // thin activation band just below the sticky nav (48px tall + a little
+    // slack), so the highlighted link is the section actually under the nav
+    }, { rootMargin: '-64px 0px -70% 0px', threshold: 0 });
+
+    sections.forEach(function (s) { observer.observe(s); });
+    setActive();
+    }
+  })();
+</script>

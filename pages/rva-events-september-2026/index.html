@@ -1,0 +1,169 @@
+<!-- VPM: RVA Events — September 2026
+     Deploy target: WordPress Divi Code Block (paste this whole file's contents into one Code module)
+     Namespace: vpm-evts- -->
+<div class="vpm-evts">
+  <style>
+    .vpm-evts {
+      --vpm-dark-blue:  #003865;
+      --vpm-light-blue: #6CACE4;
+      --vpm-yellow:     #E0E721;
+      --vpm-black:      #101820;
+      --vpm-gray-600:   #5A6470;
+      --vpm-gray-300:   #D1D3D4;
+      --vpm-gray-100:   #F2F3F4;
+      --vpm-white:      #FFFFFF;
+
+      --font-sans:    'Public Sans', 'GT America', 'Helvetica Neue', Arial, sans-serif;
+      --font-display: 'IBM Plex Sans Condensed', 'Oswald', 'GT America Condensed', 'Arial Narrow', sans-serif;
+
+      max-width: 720px;
+      margin: 0 auto;
+      font-family: var(--font-sans);
+      color: var(--vpm-black);
+      box-sizing: border-box;
+    }
+    .vpm-evts *, .vpm-evts *::before, .vpm-evts *::after {
+      box-sizing: border-box;
+    }
+    .vpm-evts__heading {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 1.2;
+      color: var(--vpm-dark-blue);
+      margin: 0 0 16px;
+    }
+    .vpm-evts__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .vpm-evts__item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 20px;
+      background: var(--vpm-white);
+      border: 1px solid var(--vpm-gray-300);
+      border-left: 4px solid var(--vpm-light-blue);
+      border-radius: 4px;
+    }
+    .vpm-evts__date {
+      flex: 0 0 auto;
+      width: 76px;
+      text-align: center;
+      font-family: var(--font-display);
+      color: var(--vpm-dark-blue);
+    }
+    .vpm-evts__date-month {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--vpm-gray-600);
+    }
+    .vpm-evts__date-day {
+      display: block;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+    .vpm-evts__body {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    .vpm-evts__time {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--vpm-gray-600);
+      margin-bottom: 4px;
+    }
+    .vpm-evts__title {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin: 0 0 8px;
+    }
+    .vpm-evts__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--vpm-dark-blue);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .vpm-evts__link:hover,
+    .vpm-evts__link:focus-visible {
+      color: var(--vpm-light-blue);
+    }
+    .vpm-evts__link:focus-visible {
+      outline: 2px solid var(--vpm-dark-blue);
+      outline-offset: 2px;
+    }
+    .vpm-evts__link-arrow {
+      transition: transform 0.15s ease;
+    }
+    .vpm-evts__link:hover .vpm-evts__link-arrow {
+      transform: translateX(2px);
+    }
+
+    @media (max-width: 420px) {
+      .vpm-evts__item {
+        padding: 16px;
+        gap: 12px;
+      }
+      .vpm-evts__date {
+        width: 56px;
+      }
+      .vpm-evts__date-day {
+        font-size: 26px;
+      }
+      .vpm-evts__title {
+        font-size: 16px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .vpm-evts__link-arrow {
+        transition: none;
+      }
+    }
+  </style>
+
+  <h2 class="vpm-evts__heading">Upcoming Events</h2>
+  <ul class="vpm-evts__list">
+    <li class="vpm-evts__item">
+      <div class="vpm-evts__date" aria-hidden="true">
+        <span class="vpm-evts__date-month">Sep</span>
+        <span class="vpm-evts__date-day">4</span>
+      </div>
+      <div class="vpm-evts__body">
+        <span class="vpm-evts__time">Friday, September 4 &middot; 5&ndash;8 p.m.</span>
+        <h3 class="vpm-evts__title">RVA First Fridays</h3>
+        <a class="vpm-evts__link" href="https://www.vpm.org/announcements/2026-08-20/join-vpm-for-the-return-of-rva-first-fridays-sept-4-on-broad-st/">
+          Learn more <span class="vpm-evts__link-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </li>
+    <li class="vpm-evts__item">
+      <div class="vpm-evts__date" aria-hidden="true">
+        <span class="vpm-evts__date-month">Sep</span>
+        <span class="vpm-evts__date-day">19</span>
+      </div>
+      <div class="vpm-evts__body">
+        <span class="vpm-evts__time">Saturday, September 19 &middot; 2:30&ndash;8 p.m.</span>
+        <h3 class="vpm-evts__title">Broad New Day</h3>
+        <a class="vpm-evts__link" href="https://www.eventbrite.com/e/broad-new-day-tickets-1993692279276">
+          Get tickets <span class="vpm-evts__link-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </li>
+  </ul>
+</div>

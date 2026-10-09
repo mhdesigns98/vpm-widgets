@@ -405,19 +405,18 @@ body {
     <div class="wl-header__left">
       <p class="wl-header__eyebrow">VPM News</p>
       <h1 class="wl-header__title">Widget Lab</h1>
-      <p class="wl-header__sub">Reusable HTML blocks and web components — the ones used on more than one page. Preview, copy code, or share a link.</p>
+      <p class="wl-header__sub">Reusable blocks (used on more than one page) and full page builds (one page each) for vpm.org. Preview, copy code, or share a link.</p>
     </div>
     <div class="wl-header__count-block" aria-hidden="true">
       <span class="wl-header__count-num" id="js-big-count">—</span>
-      <span class="wl-header__count-label">Widgets</span>
+      <span class="wl-header__count-label">Builds</span>
     </div>
   </div>
 </header>
 
 <nav class="wl-nav" aria-label="Site sections">
   <div class="wl-nav__inner">
-    <a class="wl-nav__tab is-active" href="index.html" aria-current="page">Widgets</a>
-    <a class="wl-nav__tab" href="https://mhdesigns98.github.io/vpm-pages/">Pages</a>
+    <a class="wl-nav__tab is-active" href="index.html" aria-current="page">Widgets &amp; Pages</a>
     <a class="wl-nav__tab" href="brand-guide.html">Brand Guide</a>
   </div>
 </nav>
@@ -621,13 +620,122 @@ body {
     },
   ];
 
-  function widgetPath(slug, file) {
-    return 'widgets/' + slug + '/' + file;
+  const PAGES = [
+    {
+      slug: 'annual-report-2025',
+      name: 'Annual Report 2025',
+      desc: 'Interactive 2025 Annual Report page for VPM.',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+    {
+      slug: 'basics-virginia',
+      name: 'The Basics Virginia',
+      desc: 'Five-section page composite for The Basics Virginia™ — hero, principles grid, in action, the movement, nature trail CTA — as one Brightspot HtmlModule drop-in. Web components, px-not-rem sizing.',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+    {
+      slug: 'ecp-partners-team',
+      name: 'ECP Partners & Team',
+      desc: 'Early Childhood Education partners & team page — Brightspot-optimized.',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+    {
+      slug: 'elections-2026-primary',
+      name: 'Elections 2026 Primary',
+      desc: '2026 Virginia Primary page — dates, video carousel, article links. WordPress ACF split-file format.',
+      preview: 'preview.html',
+      files: [
+        { label: 'HTML', file: 'html.html' },
+        { label: 'CSS',  file: 'css.css'  },
+        { label: 'JS',   file: 'js.js'    },
+      ],
+    },
+    {
+      slug: 'how-federal-funding-works',
+      name: 'How Federal Funding Works',
+      desc: 'Explainer section on the impact page illustrating how federal funding flows to public media.',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+    {
+      slug: 'impact-report-2025',
+      name: 'Impact Report 2025',
+      desc: '2025 Impact Report page as deployed — hero, sticky jump links, awards counters. Two HTML fields; see the README for paste order.',
+      preview: 'preview.html',
+      files: [
+        { label: 'Hero + Nav', file: 'html-hero-nav.html' },
+        { label: 'Awards',     file: 'html-awards.html'   },
+        { label: 'CSS',        file: 'css.css'            },
+        { label: 'JS',         file: 'js.js'              },
+      ],
+    },
+    {
+      slug: 'neighborhood-history',
+      name: 'Neighborhood History',
+      desc: 'The story of the site of VPM’s 15 E. Broad St. headquarters — captioned photo timeline (1886–2026), full-bleed map band, closing lockup and newsletter signup — as one Code Block under the native hero. Check the README’s “Do not paste until” list first.',
+      preview: 'preview.html',
+      files: [
+        { label: 'HTML', file: 'html.html' },
+        { label: 'CSS',  file: 'css.css'  },
+        { label: 'JS',   file: 'js.js'    },
+      ],
+    },
+    {
+      slug: 'raised-razed',
+      name: 'Raised/Razed',
+      desc: 'Raised/Razed documentary page (Vinegar Hill, Charlottesville) — consolidated from 32 stacked WordPress sections into one Code Block. Built against the live vpm.org page; see the README.',
+      preview: 'preview.html',
+      files: [
+        { label: 'HTML', file: 'html.html' },
+        { label: 'CSS',  file: 'css.css'  },
+      ],
+    },
+    {
+      slug: 'rva-events-september-2026',
+      name: 'RVA Events — September 2026',
+      desc: 'Upcoming Events list block for a VPM subsite page — RVA First Fridays and Broad New Day, with date, time, title, and outbound link.',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+    {
+      slug: 'voter-guide-2026',
+      name: 'Voter Guide 2026',
+      desc: 'Seven sections pasted separately into the WordPress editor — header, section nav, key Virginia elections, key regional races, video coverage, voting FAQ, newsletter signup. Read PASTE-ORDER.md before pasting.',
+      preview: 'demo/index.html',
+      files: [
+        { label: 'Paste order', file: 'sections/PASTE-ORDER.md'              },
+        { label: 'Header',      file: 'sections/header-section.html'         },
+        { label: 'Nav',         file: 'sections/section-nav.html'            },
+        { label: 'VA races',    file: 'sections/key-virginia-elections.html' },
+        { label: 'Regional',    file: 'sections/key-regional-races.html'     },
+        { label: 'Video',       file: 'sections/video-coverage.html'         },
+        { label: 'FAQ',         file: 'sections/voting-faq.html'             },
+        { label: 'Signup',      file: 'sections/newsletter-signup.html'      },
+      ],
+    },
+    {
+      slug: 'unwined-episode',
+      name: "Un-Wine'd Episode",
+      desc: 'Un-Wine’d page upper section — "Stream more" lockup, jump links, PBS viral player, episode write-up, sponsor row. Uses the links-with-map widget pasted directly below it.',
+      preview: 'preview.html',
+      files: [
+        { label: 'HTML',      file: 'html.html'        },
+        { label: 'CSS',       file: 'css.css'          },
+        { label: 'Page CSS',  file: 'unwined-page.css' },
+      ],
+    },
+  ];
+
+  function widgetPath(slug, file, dir) {
+    return (dir || 'widgets') + '/' + slug + '/' + file;
   }
 
   function shareUrl(w) {
     const base = window.location.href.split('#')[0].replace(/\/?$/, '/');
-    return base + widgetPath(w.slug, w.preview);
+    return base + widgetPath(w.slug, w.preview, w.dir);
   }
 
   function flash(btn, msg) {
@@ -643,9 +751,9 @@ body {
     }, 1800);
   }
 
-  async function copyFile(slug, file, btn) {
+  async function copyFile(slug, file, btn, dir) {
     try {
-      const res = await fetch(widgetPath(slug, file));
+      const res = await fetch(widgetPath(slug, file, dir));
       if (!res.ok) throw new Error(res.status);
       await navigator.clipboard.writeText(await res.text());
       flash(btn, 'Copied!');
@@ -677,7 +785,7 @@ body {
 
     const previewLink = document.createElement('a');
     previewLink.className = 'wl-card__preview-link';
-    previewLink.href = widgetPath(w.slug, w.preview);
+    previewLink.href = widgetPath(w.slug, w.preview, w.dir);
     previewLink.target = '_blank';
     previewLink.rel = 'noopener noreferrer';
     previewLink.setAttribute('aria-label', 'Preview ' + w.name + ' in a new tab');
@@ -707,7 +815,7 @@ body {
       btn.type = 'button';
       btn.textContent = f.label;
       btn.setAttribute('aria-label', 'Copy ' + f.label + ' for ' + w.name);
-      btn.addEventListener('click', function () { copyFile(w.slug, f.file, btn); });
+      btn.addEventListener('click', function () { copyFile(w.slug, f.file, btn, w.dir); });
       footer.appendChild(btn);
     });
 
@@ -756,9 +864,11 @@ body {
 
   const main = document.getElementById('js-main');
   const bigCount = document.getElementById('js-big-count');
-  bigCount.textContent = WIDGETS.length;
+  PAGES.forEach(function (p) { p.dir = 'pages'; });
+  bigCount.textContent = WIDGETS.length + PAGES.length;
 
   main.appendChild(buildSection('widget', 'Widgets', WIDGETS));
+  main.appendChild(buildSection('page', 'Pages', PAGES));
 })();
 </script>
 

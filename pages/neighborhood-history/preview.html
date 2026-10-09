@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neighborhood History — preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=Public+Sans:wght@300..800&display=swap" rel="stylesheet">
+<!--
+  Preview only — not pasted anywhere. Loads html.html + css.css + js.js into a
+  wpp-base Section Builder Code Block wrapper, under the REAL theme stylesheets pulled
+  live from vpm.org, so collisions show up here before you touch the live draft.
+  Needs network access to vpm.org and to be served over http (GitHub Pages, or
+  `python3 -m http.server` from the repo root). Offline, the theme CSS silently
+  fails to load and this degrades to an unstyled-host check only.
+-->
+<style>
+  /* Offline fallback for the container only — listed before the theme CSS so the real rules win */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+  .page-section { padding: 28px 0; }
+</style>
+<link rel="stylesheet" href="https://www.vpm.org/wp-content/themes/wpp-base/assets/css/base.css?ver=1.4.24" onload="this.dataset.ok=1" onerror="this.dataset.ok=0">
+<link rel="stylesheet" href="https://www.vpm.org/wp-content/themes/wpp-base/assets/css/components.css?ver=1.4.24" onload="this.dataset.ok=1" onerror="this.dataset.ok=0">
+<link rel="stylesheet" href="https://www.vpm.org/wp-content/themes/wpp-base/assets/css/overrides.css?ver=1.4.24" onload="this.dataset.ok=1" onerror="this.dataset.ok=0">
+<link rel="stylesheet" href="https://www.vpm.org/wp-content/themes/wpp-base/assets/css/page-builder.css?ver=1.4.24" onload="this.dataset.ok=1" onerror="this.dataset.ok=0">
+<style>
+  /* Theme config vars, as the live page inlines them (#bsm-config-vars) */
+  :root {
+    --navy: #003865; --dark-navy: #101820; --blue: #6CACE4; --red: #c8102e;
+    --yellow: #E0E721; --white: #ffffff; --gray-bg: #EDEDED; --light-blue: #e8f0f8;
+    --gray-border: #e6e6e6; --gray-text-dark: #101820; --gray-text: #666666;
+    --link-color: #1a7fc3;
+    --font-primary: 'Public Sans', 'Helvetica Neue', Arial, sans-serif;
+    --font-condensed: 'IBM Plex Sans Condensed', 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+    --font-body: 'Public Sans', 'Helvetica Neue', Arial, sans-serif;
+    --font-heading: 'IBM Plex Sans Condensed', 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+  }
+  /* Preview-only chrome stand-ins (the real header/footer markup isn't reproduced) */
+  .mock-bar { background: #003865; color: #fff; padding: 12px 16px; font: 600 13px Arial, sans-serif; }
+  .mock-footer { background: #101820; color: #fff; padding: 48px 16px; }
+  .preview-warn { position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999; background: #1a7f37;
+    color: #fff; font: 600 13px/1.4 Arial, sans-serif; padding: 8px 16px; }
+  .preview-warn.is-fail { background: #c8102e; }
+</style>
+</head>
+<body class="wp-singular page-template page-template-templates page-template-section-builder page-template-templatessection-builder-php page page-id-490005 wp-theme-wpp-base">
+  <div class="mock-bar">Mock wpp-base header</div>
+  <main id="bsm-main">
+    <section class="page-section page-hero min-small align-left">
+      <div class="page-hero-overlay navy"></div>
+      <div class="container">
+        <div class="page-hero-content">
+          <h1>Neighborhood History</h1>
+          <p class="page-hero-subtitle">Native theme hero — not part of this build.</p>
+        </div>
+      </div>
+    </section>
+    <div id="blocks"></div>
+  </main>
+  <footer class="mock-footer">Footer stand-in</footer>
+
+<script>
+(function () {
+  var root = document.getElementById('blocks');
+
+  /* Status bar: waits for window load and every image probe, then reports once */
+  function bar(msg, fail) {
+    var el = document.createElement('div');
+    el.className = 'preview-warn' + (fail ? ' is-fail' : '');
+    el.textContent = msg;
+    document.body.appendChild(el);
+  }
+
+  function probe(u) {
+    return new Promise(function (resolve) {
+      var img = new Image();
+      img.onload = function () { resolve(null); };
+      img.onerror = function () { resolve('Image failed: ' + u.split('/').pop()); };
+      img.src = u;
+    });
+  }
+
+  function checkAssets() {
+    var loaded = new Promise(function (resolve) {
+      if (document.readyState === 'complete') { resolve(); } else { window.addEventListener('load', resolve); }
+    });
+    return loaded.then(function () {
+      var problems = [];
+      var links = document.querySelectorAll('link[href*="wpp-base"]');
+      var ok = [].filter.call(links, function (l) { return l.dataset.ok === '1'; });
+      if (ok.length < links.length) {
+        problems.push('Theme CSS not loaded (' + ok.length + '/' + links.length + ') — results are not representative');
+      }
+      /* Every src, every srcset candidate, and every full-size link target */
+      var urls = {};
+      document.querySelectorAll('.vpm-nh img').forEach(function (img) {
+        urls[img.getAttribute('src')] = 1;
+        (img.getAttribute('srcset') || '').split(',').forEach(function (c) {
+          var u = c.trim().split(/\s+/)[0];
+          if (u) { urls[u] = 1; }
+        });
+      });
+      document.querySelectorAll('.vpm-nh a[href$=".jpg"]').forEach(function (a) { urls[a.href] = 1; });
+      var list = Object.keys(urls);
+      return Promise.all(list.map(probe)).then(function (res) {
+        problems = problems.concat(res.filter(Boolean));
+        if (problems.length) { bar(problems.join(' · '), true); }
+        else { bar('All checks passed — theme CSS loaded, ' + list.length + ' image URLs resolved', false); }
+      });
+    });
+  }
+
+  function get(file) {
+    return fetch(file).then(function (r) {
+      if (!r.ok) { throw new Error(file + ': ' + r.status); }
+      return r.text();
+    });
+  }
+
+  /* Mirrors how the theme renders a Code Block: CSS field, then HTML, then JS */
+  Promise.all([get('html.html'), get('css.css'), get('js.js')]).then(function (f) {
+    var section = document.createElement('section');
+    section.className = 'page-section page-code-block';
+    section.innerHTML = '<div class="container"><div class="page-code-block-html"></div></div>';
+    var slot = section.querySelector('.page-code-block-html');
+    var style = document.createElement('style');
+    style.textContent = f[1];
+    slot.appendChild(style);
+    slot.insertAdjacentHTML('beforeend', f[0]);
+    var script = document.createElement('script');
+    script.textContent = f[2];
+    slot.appendChild(script);
+    root.appendChild(section);
+  }).then(checkAssets).catch(function (err) {
+    root.textContent = 'Preview failed to load the page files — serve over http. ' + err.message;
+  });
+})();
+</script>
+</body>
+</html>

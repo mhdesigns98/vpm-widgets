@@ -6,7 +6,7 @@ effort: medium
 
 You are working with the VPM design system. Apply it exactly.
 
-All paths below are relative to the root of this repository (`vpm-widgets`). If you are working
+All paths below are relative to the root of this repository (`vpm-widgets`, which now holds widgets and pages). If you are working
 in a different VPM project, clone or open `vpm-widgets` alongside it and read the files there —
 never substitute recalled values for the real files.
 
@@ -63,9 +63,9 @@ kept here.
 
 Before picking a slug or namespace prefix, check `INDEX.md` for collisions.
 
-A widget is used on more than one page; a page build on exactly one. Full page builds live in
-the separate `vpm-pages` repo (https://github.com/mhdesigns98/vpm-pages) and follow that repo's
-`CLAUDE.md` — read it there when the work is a page rather than a reusable block.
+A widget is used on more than one page; a page build on exactly one. Both live in this repo
+(`widgets/` and `pages/`) and are indexed in `INDEX.md` with a **Used on** column. Page builds
+follow the page checklist in `CLAUDE.md`.
 
 `/ship-widget` (blocks) and `/ship-page` (pages) are the only pre-CMS gates. A generic
 accessibility review does not substitute for either. Every widget must pass the CMS test
@@ -80,4 +80,3 @@ If a build seems to need a value the tokens don't have, say so rather than inven
 
 - Living brand guide: https://claude.ai/design/p/548f9e49-14a7-437d-9bef-9c5aa193f4f8
 - Widget Lab (live): https://mhdesigns98.github.io/vpm-widgets/
-- VPM Pages (live): https://mhdesigns98.github.io/vpm-pages/
