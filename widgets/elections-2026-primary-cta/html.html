@@ -1,16 +1,18 @@
 <!-- VPM 2026 Primary — Homepage CTA -->
+<!-- Consumes the shared base layer. `vpm-ui` on the root is required:
+     without it no atom resolves. See /base/README.md for paste order. -->
 <!-- No id attributes anywhere: this block may be placed more than once on a
      page, and duplicate ids are invalid and confuse screen readers. -->
-<section class="vpm-elec26cta">
-  <div class="vpm-elec26cta__bar" aria-hidden="true"></div>
+<section class="vpm-ui vpm-elec26cta">
+  <div class="vpm-accent-bar" aria-hidden="true"></div>
 
   <div class="vpm-elec26cta__grid">
 
     <!-- Media: swap the src for a VPM-owned photo. Remove this <figure> entirely
          and the panel fills the full width with no layout break. -->
-    <figure class="vpm-elec26cta__media">
+    <figure class="vpm-media vpm-elec26cta__media">
       <img
-        class="vpm-elec26cta__img"
+        class="vpm-img"
         src="https://placehold.co/1200x800/003865/FFFFFF?text=Swap+in+VPM+photo"
         alt=""
         loading="lazy"
@@ -20,21 +22,23 @@
       />
     </figure>
 
-    <div class="vpm-elec26cta__panel">
-      <p class="vpm-elec26cta__eyebrow">VPM News &middot; Election Coverage</p>
+    <!-- vpm-on-dark is what inverts the type atoms. Drop it and the heading
+         and body copy stay dark and disappear into the panel. -->
+    <div class="vpm-on-dark vpm-elec26cta__panel">
+      <p class="vpm-eyebrow">VPM News &middot; Election Coverage</p>
 
-      <h2 class="vpm-elec26cta__title">
+      <h2 class="vpm-h2">
         Virginia's 2026 primary election
       </h2>
 
-      <p class="vpm-elec26cta__body">
+      <p class="vpm-body vpm-measure">
         Virginians choose their party nominees Tuesday, Aug. 4. VPM News has what's
         on your ballot, where and when to vote, and live results as they come in.
       </p>
 
-      <a class="vpm-elec26cta__link" href="https://vpm.org/elections">
+      <a class="vpm-btn vpm-btn--accent vpm-elec26cta__cta" href="https://vpm.org/elections">
         Explore our coverage
-        <span class="vpm-elec26cta__arrow" aria-hidden="true">&rarr;</span>
+        <span class="vpm-btn__arrow" aria-hidden="true">&rarr;</span>
       </a>
     </div>
 

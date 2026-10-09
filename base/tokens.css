@@ -1,0 +1,109 @@
+/* ============================================
+   VPM Base Layer — 1 of 3: TOKENS
+   Paste order: reset.css → tokens.css → atoms.css
+   Paste ONCE per page, into the first Code Block on that page.
+
+   DERIVED FILE. This is a paste-sized subset of the canonical
+   /tokens.css. Never hand-edit a value here — change /tokens.css
+   and re-derive, or the two silently diverge.
+
+   Scoped to .vpm-ui, NOT :root. The canonical tokens.css declares on
+   :root and styles bare elements (html, body, h1, p, a) — pasting that
+   into a Code Block would restyle the whole host page. Everything here
+   is confined to the widget subtree.
+   ============================================ */
+
+.vpm-ui {
+  /* ---- Brand core ---- */
+  --vpm-dark-blue:  #003865; /* PMS 2955 C */
+  --vpm-light-blue: #6CACE4; /* PMS 284 C  */
+  --vpm-yellow:     #E0E721; /* PMS 388 C  */
+  --vpm-red:        #EE2737; /* PMS 1788 C */
+  --vpm-black:      #101820; /* PMS Black 6 C */
+  --vpm-grey:       #B2B4B2; /* PMS 421 C  */
+  --vpm-white:      #FFFFFF;
+
+  /* ---- Tints/shades actually used by widgets ---- */
+  --vpm-blue-900: #002244;
+  --vpm-blue-700: #003865;
+  --vpm-blue-100: #D6E8F6;
+  --vpm-blue-050: #EEF4FB;
+  --vpm-yellow-600: #C8CF1C;
+  --vpm-red-700:  #B81E2A;
+  --vpm-gray-600: #5A6470;
+  --vpm-gray-300: #D1D3D4;
+  --vpm-gray-200: #E5E7E9;
+  --vpm-gray-100: #F2F3F4;
+
+  /* ---- Semantic ---- */
+  --fg-on-dark:       var(--vpm-white);
+  --fg-on-dark-muted: #B9C8D8;
+  --fg-default:       var(--vpm-black);
+  --fg-muted:         var(--vpm-gray-600);
+  --border-on-dark:   rgba(255, 255, 255, 0.18);
+
+  /* ---- Type ----
+     No @import here. An @import is only valid at the top of a
+     stylesheet, and a Code Block CSS field gives no guarantee about
+     where its <style> lands. Fonts are the host page's job; these
+     stacks degrade to Arial/Impact cleanly. */
+  --font-sans:    'Inter', 'GT America', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Oswald', 'GT America Condensed', 'Impact', sans-serif;
+
+  --fs-h1:      clamp(28px, 3.2vw, 44px);
+  --fs-h2:      clamp(24px, 2.4vw, 32px);
+  --fs-h3:      20px;
+  --fs-h4:      18px;
+  --fs-body-lg: 18px;
+  --fs-body:    16px;
+  --fs-body-sm: 14px;
+  --fs-caption: 12px;
+  --fs-eyebrow: 13px;
+
+  --lh-tight:  1.05;
+  --lh-snug:   1.2;
+  --lh-normal: 1.45;
+  --lh-loose:  1.65;
+
+  --tracking-eyebrow: 0.12em;
+  --tracking-display: -0.01em;
+  --tracking-wide:    0.04em;
+
+  /* ---- Spacing (4px base) ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* ---- Radii — VPM is sharp: 0–4px, 8px exception ---- */
+  --radius-sm:   2px;
+  --radius-md:   4px;
+  --radius-lg:   8px;
+  --radius-pill: 999px;
+
+  /* ---- Shadows ---- */
+  --shadow-sm:    0 2px 6px rgba(16, 24, 32, 0.08);
+  --shadow-md:    0 8px 24px rgba(16, 24, 32, 0.10);
+  --shadow-lg:    0 18px 48px rgba(16, 24, 32, 0.14);
+  --shadow-focus: 0 0 0 3px rgba(108, 172, 228, 0.55);
+
+  /* ---- Motion ---- */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-entrance: cubic-bezier(0, 0, 0.2, 1);
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 320ms;
+
+  /* ---- Accent bar (blue / yellow / red 3-stripe) ---- */
+  --accent-bar: linear-gradient(90deg,
+      var(--vpm-light-blue) 0%,
+      var(--vpm-light-blue) 30%,
+      var(--vpm-yellow)     30%,
+      var(--vpm-yellow)     70%,
+      var(--vpm-red)        70%,
+      var(--vpm-red)        100%);
+}

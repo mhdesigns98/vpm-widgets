@@ -1,0 +1,353 @@
+/* ============================================
+   VPM Base Layer — 3 of 3: ATOMS
+   Paste order: reset.css → tokens.css → atoms.css
+   Paste ONCE per page, into the first Code Block on that page.
+
+   Atoms carry appearance only — never layout, never position, never
+   width. Where an atom sits on the page is the organism's business.
+
+   Every selector is double-scoped (.vpm-ui .vpm-x) for specificity
+   0,2,0. That is deliberate: it beats a host theme's single-class or
+   element rules without reaching for !important. !important appears
+   only on link color and text-decoration, where host themes use it too.
+   ============================================ */
+
+/* ============================================
+   Typography
+   ============================================ */
+
+.vpm-ui .vpm-h1 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-h1);
+  font-weight: 800;
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-display);
+  text-wrap: balance;
+  text-transform: none;
+}
+
+.vpm-ui .vpm-h2 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-h2);
+  font-weight: 800;
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-display);
+  text-wrap: balance;
+  text-transform: none;
+}
+
+.vpm-ui .vpm-h3 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: var(--lh-snug);
+  text-wrap: balance;
+}
+
+.vpm-ui .vpm-h4 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+}
+
+/* Condensed display face. VPM uses this for newsletter lockups and
+   section titles, not for body headings. */
+.vpm-ui .vpm-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+  text-transform: uppercase;
+}
+
+.vpm-ui .vpm-body    { font-size: var(--fs-body);    line-height: var(--lh-loose); text-wrap: pretty; }
+.vpm-ui .vpm-body-lg { font-size: var(--fs-body-lg); line-height: var(--lh-loose); text-wrap: pretty; }
+.vpm-ui .vpm-body-sm { font-size: var(--fs-body-sm); line-height: var(--lh-normal); }
+.vpm-ui .vpm-caption { font-size: var(--fs-caption); line-height: var(--lh-normal); color: var(--fg-muted); }
+
+/* Body copy sitting on a dark panel. */
+.vpm-ui .vpm-on-dark .vpm-body,
+.vpm-ui .vpm-on-dark .vpm-body-lg,
+.vpm-ui .vpm-on-dark .vpm-body-sm { color: var(--fg-on-dark-muted); }
+
+.vpm-ui .vpm-on-dark .vpm-h1,
+.vpm-ui .vpm-on-dark .vpm-h2,
+.vpm-ui .vpm-on-dark .vpm-h3,
+.vpm-ui .vpm-on-dark .vpm-h4 { color: var(--fg-on-dark); }
+
+/* Constrain measure for readability. */
+.vpm-ui .vpm-measure { max-width: 46ch; }
+
+/* ============================================
+   Eyebrow — small uppercase kicker, no box
+   ============================================ */
+
+.vpm-ui .vpm-eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  line-height: 1.3;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-eyebrow);
+  color: var(--vpm-yellow);
+}
+
+.vpm-ui .vpm-eyebrow--dark  { color: var(--vpm-dark-blue); }
+.vpm-ui .vpm-eyebrow--red   { color: var(--vpm-red); }
+.vpm-ui .vpm-eyebrow--light { color: var(--vpm-light-blue); }
+.vpm-ui .vpm-eyebrow--white { color: var(--vpm-white); }
+
+/* ============================================
+   Badge — the eyebrow's boxed sibling
+   ============================================ */
+
+.vpm-ui .vpm-badge {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-radius: var(--radius-md);
+  background: var(--vpm-dark-blue);
+  color: var(--vpm-white);
+}
+
+.vpm-ui .vpm-badge--invert { background: var(--vpm-white); color: var(--vpm-dark-blue); }
+.vpm-ui .vpm-badge--live   { background: var(--vpm-red);   color: var(--vpm-white); }
+.vpm-ui .vpm-badge--accent { background: var(--vpm-yellow);color: var(--vpm-black); }
+
+/* ============================================
+   Buttons
+   Works as <button>, <a>, or <input type="submit">.
+   ============================================ */
+
+.vpm-ui .vpm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body-sm);
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  text-align: center;
+  text-decoration: none !important;
+  border: 0;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease-standard),
+    color var(--dur-fast) var(--ease-standard),
+    transform var(--dur-base) var(--ease-standard),
+    box-shadow var(--dur-base) var(--ease-standard);
+}
+
+.vpm-ui .vpm-btn:hover,
+.vpm-ui .vpm-btn:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  text-decoration: none !important;
+}
+
+.vpm-ui .vpm-btn:disabled,
+.vpm-ui .vpm-btn[aria-disabled='true'] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* --- Variants. Colour only; geometry stays with .vpm-btn. --- */
+
+/* Default: dark blue on light backgrounds. */
+.vpm-ui .vpm-btn--solid {
+  background: var(--vpm-dark-blue);
+  color: var(--vpm-white) !important;
+}
+.vpm-ui .vpm-btn--solid:hover,
+.vpm-ui .vpm-btn--solid:focus-visible {
+  background: var(--vpm-blue-900);
+  color: var(--vpm-white) !important;
+}
+
+/* Light blue on dark panels — the elections CTA treatment. */
+.vpm-ui .vpm-btn--accent {
+  background: var(--vpm-light-blue);
+  color: var(--vpm-blue-900) !important;
+}
+.vpm-ui .vpm-btn--accent:hover,
+.vpm-ui .vpm-btn--accent:focus-visible {
+  background: var(--vpm-white);
+  color: var(--vpm-blue-900) !important;
+}
+
+.vpm-ui .vpm-btn--yellow {
+  background: var(--vpm-yellow);
+  color: var(--vpm-black) !important;
+}
+.vpm-ui .vpm-btn--yellow:hover,
+.vpm-ui .vpm-btn--yellow:focus-visible {
+  background: var(--vpm-yellow-600);
+  color: var(--vpm-black) !important;
+}
+
+.vpm-ui .vpm-btn--outline {
+  background: transparent;
+  color: var(--vpm-dark-blue) !important;
+  box-shadow: inset 0 0 0 2px currentColor;
+}
+.vpm-ui .vpm-btn--outline:hover,
+.vpm-ui .vpm-btn--outline:focus-visible {
+  background: var(--vpm-dark-blue);
+  color: var(--vpm-white) !important;
+  box-shadow: var(--shadow-md);
+}
+
+.vpm-ui .vpm-on-dark .vpm-btn--outline {
+  color: var(--vpm-white) !important;
+}
+.vpm-ui .vpm-on-dark .vpm-btn--outline:hover,
+.vpm-ui .vpm-on-dark .vpm-btn--outline:focus-visible {
+  background: var(--vpm-white);
+  color: var(--vpm-dark-blue) !important;
+}
+
+/* Circular icon button — carousel arrows, close buttons. */
+.vpm-ui .vpm-btn--icon {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  padding: 0;
+  border-radius: var(--radius-pill);
+  background: var(--vpm-blue-900);
+  color: var(--vpm-white) !important;
+}
+.vpm-ui .vpm-btn--icon:hover,
+.vpm-ui .vpm-btn--icon:focus-visible {
+  background: var(--vpm-dark-blue);
+  transform: none;
+}
+
+/* Text-only CTA that still reads as an action. */
+.vpm-ui .vpm-btn--bare {
+  padding: 0;
+  background: none;
+  color: var(--vpm-dark-blue) !important;
+}
+.vpm-ui .vpm-btn--bare:hover,
+.vpm-ui .vpm-btn--bare:focus-visible {
+  transform: none;
+  box-shadow: none;
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+}
+
+/* Arrow glyph nudge — used by several CTAs. */
+.vpm-ui .vpm-btn__arrow {
+  transition: transform var(--dur-base) var(--ease-standard);
+}
+.vpm-ui .vpm-btn:hover .vpm-btn__arrow,
+.vpm-ui .vpm-btn:focus-visible .vpm-btn__arrow {
+  transform: translateX(3px);
+}
+
+/* ============================================
+   Media
+   ============================================ */
+
+/* Aspect-constrained frame. Set --vpm-aspect inline to override. */
+.vpm-ui .vpm-media {
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  aspect-ratio: var(--vpm-aspect, 16 / 9);
+  background: var(--vpm-blue-900);
+}
+
+.vpm-ui .vpm-media--portrait { --vpm-aspect: 9 / 16; }
+.vpm-ui .vpm-media--square   { --vpm-aspect: 1 / 1; }
+.vpm-ui .vpm-media--rounded  { border-radius: var(--radius-md); }
+
+/* Standalone: carries its own ratio so it never causes layout shift. */
+.vpm-ui .vpm-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  aspect-ratio: var(--vpm-aspect, 16 / 9);
+  object-fit: cover;
+  border: 0;
+}
+
+/* Inside a frame: the frame owns the ratio, the image fills it. */
+.vpm-ui .vpm-media > .vpm-img {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+/* ============================================
+   Surfaces
+   ============================================ */
+
+.vpm-ui .vpm-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--vpm-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.vpm-ui .vpm-card--flat   { box-shadow: none; border: 1px solid var(--vpm-gray-200); }
+.vpm-ui .vpm-card--dark   { background: var(--vpm-dark-blue); color: var(--fg-on-dark); }
+.vpm-ui .vpm-card--muted  { background: var(--vpm-gray-100); box-shadow: none; }
+
+/* Panel sitting on dark. Pair with .vpm-on-dark so type atoms invert. */
+.vpm-ui .vpm-panel-dark {
+  background: var(--vpm-dark-blue);
+  color: var(--fg-on-dark);
+}
+
+/* The 3-stripe brand rule. Repeated by hand in at least three widgets. */
+.vpm-ui .vpm-accent-bar {
+  display: block;
+  width: 100%;
+  height: 4px;
+  background: var(--accent-bar);
+}
+
+/* ============================================
+   Utilities
+   ============================================ */
+
+.vpm-ui .vpm-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================
+   Forced colors — Windows high contrast strips
+   backgrounds, so buttons need a real border.
+   ============================================ */
+
+@media (forced-colors: active) {
+  .vpm-ui .vpm-btn,
+  .vpm-ui .vpm-badge { border: 1px solid currentColor; }
+}

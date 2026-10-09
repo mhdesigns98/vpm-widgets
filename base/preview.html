@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VPM Base Layer — atom gallery</title>
+
+<!-- Loaded as separate files here so this page can never drift from the
+     real paste sources. In the CMS these are three pastes into one field. -->
+<link rel="stylesheet" href="reset.css">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="atoms.css">
+
+<style>
+  /* Page chrome only — not part of the base layer. */
+  body { margin: 0; padding: 32px; font: 16px/1.5 'Inter', Arial, sans-serif;
+         background: #F8F9FA; color: #101820; }
+  .demo { max-width: 960px; margin: 0 auto; }
+  .demo h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .12em;
+             color: #5A6470; margin: 40px 0 12px; border-bottom: 1px solid #D1D3D4;
+             padding-bottom: 6px; }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .dark { background: #003865; padding: 24px; }
+  .grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  #report { position: sticky; top: 0; background: #101820; color: #E0E721;
+            font: 13px/1.6 ui-monospace, Menlo, monospace; padding: 12px 16px;
+            border-radius: 4px; margin-bottom: 24px; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<div class="demo">
+  <div id="report">checking…</div>
+
+  <!-- Everything below is inside .vpm-ui, exactly as a widget would be. -->
+  <div class="vpm-ui">
+
+    <h2>Accent bar</h2>
+    <span class="vpm-accent-bar"></span>
+
+    <h2>Type</h2>
+    <p class="vpm-h1">Heading one</p>
+    <p class="vpm-h2">Heading two</p>
+    <p class="vpm-h3">Heading three</p>
+    <p class="vpm-h4">Heading four</p>
+    <p class="vpm-display" style="font-size:32px">Display condensed</p>
+    <p class="vpm-body vpm-measure">Body copy at the default measure, which caps at 46
+      characters so lines stay readable regardless of how wide the host column is.</p>
+    <p class="vpm-body-sm">Body small.</p>
+    <p class="vpm-caption">Caption.</p>
+
+    <h2>Eyebrows</h2>
+    <div class="row">
+      <span class="vpm-eyebrow vpm-eyebrow--dark">Default dark</span>
+      <span class="vpm-eyebrow vpm-eyebrow--red">Breaking</span>
+      <span class="vpm-eyebrow vpm-eyebrow--light">Education</span>
+    </div>
+
+    <h2>Badges</h2>
+    <div class="row">
+      <span class="vpm-badge">Morning Monitor</span>
+      <span class="vpm-badge vpm-badge--invert">Invert</span>
+      <span class="vpm-badge vpm-badge--live">Live</span>
+      <span class="vpm-badge vpm-badge--accent">Accent</span>
+    </div>
+
+    <h2>Buttons — on light</h2>
+    <div class="row">
+      <button class="vpm-btn vpm-btn--solid">Solid</button>
+      <button class="vpm-btn vpm-btn--outline">Outline</button>
+      <button class="vpm-btn vpm-btn--yellow">Yellow</button>
+      <button class="vpm-btn vpm-btn--icon" aria-label="Next">›</button>
+      <a class="vpm-btn vpm-btn--bare" href="#">Bare link<span class="vpm-btn__arrow" aria-hidden="true">→</span></a>
+      <button class="vpm-btn vpm-btn--solid" disabled>Disabled</button>
+    </div>
+
+    <h2>Buttons + type — on dark</h2>
+    <div class="dark vpm-on-dark">
+      <p class="vpm-eyebrow">2026 Primary</p>
+      <p class="vpm-h2">Heading inverts via .vpm-on-dark</p>
+      <p class="vpm-body vpm-measure">Body copy inverts too, to the muted on-dark tone.</p>
+      <div class="row" style="margin-top:16px">
+        <a class="vpm-btn vpm-btn--accent" href="#">Accent<span class="vpm-btn__arrow" aria-hidden="true">→</span></a>
+        <a class="vpm-btn vpm-btn--outline" href="#">Outline on dark</a>
+      </div>
+    </div>
+
+    <h2>Media + cards</h2>
+    <div class="grid3">
+      <article class="vpm-card">
+        <figure class="vpm-media">
+          <img class="vpm-img" alt="" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'><rect width='16' height='9' fill='%236CACE4'/></svg>">
+        </figure>
+        <div style="padding:16px">
+          <p class="vpm-eyebrow vpm-eyebrow--red">Politics</p>
+          <p class="vpm-h3">Framed 16:9 in a card</p>
+        </div>
+      </article>
+
+      <article class="vpm-card vpm-card--flat">
+        <figure class="vpm-media vpm-media--square">
+          <img class="vpm-img" alt="" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'><rect width='1' height='1' fill='%23E0E721'/></svg>">
+        </figure>
+        <div style="padding:16px"><p class="vpm-h3">Square, flat card</p></div>
+      </article>
+
+      <article class="vpm-card vpm-card--dark vpm-on-dark">
+        <figure class="vpm-media vpm-media--portrait">
+          <img class="vpm-img" alt="" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 16'><rect width='9' height='16' fill='%23EE2737'/></svg>">
+        </figure>
+        <div style="padding:16px"><p class="vpm-h3">Portrait, dark card</p></div>
+      </article>
+    </div>
+
+    <h2>Standalone image (no frame — carries its own 16:9)</h2>
+    <img class="vpm-img" alt="" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'><rect width='16' height='9' fill='%23002244'/></svg>">
+
+  </div>
+</div>
+
+<script>
+(function () {
+  // Any rule the engine refused to parse is silently dropped from cssRules.
+  // Compare parsed rule counts against the `{` count in each source file.
+  var files = ['reset.css', 'tokens.css', 'atoms.css'];
+  var out = [];
+  var pending = files.length;
+
+  function done() {
+    if (--pending) return;
+    var el = document.getElementById('report');
+    var bad = out.some(function (l) { return l.indexOf('MISMATCH') > -1; });
+    el.textContent = out.join('\n');
+    el.style.color = bad ? '#EE2737' : '#E0E721';
+  }
+
+  files.forEach(function (f, i) {
+    var sheet = document.styleSheets[i];
+    var parsed;
+    try { parsed = sheet.cssRules.length; }
+    catch (e) { out.push(f + ': cannot read (CORS — serve over http, not file://)'); return done(); }
+
+    fetch(f).then(function (r) { return r.text(); }).then(function (txt) {
+      // Every `{` in the source is one block: a style rule, an at-rule
+      // wrapper, or a rule nested inside one. Comments are stripped first
+      // so a brace in prose can't skew the count.
+      var srcBlocks = ((txt.replace(/\/\*[\s\S]*?\*\//g, '').match(/\{/g)) || []).length;
+
+      // Mirror that from the parsed sheet: each grouping rule counts once
+      // for itself plus once per child. NB: a plain CSSStyleRule exposes an
+      // empty-but-truthy cssRules list, so test length, not existence.
+      var nested = 0;
+      Array.prototype.forEach.call(sheet.cssRules, function (r) {
+        if (r.cssRules && r.cssRules.length) nested += r.cssRules.length;
+      });
+      var accounted = parsed + nested;
+
+      out.push(f + ': ' + accounted + ' blocks parsed, ' + srcBlocks +
+               ' in source' +
+               (accounted === srcBlocks ? '  OK' : '  MISMATCH — a rule was dropped'));
+      done();
+    }).catch(function () { out.push(f + ': fetch failed'); done(); });
+  });
+})();
+</script>
+</body>
+</html>

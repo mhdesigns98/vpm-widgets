@@ -1,0 +1,122 @@
+/* ============================================
+   VPM Base Layer — 2 of 3: RESET
+   Paste order: reset.css → tokens.css → atoms.css
+   Paste ONCE per page, into the first Code Block on that page.
+
+   Scoped entirely to .vpm-ui. Nothing here can reach the host page.
+   Every selector is a descendant of .vpm-ui by construction — if you
+   add a rule to this file, it must start with .vpm-ui.
+   ============================================ */
+
+.vpm-ui {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  color: var(--fg-default);
+  text-align: left;
+
+  /* New stacking context. Keeps widget z-indexes from fighting the
+     sticky Stream Player, and keeps the player from landing inside us. */
+  isolation: isolate;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.vpm-ui *,
+.vpm-ui *::before,
+.vpm-ui *::after {
+  box-sizing: border-box;
+}
+
+/* Host themes routinely set global margins on headings and paragraphs,
+   sometimes with !important. Zero them inside the widget only. */
+.vpm-ui h1,
+.vpm-ui h2,
+.vpm-ui h3,
+.vpm-ui h4,
+.vpm-ui h5,
+.vpm-ui h6,
+.vpm-ui p,
+.vpm-ui figure,
+.vpm-ui blockquote,
+.vpm-ui ul,
+.vpm-ui ol,
+.vpm-ui dl,
+.vpm-ui dd {
+  margin: 0;
+  padding: 0;
+}
+
+.vpm-ui ul,
+.vpm-ui ol {
+  list-style: none;
+}
+
+.vpm-ui img,
+.vpm-ui svg,
+.vpm-ui video,
+.vpm-ui canvas {
+  display: block;
+  max-width: 100%;
+}
+
+.vpm-ui img,
+.vpm-ui video {
+  height: auto;
+  border: 0;
+}
+
+/* Form controls do not inherit font by default. */
+.vpm-ui input,
+.vpm-ui button,
+.vpm-ui textarea,
+.vpm-ui select {
+  font: inherit;
+  color: inherit;
+  margin: 0;
+}
+
+.vpm-ui button {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* ---- Focus ----
+   One visible ring for every interactive element in every widget. A
+   widget may restyle this; it may not remove it. Uses :focus-visible so
+   mouse clicks stay clean while keyboard nav is always indicated. */
+.vpm-ui :focus-visible {
+  outline: 2px solid var(--vpm-light-blue);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Widgets on a dark panel opt into the light ring. */
+.vpm-ui .vpm-on-dark :focus-visible {
+  outline-color: var(--vpm-white);
+}
+
+/* ---- Motion preference ----
+   Covers every widget at once. Previously only 1 of 6 split-file
+   widgets honoured this.
+
+   .01ms rather than `none` on purpose: a zero-duration transition never
+   fires transitionend, and some widgets sequence state off that event. */
+@media (prefers-reduced-motion: reduce) {
+  .vpm-ui *,
+  .vpm-ui *::before,
+  .vpm-ui *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}

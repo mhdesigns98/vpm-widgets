@@ -122,6 +122,25 @@
   // Surface widget JS errors loudly
   window.addEventListener('error', e => log(`JS error: ${e.message}`, 'err'));
 
+  // The shared base layer (/base/) is pasted once per page in the CMS, into
+  // the first Code Block. A widget declares that dependency by putting
+  // `vpm-ui` on its root element, so detect it from the markup rather than
+  // making every caller remember a query param.
+  async function fetchBaseLayer(html) {
+    if (!/class=["'][^"']*\bvpm-ui\b/.test(html)) return '';
+    const files = ['reset.css', 'tokens.css', 'atoms.css']; // paste order matters
+    try {
+      const parts = await Promise.all(
+        files.map(f => fetch(`../base/${f}`).then(r => r.ok ? r.text() : Promise.reject(f)))
+      );
+      log(`Widget uses .vpm-ui — injected base layer (${files.join(' → ')}).`);
+      return parts.join('\n');
+    } catch (e) {
+      log(`Widget uses .vpm-ui but base/${e} is missing — it will render unstyled.`, 'err');
+      return '';
+    }
+  }
+
   async function fetchWidget() {
     if (!slug) { log('No ?widget=SLUG param — nothing to load.', 'warn'); status('no widget'); return null; }
     document.getElementById('hz-widget-name').textContent = `widgets/${slug}/` + (mode !== 'auto' ? ` (${mode})` : '');
@@ -137,7 +156,7 @@
         );
         const js = await fetch(base + 'js.js').then(r => r.ok ? r.text() : '').catch(() => '');
         log(`Loaded ACF split files (html/css${js ? '/js' : ', no js.js — static widget'}).`);
-        return { kind: 'acf', html, css, js };
+        return { kind: 'acf', html, css, js, baseCss: await fetchBaseLayer(html) };
       } catch (e) {
         if (mode === 'acf') { log(`ACF file missing: ${e}`, 'err'); return null; }
       }
@@ -160,7 +179,17 @@
   }
 
   function inject(payload, slot, copyLabel) {
-    // CMS-style injection: styles + markup + scripts appended to the page
+    // CMS-style injection: styles + markup + scripts appended to the page.
+    // Base layer goes in once for the whole page and ahead of every widget's
+    // own CSS, mirroring "paste it into the first Code Block". Both copies
+    // share this one injection — which is also the real-world test that two
+    // instances on a page don't need two base pastes.
+    if (payload.baseCss && !document.getElementById('hz-style-base')) {
+      const bst = document.createElement('style');
+      bst.id = 'hz-style-base';
+      bst.textContent = payload.baseCss;
+      document.head.appendChild(bst);
+    }
     const styleId = `hz-style-${copyLabel}`;
     if (!document.getElementById(styleId)) {
       const st = document.createElement('style');

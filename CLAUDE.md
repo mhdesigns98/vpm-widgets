@@ -22,10 +22,26 @@ Some widgets (e.g. `elections-2026-primary`) use a split-file format for WordPre
 ```
 
 ## Design Tokens
-`tokens.css` in the repo root is the **canonical VPM design token file** (migrated from the deprecated vpm-component-library). Widgets must stay self-contained, so copy the custom properties you need into the widget's scoped `<style>` — never link the file externally. No hard-coded hex values.
+`tokens.css` in the repo root is the **canonical VPM design token file** (migrated from the deprecated vpm-component-library). Never link it externally, and never hard-code hex values.
+
+For ACF split-file widgets, get tokens from the **base layer** rather than re-inlining them (see below). `base/tokens.css` is a paste-sized subset **derived** from `tokens.css` — change the canonical file and re-derive; never hand-edit a value in the subset. Single-file and Shadow DOM widgets still inline what they need.
+
+## Base Layer (atoms → molecules → organisms)
+`base/` holds the shared atoms — buttons, eyebrows, badges, media frames, cards, the accent bar, the focus ring, and the global `prefers-reduced-motion` block. It is pasted **once per page**, into the first Code Block's CSS field, in this order:
+
+```
+base/reset.css → base/tokens.css → base/atoms.css → that block's own css.css
+```
+
+Every later Code Block on the page pastes only its own `css.css`. Widgets opt in by putting `vpm-ui` on their root element alongside their namespace class. Full rules, the molecule snippets, and the list of widgets the layer deliberately can't reach: `base/README.md`.
+
+- **A widget must not define its own** button, eyebrow, badge, focus ring, or reduced-motion block. Need a variant? Add a modifier to the atom in `base/atoms.css` — not a private class in the widget.
+- **A widget's CSS may override an atom's colour, never its box model or motion.**
+- **Atoms carry appearance only** — no layout, no positioning, no width. Placement stays in the widget's `css.css`.
+- Every rule in `base/` starts with `.vpm-ui`. A rule that doesn't is a bug.
 
 ## Style Conventions
-- All class names and IDs namespaced with a widget-specific prefix (e.g. `vpm-elec26-`, `vpm-mm-`)
+- All class names and IDs namespaced with a widget-specific prefix (e.g. `vpm-elec26-`, `vpm-mm-`) — except shared atoms from the base layer, which are deliberately global within `.vpm-ui`
 - BEM naming convention within namespace
 - Shadow DOM encapsulation for reusable web components
 - No external dependencies unless explicitly approved
@@ -62,6 +78,15 @@ Every widget must pass the CMS test harness (`/harness/harness.html?widget=[name
 - [ ] Keyboard accessible, visible focus, WCAG 2.1 AA contrast, `prefers-reduced-motion` respected
 - [ ] No `id` attributes, or none that duplicate when the block is placed twice on one page
 - [ ] No console errors in the harness log
+
+For widgets on the base layer (`vpm-ui` on the root), additionally:
+
+- [ ] Defines no button, eyebrow, badge, focus ring, or reduced-motion rules of its own
+- [ ] **Base absent** — renders as readable, coherent content rather than collapsing (editors will forget the paste)
+- [ ] **Base pasted twice** — visually identical to once
+- [ ] Two instances on one page share a single base paste with no cross-contamination
+
+The harness injects the base layer automatically when it sees `vpm-ui` in the widget's markup, and logs which files it pulled in.
 
 ## Repo Consolidation
 When asked to consolidate, audit existing repos and Gists, identify widget/embed code, and migrate it into the structure above. Archive source repos after migration.
