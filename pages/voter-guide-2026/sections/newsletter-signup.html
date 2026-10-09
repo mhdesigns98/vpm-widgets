@@ -1,0 +1,25 @@
+<!--
+  VPM Voter Guide — Newsletter Signup Section (ACF)
+  Native Mailchimp embedded-form POST, matching the pattern already used by the
+  standalone Widget Lab signup embeds (bypasses the custom /api/subscribe API
+  entirely — no backend, no Turnstile, no API key exposure). Subscribes into
+  Morning Monitor and tags with 1620445 ("Election Coverage") and 1620257
+  ("Website Embed"), confirmed via Mailchimp's own generated embed for those tags.
+  Requires the shared styles from header-section.html (or
+  _shared-styles.html) to be present elsewhere on the page.
+-->
+<div class="vpm-vg">
+  <div class="vg-newsletter-bar">
+    <span class="vg-eyebrow">Stay Informed</span>
+    <h2 class="vg-heading-font">VPM Elections Newsletter</h2>
+    <p>Get the latest Virginia election news, candidate profiles, and voting reminders, delivered to your inbox.</p>
+    <form action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=26497cf3ad&amp;f_id=0016c9e1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="vg-newsletter-form validate" target="_blank" novalidate>
+      <input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required placeholder="Your email address">
+      <div hidden><input type="hidden" name="tags" value="1620445,1620257"></div>
+      <div aria-hidden="true" style="position:absolute;left:-5000px;">
+        <input type="text" name="b_6fe41b3055c403be08140ec95_26497cf3ad" tabindex="-1" value="">
+      </div>
+      <button type="submit" name="subscribe" id="mc-embedded-subscribe">Subscribe</button>
+    </form>
+  </div>
+</div>

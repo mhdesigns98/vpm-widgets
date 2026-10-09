@@ -1,0 +1,1036 @@
+<!--
+  VPM Voter Guide — Shared Styles (fallback / optional)
+  ==========================================================
+  This is a COPY of the same style block bundled inside
+  header-section.html. You do NOT need to add this separately if
+  header-section.html is present on the page — it already includes
+  these styles once.
+
+  Use this file ONLY if you build a page that uses one or more of the
+  other section fragments (Section Nav, Video, Elections, Regional,
+  FAQ, Newsletter) WITHOUT including the Header Section — paste this
+  once, anywhere on that page, instead.
+
+  It also carries the "LIVE BLOCK OVERRIDES" rules that restyle the
+  CMS's own Article List block (see header-section.html) — those are
+  the only un-prefixed selectors in here, and they are required for a
+  live story feed to match the design.
+
+  Keep this file in sync with header-section.html; it is generated
+  from it, and doubles as the recovery anchor if any single fragment
+  gets corrupted.
+-->
+<style>
+  .vpm-vg{
+    --azure-9:#101820;
+    --azure-9-2:#0d1520;
+    --azure-13:#024;
+    --azure-20:#003865;
+    --azure-28:#3d4652;
+    --azure-40:#8e98a5;
+    --azure-66:#6cace4;
+    --azure-79:#b9c8d8;
+    --yellow-52:#e0e721;
+    --red-54:#ee2737;
+    --red-64:#ff5566;
+    --grey-53:#838d99;
+    --white:#ffffff;
+    --border-faint:rgba(255,255,255,0.06);
+    --border-faint2:rgba(255,255,255,0.07);
+    --border-faint3:rgba(255,255,255,0.08);
+    --border-azure-30:rgba(108,172,228,0.3);
+    --border-azure-20:rgba(108,172,228,0.2);
+  }
+
+  .vpm-vg * {box-sizing:border-box;}
+  .vpm-vg{
+    background:var(--azure-9);
+    color:var(--white);
+    font-family:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .vpm-vg img {max-width:100%;display:block;}
+  .vpm-vg a {color:inherit;text-decoration:none;}
+  .vpm-vg .vg-heading-font {font-family:'Oswald',Impact,'Arial Narrow',sans-serif;}
+
+  .vpm-vg .vg-wrap {
+    max-width:1200px;
+    margin:0 auto;
+    padding-left:24px;
+    padding-right:24px;
+  }
+
+  /* ---------- Header ---------- */
+  .vpm-vg .vg-site-header-note {
+    background:var(--azure-13);
+    border-bottom:2px dashed var(--border-azure-30);
+    text-align:center;
+    padding:12px 24px 14px;
+    font-size:12px;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+    color:var(--azure-40);
+  }
+  .vpm-vg .vg-promo-bar {
+    background:var(--azure-13);
+    border-bottom:1px solid var(--border-azure-20);
+    padding:10px 0 11px;
+  }
+  .vpm-vg .vg-promo-inner {
+    display:flex;
+    align-items:center;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .vpm-vg .vg-promo-tag {
+    background:var(--red-54);
+    color:var(--white);
+    font-size:10px;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    padding:3px 8px;
+    border-radius:1px;
+    white-space:nowrap;
+  }
+  .vpm-vg .vg-promo-text {
+    flex:1;
+    min-width:200px;
+    font-size:13px;
+    line-height:19.5px;
+    color:var(--azure-79);
+  }
+  .vpm-vg .vg-promo-link {
+    display:flex;
+    align-items:center;
+    gap:4px;
+    font-size:12px;
+    color:var(--azure-66);
+    white-space:nowrap;
+  }
+  .vpm-vg .vg-promo-link svg {width:11px;height:11px;}
+
+  /* ---------- Section nav ---------- */
+  /* NOTE: no `html{scroll-behavior:smooth}` here — a global selector would leak
+     out of this fragment and change scrolling for the whole site. Smooth scroll
+     is handled by the nav click handler in the <script> at the end of this
+     fragment instead. */
+  .vpm-vg #video, .vpm-vg #elections, .vpm-vg #regional, .vpm-vg #faq {scroll-margin-top:64px;}
+  .vpm-vg .vg-section-nav {
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:rgba(0,34,68,0.92);
+    backdrop-filter:saturate(140%) blur(8px);
+    -webkit-backdrop-filter:saturate(140%) blur(8px);
+    border-top:1px solid var(--border-azure-20);
+    border-bottom:1px solid var(--border-azure-20);
+  }
+  .vpm-vg .vg-section-nav-inner {
+    display:flex;
+    align-items:center;
+    gap:20px;
+    min-height:48px;
+  }
+  .vpm-vg .vg-section-nav-label {
+    flex-shrink:0;
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--azure-40);
+  }
+  .vpm-vg .vg-section-nav ul {
+    display:flex;
+    gap:4px;
+    margin:0;
+    padding:0;
+    list-style:none;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .vpm-vg .vg-section-nav ul::-webkit-scrollbar {display:none;}
+  .vpm-vg .vg-section-nav a {
+    display:block;
+    white-space:nowrap;
+    padding:8px 12px;
+    border-radius:3px;
+    font-size:13px;
+    font-weight:500;
+    color:var(--azure-79);
+    transition:color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .vpm-vg .vg-section-nav a:hover {
+    color:#fff;
+    background:rgba(255,255,255,0.06);
+  }
+  .vpm-vg .vg-section-nav a.vg-active {
+    color:var(--azure-9);
+    background:var(--yellow-52);
+    font-weight:600;
+  }
+
+  /* ---------- Hero ---------- */
+  .vpm-vg .vg-hero-section {
+    padding-top:56px;
+  }
+  /* Band that carries only the "Featured Stories" label; the cards themselves
+     are the live Article List block pasted immediately after this fragment. */
+  .vpm-vg .vg-featured-band {
+    padding-top:16px;
+    padding-bottom:16px;
+  }
+  /* the label's own bottom margin would collapse out through the bottom of the
+     fragment and show as a white strip above the live block — zero it here */
+  .vpm-vg .vg-featured-band .vg-section-label {margin-bottom:0;}
+  .vpm-vg .vg-hero-row {
+    display:flex;
+    gap:48px;
+    align-items:flex-start;
+    flex-wrap:wrap;
+  }
+  .vpm-vg .vg-hero-main {flex:1 1 0;min-width:320px;}
+  .vpm-vg .vg-eyebrow {
+    color:var(--azure-66);
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    margin:0 0 12px;
+  }
+  .vpm-vg .vg-headline {margin:0;font-weight:700;}
+  .vpm-vg .vg-headline span {
+    display:block;
+    margin:0;
+    font-weight:700;
+    text-transform:uppercase;
+    font-size:clamp(48px,7.5vw,108px);
+    line-height:0.92;
+    letter-spacing:-1px;
+  }
+  .vpm-vg .vg-headline .vg-l1 {color:var(--azure-66);}
+  .vpm-vg .vg-headline .vg-l2 {color:var(--yellow-52);}
+  .vpm-vg .vg-headline .vg-l3 {color:var(--white);}
+  .vpm-vg .vg-hero-dek {
+    color:var(--azure-79);
+    font-size:16px;
+    line-height:24px;
+    max-width:500px;
+    margin:18px 0 28px;
+  }
+  .vpm-vg .vg-section-label {
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin:0 0 16px;
+  }
+  .vpm-vg .vg-section-label .vg-accent {
+    width:3px;height:16px;background:var(--yellow-52);border-radius:1px;flex-shrink:0;
+  }
+  .vpm-vg .vg-section-label span,
+  .vpm-vg .vg-section-label h2 {
+    margin:0;
+    font-weight:600;
+    font-size:12px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:#c8d0d8;
+  }
+  /* Larger, mixed-case variant used as each band's real <h2> heading
+     (was an inline style="font-size:28px..." before the headings were
+     promoted from <span> to <h2>). */
+  .vpm-vg .vg-section-label h2.vg-section-title {
+    font-size:28px;
+    line-height:1.15;
+    letter-spacing:-0.28px;
+    text-transform:none;
+    font-weight:600;
+    color:var(--white);
+  }
+
+  .vpm-vg .vg-kicker {
+    font-size:10px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+  }
+  .vpm-vg .vg-kicker.vg-k-red {color:var(--red-64);}
+  .vpm-vg .vg-kicker.vg-k-azure {color:var(--azure-66);}
+  .vpm-vg .vg-kicker.vg-k-tag {
+    background:var(--yellow-52);
+    color:var(--azure-9);
+    display:inline-block;
+    width:fit-content;
+    padding:2px 6px;
+    border-radius:1px;
+    font-size:10px;
+  }
+  .vpm-vg .vg-card-title {
+    font-weight:500;
+    font-size:13px;
+    line-height:19.5px;
+    color:var(--white);
+  }
+  .vpm-vg .vg-byline {
+    font-size:11px;
+    color:var(--grey-53);
+  }
+  /* =========================================================================
+     LIVE BLOCK OVERRIDES — Featured Stories article list
+     -------------------------------------------------------------------------
+     These are the ONLY un-prefixed selectors allowed in this stylesheet. They
+     restyle the CMS's own "Article List" block (inserted by an editor at the
+     SPLIT marker below) so the live story feed matches the retired static
+     Featured Stories cards. The live block renders OUTSIDE .vpm-vg, so it can't
+     inherit the custom properties above — they are redeclared here.
+     Do not add any other bare/global selectors to this sheet.
+     ========================================================================= */
+  section.page-article-grid {
+    --vg-azure-9:#101820;
+    --vg-azure-66:#6cace4;
+    --vg-yellow-52:#e0e721;
+    --vg-grey-53:#838d99;
+    --vg-border-azure-30:rgba(108,172,228,0.3);
+    background:var(--vg-azure-9);
+    padding:0 0 8px;
+    font-family:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
+  }
+  section.page-article-grid * {box-sizing:border-box;}
+  /* full-bleed band, content re-centered on the same 1200px/24px grid as .vg-wrap */
+  section.page-article-grid > .container {
+    max-width:none;
+    padding:0;
+  }
+  section.page-article-grid .page-article-grid-inner {
+    max-width:1200px;
+    margin:0 auto;
+    padding:0 24px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:2px;
+    background:transparent;
+  }
+  /* the grid-header only renders when the editor sets a title — the preceding
+     fragment already supplies the "Featured Stories" label, so hide it */
+  section.page-article-grid .page-article-grid-header {display:none;}
+
+  section.page-article-grid article.page-article-card {
+    position:relative;
+    background:var(--vg-azure-9);
+    display:flex;
+    flex-direction:column;
+    outline:1px solid rgba(255,255,255,0.06);
+    transition:transform 0.18s ease, box-shadow 0.18s ease;
+    will-change:transform;
+  }
+  section.page-article-grid .page-article-card-media {
+    width:100%;
+    aspect-ratio:16/9.4;
+    overflow:hidden;
+  }
+  section.page-article-grid .page-article-card-media a,
+  section.page-article-grid .page-article-card-media img {
+    display:block;
+    width:100%;
+    height:100%;
+    background-size:cover;
+    background-position:center;
+    object-fit:cover;
+    transition:transform 0.4s cubic-bezier(0.2,0.7,0.2,1);
+  }
+  /* story with no image: branded placeholder tile instead of a stretched icon */
+  section.page-article-grid .page-article-card-media a.bsm-img-ph,
+  section.page-article-grid .page-article-card-media .bsm-img-ph {
+    background-color:#0d1520;
+    background-image:url("https://vpm-voter-guide.vercel.app/assets/icon-video-unavailable.svg");
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size:36px 36px;
+    opacity:0.7;
+  }
+  section.page-article-grid .page-article-category {
+    font-size:10px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--vg-azure-66);
+    padding:19px 14px 0;
+  }
+  section.page-article-grid .page-article-title {
+    margin:6px 0 0;
+    padding:0 14px;
+    font-weight:500;
+    font-size:13px;
+    line-height:19.5px;
+    color:#fff;
+  }
+  section.page-article-grid .page-article-title a {
+    color:inherit;
+    text-decoration:none;
+    transition:color 0.15s ease;
+  }
+  section.page-article-grid .page-article-byline {
+    padding:6px 14px 16px;
+    font-size:11px;
+    color:var(--vg-grey-53);
+  }
+  section.page-article-grid .page-article-excerpt {display:none;}
+  /* 3px accent bar pinned to the bottom of each card, cycling the brand
+     accents in the same order the static cards used (red → blue → yellow) */
+  section.page-article-grid article.page-article-card::after {
+    content:"";
+    display:block;
+    margin-top:auto;
+    height:3px;
+    width:100%;
+    background:#f44250;
+  }
+  section.page-article-grid .page-article-grid-inner > article:nth-child(3n+2)::after {background:#5ba8e0;}
+  section.page-article-grid .page-article-grid-inner > article:nth-child(3n+3)::after {background:var(--vg-yellow-52);}
+  /* hover: lift the card, zoom the image, tint the headline */
+  section.page-article-grid article.page-article-card:hover {
+    transform:translateY(-4px);
+    box-shadow:0 12px 28px rgba(0,0,0,0.45);
+    outline-color:var(--vg-border-azure-30);
+    z-index:1;
+  }
+  section.page-article-grid article.page-article-card:hover .page-article-card-media a,
+  section.page-article-grid article.page-article-card:hover .page-article-card-media img {
+    transform:scale(1.05);
+  }
+  section.page-article-grid article.page-article-card:hover .page-article-title a {color:var(--vg-azure-66);}
+  section.page-article-grid a:focus-visible {
+    outline:2px solid var(--vg-azure-66);
+    outline-offset:3px;
+  }
+  @media (max-width:760px){
+    section.page-article-grid .page-article-grid-inner {grid-template-columns:1fr;}
+  }
+  @media (max-width:520px){
+    section.page-article-grid .page-article-grid-inner {padding:0 16px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    section.page-article-grid * {transition-duration:0.001ms !important;}
+  }
+  /* ================= end live block overrides ================= */
+
+  /* ---------- Sidebar ---------- */
+  .vpm-vg .vg-sidebar {
+    width:340px;
+    flex:0 0 340px;
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+    padding-top:16px;
+  }
+  .vpm-vg .vg-dates-box {
+    background:var(--azure-13);
+    border:1px solid var(--yellow-52);
+    border-top-width:3px;
+    padding:24px 25px;
+  }
+  .vpm-vg .vg-dates-box .vg-eyebrow {color:var(--yellow-52);margin-bottom:16px;}
+  .vpm-vg .vg-date-row {
+    display:flex;
+    gap:16px;
+    padding:14px 0;
+    border-bottom:1px solid var(--border-faint3);
+  }
+  .vpm-vg .vg-date-row:last-of-type {border-bottom:none;}
+  .vpm-vg .vg-date-chip {
+    font-family:'Oswald',Impact,sans-serif;
+    color:var(--yellow-52);
+    font-size:22px;
+    line-height:1.27;
+    text-align:center;
+    min-width:56px;
+    flex-shrink:0;
+  }
+  .vpm-vg .vg-date-info-title {
+    font-weight:500;
+    font-size:14px;
+    color:var(--white);
+    margin:0 0 2px;
+  }
+  .vpm-vg .vg-date-info-sub {
+    font-size:12px;
+    color:var(--grey-53);
+    margin:0;
+  }
+  .vpm-vg .vg-cal-link {
+    display:block;
+    text-align:center;
+    background:var(--yellow-52);
+    color:var(--azure-9);
+    font-weight:600;
+    font-size:12px;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+    padding:10px;
+    border-radius:2px;
+    margin-top:16px;
+  }
+  .vpm-vg .vg-promo-slot {
+    border-radius:4px;
+    overflow:hidden;
+    background:#0c121a;
+    border:1px dashed var(--border-azure-30);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .vpm-vg .vg-promo-slot .vg-promo-slot-text {
+    text-align:center;
+    color:var(--azure-40);
+  }
+  .vpm-vg .vg-promo-slot .vg-promo-slot-text .vg-promo-slot-title {
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    font-weight:600;
+    margin:0 0 4px;
+  }
+  .vpm-vg .vg-promo-slot .vg-promo-slot-text .vg-promo-slot-size {
+    font-size:11px;
+    margin:0;
+  }
+  .vpm-vg .vg-slot-300x250 {width:300px;height:250px;}
+  .vpm-vg .vg-slot-300x600 {width:300px;height:600px;}
+  .vpm-vg .vg-slot-caption {
+    font-size:10px;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+    color:var(--azure-40);
+    text-align:center;
+    margin:6px 0 0;
+  }
+
+  /* ---------- Leaderboard promo ---------- */
+  .vpm-vg .vg-banner-slot {
+    background:#0c121a;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px 0;
+  }
+  .vpm-vg .vg-banner-slot .vg-promo-slot {
+    width:100%;
+    max-width:970px;
+    height:90px;
+    border-radius:4px;
+  }
+
+  /* ---------- Generic sections ---------- */
+  .vpm-vg section.vg-block {
+    padding:64px 0;
+  }
+  .vpm-vg section.vg-block.vg-alt {background:var(--azure-9-2);}
+  .vpm-vg .vg-section-sub {
+    color:var(--grey-53);
+    font-size:15px;
+    line-height:22.5px;
+    margin:0 0 16px 15px;
+  }
+
+  /* ---------- Video section ---------- */
+  .vpm-vg .vg-video-grid {
+    display:grid;
+    grid-template-columns:3fr 2fr;
+    gap:24px;
+    margin-top:16px;
+    align-items:start;
+  }
+  .vpm-vg .vg-video-player {
+    background:#000;
+    border-radius:2px;
+    aspect-ratio:16/9;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:16px;
+    background-image:linear-gradient(90deg, rgb(40,40,40) 0%, rgb(40,40,40) 100%);
+    position:relative;
+  }
+  .vpm-vg .vg-video-player img.vg-unavailable-icon {width:64px;height:64px;opacity:0.9;}
+  .vpm-vg .vg-video-player .vg-msg {color:#eee;font-size:20px;text-align:center;}
+  .vpm-vg .vg-video-player .vg-yt-icon {position:absolute;bottom:12px;right:12px;width:44px;height:44px;opacity:0.7;}
+  .vpm-vg .vg-video-meta {margin-top:12px;}
+  .vpm-vg .vg-video-meta .vg-card-title {font-size:16px;line-height:24px;font-weight:500;margin:6px 0 4px;}
+  .vpm-vg .vg-video-meta .vg-byline {font-size:13px;}
+  .vpm-vg .vg-video-cta{margin-top:28px;display:flex;justify-content:center;}
+  .vpm-vg .vg-yt-cta{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--red-54);color:#fff;
+    padding:12px 22px;border-radius:3px;
+    font-size:13px;font-weight:600;letter-spacing:0.4px;text-transform:uppercase;
+    transition:filter 0.15s ease, box-shadow 0.15s ease, transform 0.12s ease;
+  }
+  .vpm-vg .vg-yt-cta:hover{filter:brightness(1.08);box-shadow:0 6px 18px rgba(238,39,55,0.32);}
+  .vpm-vg .vg-yt-cta:active{transform:translateY(1px);}
+  .vpm-vg .vg-yt-cta-icon{width:20px;height:20px;flex-shrink:0;}
+
+  .vpm-vg .vg-shorts-label {
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--grey-53);
+    margin-bottom:12px;
+  }
+  .vpm-vg .vg-short-item {
+    display:flex;
+    gap:12px;
+    align-items:center;
+    background:var(--azure-9);
+    border:1px solid var(--border-faint);
+    border-radius:2px;
+    padding:11px;
+    margin-bottom:8px;
+  }
+  .vpm-vg .vg-short-thumb {
+    position:relative;
+    width:72px;
+    aspect-ratio:72/128;
+    border-radius:2px;
+    overflow:hidden;
+    flex-shrink:0;
+  }
+  .vpm-vg .vg-short-thumb img {width:100%;height:100%;object-fit:cover;}
+  .vpm-vg .vg-short-thumb .vg-play-overlay {
+    position:absolute;inset:0;
+    background:rgba(0,0,0,0.35);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .vpm-vg .vg-short-thumb .vg-play-overlay img {width:14px;height:14px;object-fit:contain;}
+  .vpm-vg .vg-short-title {font-weight:500;font-size:13px;line-height:19.5px;color:var(--white);margin:0 0 4px;}
+  .vpm-vg .vg-short-sub {font-size:11px;color:var(--azure-40);margin:0;}
+
+  /* ---------- Latest coverage grid ---------- */
+  .vpm-vg .vg-coverage-grid {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+    margin-top:16px;
+  }
+  .vpm-vg .vg-coverage-card {
+    background:var(--azure-9-2);
+    border:1px solid var(--border-faint2);
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .vpm-vg .vg-coverage-card .vg-thumb {width:100%;aspect-ratio:4/2.9;overflow:hidden;}
+  .vpm-vg .vg-coverage-card .vg-thumb img {width:100%;height:100%;object-fit:cover;}
+  .vpm-vg .vg-coverage-card .vg-body {padding:12px 14px 16px;display:flex;flex-direction:column;gap:4px;}
+  .vpm-vg .vg-coverage-card .vg-headline-text {font-size:14px;line-height:21px;color:var(--grey-53);}
+  .vpm-vg .vg-coverage-card .vg-byline {font-size:11px;color:var(--grey-53);}
+  .vpm-vg .vg-feed-note {
+    text-align:center;
+    margin-top:20px;
+  }
+  .vpm-vg .vg-feed-note span {
+    display:inline-block;
+    border:1px dashed var(--border-azure-30);
+    border-radius:2px;
+    padding:11px 25px;
+    font-size:12px;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+    color:var(--azure-40);
+  }
+
+  /* ---------- Content + Ad row (Key VA Elections) ---------- */
+  .vpm-vg .vg-content-slot-row {
+    display:flex;
+    gap:40px;
+    align-items:flex-start;
+  }
+  .vpm-vg .vg-content-slot-row .vg-main {flex:1;min-width:0;}
+  .vpm-vg .vg-elections-grid {
+    display:flex;
+    flex-wrap:wrap;
+    gap:16px;
+    margin-top:16px;
+    background:rgba(255,255,255,0.05);
+    padding:29px 0 0;
+    justify-content:center;
+  }
+  .vpm-vg .vg-election-card {
+    background:var(--azure-9);
+    border-top:3px solid var(--azure-20);
+    padding:31px 24px 28px;
+    width:calc(50% - 8px);
+    min-width:320px;
+    flex:1 1 380px;
+  }
+  .vpm-vg .vg-election-card .vg-emoji {font-size:36px;line-height:54px;margin:0 0 6px;}
+  .vpm-vg .vg-election-card h3 {
+    font-family:'Oswald',Impact,sans-serif;
+    font-weight:600;
+    font-size:20px;
+    letter-spacing:0.4px;
+    text-transform:uppercase;
+    color:var(--white);
+    margin:0 0 6px;
+  }
+  .vpm-vg .vg-election-card .vg-matchup {
+    color:var(--azure-66);
+    font-size:12px;
+    letter-spacing:0.6px;
+    margin:0 0 8px;
+  }
+  .vpm-vg .vg-election-card p.vg-desc {
+    color:var(--azure-79);
+    font-size:14px;
+    line-height:21px;
+    margin:0 0 10px;
+  }
+  .vpm-vg .vg-election-card .vg-learn-more {
+    color:var(--yellow-52);
+    font-size:12px;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+  }
+
+  /* ---------- Regional races ---------- */
+  .vpm-vg .vg-regional-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+    margin-top:16px;
+  }
+  .vpm-vg .vg-regional-card {
+    background:var(--azure-9);
+    border:1px solid var(--border-faint);
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .vpm-vg .vg-regional-card .vg-top-bar {height:4px;background:var(--azure-66);}
+  .vpm-vg .vg-regional-card .vg-body {padding:20px 20px 24px;display:flex;flex-direction:column;gap:8px;}
+  .vpm-vg .vg-regional-card h3 {
+    font-family:'Oswald',Impact,sans-serif;
+    font-weight:600;
+    font-size:15px;
+    text-transform:uppercase;
+    letter-spacing:0.3px;
+    margin:0;
+  }
+  .vpm-vg .vg-regional-card .vg-district {
+    color:var(--azure-66);
+    font-size:11px;
+    letter-spacing:1px;
+    margin:0;
+  }
+  .vpm-vg .vg-locality-tags {display:flex;flex-wrap:wrap;gap:4px;}
+  .vpm-vg .vg-locality-tags span {
+    background:rgba(255,255,255,0.07);
+    color:var(--azure-79);
+    font-size:11px;
+    padding:2px 7px;
+    border-radius:1px;
+    white-space:nowrap;
+  }
+  .vpm-vg .vg-regional-card .vg-desc {
+    color:var(--azure-79);
+    font-size:12px;
+    line-height:18px;
+    margin:4px 0 0;
+  }
+
+  /* ---------- Voter Resources bar ---------- */
+  .vpm-vg .vg-resources-bar {
+    background:var(--azure-9-2);
+    border-top:1px solid var(--border-faint);
+    border-bottom:1px solid var(--border-faint);
+    padding:18px 0;
+  }
+  .vpm-vg .vg-resources-bar .vg-wrap {display:flex;gap:32px;flex-wrap:wrap;font-size:11px;letter-spacing:0.6px;text-transform:uppercase;color:var(--azure-66);}
+
+  /* ---------- FAQ ---------- */
+  .vpm-vg .vg-faq-list {margin-top:16px;}
+  .vpm-vg details.vg-faq-item {
+    border-bottom:1px solid var(--border-faint3);
+  }
+  .vpm-vg details.vg-faq-item summary {
+    list-style:none;
+    cursor:pointer;
+    padding:18px 4px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-size:15px;
+    font-weight:500;
+    color:var(--white);
+  }
+  .vpm-vg details.vg-faq-item summary::-webkit-details-marker {display:none;}
+  .vpm-vg details.vg-faq-item .vg-chevron {
+    width:14px;height:14px;flex-shrink:0;margin-left:16px;
+    transition:transform 0.2s ease;
+    filter:brightness(0) saturate(100%) invert(70%) sepia(45%) saturate(500%) hue-rotate(180deg);
+  }
+  .vpm-vg details.vg-faq-item[open] .vg-chevron {transform:rotate(180deg);}
+  .vpm-vg .vg-faq-answer {
+    padding:0 4px 20px;
+    color:var(--azure-79);
+    font-size:14px;
+    line-height:21px;
+  }
+  .vpm-vg .vg-faq-footnote {
+    margin-top:24px;
+    background:var(--azure-13);
+    border-left:3px solid var(--yellow-52);
+    padding:16px 20px;
+    font-size:13px;
+    color:var(--azure-79);
+  }
+  .vpm-vg .vg-faq-footnote a {color:var(--azure-66);}
+
+  /* ---------- Newsletter footer ---------- */
+  .vpm-vg .vg-newsletter-bar {
+    background:var(--azure-13);
+    text-align:center;
+    padding:48px 24px;
+  }
+  .vpm-vg .vg-newsletter-bar .vg-eyebrow {
+    color:var(--azure-66);
+    justify-content:center;
+    display:block;
+  }
+  .vpm-vg .vg-newsletter-bar h2 {
+    font-family:'Oswald',Impact,sans-serif;
+    font-weight:700;
+    text-transform:uppercase;
+    font-size:32px;
+    margin:8px 0 8px;
+  }
+  .vpm-vg .vg-newsletter-bar p {
+    color:var(--azure-79);
+    font-size:14px;
+    margin:0 0 24px;
+  }
+  .vpm-vg .vg-newsletter-form {
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
+    max-width:420px;
+    margin:0 auto;
+  }
+  .vpm-vg .vg-newsletter-form input[type=email] {
+    flex:1;
+    min-width:220px;
+    padding:12px 14px;
+    border-radius:2px;
+    border:1px solid var(--border-azure-20);
+    background:rgba(255,255,255,0.05);
+    color:var(--white);
+    font-size:14px;
+  }
+  .vpm-vg .vg-newsletter-form input[type=email]::placeholder {color:var(--azure-40);}
+  .vpm-vg .vg-newsletter-form button {
+    background:var(--yellow-52);
+    color:var(--azure-9);
+    border:none;
+    padding:12px 22px;
+    border-radius:2px;
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+    cursor:pointer;
+  }
+  .vpm-vg .vg-site-footer-note {
+    background:var(--azure-13);
+    text-align:center;
+    padding:14px 24px;
+    font-size:11px;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+    color:var(--azure-40);
+    border-top:1px solid var(--border-faint3);
+  }
+
+  /* ---------- Interactions / hover states ---------- */
+  .vpm-vg .vg-coverage-card,
+  .vpm-vg .vg-regional-card,
+  .vpm-vg .vg-election-card,
+  .vpm-vg .vg-short-item {
+    transition:transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+    will-change:transform;
+  }
+  /* card image zoom */
+  .vpm-vg .vg-coverage-card .vg-thumb img,
+  .vpm-vg .vg-short-thumb img {
+    transition:transform 0.4s cubic-bezier(0.2,0.7,0.2,1);
+  }
+  .vpm-vg .vg-coverage-card:hover .vg-thumb img,
+  .vpm-vg .vg-short-item:hover .vg-short-thumb img {
+    transform:scale(1.05);
+  }
+  /* card lift */
+  .vpm-vg .vg-coverage-card:hover {
+    transform:translateY(-4px);
+    box-shadow:0 12px 28px rgba(0,0,0,0.45);
+    border-color:var(--border-azure-30);
+    position:relative;
+    z-index:1;
+  }
+  .vpm-vg .vg-regional-card:hover,
+  .vpm-vg .vg-short-item:hover {
+    transform:translateY(-3px);
+    box-shadow:0 10px 24px rgba(0,0,0,0.4);
+    border-color:var(--border-azure-30);
+  }
+  .vpm-vg .vg-election-card:hover {
+    background:rgba(255,255,255,0.02);
+    box-shadow:inset 0 3px 0 -0px var(--yellow-52), 0 10px 24px rgba(0,0,0,0.35);
+  }
+  /* regional accent bar reveals on hover */
+  .vpm-vg .vg-regional-card .vg-top-bar {transition:height 0.18s ease, filter 0.18s ease;}
+  .vpm-vg .vg-regional-card:hover .vg-top-bar {height:6px;filter:brightness(1.15);}
+
+  /* text links + CTAs */
+  .vpm-vg .vg-card-title,
+  .vpm-vg .vg-short-title,
+  .vpm-vg .vg-coverage-card .vg-headline-text,
+  .vpm-vg .vg-election-card h3 {transition:color 0.15s ease;}
+  .vpm-vg .vg-short-item:hover .vg-short-title,
+  .vpm-vg .vg-coverage-card:hover .vg-headline-text {color:var(--azure-66);}
+
+  .vpm-vg .vg-learn-more,
+  .vpm-vg .vg-promo-link,
+  .vpm-vg .vg-resources-bar a {
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    transition:color 0.15s ease, gap 0.15s ease;
+  }
+  .vpm-vg .vg-learn-more:hover {color:#fff;gap:8px;}
+  .vpm-vg .vg-promo-link:hover {color:#fff;}
+  .vpm-vg .vg-resources-bar a {position:relative;}
+  .vpm-vg .vg-resources-bar a::after {
+    content:"";
+    position:absolute;
+    left:0;bottom:-3px;
+    width:100%;height:1px;
+    background:currentColor;
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:transform 0.2s ease;
+  }
+  .vpm-vg .vg-resources-bar a:hover::after {transform:scaleX(1);}
+  .vpm-vg .vg-faq-footnote a,
+  .vpm-vg .vg-promo-text + .vg-promo-link {transition:color 0.15s ease;}
+  .vpm-vg .vg-faq-footnote a:hover {color:#fff;}
+
+  /* button CTAs */
+  .vpm-vg .vg-cal-link,
+  .vpm-vg .vg-newsletter-form button {
+    transition:transform 0.12s ease, filter 0.15s ease, box-shadow 0.15s ease;
+  }
+  .vpm-vg .vg-cal-link:hover,
+  .vpm-vg .vg-newsletter-form button:hover {
+    filter:brightness(1.08);
+    box-shadow:0 6px 18px rgba(224,231,33,0.28);
+  }
+  .vpm-vg .vg-cal-link:active,
+  .vpm-vg .vg-newsletter-form button:active {transform:translateY(1px);filter:brightness(0.97);}
+
+  /* FAQ rows */
+  .vpm-vg details.vg-faq-item summary {transition:color 0.15s ease;}
+  .vpm-vg details.vg-faq-item summary:hover {color:var(--azure-66);}
+  .vpm-vg .vg-faq-answer {animation:faqReveal 0.25s ease;}
+  @keyframes faqReveal{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:none;}}
+
+  /* newsletter input focus */
+  .vpm-vg .vg-newsletter-form input[type=email] {transition:border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;}
+  .vpm-vg .vg-newsletter-form input[type=email]:focus {
+    outline:none;
+    border-color:var(--azure-66);
+    background:rgba(255,255,255,0.08);
+    box-shadow:0 0 0 3px rgba(108,172,228,0.18);
+  }
+
+  /* "live" pulse on the Election 2026 tag */
+  .vpm-vg .vg-promo-tag {position:relative;padding-left:20px;}
+  .vpm-vg .vg-promo-tag::before {
+    content:"";
+    position:absolute;
+    left:8px;top:50%;
+    width:6px;height:6px;
+    margin-top:-3px;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 0 0 0 rgba(255,255,255,0.7);
+    animation:livePulse 2s infinite;
+  }
+  @keyframes livePulse{
+    0%{box-shadow:0 0 0 0 rgba(255,255,255,0.6);}
+    70%{box-shadow:0 0 0 7px rgba(255,255,255,0);}
+    100%{box-shadow:0 0 0 0 rgba(255,255,255,0);}
+  }
+
+  /* keyboard focus visibility — scoped: bare a/button selectors would leak
+     focus styling onto the site header, footer and nav */
+  .vpm-vg a:focus-visible,
+  .vpm-vg button:focus-visible,
+  .vpm-vg summary:focus-visible {
+    outline:2px solid var(--azure-66);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+
+  /* respect reduced-motion preferences */
+  @media (prefers-reduced-motion:reduce){
+    .vpm-vg * {animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;scroll-behavior:auto !important;}
+    .vpm-vg .vg-promo-tag::before {animation:none;}
+  }
+
+  /* ---------- Responsive ---------- */
+
+  /* Tablet / small laptop */
+  @media (max-width:980px){
+    .vpm-vg .vg-hero-section {padding-top:40px;}
+    .vpm-vg .vg-hero-row {flex-direction:column;}
+    .vpm-vg .vg-hero-main {min-width:0;}
+    .vpm-vg .vg-sidebar {width:100%;flex:1 1 auto;flex-direction:row;flex-wrap:wrap;}
+    .vpm-vg .vg-sidebar .vg-dates-box {flex:1 1 320px;}
+    .vpm-vg .vg-sidebar > div:last-child {flex:1 1 300px;display:flex;flex-direction:column;justify-content:center;}
+    .vpm-vg .vg-video-grid {grid-template-columns:1fr;}
+    .vpm-vg .vg-coverage-grid {grid-template-columns:repeat(2,1fr);}
+    .vpm-vg .vg-regional-grid {grid-template-columns:repeat(2,1fr);}
+    .vpm-vg .vg-content-slot-row {flex-direction:column;}
+    .vpm-vg .vg-content-slot-row > div:last-child {width:100%;}
+    .vpm-vg .vg-slot-300x600, .vpm-vg .vg-slot-300x250 {width:100%;height:120px;}
+  }
+
+  /* Large phone / portrait tablet */
+  @media (max-width:760px){
+    .vpm-vg section.vg-block {padding:44px 0;}
+    .vpm-vg .vg-sidebar {flex-direction:column;}
+    .vpm-vg .vg-sidebar .vg-dates-box,
+    .vpm-vg .vg-sidebar > div:last-child {flex-basis:auto;}
+    .vpm-vg .vg-regional-grid {grid-template-columns:1fr;}
+    .vpm-vg .vg-elections-grid {padding-top:20px;}
+    .vpm-vg .vg-election-card {width:100%;min-width:0;flex-basis:100%;padding:24px 20px;}
+    .vpm-vg .vg-section-label h2.vg-section-title {font-size:22px;}
+    .vpm-vg .vg-headline span {font-size:16vw;}
+  }
+
+  /* Small phone */
+  @media (max-width:520px){
+    .vpm-vg .vg-wrap {padding-left:16px;padding-right:16px;}
+    .vpm-vg section.vg-block {padding:36px 0;}
+    .vpm-vg .vg-hero-section {padding-top:32px;}
+    .vpm-vg .vg-coverage-grid {grid-template-columns:1fr;}
+    .vpm-vg .vg-dates-box {padding:20px 18px;}
+    .vpm-vg .vg-promo-inner {gap:8px;}
+    .vpm-vg .vg-promo-text {min-width:0;font-size:12px;}
+    .vpm-vg .vg-promo-link {font-size:11px;}
+    .vpm-vg .vg-hero-dek {font-size:15px;}
+    .vpm-vg .vg-newsletter-bar {padding:36px 18px;}
+    .vpm-vg .vg-newsletter-bar h2 {font-size:26px;}
+    .vpm-vg .vg-newsletter-form {flex-direction:column;}
+    .vpm-vg .vg-newsletter-form input[type=email],
+    .vpm-vg .vg-newsletter-form button {width:100%;min-width:0;}
+    .vpm-vg .vg-resources-bar .vg-wrap {gap:16px 20px;}
+    .vpm-vg .vg-video-player .vg-msg {font-size:16px;}
+    .vpm-vg .vg-section-nav-label {display:none;}
+    .vpm-vg .vg-section-nav-inner {gap:0;}
+    .vpm-vg .vg-section-nav a {font-size:12px;padding:8px 10px;}
+  }
+</style>

@@ -1,11 +1,13 @@
 ---
-description: Turn an idea into a half-page BRIEF.md before building a widget. Usage: /brief [one-line idea] — interviews you briefly, then writes the brief into the widget folder so the build starts from agreed requirements instead of discovering them mid-build.
+description: Turn an idea into a half-page BRIEF.md before building a widget or page. Usage: /brief [one-line idea] — interviews you briefly, then writes the brief into the widget or page folder so the build starts from agreed requirements instead of discovering them mid-build.
 effort: medium
 ---
 
 Write a project brief BEFORE any code gets written. Play the PM role: pin down the requirements that would otherwise surface as mid-build direction changes.
 
 **Arguments:** $ARGUMENTS
+
+**Widget or page?** A widget is used on more than one URL; a page build on exactly one. Ask "how many URLs?" if it isn't clear. Widgets: `widgets/[slug]/`, scaffold with `/new-widget`. Pages: `pages/[slug]/`, scaffold with `/new-page`, and ask for the **live URL** and **paste shape** (one Code Block, separate ACF fields, or several blocks) in place of "deploy target". **Pages are committed to a public repo** (as is everything here), so keep the brief to requirements: no criticism of colleagues or vendors, no embargoed content, no named individuals' contact details.
 
 ---
 
@@ -15,7 +17,7 @@ If `$ARGUMENTS` describes the idea, start from it. Otherwise ask: "What's the id
 
 **If an existing `BRIEF.md` is already in the widget folder, read it first, then ask:**
 > "Before we update this brief — what have you reconsidered since we last worked on this? What assumptions no longer hold?"
-Fold any answers into the brief before proceeding. Skip if this is a fresh widget.
+Fold any answers into the brief before proceeding. Skip if this is fresh.
 
 ## Step 2 — Interview (one message)
 
@@ -30,17 +32,17 @@ Audience and content source are usually "VPM site visitors" and "static content,
 
 ## Step 3 — Write BRIEF.md
 
-Write `BRIEF.md` into `widgets/[slug]/`. If the slug/folder doesn't exist yet, ask where it will live, or just hold the brief and let `/new-widget` create the folder and file it. Keep it to half a page:
+Write `BRIEF.md` into `widgets/[slug]/` or `pages/[slug]/`. If the slug/folder doesn't exist yet, ask where it will live, or just hold the brief and let `/new-widget` or `/new-page` create the folder and file it. Keep it to half a page:
 
 ```markdown
-# [Widget Name] — Brief
+# [Widget or Page Name] — Brief
 *Written: [date]*
 
 ## Problem / Why
 [1–2 sentences]
 
 ## User moment
-[One concrete scenario: who is on the page, why they're there, what this widget does for them in that moment]
+[One concrete scenario: who is on the page, why they're there, what this widget or page does for them in that moment]
 
 ## What done looks like
 [concrete, observable success criteria — bullet list]
@@ -50,7 +52,7 @@ Write `BRIEF.md` into `widgets/[slug]/`. If the slug/folder doesn't exist yet, a
 - [exclusion]
 
 ## Deploy target & constraints
-[CMS/platform + the format it implies, e.g. "WordPress ACF → split-file, self-contained, no external deps"]
+[Widget: CMS/platform + the format it implies, e.g. "WordPress ACF → split-file, self-contained, no external deps". Page: live URL + paste shape, e.g. "vpm.org/elections — one Code Block". `/new-page` reads this to pick its shape.]
 
 ## Open questions
 [anything unresolved — fine to leave items here]
@@ -59,4 +61,4 @@ Write `BRIEF.md` into `widgets/[slug]/`. If the slug/folder doesn't exist yet, a
 ## Step 4 — Confirm and hand off
 
 Show the brief, ask for one round of corrections, then finish with:
-> Brief saved to `[path]`. Scaffold the build with `/new-widget [name]` — brand tokens load automatically.
+> Brief saved to `[path]`. Scaffold the build with `/new-widget [name]` or `/new-page [name]` — brand tokens load automatically.

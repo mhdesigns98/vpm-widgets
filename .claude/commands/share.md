@@ -14,9 +14,7 @@ live preview, at wide/desktop/tablet/mobile width. They don't need to find anyth
 The first word of `$ARGUMENTS` is a slug. Anything after it is the note for the viewer.
 
 - If `widgets/<slug>/` exists in this repo, it's a widget: `?w=<slug>`.
-- If it's a page build in `vpm-pages` (`~/Projects/vpm/vpm-pages/pages/<slug>/`, or the sibling
-  checkout), use `?p=<slug>`. Page links still go through this repo's `share/` page. Both repos
-  publish on the same GitHub Pages origin, so one viewer serves both.
+- If `pages/<slug>/` exists in this repo, it's a page build: `?p=<slug>`. One viewer serves both.
 - No slug: infer it from the current directory or the folder you've just been working in. If it
   could be more than one, ask.
 
@@ -26,7 +24,7 @@ GitHub Pages publishes `main` only. A folder that exists only on a branch or an 
 viewer a "Preview not found" page.
 
 ```bash
-git fetch -q origin main && git ls-tree -d origin/main widgets/<slug>   # or pages/<slug> in vpm-pages
+git fetch -q origin main && git ls-tree -d origin/main widgets/<slug>   # or pages/<slug>
 ```
 
 If it isn't on `origin/main` yet, say so plainly. Don't hand over a link that will 404. Offer to

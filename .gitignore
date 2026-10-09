@@ -4,6 +4,7 @@
 # Only per-developer local config is ignored.
 .claude/settings.local.json
 .claude/local/
+.claude/worktrees/
 
 # Browser-automation scratch output (screenshots, console logs)
 .playwright-mcp/

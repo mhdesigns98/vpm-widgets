@@ -1,0 +1,312 @@
+/* ================================================
+   Neighborhood History — CSS block
+   ACF field: CSS
+   Everything scoped under .vpm-nh. No global selectors.
+   Tokens copied from vpm-widgets/tokens.css (canonical) and declared on
+   .vpm-nh, not :root, so nothing leaks into the theme.
+   No @import: the theme already loads Public Sans and IBM Plex Sans Condensed.
+
+   Specificity: element resets are (0,1,1); every component rule is written
+   ".vpm-nh .vpm-nh-…" (0,2,0), which beats the resets and theme rules up to
+   (0,1,1) such as ".page-code-block-html h2". It LOSES to compound theme
+   selectors at (0,2,1)+ and to !important — only preview.html under the live
+   theme CSS proves this holds. Text color, size, line-height and family are
+   set explicitly on each text class rather than inherited.
+   ================================================ */
+
+/* ---- Tokens (subset of vpm-widgets/tokens.css) ---- */
+.vpm-nh {
+  --vpm-dark-blue:  #003865;
+  --vpm-light-blue: #6CACE4;
+  --vpm-yellow:     #E0E721;
+  --vpm-black:      #101820;
+  --vpm-white:      #FFFFFF;
+  --vpm-blue-900:   #002244;
+  --vpm-gray-600:   #5A6470;
+  --vpm-gray-200:   #E5E7E9;
+  --vpm-gray-050:   #F8F9FA;
+
+  --fg-default:       var(--vpm-black);
+  --fg-muted:         var(--vpm-gray-600);
+  --fg-on-dark:       var(--vpm-white);
+  --fg-on-dark-muted: #B9C8D8;
+  --fg-link:          var(--vpm-dark-blue);
+  --fg-link-hover:    var(--vpm-blue-900);
+  --bg-inverse:       var(--vpm-dark-blue);
+  --bg-muted:         var(--vpm-gray-050);
+  --border-default:   var(--vpm-gray-200);
+
+  --font-sans:    'Public Sans', 'GT America', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'IBM Plex Sans Condensed', 'Oswald', 'GT America Condensed', 'Arial Narrow', sans-serif;
+
+  --fs-display-lg: clamp(32px, 4vw, 56px);
+  --fs-h2:         clamp(24px, 2.4vw, 32px);
+  --fs-h3:         20px;
+  --fs-body:       16px;
+  --fs-body-sm:    14px;
+  --fs-caption:    12px;
+  --fs-eyebrow:    13px;
+
+  --lh-tight:  1.05;
+  --lh-snug:   1.2;
+  --lh-loose:  1.65;
+  --tracking-eyebrow: 0.12em;
+
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  --dur-fast: 120ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Page-level: one section gap, used for every band */
+  --nh-section-gap: var(--space-8);
+  /* Focus ring: navy on light bands (≥3:1 on white); overridden on navy */
+  --nh-focus: var(--vpm-dark-blue);
+}
+
+/* ---- Base ---- */
+.vpm-nh,
+.vpm-nh * { box-sizing: border-box; }
+.vpm-nh {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-loose);
+  color: var(--fg-default);
+  -webkit-font-smoothing: antialiased;
+}
+/* Hostile-host resets: theme heading sizes, rich-text margins, img rules */
+.vpm-nh h2,
+.vpm-nh h3,
+.vpm-nh p,
+.vpm-nh ol,
+.vpm-nh li,
+.vpm-nh figure { margin: 0; padding: 0; }
+.vpm-nh ol,
+.vpm-nh li { list-style: none; }
+.vpm-nh li::before,
+.vpm-nh li::marker { content: none; }
+.vpm-nh h2,
+.vpm-nh h3 { text-transform: none; letter-spacing: normal; }
+.vpm-nh img { display: block; max-width: 100%; height: auto; border: 0; }
+/* !important on link color only: the pre-ship check assumes a host rule like
+   "a { color: … !important }", which no specificity can beat. Every other
+   link color below sets its own !important value for the same reason. */
+.vpm-nh a {
+  color: var(--fg-link) !important;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.vpm-nh a:hover { color: var(--fg-link-hover) !important; }
+.vpm-nh a:focus-visible {
+  outline: 2px solid var(--nh-focus);
+  outline-offset: 2px;
+}
+
+.vpm-nh .vpm-nh-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.vpm-nh .vpm-nh-eyebrow {
+  display: block;
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+.vpm-nh .vpm-nh-heading {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: var(--lh-snug);
+  color: var(--fg-default);
+  text-wrap: balance;
+}
+
+/* ---- Bands ----
+   Every section is a band with the same vertical padding, so spacing between
+   sections is controlled here, not by the theme. The navy band paints its
+   background edge to edge without widening the layout box, so there is no
+   horizontal scroll where scrollbars take up width (which both width:100vw
+   and margin-inline:calc(50% - 50vw) cause). box-shadow never adds scrollable
+   overflow; clip-path trims its vertical spread. Needs no ancestor with
+   overflow:hidden — see DEV-REQUEST.md #7. */
+.vpm-nh .vpm-nh-band { padding-block: var(--nh-section-gap); }
+.vpm-nh .vpm-nh-band--inverse {
+  --nh-focus: var(--vpm-light-blue);
+  background: var(--bg-inverse);
+  box-shadow: 0 0 0 100vmax var(--bg-inverse);
+  clip-path: inset(0 -100vmax);
+  color: var(--fg-on-dark);
+}
+.vpm-nh .vpm-nh-band--inverse .vpm-nh-heading { color: var(--fg-on-dark); }
+/* First/last bands sit against the theme's own section padding (white), so
+   they carry no background and need no top/bottom padding of their own. */
+/* of-type, not child: survives an empty <p> injected by a content filter */
+.vpm-nh .vpm-nh-band:first-of-type { padding-top: 0; }
+.vpm-nh .vpm-nh-band:last-of-type { padding-bottom: 0; }
+
+/* =========================================
+   Timeline
+   ========================================= */
+.vpm-nh .vpm-nh-timeline__header { margin-bottom: var(--space-6); }
+.vpm-nh .vpm-nh-timeline__header .vpm-nh-heading { margin-top: var(--space-2); }
+
+.vpm-nh .vpm-nh-timeline__list { list-style: none; }
+
+.vpm-nh .vpm-nh-timeline__item {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--space-5);
+  align-items: start;
+  margin: 0;
+  padding: var(--space-6) 0;
+  border-top: 1px solid var(--border-default);
+}
+.vpm-nh .vpm-nh-timeline__item:first-child { border-top: 0; padding-top: 0; }
+
+.vpm-nh .vpm-nh-timeline__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--bg-muted);
+}
+/* contain, not cover: archival scans (a book page, a newspaper clipping) are
+   shown whole in a uniform cell; the muted cell color fills the difference */
+.vpm-nh .vpm-nh-timeline__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.vpm-nh .vpm-nh-timeline__year {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--fs-display-lg);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+  color: var(--vpm-dark-blue);
+}
+.vpm-nh .vpm-nh-timeline__title {
+  margin-top: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: var(--lh-snug);
+  color: var(--fg-default);
+}
+.vpm-nh .vpm-nh-timeline__caption {
+  font-family: var(--font-sans);
+  line-height: var(--lh-loose);
+  margin-top: var(--space-3);
+  font-size: var(--fs-body);
+  color: var(--fg-default);
+}
+.vpm-nh .vpm-nh-timeline__credit {
+  font-family: var(--font-sans);
+  line-height: var(--lh-loose);
+  margin-top: var(--space-3);
+  font-size: var(--fs-caption);
+  color: var(--fg-muted);
+}
+
+/* =========================================
+   Map
+   ========================================= */
+.vpm-nh .vpm-nh-map .vpm-nh-heading { margin-bottom: var(--space-5); }
+.vpm-nh .vpm-nh-map__desc {
+  font-family: var(--font-sans);
+  line-height: var(--lh-loose);
+  margin-top: var(--space-4);
+  max-width: 720px;
+  font-size: var(--fs-body-sm);
+  color: var(--fg-on-dark-muted);
+}
+/* Own line with a 44px tap target, rather than an inline link at 16px */
+.vpm-nh .vpm-nh-map__open {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: var(--space-2);
+  color: var(--fg-on-dark) !important;
+  font-weight: 600;
+  text-decoration: underline;
+}
+.vpm-nh .vpm-nh-map__open:hover { color: var(--vpm-yellow) !important; }
+
+/* =========================================
+   Closing band (lockup + copy + newsletter)
+   ========================================= */
+.vpm-nh .vpm-nh-closing__lockup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-6);
+  background: var(--bg-inverse);
+}
+.vpm-nh .vpm-nh-closing__tagline {
+  font-family: var(--font-display);
+  font-size: var(--fs-display-lg);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+  text-transform: uppercase;
+  color: var(--vpm-yellow);
+}
+.vpm-nh .vpm-nh-closing__chevron {
+  flex: none;
+  width: 48px;
+  height: 64px;
+  color: var(--vpm-light-blue);
+}
+.vpm-nh .vpm-nh-closing__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: var(--space-6);
+  align-items: start;
+  margin-top: var(--space-6);
+}
+.vpm-nh .vpm-nh-closing__copy .vpm-nh-heading { margin-bottom: var(--space-4); }
+.vpm-nh .vpm-nh-closing__text {
+  font-family: var(--font-sans);
+  line-height: var(--lh-loose);
+  font-size: var(--fs-body);
+  color: var(--fg-default);
+}
+.vpm-nh .vpm-nh-closing__text + .vpm-nh-closing__text { margin-top: var(--space-4); }
+.vpm-nh .vpm-nh-closing__signup iframe {
+  display: block;
+  width: 100%;
+  max-width: 340px;
+  height: 440px; /* resized by the listener in js.js */
+  margin-inline: auto;
+  border: 0;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 760px) {
+  .vpm-nh { --nh-section-gap: var(--space-7); }
+  .vpm-nh .vpm-nh-timeline__item { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+  .vpm-nh .vpm-nh-closing__body { grid-template-columns: minmax(0, 1fr); }
+  .vpm-nh .vpm-nh-closing__lockup { padding: var(--space-4); }
+  .vpm-nh .vpm-nh-closing__chevron { width: 32px; height: 44px; }
+}
+
+/* ---- Motion ---- */
+@media (prefers-reduced-motion: no-preference) {
+  .vpm-nh a { transition: color var(--dur-fast) var(--ease-standard); }
+}

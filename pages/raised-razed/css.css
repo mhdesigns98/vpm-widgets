@@ -1,0 +1,199 @@
+/* ================================================================
+   Raised/Razed — CSS block
+   ACF field: CSS  (Code Block section)
+
+   Every rule is scoped under .vpm-rr so hostile host CSS can't
+   reach in and nothing here leaks out. The source page's press-item
+   images used bare .page-split-image / .page-split-text classes
+   supplied by the theme — this replaces those with namespaced BEM.
+
+   Type scale matches the theme's own measured rich-text scale
+   (16px root, 17px body / 30px h2, Public Sans body / Oswald
+   headings) — measured live on vpmnews.kinsta.cloud 2026-08-11.
+   The theme's .page-split-text h2 renders at 34px; vpm-rr-press-card__title
+   matches that for the same visual role.
+
+   Tokens copied from ~/Projects/vpm/vpm-widgets/tokens.css — do not
+   link that file, this must survive as a standalone paste.
+   ================================================================ */
+
+.vpm-rr {
+  /* Brand core */
+  --vpm-rr-dark-blue: #003865;   /* PMS 2955 C */
+  --vpm-rr-black:     #101820;   /* PMS Black 6 C */
+
+  /* Derived tints */
+  --vpm-rr-link:       #0B4F85;  /* blue-600 — 8.5:1 on white, AA */
+  --vpm-rr-link-hover: #002244;  /* blue-900 */
+  --vpm-rr-rule:       #E5E7E9;  /* gray-200 */
+  --vpm-rr-muted:      #5A6470;  /* gray-600 — 6.0:1 on white, AA */
+
+  /* Type */
+  --vpm-rr-font-body: 'Public Sans', 'Helvetica Neue', Arial, sans-serif;
+  --vpm-rr-font-head: 'Oswald', 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+
+  max-width: 1100px;
+  margin: 0 auto;
+  font-family: var(--vpm-rr-font-body);
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--vpm-rr-black);
+  text-align: left;
+}
+
+/* Scoped reset — the theme's base.css already does this, but a
+   pasted block must not depend on that. */
+.vpm-rr *,
+.vpm-rr *::before,
+.vpm-rr *::after { box-sizing: border-box; }
+
+/* Element-level defaults deliberately carry NO font-size. Every size lives
+   on a .vpm-rr .vpm-rr-* selector below, so all of them share one
+   specificity (0-2-0) and source order decides — an element rule here would
+   outrank the single-class BEM rules and silently win. */
+.vpm-rr p { margin: 0 0 1.1em; line-height: inherit; }
+.vpm-rr p:last-child { margin-bottom: 0; }
+
+.vpm-rr h1,
+.vpm-rr h2,
+.vpm-rr h3 {
+  font-family: var(--vpm-rr-font-head);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--vpm-rr-dark-blue);
+}
+.vpm-rr h2 { margin: 0 0 24px; }
+.vpm-rr h3 { margin: 0 0 0.4em; }
+
+.vpm-rr a {
+  color: var(--vpm-rr-link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.vpm-rr a:hover,
+.vpm-rr a:focus-visible { color: var(--vpm-rr-link-hover); }
+.vpm-rr a:focus-visible {
+  outline: 3px solid var(--vpm-rr-dark-blue);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.vpm-rr img { max-width: 100%; height: auto; display: block; }
+
+/* ── Hero ────────────────────────────────────────────────────── */
+.vpm-rr-hero { padding: 32px 0 24px; }
+.vpm-rr .vpm-rr-hero__title { font-size: 48px; line-height: 1.1; margin: 0; }
+
+/* ── Intro ───────────────────────────────────────────────────── */
+.vpm-rr-intro { margin-bottom: 48px; }
+.vpm-rr .vpm-rr-intro__lede { font-size: 19px; font-weight: 700; text-align: center; }
+
+.vpm-rr-player {
+  position: relative;
+  padding-top: calc(56.25% + 43px);
+  margin: 24px 0;
+}
+.vpm-rr-player iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: 0;
+}
+
+/* ── Section titles (shared by Articles / Team / About) ───────── */
+.vpm-rr-section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 30px;
+}
+.vpm-rr .vpm-rr-section-title__marker {
+  width: 14px;
+  height: 14px;
+  background: var(--vpm-rr-dark-blue);
+  flex-shrink: 0;
+}
+
+/* ── Articles ────────────────────────────────────────────────── */
+.vpm-rr-articles { margin-bottom: 56px; }
+
+.vpm-rr-press-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.vpm-rr-press-card { display: flex; flex-direction: column; }
+.vpm-rr .vpm-rr-press-card__link {
+  display: flex;
+  flex-direction: column;
+  color: inherit;
+  text-decoration: none;
+}
+.vpm-rr .vpm-rr-press-card__link:hover .vpm-rr-press-card__title,
+.vpm-rr .vpm-rr-press-card__link:focus-visible .vpm-rr-press-card__title { color: var(--vpm-rr-link); }
+.vpm-rr .vpm-rr-press-card__link:focus-visible {
+  outline: 3px solid var(--vpm-rr-dark-blue);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.vpm-rr .vpm-rr-press-card__img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  margin-bottom: 12px;
+}
+.vpm-rr .vpm-rr-press-card__title { font-size: 20px; line-height: 1.3; margin: 0; }
+
+/* ── Team ────────────────────────────────────────────────────── */
+.vpm-rr-team { margin-bottom: 56px; }
+
+.vpm-rr-team-list {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 24px;
+}
+
+.vpm-rr-member {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 32px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--vpm-rr-rule);
+}
+.vpm-rr-member:last-child { border-bottom: 0; padding-bottom: 0; }
+
+.vpm-rr .vpm-rr-member__photo {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 4px;
+}
+.vpm-rr .vpm-rr-member__name { font-size: 24px; margin: 0 0 0.2em; }
+.vpm-rr .vpm-rr-member__role {
+  font-family: var(--vpm-rr-font-body);
+  font-weight: 700;
+  color: var(--vpm-rr-muted);
+  margin: 0 0 16px;
+}
+
+/* ── About ───────────────────────────────────────────────────── */
+.vpm-rr-about { padding-top: 8px; }
+.vpm-rr .vpm-rr-about__logo { max-width: 320px; margin: 0 auto 32px; }
+
+.vpm-rr-follow { text-align: center; margin-top: 32px; }
+.vpm-rr .vpm-rr-follow a { margin: 0 12px; }
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .vpm-rr .vpm-rr-hero__title { font-size: 34px; }
+  .vpm-rr-member { grid-template-columns: 1fr; }
+  .vpm-rr .vpm-rr-member__photo { max-width: 160px; }
+}
+
+/* ── Reduced motion / focus ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .vpm-rr * { scroll-behavior: auto !important; }
+}

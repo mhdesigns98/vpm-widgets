@@ -1,0 +1,344 @@
+[
+  {
+    "key": "group_vpmvg_page",
+    "title": "Voter Guide 2026 — Page Sections",
+    "fields": [
+      {
+        "key": "field_vpmvg_sections",
+        "label": "Page Sections",
+        "name": "guide_sections",
+        "type": "flexible_content",
+        "instructions": "Add, remove, and reorder sections. Race data, regional races, important dates, election results, and FAQ content are dev-maintained in inc/voter-guide-data.php — not editable here.",
+        "button_label": "Add Section",
+        "layouts": {
+          "layout_vpmvg_hero": {
+            "key": "layout_vpmvg_hero",
+            "name": "hero",
+            "label": "Hero + Important Dates",
+            "display": "block",
+            "sub_fields": [
+              {
+                "key": "field_vpmvg_hero_eyebrow",
+                "label": "Eyebrow",
+                "name": "eyebrow",
+                "type": "text",
+                "default_value": "Virginia · 2026 General Election"
+              },
+              {
+                "key": "field_vpmvg_hero_line1",
+                "label": "Headline Line 1 (blue)",
+                "name": "headline_line_1",
+                "type": "text",
+                "default_value": "VPM News"
+              },
+              {
+                "key": "field_vpmvg_hero_line2",
+                "label": "Headline Line 2 (yellow)",
+                "name": "headline_line_2",
+                "type": "text",
+                "default_value": "Voter"
+              },
+              {
+                "key": "field_vpmvg_hero_line3",
+                "label": "Headline Line 3 (white)",
+                "name": "headline_line_3",
+                "type": "text",
+                "default_value": "Guide"
+              },
+              {
+                "key": "field_vpmvg_hero_body",
+                "label": "Body Copy",
+                "name": "body",
+                "type": "textarea",
+                "rows": 3,
+                "default_value": "Get nonpartisan information about the candidates and measures on your Virginia ballot this November. VPM is here to help you vote with confidence."
+              },
+              {
+                "key": "field_vpmvg_hero_featured_posts",
+                "label": "Featured Stories",
+                "name": "featured_posts",
+                "type": "relationship",
+                "instructions": "Pick up to 3 posts to feature under the hero (falls back to latest 3 posts in the Elections category if left empty).",
+                "post_type": [ "post" ],
+                "filters": [ "search", "taxonomy" ],
+                "min": 0,
+                "max": 3,
+                "return_format": "id"
+              },
+              {
+                "key": "field_vpmvg_hero_calendar_url",
+                "label": "\"Full Elections Calendar\" Link URL",
+                "name": "calendar_url",
+                "type": "url",
+                "default_value": "#"
+              }
+            ]
+          },
+          "layout_vpmvg_video": {
+            "key": "layout_vpmvg_video",
+            "name": "video_coverage",
+            "label": "Video Coverage",
+            "display": "block",
+            "sub_fields": [
+              {
+                "key": "field_vpmvg_video_featured_url",
+                "label": "Featured Video (YouTube/Vimeo URL)",
+                "name": "featured_video_url",
+                "type": "oembed"
+              },
+              {
+                "key": "field_vpmvg_video_featured_title",
+                "label": "Featured Video Title",
+                "name": "featured_video_title",
+                "type": "text",
+                "default_value": "Election Night Special: Virginia Results with VPM News"
+              },
+              {
+                "key": "field_vpmvg_video_featured_caption",
+                "label": "Featured Video Caption",
+                "name": "featured_video_caption",
+                "type": "text",
+                "default_value": "VPM News · Election Night 2026"
+              },
+              {
+                "key": "field_vpmvg_video_shorts",
+                "label": "Shorts",
+                "name": "shorts",
+                "type": "repeater",
+                "min": 0,
+                "max": 6,
+                "layout": "table",
+                "button_label": "Add Short",
+                "sub_fields": [
+                  {
+                    "key": "field_vpmvg_short_title",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text"
+                  },
+                  {
+                    "key": "field_vpmvg_short_url",
+                    "label": "Video URL",
+                    "name": "video_url",
+                    "type": "oembed"
+                  }
+                ]
+              }
+            ]
+          },
+          "layout_vpmvg_latest_coverage": {
+            "key": "layout_vpmvg_latest_coverage",
+            "name": "latest_coverage",
+            "label": "Latest Coverage (WP Feed)",
+            "display": "block",
+            "sub_fields": [
+              {
+                "key": "field_vpmvg_coverage_category",
+                "label": "Category",
+                "name": "category",
+                "type": "taxonomy",
+                "taxonomy": "category",
+                "field_type": "select",
+                "allow_null": 0,
+                "return_format": "id",
+                "instructions": "Defaults to the \"Elections\" category."
+              },
+              {
+                "key": "field_vpmvg_coverage_count",
+                "label": "Number of Posts",
+                "name": "post_count",
+                "type": "number",
+                "default_value": 4,
+                "min": 1,
+                "max": 12
+              }
+            ]
+          },
+          "layout_vpmvg_key_races": {
+            "key": "layout_vpmvg_key_races",
+            "name": "key_races",
+            "label": "Key Virginia Elections",
+            "display": "block",
+            "sub_fields": [
+              {
+                "key": "field_vpmvg_key_races_title",
+                "label": "Section Title",
+                "name": "section_title",
+                "type": "text",
+                "default_value": "Key Virginia Elections"
+              },
+              {
+                "key": "field_vpmvg_key_races_subtitle",
+                "label": "Section Subtitle",
+                "name": "section_subtitle",
+                "type": "text",
+                "default_value": "The most consequential races on the 2026 Virginia ballot"
+              }
+            ]
+          },
+          "layout_vpmvg_regional_races": {
+            "key": "layout_vpmvg_regional_races",
+            "name": "regional_races",
+            "label": "Key Regional Races",
+            "display": "block",
+            "sub_fields": [
+              {
+                "key": "field_vpmvg_regional_title",
+                "label": "Section Title",
+                "name": "section_title",
+                "type": "text",
+                "default_value": "Key Regional Races"
+              },
+              {
+                "key": "field_vpmvg_regional_subtitle",
+                "label": "Section Subtitle",
+                "name": "section_subtitle",
+                "type": "text",
+                "default_value": "Find competitive congressional contests near you"
+              }
+            ]
+          },
+          "layout_vpmvg_voter_resources": {
+            "key": "layout_vpmvg_voter_resources",
+            "name": "voter_resources",
+            "label": "Voter Resources Bar",
+            "display": "block",
+            "sub_fields": [
+              {
+                "key": "field_vpmvg_resources_links",
+                "label": "Links",
+                "name": "links",
+                "type": "repeater",
+                "layout": "table",
+                "button_label": "Add Link",
+                "sub_fields": [
+                  {
+                    "key": "field_vpmvg_resource_label",
+                    "label": "Label",
+                    "name": "label",
+                    "type": "text"
+                  },
+                  {
+                    "key": "field_vpmvg_resource_url",
+                    "label": "URL",
+                    "name": "url",
+                    "type": "url"
+                  }
+                ],
+                "default_value": [
+                  { "label": "Find Your Ballot", "url": "#" },
+                  { "label": "Check Registration", "url": "#" },
+                  { "label": "Early Voting Info", "url": "#" }
+                ]
+              }
+            ]
+          },
+          "layout_vpmvg_results": {
+            "key": "layout_vpmvg_results",
+            "name": "election_results",
+            "label": "Election Results",
+            "display": "block",
+            "sub_fields": [
+              {
+                "key": "field_vpmvg_results_title",
+                "label": "Section Title",
+                "name": "section_title",
+                "type": "text",
+                "default_value": "Election Results"
+              },
+              {
+                "key": "field_vpmvg_results_subtitle",
+                "label": "Section Subtitle",
+                "name": "section_subtitle",
+                "type": "text",
+                "default_value": "Results update automatically. * denotes incumbent. All times ET."
+              }
+            ]
+          },
+          "layout_vpmvg_faq": {
+            "key": "layout_vpmvg_faq",
+            "name": "faq",
+            "label": "Voting FAQ",
+            "display": "block",
+            "sub_fields": [
+              {
+                "key": "field_vpmvg_faq_title",
+                "label": "Section Title",
+                "name": "section_title",
+                "type": "text",
+                "default_value": "Voting FAQ"
+              },
+              {
+                "key": "field_vpmvg_faq_subtitle",
+                "label": "Section Subtitle",
+                "name": "section_subtitle",
+                "type": "text",
+                "default_value": "Everything you need to cast your ballot in Virginia"
+              },
+              {
+                "key": "field_vpmvg_faq_callout_url",
+                "label": "Callout Link URL",
+                "name": "callout_url",
+                "type": "url",
+                "default_value": "https://www.elections.virginia.gov"
+              }
+            ]
+          },
+          "layout_vpmvg_newsletter": {
+            "key": "layout_vpmvg_newsletter",
+            "name": "newsletter",
+            "label": "Newsletter Signup",
+            "display": "block",
+            "sub_fields": [
+              {
+                "key": "field_vpmvg_newsletter_eyebrow",
+                "label": "Eyebrow",
+                "name": "eyebrow",
+                "type": "text",
+                "default_value": "Stay Informed"
+              },
+              {
+                "key": "field_vpmvg_newsletter_heading",
+                "label": "Heading",
+                "name": "heading",
+                "type": "text",
+                "default_value": "VPM Elections Newsletter"
+              },
+              {
+                "key": "field_vpmvg_newsletter_body",
+                "label": "Body Copy",
+                "name": "body",
+                "type": "textarea",
+                "rows": 2,
+                "default_value": "Get the latest Virginia election news, candidate profiles, and voting reminders delivered to your inbox."
+              },
+              {
+                "key": "field_vpmvg_newsletter_form_action",
+                "label": "Form Action URL",
+                "name": "form_action",
+                "type": "url",
+                "instructions": "Mailchimp form action URL or the VPM newsletter signup API endpoint."
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "page_template",
+          "operator": "==",
+          "value": "page-templates/template-voter-guide.php"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "description": "Flexible-content sections for the VPM News Voter Guide 2026 page."
+  }
+]

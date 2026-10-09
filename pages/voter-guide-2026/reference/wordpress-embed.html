@@ -1,0 +1,1381 @@
+<!--
+  VPM Voter Guide — WordPress Custom HTML block embed
+  =====================================================
+  HOW TO USE:
+  1. In WP admin, create (or edit) a page and set it to a FULL-WIDTH /
+     no-sidebar template — this design is 1200px wide and will look
+     cramped in a narrow theme content column.
+  2. Add a "Custom HTML" block (Gutenberg) — or a Divi "Code" module —
+     to that page.
+  3. Paste this entire file's contents into the block.
+  4. Publish and preview.
+
+  NOTES:
+  - All CSS/markup is scoped under the ".vpm-vg" wrapper class so it
+    cannot leak out and restyle the rest of your theme. Do not remove
+    the outer <div class="vpm-vg"> — everything depends on that scope.
+  - Images point at the live Vercel deployment
+    (https://vpm-voter-guide.vercel.app/assets/...) so nothing needs to
+    be re-uploaded to the WP Media Library. If you'd rather self-host
+    the images in WordPress: upload the /assets folder to your Media
+    Library, then find-and-replace
+      https://vpm-voter-guide.vercel.app/assets/
+    with your own Media Library base URL throughout this file.
+  - The "On this page" nav uses position:sticky; top:0. If your theme
+    has its own sticky header (or the WP logged-in admin bar overlaps
+    it), find ".vpm-vg .vg-section-nav" below and bump "top:0" to
+    "top:32px" (admin bar) or to your theme header's height.
+  - The FAQ accordion and section-nav scrollspy need inline <script> to
+    run. Most themes' Custom HTML blocks allow this. If your theme or a
+    security plugin strips inline <script> tags, install the "WPCode"
+    plugin (or similar "Insert Headers/Footers/Code Snippets" plugin)
+    and add the script from the bottom of this file as a separate
+    snippet instead.
+  - This is a static visual mockup: the FAQ accordion, hover states, and
+    section nav are functional; article cards, ad slots, and the
+    newsletter form are non-functional placeholders.
+-->
+<div class="vpm-vg">
+<style>
+  .vpm-vg{
+    --azure-9:#101820;
+    --azure-9-2:#0d1520;
+    --azure-13:#024;
+    --azure-20:#003865;
+    --azure-28:#3d4652;
+    --azure-40:#8e98a5;
+    --azure-66:#6cace4;
+    --azure-79:#b9c8d8;
+    --yellow-52:#e0e721;
+    --red-54:#ee2737;
+    --red-64:#ff5566;
+    --grey-53:#838d99;
+    --white:#ffffff;
+    --border-faint:rgba(255,255,255,0.06);
+    --border-faint2:rgba(255,255,255,0.07);
+    --border-faint3:rgba(255,255,255,0.08);
+    --border-azure-30:rgba(108,172,228,0.3);
+    --border-azure-20:rgba(108,172,228,0.2);
+  }
+
+  .vpm-vg * {box-sizing:border-box;}
+  .vpm-vg{
+    background:var(--azure-9);
+    color:var(--white);
+    font-family:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .vpm-vg img {max-width:100%;display:block;}
+  .vpm-vg a {color:inherit;text-decoration:none;}
+  .vpm-vg .vg-heading-font {font-family:'Oswald',Impact,'Arial Narrow',sans-serif;}
+
+  .vpm-vg .vg-wrap {
+    max-width:1200px;
+    margin:0 auto;
+    padding-left:24px;
+    padding-right:24px;
+  }
+
+  /* ---------- Header ---------- */
+  .vpm-vg .vg-site-header-note {
+    background:var(--azure-13);
+    border-bottom:2px dashed var(--border-azure-30);
+    text-align:center;
+    padding:12px 24px 14px;
+    font-size:12px;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+    color:var(--azure-40);
+  }
+  .vpm-vg .vg-promo-bar {
+    background:var(--azure-13);
+    border-bottom:1px solid var(--border-azure-20);
+    padding:10px 0 11px;
+  }
+  .vpm-vg .vg-promo-inner {
+    display:flex;
+    align-items:center;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .vpm-vg .vg-promo-tag {
+    background:var(--red-54);
+    color:var(--white);
+    font-size:10px;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    padding:3px 8px;
+    border-radius:1px;
+    white-space:nowrap;
+  }
+  .vpm-vg .vg-promo-text {
+    flex:1;
+    min-width:200px;
+    font-size:13px;
+    line-height:19.5px;
+    color:var(--azure-79);
+  }
+  .vpm-vg .vg-promo-link {
+    display:flex;
+    align-items:center;
+    gap:4px;
+    font-size:12px;
+    color:var(--azure-66);
+    white-space:nowrap;
+  }
+  .vpm-vg .vg-promo-link svg {width:11px;height:11px;}
+
+  /* ---------- Section nav ---------- */
+  html{scroll-behavior:smooth;}
+  .vpm-vg #video, .vpm-vg #latest, .vpm-vg #elections, .vpm-vg #regional, .vpm-vg #faq {scroll-margin-top:64px;}
+  .vpm-vg .vg-section-nav {
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:rgba(0,34,68,0.92);
+    backdrop-filter:saturate(140%) blur(8px);
+    -webkit-backdrop-filter:saturate(140%) blur(8px);
+    border-top:1px solid var(--border-azure-20);
+    border-bottom:1px solid var(--border-azure-20);
+  }
+  .vpm-vg .vg-section-nav-inner {
+    display:flex;
+    align-items:center;
+    gap:20px;
+    min-height:48px;
+  }
+  .vpm-vg .vg-section-nav-label {
+    flex-shrink:0;
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--azure-40);
+  }
+  .vpm-vg .vg-section-nav ul {
+    display:flex;
+    gap:4px;
+    margin:0;
+    padding:0;
+    list-style:none;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .vpm-vg .vg-section-nav ul::-webkit-scrollbar {display:none;}
+  .vpm-vg .vg-section-nav a {
+    display:block;
+    white-space:nowrap;
+    padding:8px 12px;
+    border-radius:3px;
+    font-size:13px;
+    font-weight:500;
+    color:var(--azure-79);
+    transition:color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .vpm-vg .vg-section-nav a:hover {
+    color:#fff;
+    background:rgba(255,255,255,0.06);
+  }
+  .vpm-vg .vg-section-nav a.vg-active {
+    color:var(--azure-9);
+    background:var(--yellow-52);
+    font-weight:600;
+  }
+
+  /* ---------- Hero ---------- */
+  .vpm-vg .vg-hero-section {
+    padding-top:56px;
+  }
+  .vpm-vg .vg-hero-row {
+    display:flex;
+    gap:48px;
+    align-items:flex-start;
+    flex-wrap:wrap;
+  }
+  .vpm-vg .vg-hero-main {flex:1 1 0;min-width:320px;}
+  .vpm-vg .vg-eyebrow {
+    color:var(--azure-66);
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    margin:0 0 12px;
+  }
+  .vpm-vg .vg-headline {margin:0;}
+  .vpm-vg .vg-headline p {
+    margin:0;
+    font-weight:700;
+    text-transform:uppercase;
+    font-size:clamp(48px,7.5vw,108px);
+    line-height:0.92;
+    letter-spacing:-1px;
+  }
+  .vpm-vg .vg-headline .vg-l1 {color:var(--azure-66);}
+  .vpm-vg .vg-headline .vg-l2 {color:var(--yellow-52);}
+  .vpm-vg .vg-headline .vg-l3 {color:var(--white);}
+  .vpm-vg .vg-hero-dek {
+    color:var(--azure-79);
+    font-size:16px;
+    line-height:24px;
+    max-width:500px;
+    margin:18px 0 28px;
+  }
+  .vpm-vg .vg-section-label {
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin:0 0 16px;
+  }
+  .vpm-vg .vg-section-label .vg-accent {
+    width:3px;height:16px;background:var(--yellow-52);border-radius:1px;flex-shrink:0;
+  }
+  .vpm-vg .vg-section-label span {
+    font-weight:600;
+    font-size:12px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:#c8d0d8;
+  }
+
+  .vpm-vg .vg-featured-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:2px;
+    background:rgba(255,255,255,0.06);
+  }
+  .vpm-vg .vg-featured-card {
+    background:var(--azure-9);
+    display:flex;
+    flex-direction:column;
+  }
+  .vpm-vg .vg-featured-card .vg-thumb {
+    width:100%;
+    aspect-ratio:16/9.4;
+    overflow:hidden;
+  }
+  .vpm-vg .vg-featured-card .vg-thumb img {width:100%;height:100%;object-fit:cover;}
+  .vpm-vg .vg-featured-card .vg-body {
+    padding:19px 14px 16px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    flex:1;
+  }
+  .vpm-vg .vg-kicker {
+    font-size:10px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+  }
+  .vpm-vg .vg-kicker.vg-k-red {color:var(--red-64);}
+  .vpm-vg .vg-kicker.vg-k-azure {color:var(--azure-66);}
+  .vpm-vg .vg-kicker.vg-k-tag {
+    background:var(--yellow-52);
+    color:var(--azure-9);
+    display:inline-block;
+    width:fit-content;
+    padding:2px 6px;
+    border-radius:1px;
+    font-size:10px;
+  }
+  .vpm-vg .vg-card-title {
+    font-weight:500;
+    font-size:13px;
+    line-height:19.5px;
+    color:var(--white);
+  }
+  .vpm-vg .vg-byline {
+    font-size:11px;
+    color:var(--grey-53);
+  }
+  .vpm-vg .vg-accent-bar {height:3px;width:100%;}
+  .vpm-vg .vg-accent-bar.vg-red {background:#f44250;}
+  .vpm-vg .vg-accent-bar.vg-blue {background:#5ba8e0;}
+  .vpm-vg .vg-accent-bar.vg-yellow {background:var(--yellow-52);}
+
+  /* ---------- Sidebar ---------- */
+  .vpm-vg .vg-sidebar {
+    width:340px;
+    flex:0 0 340px;
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+    padding-top:16px;
+  }
+  .vpm-vg .vg-dates-box {
+    background:var(--azure-13);
+    border:1px solid var(--yellow-52);
+    border-top-width:3px;
+    padding:24px 25px;
+  }
+  .vpm-vg .vg-dates-box .vg-eyebrow {color:var(--yellow-52);margin-bottom:16px;}
+  .vpm-vg .vg-date-row {
+    display:flex;
+    gap:16px;
+    padding:14px 0;
+    border-bottom:1px solid var(--border-faint3);
+  }
+  .vpm-vg .vg-date-row:last-of-type {border-bottom:none;}
+  .vpm-vg .vg-date-chip {
+    font-family:'Oswald',Impact,sans-serif;
+    color:var(--yellow-52);
+    font-size:22px;
+    line-height:1.27;
+    text-align:center;
+    min-width:56px;
+    flex-shrink:0;
+  }
+  .vpm-vg .vg-date-info-title {
+    font-weight:500;
+    font-size:14px;
+    color:var(--white);
+    margin:0 0 2px;
+  }
+  .vpm-vg .vg-date-info-sub {
+    font-size:12px;
+    color:var(--grey-53);
+    margin:0;
+  }
+  .vpm-vg .vg-cal-link {
+    display:block;
+    text-align:center;
+    background:var(--yellow-52);
+    color:var(--azure-9);
+    font-weight:600;
+    font-size:12px;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+    padding:10px;
+    border-radius:2px;
+    margin-top:16px;
+  }
+  .vpm-vg .vg-promo-slot {
+    border-radius:4px;
+    overflow:hidden;
+    background:#0c121a;
+    border:1px dashed var(--border-azure-30);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .vpm-vg .vg-promo-slot .vg-promo-slot-text {
+    text-align:center;
+    color:var(--azure-40);
+  }
+  .vpm-vg .vg-promo-slot .vg-promo-slot-text .vg-promo-slot-title {
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    font-weight:600;
+    margin:0 0 4px;
+  }
+  .vpm-vg .vg-promo-slot .vg-promo-slot-text .vg-promo-slot-size {
+    font-size:11px;
+    margin:0;
+  }
+  .vpm-vg .vg-slot-300x250 {width:300px;height:250px;}
+  .vpm-vg .vg-slot-300x600 {width:300px;height:600px;}
+  .vpm-vg .vg-slot-caption {
+    font-size:10px;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+    color:var(--azure-40);
+    text-align:center;
+    margin:6px 0 0;
+  }
+
+  /* ---------- Leaderboard promo ---------- */
+  .vpm-vg .vg-banner-slot {
+    background:#0c121a;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px 0;
+  }
+  .vpm-vg .vg-banner-slot .vg-promo-slot {
+    width:100%;
+    max-width:970px;
+    height:90px;
+    border-radius:4px;
+  }
+
+  /* ---------- Generic sections ---------- */
+  .vpm-vg section.vg-block {
+    padding:64px 0;
+  }
+  .vpm-vg section.vg-block.vg-alt {background:var(--azure-9-2);}
+  .vpm-vg .vg-section-sub {
+    color:var(--grey-53);
+    font-size:15px;
+    line-height:22.5px;
+    margin:0 0 16px 15px;
+  }
+
+  /* ---------- Video section ---------- */
+  .vpm-vg .vg-video-grid {
+    display:grid;
+    grid-template-columns:3fr 2fr;
+    gap:24px;
+    margin-top:16px;
+    align-items:start;
+  }
+  .vpm-vg .vg-video-player {
+    background:#000;
+    border-radius:2px;
+    aspect-ratio:16/9;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:16px;
+    background-image:linear-gradient(90deg, rgb(40,40,40) 0%, rgb(40,40,40) 100%);
+    position:relative;
+  }
+  .vpm-vg .vg-video-player img.vg-unavailable-icon {width:64px;height:64px;opacity:0.9;}
+  .vpm-vg .vg-video-player .vg-msg {color:#eee;font-size:20px;text-align:center;}
+  .vpm-vg .vg-video-player .vg-yt-icon {position:absolute;bottom:12px;right:12px;width:44px;height:44px;opacity:0.7;}
+  .vpm-vg .vg-video-meta {margin-top:12px;}
+  .vpm-vg .vg-video-meta .vg-card-title {font-size:16px;line-height:24px;font-weight:500;margin:6px 0 4px;}
+  .vpm-vg .vg-video-meta .vg-byline {font-size:13px;}
+  .vpm-vg .vg-video-cta{margin-top:28px;display:flex;justify-content:center;}
+  .vpm-vg .vg-yt-cta{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--red-54);color:#fff;
+    padding:12px 22px;border-radius:3px;
+    font-size:13px;font-weight:600;letter-spacing:0.4px;text-transform:uppercase;
+    transition:filter 0.15s ease, box-shadow 0.15s ease, transform 0.12s ease;
+  }
+  .vpm-vg .vg-yt-cta:hover{filter:brightness(1.08);box-shadow:0 6px 18px rgba(238,39,55,0.32);}
+  .vpm-vg .vg-yt-cta:active{transform:translateY(1px);}
+  .vpm-vg .vg-yt-cta-icon{width:20px;height:20px;flex-shrink:0;}
+
+  .vpm-vg .vg-shorts-label {
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--grey-53);
+    margin-bottom:12px;
+  }
+  .vpm-vg .vg-short-item {
+    display:flex;
+    gap:12px;
+    align-items:center;
+    background:var(--azure-9);
+    border:1px solid var(--border-faint);
+    border-radius:2px;
+    padding:11px;
+    margin-bottom:8px;
+  }
+  .vpm-vg .vg-short-thumb {
+    position:relative;
+    width:72px;
+    aspect-ratio:72/128;
+    border-radius:2px;
+    overflow:hidden;
+    flex-shrink:0;
+  }
+  .vpm-vg .vg-short-thumb img {width:100%;height:100%;object-fit:cover;}
+  .vpm-vg .vg-short-thumb .vg-play-overlay {
+    position:absolute;inset:0;
+    background:rgba(0,0,0,0.35);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .vpm-vg .vg-short-thumb .vg-play-overlay img {width:14px;height:14px;object-fit:contain;}
+  .vpm-vg .vg-short-title {font-weight:500;font-size:13px;line-height:19.5px;color:var(--white);margin:0 0 4px;}
+  .vpm-vg .vg-short-sub {font-size:11px;color:var(--azure-40);margin:0;}
+
+  /* ---------- Latest coverage grid ---------- */
+  .vpm-vg .vg-coverage-grid {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+    margin-top:16px;
+  }
+  .vpm-vg .vg-coverage-card {
+    background:var(--azure-9-2);
+    border:1px solid var(--border-faint2);
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .vpm-vg .vg-coverage-card .vg-thumb {width:100%;aspect-ratio:4/2.9;overflow:hidden;}
+  .vpm-vg .vg-coverage-card .vg-thumb img {width:100%;height:100%;object-fit:cover;}
+  .vpm-vg .vg-coverage-card .vg-body {padding:12px 14px 16px;display:flex;flex-direction:column;gap:4px;}
+  .vpm-vg .vg-coverage-card .vg-headline-text {font-size:14px;line-height:21px;color:var(--grey-53);}
+  .vpm-vg .vg-coverage-card .vg-byline {font-size:11px;color:var(--grey-53);}
+  .vpm-vg .vg-feed-note {
+    text-align:center;
+    margin-top:20px;
+  }
+  .vpm-vg .vg-feed-note span {
+    display:inline-block;
+    border:1px dashed var(--border-azure-30);
+    border-radius:2px;
+    padding:11px 25px;
+    font-size:12px;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+    color:var(--azure-40);
+  }
+
+  /* ---------- Content + Ad row (Key VA Elections) ---------- */
+  .vpm-vg .vg-content-slot-row {
+    display:flex;
+    gap:40px;
+    align-items:flex-start;
+  }
+  .vpm-vg .vg-content-slot-row .vg-main {flex:1;min-width:0;}
+  .vpm-vg .vg-elections-grid {
+    display:flex;
+    flex-wrap:wrap;
+    gap:16px;
+    margin-top:16px;
+    background:rgba(255,255,255,0.05);
+    padding:29px 0 0;
+    justify-content:center;
+  }
+  .vpm-vg .vg-election-card {
+    background:var(--azure-9);
+    border-top:3px solid var(--azure-20);
+    padding:31px 24px 28px;
+    width:calc(50% - 8px);
+    min-width:320px;
+    flex:1 1 380px;
+  }
+  .vpm-vg .vg-election-card .vg-emoji {font-size:36px;line-height:54px;margin:0 0 6px;}
+  .vpm-vg .vg-election-card h3 {
+    font-family:'Oswald',Impact,sans-serif;
+    font-weight:600;
+    font-size:20px;
+    letter-spacing:0.4px;
+    text-transform:uppercase;
+    color:var(--white);
+    margin:0 0 6px;
+  }
+  .vpm-vg .vg-election-card .vg-matchup {
+    color:var(--azure-66);
+    font-size:12px;
+    letter-spacing:0.6px;
+    margin:0 0 8px;
+  }
+  .vpm-vg .vg-election-card p.vg-desc {
+    color:var(--azure-79);
+    font-size:14px;
+    line-height:21px;
+    margin:0 0 10px;
+  }
+  .vpm-vg .vg-election-card .vg-learn-more {
+    color:var(--yellow-52);
+    font-size:12px;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+  }
+
+  /* ---------- Regional races ---------- */
+  .vpm-vg .vg-regional-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+    margin-top:16px;
+  }
+  .vpm-vg .vg-regional-card {
+    background:var(--azure-9);
+    border:1px solid var(--border-faint);
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .vpm-vg .vg-regional-card .vg-top-bar {height:4px;background:var(--azure-66);}
+  .vpm-vg .vg-regional-card .vg-body {padding:20px 20px 24px;display:flex;flex-direction:column;gap:8px;}
+  .vpm-vg .vg-regional-card h3 {
+    font-family:'Oswald',Impact,sans-serif;
+    font-weight:600;
+    font-size:15px;
+    text-transform:uppercase;
+    letter-spacing:0.3px;
+    margin:0;
+  }
+  .vpm-vg .vg-regional-card .vg-district {
+    color:var(--azure-66);
+    font-size:11px;
+    letter-spacing:1px;
+    margin:0;
+  }
+  .vpm-vg .vg-locality-tags {display:flex;flex-wrap:wrap;gap:4px;}
+  .vpm-vg .vg-locality-tags span {
+    background:rgba(255,255,255,0.07);
+    color:var(--azure-79);
+    font-size:11px;
+    padding:2px 7px;
+    border-radius:1px;
+    white-space:nowrap;
+  }
+  .vpm-vg .vg-regional-card .vg-desc {
+    color:var(--azure-79);
+    font-size:12px;
+    line-height:18px;
+    margin:4px 0 0;
+  }
+
+  /* ---------- Voter Resources bar ---------- */
+  .vpm-vg .vg-resources-bar {
+    background:var(--azure-9-2);
+    border-top:1px solid var(--border-faint);
+    border-bottom:1px solid var(--border-faint);
+    padding:18px 0;
+  }
+  .vpm-vg .vg-resources-bar .vg-wrap {display:flex;gap:32px;flex-wrap:wrap;font-size:11px;letter-spacing:0.6px;text-transform:uppercase;color:var(--azure-66);}
+
+  /* ---------- FAQ ---------- */
+  .vpm-vg .vg-faq-list {margin-top:16px;}
+  .vpm-vg details.vg-faq-item {
+    border-bottom:1px solid var(--border-faint3);
+  }
+  .vpm-vg details.vg-faq-item summary {
+    list-style:none;
+    cursor:pointer;
+    padding:18px 4px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-size:15px;
+    font-weight:500;
+    color:var(--white);
+  }
+  .vpm-vg details.vg-faq-item summary::-webkit-details-marker {display:none;}
+  .vpm-vg details.vg-faq-item .vg-chevron {
+    width:14px;height:14px;flex-shrink:0;margin-left:16px;
+    transition:transform 0.2s ease;
+    filter:brightness(0) saturate(100%) invert(70%) sepia(45%) saturate(500%) hue-rotate(180deg);
+  }
+  .vpm-vg details.vg-faq-item[open] .vg-chevron {transform:rotate(180deg);}
+  .vpm-vg .vg-faq-answer {
+    padding:0 4px 20px;
+    color:var(--azure-79);
+    font-size:14px;
+    line-height:21px;
+  }
+  .vpm-vg .vg-faq-footnote {
+    margin-top:24px;
+    background:var(--azure-13);
+    border-left:3px solid var(--yellow-52);
+    padding:16px 20px;
+    font-size:13px;
+    color:var(--azure-79);
+  }
+  .vpm-vg .vg-faq-footnote a {color:var(--azure-66);}
+
+  /* ---------- Newsletter footer ---------- */
+  .vpm-vg .vg-newsletter-bar {
+    background:var(--azure-13);
+    text-align:center;
+    padding:48px 24px;
+  }
+  .vpm-vg .vg-newsletter-bar .vg-eyebrow {
+    color:var(--azure-66);
+    justify-content:center;
+    display:block;
+  }
+  .vpm-vg .vg-newsletter-bar h2 {
+    font-family:'Oswald',Impact,sans-serif;
+    font-weight:700;
+    text-transform:uppercase;
+    font-size:32px;
+    margin:8px 0 8px;
+  }
+  .vpm-vg .vg-newsletter-bar p {
+    color:var(--azure-79);
+    font-size:14px;
+    margin:0 0 24px;
+  }
+  .vpm-vg .vg-newsletter-form {
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
+    max-width:420px;
+    margin:0 auto;
+  }
+  .vpm-vg .vg-newsletter-form input[type=email] {
+    flex:1;
+    min-width:220px;
+    padding:12px 14px;
+    border-radius:2px;
+    border:1px solid var(--border-azure-20);
+    background:rgba(255,255,255,0.05);
+    color:var(--white);
+    font-size:14px;
+  }
+  .vpm-vg .vg-newsletter-form input[type=email]::placeholder {color:var(--azure-40);}
+  .vpm-vg .vg-newsletter-form button {
+    background:var(--yellow-52);
+    color:var(--azure-9);
+    border:none;
+    padding:12px 22px;
+    border-radius:2px;
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+    cursor:pointer;
+  }
+  .vpm-vg .vg-site-footer-note {
+    background:var(--azure-13);
+    text-align:center;
+    padding:14px 24px;
+    font-size:11px;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+    color:var(--azure-40);
+    border-top:1px solid var(--border-faint3);
+  }
+
+  /* ---------- Interactions / hover states ---------- */
+  .vg-featured-card,
+  .vg-coverage-card,
+  .vg-regional-card,
+  .vg-election-card,
+  .vpm-vg .vg-short-item {
+    transition:transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+    will-change:transform;
+  }
+  /* card image zoom */
+  .vg-featured-card .vg-thumb img,
+  .vg-coverage-card .vg-thumb img,
+  .vpm-vg .vg-short-thumb img {
+    transition:transform 0.4s cubic-bezier(0.2,0.7,0.2,1);
+  }
+  .vg-featured-card:hover .vg-thumb img,
+  .vg-coverage-card:hover .vg-thumb img,
+  .vpm-vg .vg-short-item:hover .vg-short-thumb img {
+    transform:scale(1.05);
+  }
+  /* card lift */
+  .vg-featured-card:hover,
+  .vpm-vg .vg-coverage-card:hover {
+    transform:translateY(-4px);
+    box-shadow:0 12px 28px rgba(0,0,0,0.45);
+    border-color:var(--border-azure-30);
+    position:relative;
+    z-index:1;
+  }
+  .vg-regional-card:hover,
+  .vpm-vg .vg-short-item:hover {
+    transform:translateY(-3px);
+    box-shadow:0 10px 24px rgba(0,0,0,0.4);
+    border-color:var(--border-azure-30);
+  }
+  .vpm-vg .vg-election-card:hover {
+    background:rgba(255,255,255,0.02);
+    box-shadow:inset 0 3px 0 -0px var(--yellow-52), 0 10px 24px rgba(0,0,0,0.35);
+  }
+  /* regional accent bar reveals on hover */
+  .vpm-vg .vg-regional-card .vg-top-bar {transition:height 0.18s ease, filter 0.18s ease;}
+  .vpm-vg .vg-regional-card:hover .vg-top-bar {height:6px;filter:brightness(1.15);}
+
+  /* text links + CTAs */
+  .vg-card-title,
+  .vg-short-title,
+  .vg-coverage-card .vg-headline-text,
+  .vpm-vg .vg-election-card h3 {transition:color 0.15s ease;}
+  .vg-featured-card:hover .vg-card-title,
+  .vg-short-item:hover .vg-short-title,
+  .vpm-vg .vg-coverage-card:hover .vg-headline-text {color:var(--azure-66);}
+
+  .vg-learn-more,
+  .vg-promo-link,
+  .vpm-vg .vg-resources-bar a {
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    transition:color 0.15s ease, gap 0.15s ease;
+  }
+  .vpm-vg .vg-learn-more:hover {color:#fff;gap:8px;}
+  .vpm-vg .vg-promo-link:hover {color:#fff;}
+  .vpm-vg .vg-resources-bar a {position:relative;}
+  .vpm-vg .vg-resources-bar a::after {
+    content:"";
+    position:absolute;
+    left:0;bottom:-3px;
+    width:100%;height:1px;
+    background:currentColor;
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:transform 0.2s ease;
+  }
+  .vpm-vg .vg-resources-bar a:hover::after {transform:scaleX(1);}
+  .vg-faq-footnote a,
+  .vpm-vg .vg-promo-text + .vg-promo-link {transition:color 0.15s ease;}
+  .vpm-vg .vg-faq-footnote a:hover {color:#fff;}
+
+  /* button CTAs */
+  .vg-cal-link,
+  .vpm-vg .vg-newsletter-form button {
+    transition:transform 0.12s ease, filter 0.15s ease, box-shadow 0.15s ease;
+  }
+  .vg-cal-link:hover,
+  .vpm-vg .vg-newsletter-form button:hover {
+    filter:brightness(1.08);
+    box-shadow:0 6px 18px rgba(224,231,33,0.28);
+  }
+  .vg-cal-link:active,
+  .vpm-vg .vg-newsletter-form button:active {transform:translateY(1px);filter:brightness(0.97);}
+
+  /* FAQ rows */
+  .vpm-vg details.vg-faq-item summary {transition:color 0.15s ease;}
+  .vpm-vg details.vg-faq-item summary:hover {color:var(--azure-66);}
+  .vpm-vg .vg-faq-answer {animation:faqReveal 0.25s ease;}
+  @keyframes faqReveal{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:none;}}
+
+  /* newsletter input focus */
+  .vpm-vg .vg-newsletter-form input[type=email] {transition:border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;}
+  .vpm-vg .vg-newsletter-form input[type=email]:focus {
+    outline:none;
+    border-color:var(--azure-66);
+    background:rgba(255,255,255,0.08);
+    box-shadow:0 0 0 3px rgba(108,172,228,0.18);
+  }
+
+  /* "live" pulse on the Election 2026 tag */
+  .vpm-vg .vg-promo-tag {position:relative;padding-left:20px;}
+  .vpm-vg .vg-promo-tag::before {
+    content:"";
+    position:absolute;
+    left:8px;top:50%;
+    width:6px;height:6px;
+    margin-top:-3px;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 0 0 0 rgba(255,255,255,0.7);
+    animation:livePulse 2s infinite;
+  }
+  @keyframes livePulse{
+    0%{box-shadow:0 0 0 0 rgba(255,255,255,0.6);}
+    70%{box-shadow:0 0 0 7px rgba(255,255,255,0);}
+    100%{box-shadow:0 0 0 0 rgba(255,255,255,0);}
+  }
+
+  /* keyboard focus visibility */
+  a:focus-visible,
+  button:focus-visible,
+  .vpm-vg summary:focus-visible {
+    outline:2px solid var(--azure-66);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+
+  /* respect reduced-motion preferences */
+  @media (prefers-reduced-motion:reduce){
+    .vpm-vg * {animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;scroll-behavior:auto !important;}
+    .vpm-vg .vg-promo-tag::before {animation:none;}
+  }
+
+  /* ---------- Responsive ---------- */
+
+  /* Tablet / small laptop */
+  @media (max-width:980px){
+    .vpm-vg .vg-hero-section {padding-top:40px;}
+    .vpm-vg .vg-hero-row {flex-direction:column;}
+    .vpm-vg .vg-hero-main {min-width:0;}
+    .vpm-vg .vg-sidebar {width:100%;flex:1 1 auto;flex-direction:row;flex-wrap:wrap;}
+    .vpm-vg .vg-sidebar .vg-dates-box {flex:1 1 320px;}
+    .vpm-vg .vg-sidebar > div:last-child {flex:1 1 300px;display:flex;flex-direction:column;justify-content:center;}
+    .vpm-vg .vg-featured-grid {grid-template-columns:repeat(3,1fr);}
+    .vpm-vg .vg-video-grid {grid-template-columns:1fr;}
+    .vpm-vg .vg-coverage-grid {grid-template-columns:repeat(2,1fr);}
+    .vpm-vg .vg-regional-grid {grid-template-columns:repeat(2,1fr);}
+    .vpm-vg .vg-content-slot-row {flex-direction:column;}
+    .vpm-vg .vg-content-slot-row > div:last-child {width:100%;}
+    .vpm-vg .vg-slot-300x600, .vpm-vg .vg-slot-300x250 {width:100%;height:120px;}
+  }
+
+  /* Large phone / portrait tablet */
+  @media (max-width:760px){
+    .vpm-vg section.vg-block {padding:44px 0;}
+    .vpm-vg .vg-sidebar {flex-direction:column;}
+    .vg-sidebar .vg-dates-box,
+    .vpm-vg .vg-sidebar > div:last-child {flex-basis:auto;}
+    .vpm-vg .vg-featured-grid {grid-template-columns:1fr;}
+    .vpm-vg .vg-regional-grid {grid-template-columns:1fr;}
+    .vpm-vg .vg-elections-grid {padding-top:20px;}
+    .vpm-vg .vg-election-card {width:100%;min-width:0;flex-basis:100%;padding:24px 20px;}
+    .vpm-vg .vg-section-label span[style] {font-size:22px !important;}
+    .vpm-vg .vg-headline p {font-size:16vw;}
+  }
+
+  /* Small phone */
+  @media (max-width:520px){
+    .vpm-vg .vg-wrap {padding-left:16px;padding-right:16px;}
+    .vpm-vg section.vg-block {padding:36px 0;}
+    .vpm-vg .vg-hero-section {padding-top:32px;}
+    .vpm-vg .vg-coverage-grid {grid-template-columns:1fr;}
+    .vpm-vg .vg-dates-box {padding:20px 18px;}
+    .vpm-vg .vg-promo-inner {gap:8px;}
+    .vpm-vg .vg-promo-text {min-width:0;font-size:12px;}
+    .vpm-vg .vg-promo-link {font-size:11px;}
+    .vpm-vg .vg-hero-dek {font-size:15px;}
+    .vpm-vg .vg-newsletter-bar {padding:36px 18px;}
+    .vpm-vg .vg-newsletter-bar h2 {font-size:26px;}
+    .vpm-vg .vg-newsletter-form {flex-direction:column;}
+    .vg-newsletter-form input[type=email],
+    .vpm-vg .vg-newsletter-form button {width:100%;min-width:0;}
+    .vpm-vg .vg-resources-bar .vg-wrap {gap:16px 20px;}
+    .vpm-vg .vg-video-player .vg-msg {font-size:16px;}
+    .vpm-vg .vg-section-nav-label {display:none;}
+    .vpm-vg .vg-section-nav-inner {gap:0;}
+    .vpm-vg .vg-section-nav a {font-size:12px;padding:8px 10px;}
+  }
+</style>
+
+
+<div class="vg-promo-bar">
+  <div class="vg-wrap vg-promo-inner">
+    <span class="vg-promo-tag">Election 2026</span>
+    <span class="vg-promo-text">VPM is Virginia's source for nonpartisan election coverage — reporting on the issues and candidates on your ballot.</span>
+    <span class="vg-promo-link">More coverage
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    </span>
+  </div>
+</div>
+
+<main class="vg-wrap vg-hero-section">
+  <div class="vg-hero-row">
+    <div class="vg-hero-main">
+      <p class="vg-eyebrow">Virginia · 2026 General Election</p>
+      <div class="vg-headline vg-heading-font">
+        <p class="vg-l1">VPM News</p>
+        <p class="vg-l2">Voter</p>
+        <p class="vg-l3">Guide</p>
+      </div>
+      <p class="vg-hero-dek">Get nonpartisan information about the candidates and measures on your Virginia ballot this November. VPM is here to help you vote with confidence.</p>
+
+      <div class="vg-section-label"><span class="vg-accent"></span><span>Featured Stories</span></div>
+
+      <div class="vg-featured-grid">
+        <a class="vg-featured-card" href="#">
+          <div class="vg-thumb"><img src="https://vpm-voter-guide.vercel.app/assets/photo-senate-crowd.jpg" alt="Crowd at a Virginia campaign event"></div>
+          <div class="vg-body">
+            <p class="vg-kicker vg-k-red">U.S. Senate</p>
+            <p class="vg-card-title">Tim Kaine faces his toughest re-election yet as Virginia shifts right</p>
+            <p class="vg-byline">VPM News Staff</p>
+          </div>
+          <div class="vg-accent-bar vg-red"></div>
+        </a>
+        <a class="vg-featured-card" href="#">
+          <div class="vg-thumb"><img src="https://vpm-voter-guide.vercel.app/assets/photo-congress-capitol.jpg" alt="U.S. Capitol interior"></div>
+          <div class="vg-body">
+            <p class="vg-kicker vg-k-azure">Congress</p>
+            <p class="vg-card-title">Five Virginia House seats rated as competitive heading into the fall</p>
+            <p class="vg-byline">VPM News Staff</p>
+          </div>
+          <div class="vg-accent-bar vg-blue"></div>
+        </a>
+        <a class="vg-featured-card" href="#">
+          <div class="vg-thumb"><img src="https://vpm-voter-guide.vercel.app/assets/photo-voting-rights.jpg" alt="Person casting a ballot"></div>
+          <div class="vg-body">
+            <span class="vg-kicker vg-k-tag">Voting Rights</span>
+            <p class="vg-card-title">What Virginia voters need to know before they head to the polls</p>
+            <p class="vg-byline">VPM News Staff</p>
+          </div>
+          <div class="vg-accent-bar vg-yellow"></div>
+        </a>
+      </div>
+    </div>
+
+    <aside class="vg-sidebar">
+      <div class="vg-dates-box">
+        <p class="vg-eyebrow">Important Dates</p>
+
+        <div class="vg-date-row">
+          <div class="vg-date-chip">Oct<br>19</div>
+          <div>
+            <p class="vg-date-info-title">Voter Registration Deadline</p>
+            <p class="vg-date-info-sub">Register online at vote.virginia.gov</p>
+          </div>
+        </div>
+        <div class="vg-date-row">
+          <div class="vg-date-chip">Sep<br>19</div>
+          <div>
+            <p class="vg-date-info-title">Absentee Ballot Request Opens</p>
+            <p class="vg-date-info-sub">No-excuse absentee available</p>
+          </div>
+        </div>
+        <div class="vg-date-row">
+          <div class="vg-date-chip">Sep<br>19</div>
+          <div>
+            <p class="vg-date-info-title">Early In-Person Voting Begins</p>
+            <p class="vg-date-info-sub">45 days before Election Day</p>
+          </div>
+        </div>
+        <div class="vg-date-row">
+          <div class="vg-date-chip">Nov<br>3</div>
+          <div>
+            <p class="vg-date-info-title">Election Day</p>
+            <p class="vg-date-info-sub">Polls open 6 a.m. – 7 p.m.</p>
+          </div>
+        </div>
+
+        <a class="vg-cal-link" href="#">Full Elections Calendar →</a>
+      </div>
+
+      <div>
+        <div class="vg-promo-slot vg-slot-300x250"><div class="vg-promo-slot-text"><p class="vg-promo-slot-title">Advertisement</p><p class="vg-promo-slot-size">300 × 250</p></div></div>
+        <p class="vg-slot-caption">Advertisement</p>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<nav class="vg-section-nav" aria-label="Page sections">
+  <div class="vg-wrap vg-section-nav-inner">
+    <span class="vg-section-nav-label">On this page</span>
+    <ul>
+      <li><a href="#video">Video Coverage</a></li>
+      <li><a href="#latest">Latest Coverage</a></li>
+      <li><a href="#elections">Key Elections</a></li>
+      <li><a href="#regional">Regional Races</a></li>
+      <li><a href="#faq">Voting FAQ</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="vg-banner-slot">
+  <div class="vg-promo-slot"><div class="vg-promo-slot-text"><p class="vg-promo-slot-title">Advertisement</p><p class="vg-promo-slot-size">970 × 90</p></div></div>
+</div>
+
+<section class="vg-block vg-alt" id="video">
+  <div class="vg-wrap">
+    <div class="vg-section-label"><span class="vg-accent"></span><span style="font-size:28px;letter-spacing:-0.28px;text-transform:none;font-weight:600;color:#fff;">VPM Video Coverage</span></div>
+    <p class="vg-section-sub">Watch VPM's election reporting — full segments and short clips</p>
+
+    <div class="vg-video-grid">
+      <div>
+        <div class="vg-video-player">
+          <img class="vg-unavailable-icon" src="https://vpm-voter-guide.vercel.app/assets/icon-video-unavailable.svg" alt="">
+          <p class="vg-msg">This video is unavailable</p>
+          <img class="vg-yt-icon" src="https://vpm-voter-guide.vercel.app/assets/icon-youtube-link.svg" alt="Visit YouTube">
+        </div>
+        <div class="vg-video-meta">
+          <p class="vg-kicker vg-k-red">Featured</p>
+          <p class="vg-card-title">Election Night Special: Virginia Results with VPM News</p>
+          <p class="vg-byline">VPM News · Election Night 2026</p>
+        </div>
+      </div>
+
+      <div>
+        <p class="vg-shorts-label">Shorts</p>
+
+        <a class="vg-short-item" href="#">
+          <div class="vg-short-thumb">
+            <img src="https://vpm-voter-guide.vercel.app/assets/photo-short-ballot.jpg" alt="">
+            <div class="vg-play-overlay"><img src="https://vpm-voter-guide.vercel.app/assets/icon-play-overlay.svg" alt=""></div>
+          </div>
+          <div>
+            <p class="vg-short-title">How to read your Virginia ballot</p>
+            <p class="vg-short-sub">YouTube Short</p>
+          </div>
+        </a>
+        <a class="vg-short-item" href="#">
+          <div class="vg-short-thumb">
+            <img src="https://vpm-voter-guide.vercel.app/assets/photo-short-senate.jpg" alt="">
+            <div class="vg-play-overlay"><img src="https://vpm-voter-guide.vercel.app/assets/icon-play-overlay.svg" alt=""></div>
+          </div>
+          <div>
+            <p class="vg-short-title">Meet the candidates: VA Senate</p>
+            <p class="vg-short-sub">YouTube Short</p>
+          </div>
+        </a>
+        <a class="vg-short-item" href="#">
+          <div class="vg-short-thumb">
+            <img src="https://vpm-voter-guide.vercel.app/assets/photo-short-earlyvoting.jpg" alt="">
+            <div class="vg-play-overlay"><img src="https://vpm-voter-guide.vercel.app/assets/icon-play-overlay.svg" alt=""></div>
+          </div>
+          <div>
+            <p class="vg-short-title">Early voting — what you need to know</p>
+            <p class="vg-short-sub">YouTube Short</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="vg-video-cta">
+      <a class="vg-yt-cta" href="https://www.youtube.com/@VPM" target="_blank" rel="noopener noreferrer">
+        <svg class="vg-yt-cta-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 7.5a3 3 0 0 0-2.1-2.1C19 4.8 12 4.8 12 4.8s-7 0-8.9.6A3 3 0 0 0 1 7.5 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.5a3 3 0 0 0 2.1 2.1c1.9.6 8.9.6 8.9.6s7 0 8.9-.6A3 3 0 0 0 23 16.5 31 31 0 0 0 23.5 12 31 31 0 0 0 23 7.5ZM9.8 15.3V8.7l5.7 3.3-5.7 3.3Z"/></svg>
+        Visit VPM on YouTube
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="vg-block" id="latest">
+  <div class="vg-wrap">
+    <p class="vg-eyebrow" style="margin-bottom:8px;">From the Newsroom</p>
+    <div class="vg-section-label"><span class="vg-accent"></span><span style="font-size:28px;letter-spacing:-0.28px;text-transform:none;font-weight:600;color:#fff;">Latest Coverage</span></div>
+    <p class="vg-section-sub">Stories from VPM's election reporting team</p>
+
+    <div class="vg-coverage-grid">
+      <a class="vg-coverage-card" href="#">
+        <div class="vg-thumb"><img src="https://vpm-voter-guide.vercel.app/assets/photo-senate-crowd.jpg" alt=""></div>
+        <div class="vg-body">
+          <p class="vg-kicker vg-k-red">U.S. Senate</p>
+          <p class="vg-headline-text">Article headline from WordPress feed</p>
+          <p class="vg-byline">Author · Date</p>
+        </div>
+      </a>
+      <a class="vg-coverage-card" href="#">
+        <div class="vg-thumb"><img src="https://vpm-voter-guide.vercel.app/assets/photo-latest-capitol-dome.jpg" alt=""></div>
+        <div class="vg-body">
+          <p class="vg-kicker vg-k-azure">Congress</p>
+          <p class="vg-headline-text">Article headline from WordPress feed</p>
+          <p class="vg-byline">Author · Date</p>
+        </div>
+      </a>
+      <a class="vg-coverage-card" href="#">
+        <div class="vg-thumb"><img src="https://vpm-voter-guide.vercel.app/assets/photo-latest-votingrights.jpg" alt=""></div>
+        <div class="vg-body">
+          <span class="vg-kicker vg-k-tag">Voting Rights</span>
+          <p class="vg-headline-text">Article headline from WordPress feed</p>
+          <p class="vg-byline">Author · Date</p>
+        </div>
+      </a>
+      <a class="vg-coverage-card" href="#">
+        <div class="vg-thumb"><img src="https://vpm-voter-guide.vercel.app/assets/photo-latest-elections.jpg" alt=""></div>
+        <div class="vg-body">
+          <p class="vg-kicker vg-k-azure">Elections</p>
+          <p class="vg-headline-text">Article headline from WordPress feed</p>
+          <p class="vg-byline">Author · Date</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="vg-feed-note"><span>Replace with WordPress feed block / shortcode</span></div>
+  </div>
+</section>
+
+<section class="vg-block" id="elections">
+  <div class="vg-wrap">
+    <div class="vg-content-slot-row">
+      <div class="vg-main">
+        <div class="vg-section-label"><span class="vg-accent"></span><span style="font-size:28px;letter-spacing:-0.28px;text-transform:none;font-weight:600;color:#fff;">Key Virginia Elections</span></div>
+        <p class="vg-section-sub">The most consequential races on the 2026 Virginia ballot</p>
+
+        <div class="vg-elections-grid">
+          <div class="vg-election-card">
+            <p class="vg-emoji">🏛</p>
+            <h3>U.S. Senate</h3>
+            <p class="vg-matchup">Tim Kaine (D) vs. TBD (R)</p>
+            <p class="vg-desc">Sen. Tim Kaine seeks a third term in one of 2026's most-watched races. Republicans have fielded multiple primary challengers vying for the nomination in a state growing increasingly competitive at the federal level.</p>
+            <a class="vg-learn-more" href="#">Learn more →</a>
+          </div>
+          <div class="vg-election-card">
+            <p class="vg-emoji">🗳</p>
+            <h3>U.S. House — All 11 Districts</h3>
+            <p class="vg-matchup">Multiple incumbents &amp; challengers</p>
+            <p class="vg-desc">Virginia's full congressional delegation is on the ballot. Seats in VA-02 (Hampton Roads), VA-05 (Southside), and VA-07 (Richmond suburbs) are rated as toss-ups or lean seats by major election forecasters.</p>
+            <a class="vg-learn-more" href="#">Learn more →</a>
+          </div>
+          <div class="vg-election-card">
+            <p class="vg-emoji">⚖</p>
+            <h3>State Corporation Commission</h3>
+            <p class="vg-matchup">To be determined</p>
+            <p class="vg-desc">Voters will elect members to Virginia's powerful regulatory body overseeing utilities, insurance, and financial institutions — decisions that affect every Virginian's power bills and insurance rates.</p>
+            <a class="vg-learn-more" href="#">Learn more →</a>
+          </div>
+          <div class="vg-election-card">
+            <p class="vg-emoji">📋</p>
+            <h3>Governor's Race 2026</h3>
+            <p class="vg-matchup">Open seat — Primary TBD</p>
+            <p class="vg-desc">With the current governor term-limited, both parties are fielding competitive primaries. The open-seat contest will test whether Virginia's recent rightward shift holds at the state level.</p>
+            <a class="vg-learn-more" href="#">Learn more →</a>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="vg-promo-slot vg-slot-300x600"><div class="vg-promo-slot-text"><p class="vg-promo-slot-title">Advertisement</p><p class="vg-promo-slot-size">300 × 600</p></div></div>
+        <p class="vg-slot-caption">Advertisement</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="vg-block vg-alt" id="regional">
+  <div class="vg-wrap">
+    <div class="vg-section-label"><span class="vg-accent"></span><span style="font-size:28px;letter-spacing:-0.28px;text-transform:none;font-weight:600;color:#fff;">Key Regional Races</span></div>
+    <p class="vg-section-sub">Find competitive congressional contests near you</p>
+
+    <div class="vg-regional-grid">
+      <div class="vg-regional-card">
+        <div class="vg-top-bar"></div>
+        <div class="vg-body">
+          <h3>Northern Virginia</h3>
+          <p class="vg-district">VA-10 &amp; VA-11</p>
+          <div class="vg-locality-tags">
+            <span>Fairfax County</span><span>Arlington</span><span>Alexandria City</span><span>Prince William</span>
+          </div>
+          <p class="vg-desc">The DC suburbs anchor competitive open-seat contests in some of the commonwealth's most closely watched districts.</p>
+        </div>
+      </div>
+      <div class="vg-regional-card">
+        <div class="vg-top-bar"></div>
+        <div class="vg-body">
+          <h3>Hampton Roads</h3>
+          <p class="vg-district">VA-02 &amp; VA-04</p>
+          <div class="vg-locality-tags">
+            <span>Virginia Beach</span><span>Norfolk</span><span>Chesapeake</span><span>Suffolk</span>
+          </div>
+          <p class="vg-desc">It's consistently one of Virginia's most closely contested regions, with a heavy military and coastal-economy influence.</p>
+        </div>
+      </div>
+      <div class="vg-regional-card">
+        <div class="vg-top-bar"></div>
+        <div class="vg-body">
+          <h3>Richmond Metro</h3>
+          <p class="vg-district">VA-04 &amp; VA-07</p>
+          <div class="vg-locality-tags">
+            <span>Richmond City</span><span>Henrico</span><span>Chesterfield</span>
+          </div>
+          <p class="vg-desc">The capital region's suburban growth is reshaping district lines, with VA-07's competitiveness drawing statewide attention.</p>
+        </div>
+      </div>
+      <div class="vg-regional-card">
+        <div class="vg-top-bar"></div>
+        <div class="vg-body">
+          <h3>Shenandoah Valley</h3>
+          <p class="vg-district">VA-06</p>
+          <div class="vg-locality-tags">
+            <span>Harrisonburg</span><span>Staunton</span><span>Augusta County</span>
+          </div>
+          <p class="vg-desc">A traditionally Republican stronghold where local turnout and agricultural policy debates could sway close down-ballot races.</p>
+        </div>
+      </div>
+      <div class="vg-regional-card">
+        <div class="vg-top-bar"></div>
+        <div class="vg-body">
+          <h3>Southwest Virginia</h3>
+          <p class="vg-district">VA-09</p>
+          <div class="vg-locality-tags">
+            <span>Bristol</span><span>Abingdon</span><span>Wise County</span>
+          </div>
+          <p class="vg-desc">One of the most rural and heavily Republican corners of the state, with energy and jobs policy dominating local debate.</p>
+        </div>
+      </div>
+      <div class="vg-regional-card">
+        <div class="vg-top-bar"></div>
+        <div class="vg-body">
+          <h3>Eastern Shore &amp; Rural East</h3>
+          <p class="vg-district">VA-01 &amp; VA-02</p>
+          <div class="vg-locality-tags">
+            <span>Accomack</span><span>Northampton</span><span>Middle Peninsula</span>
+          </div>
+          <p class="vg-desc">Part of the VA-02 swing district, this rural coastal region has a history of split-ticket voting and tight margins.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="vg-resources-bar">
+  <div class="vg-wrap">
+    <a href="#">Voter Resources</a>
+    <a href="#">Find Your Ballot</a>
+    <a href="#">Check Registration</a>
+    <a href="#">Early Voting Info</a>
+  </div>
+</div>
+
+<section class="vg-block" id="faq">
+  <div class="vg-wrap" style="max-width:800px;">
+    <div class="vg-section-label"><span class="vg-accent"></span><span style="font-size:28px;letter-spacing:-0.28px;text-transform:none;font-weight:600;color:#fff;">Voting FAQ</span></div>
+    <p class="vg-section-sub">Everything you need to cast your ballot in Virginia</p>
+
+    <div class="vg-faq-list">
+      <details class="vg-faq-item">
+        <summary>How do I register to vote in Virginia?
+          <img class="vg-chevron" src="https://vpm-voter-guide.vercel.app/assets/icon-chevron.svg" alt="">
+        </summary>
+        <div class="vg-faq-answer">You can register online at vote.virginia.gov, by mail, or in person at your local registrar's office. The deadline to register (or update your registration) for the November election is October 19. Same-day registration is available during the early voting period, though a provisional ballot may be required.</div>
+      </details>
+      <details class="vg-faq-item">
+        <summary>Can I vote early or by absentee ballot?
+          <img class="vg-chevron" src="https://vpm-voter-guide.vercel.app/assets/icon-chevron.svg" alt="">
+        </summary>
+        <div class="vg-faq-answer">Yes. Virginia offers no-excuse absentee voting, meaning any registered voter can request a mail ballot or vote in person early without providing a reason. Early in-person voting begins 45 days before Election Day at your local registrar's office or satellite voting locations.</div>
+      </details>
+      <details class="vg-faq-item">
+        <summary>What ID do I need to bring to vote?
+          <img class="vg-chevron" src="https://vpm-voter-guide.vercel.app/assets/icon-chevron.svg" alt="">
+        </summary>
+        <div class="vg-faq-answer">Virginia accepts a range of photo and non-photo IDs, including a driver's license, passport, student ID, or voter confirmation document. If you don't have an acceptable ID, you can sign an ID Confirmation Statement at the polls instead.</div>
+      </details>
+      <details class="vg-faq-item">
+        <summary>What if I make a mistake on my ballot?
+          <img class="vg-chevron" src="https://vpm-voter-guide.vercel.app/assets/icon-chevron.svg" alt="">
+        </summary>
+        <div class="vg-faq-answer">If you're voting in person and make a mistake, notify a poll worker — they can void the spoiled ballot and issue you a new one. If voting absentee by mail, contact your local registrar's office as soon as possible for guidance before submitting.</div>
+      </details>
+      <details class="vg-faq-item">
+        <summary>How do I find my polling place?
+          <img class="vg-chevron" src="https://vpm-voter-guide.vercel.app/assets/icon-chevron.svg" alt="">
+        </summary>
+        <div class="vg-faq-answer">Your polling place is listed on your voter registration card and can be looked up anytime using the Virginia Department of Elections' "Where Do I Vote" tool on vote.virginia.gov.</div>
+      </details>
+      <details class="vg-faq-item">
+        <summary>Can I vote if I have a felony conviction?
+          <img class="vg-chevron" src="https://vpm-voter-guide.vercel.app/assets/icon-chevron.svg" alt="">
+        </summary>
+        <div class="vg-faq-answer">Virginians with a past felony conviction may have their voting rights restored by the Governor. You can check your status or apply for restoration of rights through the Secretary of the Commonwealth's office.</div>
+      </details>
+      <details class="vg-faq-item">
+        <summary>Can I vote in person on Election Day?
+          <img class="vg-chevron" src="https://vpm-voter-guide.vercel.app/assets/icon-chevron.svg" alt="">
+        </summary>
+        <div class="vg-faq-answer">Yes. Polls are open from 6 a.m. to 7 p.m. on Election Day, November 3. If you're in line by 7 p.m., you are entitled to vote even if the line extends past closing time.</div>
+      </details>
+    </div>
+
+    <div class="vg-faq-footnote">
+      Still have questions? Virginia's Department of Elections has resources available in multiple languages. <a href="#">elections.virginia.gov →</a>
+    </div>
+  </div>
+</section>
+
+<div class="vg-newsletter-bar">
+  <span class="vg-eyebrow">Stay Informed</span>
+  <h2 class="vg-heading-font">VPM Elections Newsletter</h2>
+  <p>Get the latest Virginia election news, candidate profiles, and voting reminders, delivered to your inbox.</p>
+  <form class="vg-newsletter-form" onsubmit="return false;">
+    <input type="email" placeholder="Your email address" required>
+    <button type="submit">Subscribe</button>
+  </form>
+</div>
+
+<script>
+  // Scrollspy: highlight the current section in the on-page nav
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll('.vg-section-nav a'));
+    if (!links.length || !('IntersectionObserver' in window)) return;
+
+    var byId = {};
+    links.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
+
+    var sections = links
+      .map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); })
+      .filter(Boolean);
+
+    var visible = {};
+    function setActive() {
+      var current = null;
+      // pick the topmost section currently intersecting
+      sections.forEach(function (s) {
+        if (visible[s.id] && (!current || s.offsetTop < current.offsetTop)) current = s;
+      });
+      links.forEach(function (a) { a.classList.remove('active'); });
+      if (current && byId[current.id]) byId[current.id].classList.add('active');
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { visible[e.target.id] = e.isIntersecting; });
+      setActive();
+    }, { rootMargin: '-56px 0px -55% 0px', threshold: 0 });
+
+    sections.forEach(function (s) { observer.observe(s); });
+  })();
+</script>
+
+</div>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Preview — Mending Walls</title>
+<!-- GENERATED FILE — edit html.html / css.css / js.js, then run ./.build-preview.py -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ---- Preview chrome only. Approximates wpp-base so the block is judged
+       in the conditions it will actually ship into. Not part of the paste. ---- */
+html { font-size: 16px; }
+body {
+  margin: 0;
+  font-family: 'Public Sans', 'Helvetica Neue', Arial, sans-serif;
+  color: #101820;
+  background: #fff;
+  line-height: 1.6;
+  font-size: 16px;
+}
+.preview-hero {
+  background: linear-gradient(100deg, #101820 0%, #003865 100%);
+  color: #fff;
+  padding: 56px 0;
+}
+.preview-hero h1 {
+  font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif;
+  font-size: 40px;
+  line-height: 1.1;
+  margin: 0;
+}
+.preview-hero .container::before {
+  content: "";
+  display: block;
+  width: 44px;
+  height: 4px;
+  background: #E0E721;
+  margin-bottom: 20px;
+}
+.preview-note {
+  background: #E0E721;
+  color: #101820;
+  font-size: 13px;
+  padding: 8px 0;
+  text-align: center;
+  font-weight: 600;
+}
+.container { max-width: 1240px; margin: 0 auto; padding: 0 20px; }
+.page-code-block { padding: 20px 0 60px; background: #fff; }
+</style>
+<style>
+/* ================================================================
+   Mending Walls — CSS block
+   ACF field: CSS  (Code Block section)
+
+   Every rule is scoped under .vpm-mw so hostile host CSS can't
+   reach in and nothing here leaks out. The source page's 12 stacked
+   page-hero / page-rich-text sections used bare theme classes
+   (page-section, page-rich-text-inner, etc.) — this replaces those
+   with namespaced BEM.
+
+   Type scale matches the theme's own measured rich-text scale
+   (16px root, 17px body / 30px h2, Public Sans body / Oswald
+   headings) — per the same wpp-base measurement documented in
+   pages/raised-razed/css.css, 2026-08-11.
+
+   Tokens copied from ~/Projects/vpm/vpm-widgets/tokens.css — do not
+   link that file, this must survive as a standalone paste.
+   ================================================================ */
+
+.vpm-mw {
+  /* Brand core */
+  --vpm-mw-dark-blue: #003865;  /* PMS 2955 C */
+  --vpm-mw-black:     #101820;  /* PMS Black 6 C */
+
+  /* Derived tints */
+  --vpm-mw-link:       #0B4F85; /* blue-600 — 8.5:1 on white, AA */
+  --vpm-mw-link-hover: #002244; /* blue-900 */
+  --vpm-mw-rule:       #E5E7E9; /* gray-200 */
+  --vpm-mw-muted:      #5A6470; /* gray-600 — 6.0:1 on white, AA */
+
+  /* Type */
+  --vpm-mw-font-body: 'Public Sans', 'Helvetica Neue', Arial, sans-serif;
+  --vpm-mw-font-head: 'Oswald', 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+
+  max-width: 1100px;
+  margin: 0 auto;
+  font-family: var(--vpm-mw-font-body);
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--vpm-mw-black);
+  text-align: left;
+}
+
+/* Scoped reset — the theme's base.css already does this, but a
+   pasted block must not depend on that. */
+.vpm-mw *,
+.vpm-mw *::before,
+.vpm-mw *::after { box-sizing: border-box; }
+
+/* Element-level defaults deliberately carry NO font-size. Every size lives
+   on a .vpm-mw .vpm-mw-* selector below, so all of them share one
+   specificity (0-2-0) and source order decides — an element rule here would
+   outrank the single-class BEM rules and silently win. */
+.vpm-mw p { margin: 0 0 1.1em; line-height: inherit; }
+.vpm-mw p:last-child { margin-bottom: 0; }
+
+.vpm-mw h1,
+.vpm-mw h2 {
+  font-family: var(--vpm-mw-font-head);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--vpm-mw-dark-blue);
+}
+.vpm-mw h2 { margin: 0 0 24px; }
+
+.vpm-mw a {
+  color: var(--vpm-mw-link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.vpm-mw a:hover,
+.vpm-mw a:focus-visible { color: var(--vpm-mw-link-hover); }
+.vpm-mw a:focus-visible {
+  outline: 3px solid var(--vpm-mw-dark-blue);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.vpm-mw img { max-width: 100%; height: auto; display: block; }
+
+.vpm-mw .vpm-mw-visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ── Hero ────────────────────────────────────────────────────── */
+.vpm-mw-hero { padding: 32px 0 16px; }
+.vpm-mw .vpm-mw-hero__title { font-size: 48px; line-height: 1.1; margin: 0 0 8px; }
+.vpm-mw .vpm-mw-hero__subtitle {
+  font-size: 19px;
+  color: var(--vpm-mw-muted);
+  margin: 0;
+}
+
+/* ── Jump nav ────────────────────────────────────────────────── */
+.vpm-mw-jumpnav {
+  text-align: center;
+  padding: 16px 0 32px;
+  font-size: 15px;
+}
+.vpm-mw-jumpnav span { margin: 0 6px; color: var(--vpm-mw-rule); }
+
+/* ── Section titles (shared) ────────────────────────────────── */
+.vpm-mw-section-title { font-size: 30px; }
+
+/* ── Jump-link targets ───────────────────────────────────────── */
+/* The jump nav's #vpm-mw-* anchors need an offset so the sticky vpm.org
+   header doesn't cover the heading you just landed on. wpp-base's sticky
+   header height wasn't directly measurable this session (see README,
+   "Kinsta vs. live"); 90px is a conservative estimate — confirm against
+   the live header before shipping and adjust if it's off. */
+.vpm-mw-about,
+.vpm-mw-team,
+.vpm-mw-walls,
+.vpm-mw-podcast,
+.vpm-mw-resources {
+  scroll-margin-top: 90px;
+}
+
+/* ── Watch ───────────────────────────────────────────────────── */
+.vpm-mw-watch { margin-bottom: 48px; }
+.vpm-mw-player {
+  position: relative;
+  padding-top: 56.25%;
+  margin: 0 0 16px;
+}
+.vpm-mw-player iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: 0;
+}
+.vpm-mw .vpm-mw-pbs-note {
+  text-align: center;
+  font-size: 15px;
+  color: var(--vpm-mw-muted);
+}
+
+/* ── About / carousel ───────────────────────────────────────── */
+.vpm-mw-about { margin-bottom: 48px; }
+
+.vpm-mw-carousel { margin: 32px 0 0; }
+.vpm-mw-carousel__track {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  aspect-ratio: 880 / 542;
+  overflow: hidden;
+  border-radius: 4px;
+}
+.vpm-mw-carousel__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+.vpm-mw-carousel__slide--active { opacity: 1; visibility: visible; }
+.vpm-mw .vpm-mw-carousel__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.vpm-mw-carousel__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 12px;
+}
+.vpm-mw .vpm-mw-carousel__prev,
+.vpm-mw .vpm-mw-carousel__next {
+  font-family: var(--vpm-mw-font-body);
+  font-size: 22px;
+  line-height: 1;
+  background: none;
+  border: 1px solid var(--vpm-mw-rule);
+  border-radius: 4px;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  color: var(--vpm-mw-dark-blue);
+}
+.vpm-mw .vpm-mw-carousel__prev:hover,
+.vpm-mw .vpm-mw-carousel__next:hover { background: var(--vpm-mw-rule); }
+.vpm-mw .vpm-mw-carousel__prev:focus-visible,
+.vpm-mw .vpm-mw-carousel__next:focus-visible {
+  outline: 3px solid var(--vpm-mw-dark-blue);
+  outline-offset: 2px;
+}
+.vpm-mw .vpm-mw-carousel__status {
+  font-size: 14px;
+  color: var(--vpm-mw-muted);
+  margin: 0;
+  min-width: 48px;
+  text-align: center;
+}
+
+/* ── Teacher Resources ───────────────────────────────────────── */
+.vpm-mw-resources { margin-bottom: 48px; }
+.vpm-mw .vpm-mw-resources__banner { margin: 0 0 24px; border-radius: 4px; }
+
+/* ── Podcast ─────────────────────────────────────────────────── */
+.vpm-mw-podcast { margin-bottom: 48px; }
+.vpm-mw-podcast__embed iframe {
+  width: 100%;
+  height: 500px;
+  border: 0;
+}
+
+/* ── Team Members ────────────────────────────────────────────── */
+.vpm-mw-team { margin-bottom: 48px; }
+.vpm-mw-team-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-top: 24px;
+}
+.vpm-mw-member {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 24px;
+}
+.vpm-mw .vpm-mw-member__photo {
+  width: 100%;
+  border-radius: 4px;
+}
+
+/* ── Walls ───────────────────────────────────────────────────── */
+.vpm-mw-walls-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 48px;
+  margin-top: 24px;
+}
+.vpm-mw-walls-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.vpm-mw .vpm-mw-walls-list li { padding: 6px 0; border-bottom: 1px solid var(--vpm-mw-rule); }
+.vpm-mw .vpm-mw-walls-list li:last-child { border-bottom: 0; }
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .vpm-mw .vpm-mw-hero__title { font-size: 34px; }
+  .vpm-mw-member { grid-template-columns: 1fr; }
+  .vpm-mw .vpm-mw-member__photo { max-width: 160px; }
+  .vpm-mw-walls-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Reduced motion / focus ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .vpm-mw * { scroll-behavior: auto !important; }
+  .vpm-mw-carousel__slide { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="preview-note">Preview harness — hero, container and 16px root simulate the wpp-base theme. Neither is part of the ACF paste.</div>
+
+<section class="preview-hero">
+  <div class="container">
+    <h1>Mending Walls</h1>
+  </div>
+</section>
+
+<section class="page-code-block">
+  <div class="container">
+<!-- ================================================================
+     Mending Walls — HTML block
+     ACF field: HTML  (Code Block section)
+     Consolidates the 12 stacked page-hero / page-rich-text sections on
+     the live page into one namespaced Code Block. All classes .vpm-mw-*
+     ================================================================ -->
+
+<div class="vpm-mw">
+
+  <!-- ── Hero ────────────────────────────────────────────────── -->
+  <div class="vpm-mw-hero">
+    <h1 class="vpm-mw-hero__title">Mending Walls</h1>
+    <p class="vpm-mw-hero__subtitle">Establishing empathy and connection through art</p>
+  </div>
+
+  <!-- ── Jump nav ────────────────────────────────────────────── -->
+  <nav class="vpm-mw-jumpnav" aria-label="Section links">
+    <a href="#vpm-mw-about">About</a>
+    <span aria-hidden="true">|</span>
+    <a href="#vpm-mw-team">Team</a>
+    <span aria-hidden="true">|</span>
+    <a href="https://www.mendingwallsrva.com/artist" target="_blank" rel="noopener">Artists</a>
+    <span aria-hidden="true">|</span>
+    <a href="#vpm-mw-walls">Walls</a>
+    <span aria-hidden="true">|</span>
+    <a href="#vpm-mw-podcast">Podcast</a>
+    <span aria-hidden="true">|</span>
+    <a href="#vpm-mw-resources">Resources</a>
+  </nav>
+
+  <!-- ── Watch ───────────────────────────────────────────────── -->
+  <section class="vpm-mw-watch" id="vpm-mw-watch" aria-labelledby="vpm-mw-watch-title">
+    <h2 class="vpm-mw-section-title" id="vpm-mw-watch-title">Watch</h2>
+
+    <div class="vpm-mw-player">
+      <iframe src="https://player.vimeo.com/video/619023093?h=155361fca5&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+              title="MENDING WALLS: THE DOCUMENTARY (Broadcast version)"
+              loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <p class="vpm-mw-pbs-note">Download the <a href="https://www.pbs.org/pbs-video-app/">PBS Video App</a> to watch on your favorite viewing device.</p>
+  </section>
+
+  <!-- ── About ───────────────────────────────────────────────── -->
+  <section class="vpm-mw-about" id="vpm-mw-about" aria-labelledby="vpm-mw-about-title">
+    <h2 class="vpm-mw-visually-hidden" id="vpm-mw-about-title">About</h2>
+
+    <p>The groundbreaking public art project <a href="https://mendingwallsrva.com/">Mending Walls RVA</a> aims to establish empathy and connection through art. Created by Hamilton Glass in Spring 2020, in response to the community unrest following the death of George Floyd. Inspired by an eye-opening conversation he had with friend and frequent artistic collaborator Matt Lively, the project paired together 30 artists from different backgrounds, ethnicities and perspectives to have conversations about their lived experiences and to create 16 murals across the city with hope their art would ultimately spark deeper conversations within our community and promote healing.</p>
+    <p>Using real-time footage and testimonial, Mending Walls: The Documentary shows this healing journey through art. It shows how the artists got to know each other through uncomfortable conversations about race, status and their personal experiences, how they created their mural concepts to reflect those conversations and how working together ultimately opened their eyes and their hearts to the differences, as well as commonalities among all of us. It also shows how our community responded to their efforts by engaging with the spaces the murals provided, volunteering to be a part of this community-wide effort and inspiring others to put aside their discomfort and fear to talk to each other about often difficult topics.</p>
+    <p>It's a story of recognizing our collective frustration and confusion, of understanding our different experiences, of practicing empathy, and of healing a community through art. We need to talk, and we need to listen, to move our community forward.</p>
+
+    <!-- Carousel: absent from the vpmnews.kinsta.cloud dev copy; image URLs
+         and alt text supplied by Mark from the live www.vpm.org page. -->
+    <div class="vpm-mw-carousel" role="region" aria-roledescription="carousel" aria-label="Mending Walls mural photos">
+      <ul class="vpm-mw-carousel__track">
+        <li class="vpm-mw-carousel__slide vpm-mw-carousel__slide--active">
+          <img src="https://assets.vpm.org/dims4/default/39de978/2147483647/strip/true/crop/1754x1080+83+0/resize/880x542!/quality/90/?url=https%3A%2F%2Fk1-prod-vpm.s3.us-east-2.amazonaws.com%2Fbrightspot%2Fd5%2F77%2Ff76140721e4262d3cbc90a0d7dce%2Fkat-matthambroad080520-1942-m.jpg"
+               alt="" loading="lazy" decoding="async">
+        </li>
+        <li class="vpm-mw-carousel__slide">
+          <img src="https://assets.vpm.org/dims4/default/4eb78e2/2147483647/strip/true/crop/800x493+0+20/resize/880x542!/quality/90/?url=https%3A%2F%2Fk1-prod-vpm.s3.us-east-2.amazonaws.com%2Fbrightspot%2F1c%2Fd4%2F034aadea4dd539420b1cb3361864%2Fkati-hlj5hbd-x5-1.jpg"
+               alt="" loading="lazy" decoding="async">
+        </li>
+        <li class="vpm-mw-carousel__slide">
+          <img src="https://assets.vpm.org/dims4/default/89a661c/2147483647/strip/true/crop/1754x1080+83+0/resize/880x542!/quality/90/?url=https%3A%2F%2Fk1-prod-vpm.s3.us-east-2.amazonaws.com%2Fbrightspot%2Fa3%2Fd2%2F0e3508a06d8fa83383f538c18482%2Fkati-xbhpr4q-x5.jpg"
+               alt="" loading="lazy" decoding="async">
+        </li>
+        <li class="vpm-mw-carousel__slide">
+          <img src="https://assets.vpm.org/dims4/default/bd6f989/2147483647/strip/true/crop/2560x1577+0+118/resize/880x542!/quality/90/?url=https%3A%2F%2Fk1-prod-vpm.s3.us-east-2.amazonaws.com%2Fbrightspot%2F07%2Fe8%2F382fa973e63100c707e47ee4a671%2Fbs-i-drscbdj-x5.jpg"
+               alt="" loading="lazy" decoding="async">
+        </li>
+        <li class="vpm-mw-carousel__slide">
+          <img src="https://assets.vpm.org/dims4/default/d003a54/2147483647/strip/true/crop/2560x1577+0+65/resize/880x542!/quality/90/?url=https%3A%2F%2Fk1-prod-vpm.s3.us-east-2.amazonaws.com%2Fbrightspot%2Faf%2F96%2F177930eb481161253d4e04f1b944%2Fkati-m7jzvrt-x5.jpg"
+               alt="" loading="lazy" decoding="async">
+        </li>
+      </ul>
+      <div class="vpm-mw-carousel__controls">
+        <button type="button" class="vpm-mw-carousel__prev" aria-label="Previous photo">&#8249;</button>
+        <p class="vpm-mw-carousel__status" aria-live="polite">1 of 5</p>
+        <button type="button" class="vpm-mw-carousel__next" aria-label="Next photo">&#8250;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Teacher Resources ───────────────────────────────────── -->
+  <section class="vpm-mw-resources" id="vpm-mw-resources" aria-labelledby="vpm-mw-resources-title">
+    <h2 class="vpm-mw-section-title" id="vpm-mw-resources-title">Teacher Resources</h2>
+
+    <img class="vpm-mw-resources__banner"
+         src="https://vpmnews.kinsta.cloud/wp-content/uploads/optimized/bbd6b1a1-mw-9-14-event-banner.jpg"
+         alt="Mending Walls Educator Workshop, presented by Partners in the Arts and VPM"
+         loading="lazy" decoding="async">
+
+    <p>Partners in the Arts (PIA) at the University of Richmond joined with VPM and <a href="https://www.mendingwallsrva.com/">Mending Walls RVA</a> to create a virtual workshop in September 2021, introducing the Mending Walls processes of building empathy through conversations, and collaborating to create art.</p>
+    <p>Videos from the workshop are now available, free with registration, through a StoryMap that features artist discussions, and a participant's guide with questions, prompts, and activities for educators to use with their students.</p>
+    <p><a href="https://sl.richmond.edu/5i">Register here</a> for access to the workshop videos and all the resources that provide any learning community a framework for how to connect as people and how to connect as artists.</p>
+  </section>
+
+  <!-- ── Podcast ─────────────────────────────────────────────── -->
+  <section class="vpm-mw-podcast" id="vpm-mw-podcast" aria-labelledby="vpm-mw-podcast-title">
+    <h2 class="vpm-mw-section-title" id="vpm-mw-podcast-title">Podcast</h2>
+    <div class="vpm-mw-podcast__embed">
+      <iframe src="https://castbox.fm/app/castbox/player/id3184693?v=8.22.11&amp;autoplay=0"
+              title="Mending Walls podcast player" loading="lazy" frameborder="0"></iframe>
+    </div>
+  </section>
+
+  <!-- ── Team Members ────────────────────────────────────────── -->
+  <section class="vpm-mw-team" id="vpm-mw-team" aria-labelledby="vpm-mw-team-title">
+    <h2 class="vpm-mw-section-title" id="vpm-mw-team-title">Team Members</h2>
+
+    <div class="vpm-mw-team-list">
+      <article class="vpm-mw-member">
+        <img class="vpm-mw-member__photo"
+             src="https://vpmnews.kinsta.cloud/wp-content/uploads/optimized/ac76834c-pam-and-todd-hervey.png"
+             alt="Pam Hervey and Todd Hervey" loading="lazy" decoding="async">
+        <div class="vpm-mw-member__body">
+          <p>Producer Pam Hervey and Director of Photography Todd Hervey are multiple Emmy winners for their broadcast work on public television. They are the creative team behind the 13-episode series <em>The Art Scene</em> which aired on VPM PBS from September 2019 – May 2020 and earned four Emmy nominations for the first seven episodes of the season. <em>The Art Scene</em> celebrated the people and organizations who create art that changes lives in Central Virginia.</p>
+          <p>They have also produced and directed two one-hour documentaries for public television — <em>Blackbird: Legacy of Innovation</em> which airs across the country via American Public Television and daily in the theater at the Science Museum of Virginia, and <em>Aged Out: Finding Home</em>, which aired across Virginia in January 2020 with additional support from the Governor's office. Outside of their original productions, Todd and Pam Hervey have both won awards for video projects in partnership with nonprofits, agencies and Fortune 500 companies.</p>
+        </div>
+      </article>
+
+      <article class="vpm-mw-member">
+        <img class="vpm-mw-member__photo"
+             src="https://vpmnews.kinsta.cloud/wp-content/uploads/optimized/f3a7389d-hamilton-glass-bw.jpg"
+             alt="Hamilton Glass" loading="lazy" decoding="async">
+        <div class="vpm-mw-member__body">
+          <p>Co-producer Hamilton Glass is a painter and public artist living in Richmond, and the creator and founder of Mending Walls RVA. His work focuses around using public art to build up communities, and create spaces in which the community members feel they have a stake in their surroundings.</p>
+          <p>To him, it is vital that he uses his work in ways that serve the public and engage people through art. He believes in the power of art, which can hold communities together, and increasing equity around access to the arts.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ── Walls ───────────────────────────────────────────────── -->
+  <section class="vpm-mw-walls" id="vpm-mw-walls" aria-labelledby="vpm-mw-walls-title">
+    <h2 class="vpm-mw-section-title" id="vpm-mw-walls-title">Walls</h2>
+
+    <!-- Link text and href pairings reproduced exactly as they appear on the
+         live page. Several labels don't match their target URL slug (e.g.
+         "SILENCE ISN'T GOLDEN" -> /walls/water-rights-for-all/, "THE JOURNEY
+         FORWARD" -> /walls/a-new-change/). Confirmed pre-existing on the live
+         Brightspot-era page, not introduced by the WordPress migration —
+         see README "Known issues." -->
+    <div class="vpm-mw-walls-grid">
+      <ul class="vpm-mw-walls-list">
+        <li><a href="https://cms.vpm.production.k1.m1.brightspot.cloud/2021-09-03/mending-walls-in-k-12-teaching-empathy-and-creative-collaboration">Mending Walls in K-12: Teaching Empathy and Creative Collaboration</a></li>
+        <li><a href="https://mendingwallsrva.com/walls/her/" target="_blank" rel="noopener">A TIME TO RISE</a></li>
+        <li><a href="https://mendingwallsrva.com/walls/say-their-names/" target="_blank" rel="noopener">SAY THEIR NAMES</a></li>
+        <li><a href="https://mendingwallsrva.com/walls/spirit-of-sankofa/" target="_blank" rel="noopener">SPIRIT OF SANKOFA</a></li>
+        <li><a href="https://mendingwallsrva.com/walls/together-we-rise/" target="_blank" rel="noopener">TOGETHER WE RISE</a></li>
+        <li><a href="https://mendingwallsrva.com/walls/new-growth/" target="_blank" rel="noopener">NEW GROWTH</a></li>
+        <li><a href="https://mendingwallsrva.com/walls/in-conversation/" target="_blank" rel="noopener">IN CONVERSATION</a></li>
+        <li><a href="https://mendingwallsrva.com/walls/her-flowers/" target="_blank" rel="noopener">HER FLOWERS</a></li>
+        <li><a href="https://mendingwallsrva.com/walls/i-can-t-breathe/" target="_blank" rel="noopener">I CAN'T BREATHE</a></li>
+      </ul>
+      <ul class="vpm-mw-walls-list">
+        <li><a href="https://mendingwallsrva.com/walls/liberty-leads-her-people/" target="_blank" rel="noopener">LIBERTY LEADS HER PEOPLE</a></li>
+        <li><a href="https://mendingwallsrva.com/walls/water-rights-for-all/" target="_blank" rel="noopener">SILENCE ISN'T GOLDEN</a></li>
+        <li><a href="https://mendingwallsrva.com/walls/african-american-gothic/" target="_blank" rel="noopener">AFRICAN AMERICAN GOTHIC</a></li>
+        <li><a href="https://mendingwallsrva.com/walls/voices-of-perseverance/" target="_blank" rel="noopener">VOICES OF PERSEVERANCE</a></li>
+        <li><a href="https://mendingwallsrva.com/walls/the-blackwell-drlp/" target="_blank" rel="noopener">THE BLACKWELL DRIP</a></li>
+        <li><a href="https://mendingwallsrva.com/walls/its-time-for-a-change/" target="_blank" rel="noopener">ITS TIME FOR A CHANGE</a></li>
+        <li><a href="https://mendingwallsrva.com/walls/finding-tommorow/" target="_blank" rel="noopener">FINDING TOMORROW</a></li>
+        <li><a href="https://mendingwallsrva.com/walls/a-new-change/" target="_blank" rel="noopener">THE JOURNEY FORWARD</a></li>
+        <li><a href="https://mendingwallsrva.com/walls/once-upon-with-love/" target="_blank" rel="noopener">ONCE UPON…WITH LOVE</a></li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+  </div>
+</section>
+
+<script>
+/* ================================================================
+   Mending Walls — JS block
+   ACF field: JS  (Code Block section)
+   Drives the mural-photo carousel's prev/next controls and status text.
+   ================================================================ */
+(function () {
+  var root = document.querySelector('.vpm-mw-carousel');
+  if (!root) return;
+
+  var slides = root.querySelectorAll('.vpm-mw-carousel__slide');
+  var status = root.querySelector('.vpm-mw-carousel__status');
+  var prevBtn = root.querySelector('.vpm-mw-carousel__prev');
+  var nextBtn = root.querySelector('.vpm-mw-carousel__next');
+  var current = 0;
+
+  function show(index) {
+    current = (index + slides.length) % slides.length;
+    slides.forEach(function (slide, i) {
+      slide.classList.toggle('vpm-mw-carousel__slide--active', i === current);
+    });
+    if (status) status.textContent = (current + 1) + ' of ' + slides.length;
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', function () { show(current - 1); });
+  if (nextBtn) nextBtn.addEventListener('click', function () { show(current + 1); });
+})();
+</script>
+</body>
+</html>

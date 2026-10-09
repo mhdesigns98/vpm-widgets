@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VPM News Voter Guide 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    .vpm-vg,.vpm-vg *,.vpm-vg *::before,.vpm-vg *::after{box-sizing:border-box;margin:0;padding:0}
+    .vpm-vg a{text-decoration:none}.vpm-vg ul{list-style:none}.vpm-vg button{cursor:pointer;font-family:inherit}.vpm-vg img{display:block;max-width:100%}.vpm-vg input{font-family:inherit}
+    .vpm-vg{--dark-blue:#003865;--blue-900:#002244;--blue-800:#002E54;--blue-600:#0B4F85;--light-blue:#6CACE4;--yellow:#E0E721;--red:#EE2737;--black:#101820;--gray-900:#1A1F26;--gray-800:#2A313A;--gray-700:#3D4652;--gray-600:#5A6470;--gray-500:#7B8591;--gray-400:#B2B4B2;--gray-300:#D1D3D4;--gray-200:#E5E7E9;--on-dark:#B9C8D8;--font-sans:'Inter','Helvetica Neue',Arial,sans-serif;--font-display:'Oswald','Impact',sans-serif;font-family:var(--font-sans);background:var(--black);color:#fff;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.5}
+    .vpm-vg .flex{display:flex}.vpm-vg .flex-wrap{flex-wrap:wrap}.vpm-vg .items-start{align-items:flex-start}.vpm-vg .items-center{align-items:center}.vpm-vg .justify-between{justify-content:space-between}.vpm-vg .gap-1{gap:4px}.vpm-vg .gap-2{gap:8px}.vpm-vg .gap-3{gap:12px}.vpm-vg .gap-4{gap:16px}.vpm-vg .gap-6{gap:24px}.vpm-vg .w-full{width:100%}
+    .vpm-vg .container{max-width:1200px;margin:0 auto;padding:0 24px}
+    .vpm-vg .nav{background:var(--dark-blue);border-bottom:3px solid var(--yellow)}
+    .vpm-vg .banner{background:var(--blue-900);border-bottom:1px solid rgba(108,172,228,.2);padding:10px 24px}
+    .vpm-vg .banner-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:12px}
+    .vpm-vg .banner-tag{background:var(--red);color:#fff;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:1px;flex-shrink:0}
+    .vpm-vg .banner-text{color:var(--on-dark);font-size:13px}
+    .vpm-vg .banner-link{color:var(--light-blue);font-size:12px;font-weight:600;margin-left:auto;flex-shrink:0;display:flex;align-items:center;gap:4px}
+    .vpm-vg .hero{background:var(--black);padding:56px 24px 0}
+    .vpm-vg .hero-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 340px;gap:48px;align-items:start}
+    .vpm-vg .eyebrow{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--light-blue)}
+    .vpm-vg .hero-headline{font-family:var(--font-display);font-size:clamp(56px,8vw,108px);font-weight:700;line-height:.92;letter-spacing:-.01em;text-transform:uppercase;color:#fff;margin:12px 0 0}
+    .vpm-vg .hero-headline .line-blue{color:var(--light-blue);display:block}
+    .vpm-vg .hero-headline .line-yellow{color:var(--yellow);display:block}
+    .vpm-vg .hero-headline .line-white{color:#fff;display:block}
+    .vpm-vg .hero-body{color:var(--on-dark);font-size:16px;line-height:1.65;margin-top:20px;max-width:500px}
+    .vpm-vg .hero-ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+    .vpm-vg .btn-primary{display:inline-block;background:var(--yellow);color:var(--black);border:none;border-radius:2px;padding:10px 20px;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+    .vpm-vg .btn-outline{display:inline-block;background:transparent;color:var(--light-blue);border:1px solid var(--light-blue);border-radius:2px;padding:10px 20px;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+    .vpm-vg .btn-primary:hover{background:#c8cf1c}.vpm-vg .btn-outline:hover{background:rgba(108,172,228,.1)}
+    .vpm-vg .featured-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:40px;background:rgba(255,255,255,.06)}
+    .vpm-vg .feat-card{background:var(--black);display:block;transition:background 150ms}
+    .vpm-vg .feat-card:hover{background:#0d1520}
+    .vpm-vg .feat-card-img{aspect-ratio:16/9;overflow:hidden}
+    .vpm-vg .feat-card-img img{width:100%;height:100%;object-fit:cover;transition:transform 300ms}
+    .vpm-vg .feat-card:hover .feat-card-img img{transform:scale(1.03)}
+    .vpm-vg .feat-card-body{padding:12px 14px 16px}
+    .vpm-vg .feat-tag{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+    .vpm-vg .feat-tag.bg{padding:2px 6px;border-radius:1px}
+    .vpm-vg .feat-title{font-size:13px;font-weight:700;line-height:1.35;color:#fff}
+    .vpm-vg .feat-byline{font-size:11px;color:var(--gray-500);margin-top:6px}
+    .vpm-vg .dates-panel{background:var(--blue-900);border:1px solid rgba(108,172,228,.2);border-top:3px solid var(--yellow);padding:24px;position:sticky;top:24px}
+    .vpm-vg .dates-eyebrow{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--yellow)}
+    .vpm-vg .dates-list{margin-top:16px}
+    .vpm-vg .date-item{display:flex;gap:16px;align-items:flex-start;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+    .vpm-vg .date-item:last-child{border-bottom:none}
+    .vpm-vg .date-num{font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--yellow);line-height:1;min-width:56px;text-align:center;flex-shrink:0}
+    .vpm-vg .date-label{font-size:14px;font-weight:700;color:#fff;line-height:1.2}
+    .vpm-vg .date-detail{font-size:12px;color:var(--gray-500);margin-top:3px}
+    .vpm-vg .dates-cta{display:block;margin-top:16px;background:var(--dark-blue);color:var(--light-blue);text-align:center;padding:10px;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:2px;transition:background 150ms}
+    .vpm-vg .dates-cta:hover{background:var(--blue-600)}
+    .vpm-vg .section{padding:72px 24px 56px;background:var(--black)}
+    .vpm-vg .section-alt{background:#0d1520;padding:64px 24px}
+    .vpm-vg .section-inner{max-width:1200px;margin:0 auto}
+    .vpm-vg .section-label{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+    .vpm-vg .section-label-bar{width:3px;height:28px;background:var(--yellow);flex-shrink:0}
+    .vpm-vg .section-label h2{font-family:var(--font-sans);font-size:clamp(20px,2.4vw,28px);font-weight:800;color:#fff;letter-spacing:-.01em}
+    .vpm-vg .section-sub{color:var(--gray-500);font-size:15px;margin-bottom:36px;padding-left:15px}
+    .vpm-vg .race-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(255,255,255,.05)}
+    .vpm-vg .race-card{background:var(--black);padding:28px 24px;display:block;border-top:3px solid var(--dark-blue);transition:background 150ms,border-color 150ms}
+    .vpm-vg .race-card:hover{background:#0d1520;border-top-color:var(--light-blue)}
+    .vpm-vg .race-icon{font-size:36px;margin-bottom:12px}
+    .vpm-vg .race-name{font-family:var(--font-display);font-size:20px;font-weight:700;text-transform:uppercase;color:#fff;letter-spacing:.02em;margin-bottom:6px}
+    .vpm-vg .race-candidates{font-size:12px;font-weight:700;color:var(--light-blue);letter-spacing:.04em;margin-bottom:12px}
+    .vpm-vg .race-desc{font-size:14px;line-height:1.6;color:var(--on-dark)}
+    .vpm-vg .race-more{margin-top:16px;font-size:12px;font-weight:700;color:var(--yellow);letter-spacing:.04em;text-transform:uppercase}
+    .vpm-vg .region-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .vpm-vg .region-card{display:block;background:var(--black);border:1px solid rgba(255,255,255,.06);border-radius:2px;overflow:hidden;transition:border-color 150ms}
+    .vpm-vg .region-card:hover{border-color:rgba(108,172,228,.3)}
+    .vpm-vg .region-bar{height:4px}
+    .vpm-vg .region-body{padding:20px 20px 24px}
+    .vpm-vg .region-name{font-family:var(--font-display);font-size:18px;font-weight:700;text-transform:uppercase;color:#fff;margin-bottom:4px}
+    .vpm-vg .region-district{font-size:11px;font-weight:700;letter-spacing:.08em;margin-bottom:12px}
+    .vpm-vg .region-counties{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px}
+    .vpm-vg .region-county{font-size:11px;background:rgba(255,255,255,.07);color:var(--on-dark);padding:2px 7px;border-radius:1px}
+    .vpm-vg .region-note{font-size:13px;color:var(--gray-500);line-height:1.55}
+    .vpm-vg .accent-bar{height:6px;background:linear-gradient(90deg,#6CACE4 0%,#6CACE4 33%,#E0E721 33%,#E0E721 66%,#EE2737 66%,#EE2737 100%)}
+    .vpm-vg .faq-section{padding:64px 24px 80px;background:var(--black)}
+    .vpm-vg .faq-inner{max-width:800px;margin:0 auto}
+    .vpm-vg .faq-list{border-top:1px solid rgba(255,255,255,.1)}
+    .vpm-vg .faq-item{border-bottom:1px solid rgba(255,255,255,.1)}
+    .vpm-vg .faq-btn{width:100%;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;text-align:left;padding:20px 0;background:none;border:none;color:#fff}
+    .vpm-vg .faq-q{font-size:16px;font-weight:600;color:#fff;line-height:1.4;transition:color 150ms}
+    .vpm-vg .faq-item.open .faq-q{color:var(--light-blue)}
+    .vpm-vg .faq-icon{flex-shrink:0;margin-top:2px;color:var(--yellow);transition:transform 200ms;font-size:20px;line-height:1}
+    .vpm-vg .faq-item.open .faq-icon{transform:rotate(180deg)}
+    .vpm-vg .faq-answer{display:none;font-size:15px;line-height:1.65;color:var(--on-dark);padding-bottom:20px}
+    .vpm-vg .faq-item.open .faq-answer{display:block}
+    .vpm-vg .faq-callout{margin-top:40px;padding:24px;background:var(--blue-900);border:1px solid rgba(108,172,228,.2);border-left:3px solid var(--light-blue)}
+    .vpm-vg .faq-callout p{font-size:14px;color:var(--on-dark);margin-bottom:12px}
+    .vpm-vg .faq-callout a{color:var(--light-blue);font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:4px}
+    .vpm-vg .newsletter{background:var(--dark-blue);padding:48px 24px;text-align:center}
+    .vpm-vg .newsletter-inner{max-width:600px;margin:0 auto}
+    .vpm-vg .newsletter h2{font-family:var(--font-display);font-size:clamp(24px,3vw,36px);font-weight:700;text-transform:uppercase;color:#fff;margin:10px 0 8px}
+    .vpm-vg .newsletter p{color:var(--on-dark);font-size:15px;margin-bottom:24px}
+    .vpm-vg .newsletter-form{display:flex;gap:8px}
+    .vpm-vg .newsletter-input{flex:1;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;padding:12px 16px;font-size:14px;border-radius:2px;outline:none}
+    .vpm-vg .newsletter-input::placeholder{color:rgba(255,255,255,.4)}
+    .vpm-vg .newsletter-input:focus{border-color:var(--light-blue)}
+    .vpm-vg .btn-subscribe{background:var(--yellow);color:var(--black);border:none;padding:12px 24px;font-size:13px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;border-radius:2px;flex-shrink:0;transition:background 150ms}
+    .vpm-vg .btn-subscribe:hover{background:#c8cf1c}
+    .vpm-vg .footer{background:var(--blue-900);border-top:3px solid var(--yellow);padding:40px 24px 24px}
+    @media(max-width:900px){
+      .vpm-vg .hero-grid{grid-template-columns:1fr}
+      .vpm-vg .dates-panel{position:static}
+      .vpm-vg .race-grid{grid-template-columns:1fr}
+      .vpm-vg .region-grid{grid-template-columns:repeat(2,1fr)}
+      .vpm-vg .featured-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:600px){
+      .vpm-vg .region-grid{grid-template-columns:1fr}
+      .vpm-vg .newsletter-form{flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+<div class="vpm-vg">
+  <!-- Site header rendered by Brightspot -->
+  <div style="background:#002244;border-bottom:2px dashed rgba(108,172,228,0.3);padding:12px 24px;display:flex;align-items:center;justify-content:center;gap:10px">
+    <span style="font-size:12px;font-weight:600;color:#5A6470;letter-spacing:0.06em;text-transform:uppercase">Site Header &mdash; Rendered by Brightspot</span>
+  </div>
+  <div class="banner">
+    <div class="banner-inner">
+      <span class="banner-tag">Election 2026</span>
+      <div class="nav-divider"></div>
+      <span class="banner-text">VPM is Virginia&rsquo;s source for nonpartisan election coverage &mdash; reporting on the issues and candidates on your ballot.</span>
+      <a href="#" class="banner-link">More coverage <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+    </div>
+  </div>
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">Virginia &middot; 2026 General Election</span>
+        <h1 class="hero-headline">
+          <span class="line-blue">VPM News</span>
+          <span class="line-yellow">Voter</span>
+          <span class="line-white">Guide</span>
+        </h1>
+        <p class="hero-body">Get nonpartisan information about the candidates and measures on your Virginia ballot this November. VPM is here to help you vote with confidence.</p>
+        <div class="featured-grid">
+          <a class="feat-card" href="#"><div class="feat-card-img"><img src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=600&q=80" alt="" /></div><div class="feat-card-body"><span class="feat-tag" style="color:#EE2737;">U.S. Senate</span><p class="feat-title">Tim Kaine faces his toughest re-election yet as Virginia shifts right</p><p class="feat-byline">VPM News Staff</p></div></a>
+          <a class="feat-card" href="#"><div class="feat-card-img"><img src="https://images.unsplash.com/photo-1555848962-6e79363ec58f?w=600&q=80" alt="" /></div><div class="feat-card-body"><span class="feat-tag" style="color:#6CACE4;">Congress</span><p class="feat-title">Five Virginia House seats rated as competitive heading into the fall</p><p class="feat-byline">VPM News Staff</p></div></a>
+          <a class="feat-card" href="#"><div class="feat-card-img"><img src="https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=600&q=80" alt="" /></div><div class="feat-card-body"><span class="feat-tag bg" style="background:#E0E721;color:#101820;">Voting Rights</span><p class="feat-title">What Virginia voters need to know before they head to the polls</p><p class="feat-byline">VPM News Staff</p></div></a>
+        </div>
+      </div>
+      <div class="dates-panel">
+        <span class="dates-eyebrow">Important Dates</span>
+        <div class="dates-list">
+          <div class="date-item"><div class="date-num">Oct<br>19</div><div><div class="date-label">Voter Registration Deadline</div><div class="date-detail">Register online at vote.virginia.gov</div></div></div>
+          <div class="date-item"><div class="date-num">Sep<br>19</div><div><div class="date-label">Absentee Ballot Request Opens</div><div class="date-detail">No-excuse absentee available</div></div></div>
+          <div class="date-item"><div class="date-num">Sep<br>19</div><div><div class="date-label">Early In-Person Voting Begins</div><div class="date-detail">45 days before Election Day</div></div></div>
+          <div class="date-item"><div class="date-num">Nov<br>3</div><div><div class="date-label">Election Day</div><div class="date-detail">Polls open 6 a.m. &ndash; 7 p.m.</div></div></div>
+        </div>
+        <a href="#" class="dates-cta">Full Elections Calendar &rarr;</a>
+      </div>
+    </div>
+  </section>
+  <!-- VPM Video Coverage -->
+  <section class="section-alt">
+    <div class="section-inner">
+      <div class="section-label"><div class="section-label-bar"></div><h2>VPM Video Coverage</h2></div>
+      <p class="section-sub">Watch VPM's election reporting &mdash; full segments and short clips</p>
+      <div style="display:grid;grid-template-columns:3fr 2fr;gap:24px;align-items:start">
+        <div>
+          <div style="aspect-ratio:16/9;background:linear-gradient(135deg,#1A1F26,#0d1520);border:2px dashed rgba(108,172,228,.25);border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px">
+            <div style="width:56px;height:56px;border-radius:50%;background:rgba(108,172,228,.15);border:2px solid rgba(108,172,228,.3);display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="#6CACE4"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            <span style="font-size:12px;color:#5A6470;font-weight:600">Horizontal Video Embed</span>
+            <span style="font-size:11px;color:#3D4652;text-align:center;max-width:280px">Paste YouTube or Vimeo URL &mdash; 16:9 widescreen</span>
+          </div>
+          <div style="margin-top:14px">
+            <span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#EE2737">Featured</span>
+            <p style="font-size:16px;font-weight:700;color:#fff;margin-top:6px;line-height:1.3">Election Night Special: Virginia Results with VPM News</p>
+            <p style="font-size:13px;color:#7B8591;margin-top:6px">VPM News &middot; Election Night 2026</p>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7B8591;margin-bottom:12px">Shorts</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:center;background:#101820;border:1px solid rgba(255,255,255,.06);border-radius:2px;padding:10px"><div style="aspect-ratio:9/16;background:linear-gradient(180deg,#1A1F26,#0d1520);border:2px dashed rgba(108,172,228,.2);border-radius:2px;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="rgba(108,172,228,0.4)"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div><p style="font-size:13px;font-weight:600;color:#fff;line-height:1.3;margin:0">How to read your Virginia ballot</p><span style="font-size:11px;color:#5A6470;margin-top:4px;display:block">Vertical &middot; 9:16</span></div></div>
+            <div style="display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:center;background:#101820;border:1px solid rgba(255,255,255,.06);border-radius:2px;padding:10px"><div style="aspect-ratio:9/16;background:linear-gradient(180deg,#1A1F26,#0d1520);border:2px dashed rgba(108,172,228,.2);border-radius:2px;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="rgba(108,172,228,0.4)"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div><p style="font-size:13px;font-weight:600;color:#fff;line-height:1.3;margin:0">Meet the candidates: VA Senate</p><span style="font-size:11px;color:#5A6470;margin-top:4px;display:block">Vertical &middot; 9:16</span></div></div>
+            <div style="display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:center;background:#101820;border:1px solid rgba(255,255,255,.06);border-radius:2px;padding:10px"><div style="aspect-ratio:9/16;background:linear-gradient(180deg,#1A1F26,#0d1520);border:2px dashed rgba(108,172,228,.2);border-radius:2px;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="rgba(108,172,228,0.4)"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div><p style="font-size:13px;font-weight:600;color:#fff;line-height:1.3;margin:0">Early voting &mdash; what you need to know</p><span style="font-size:11px;color:#5A6470;margin-top:4px;display:block">Vertical &middot; 9:16</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest Coverage â WordPress feed placeholder -->
+  <section class="section">
+    <div class="section-inner">
+      <div style="margin-bottom:4px"><span class="eyebrow">From the Newsroom</span></div>
+      <div class="section-label"><div class="section-label-bar"></div><h2>Latest Coverage</h2></div>
+      <p class="section-sub">Stories from VPM's election reporting team</p>
+      <!-- WP FEED: Replace this grid with your WordPress shortcode or REST API block -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+        <div style="background:#0d1520;border:2px dashed rgba(108,172,228,.2);border-radius:2px;overflow:hidden"><div style="aspect-ratio:16/9;background:linear-gradient(135deg,#1A1F26,#0d1520);display:flex;align-items:center;justify-content:center"><span style="font-size:10px;color:#3D4652;font-weight:600;letter-spacing:.06em;text-transform:uppercase">WP Featured Image</span></div><div style="padding:12px 14px 16px"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#EE2737;display:block;margin-bottom:8px">U.S. Senate</span><p style="font-size:14px;font-weight:700;color:#7B8591;line-height:1.35;margin:0">Article headline from WordPress feed</p><p style="font-size:11px;color:#3D4652;margin-top:6px">Author &middot; Date</p></div></div>
+        <div style="background:#0d1520;border:2px dashed rgba(108,172,228,.2);border-radius:2px;overflow:hidden"><div style="aspect-ratio:16/9;background:linear-gradient(135deg,#1A1F26,#0d1520);display:flex;align-items:center;justify-content:center"><span style="font-size:10px;color:#3D4652;font-weight:600;letter-spacing:.06em;text-transform:uppercase">WP Featured Image</span></div><div style="padding:12px 14px 16px"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#6CACE4;display:block;margin-bottom:8px">Congress</span><p style="font-size:14px;font-weight:700;color:#7B8591;line-height:1.35;margin:0">Article headline from WordPress feed</p><p style="font-size:11px;color:#3D4652;margin-top:6px">Author &middot; Date</p></div></div>
+        <div style="background:#0d1520;border:2px dashed rgba(108,172,228,.2);border-radius:2px;overflow:hidden"><div style="aspect-ratio:16/9;background:linear-gradient(135deg,#1A1F26,#0d1520);display:flex;align-items:center;justify-content:center"><span style="font-size:10px;color:#3D4652;font-weight:600;letter-spacing:.06em;text-transform:uppercase">WP Featured Image</span></div><div style="padding:12px 14px 16px"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#101820;background:#E0E721;padding:2px 6px;border-radius:1px;display:inline-block;margin-bottom:8px">Voting Rights</span><p style="font-size:14px;font-weight:700;color:#7B8591;line-height:1.35;margin:0">Article headline from WordPress feed</p><p style="font-size:11px;color:#3D4652;margin-top:6px">Author &middot; Date</p></div></div>
+        <div style="background:#0d1520;border:2px dashed rgba(108,172,228,.2);border-radius:2px;overflow:hidden"><div style="aspect-ratio:16/9;background:linear-gradient(135deg,#1A1F26,#0d1520);display:flex;align-items:center;justify-content:center"><span style="font-size:10px;color:#3D4652;font-weight:600;letter-spacing:.06em;text-transform:uppercase">WP Featured Image</span></div><div style="padding:12px 14px 16px"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#6CACE4;display:block;margin-bottom:8px">Elections</span><p style="font-size:14px;font-weight:700;color:#7B8591;line-height:1.35;margin:0">Article headline from WordPress feed</p><p style="font-size:11px;color:#3D4652;margin-top:6px">Author &middot; Date</p></div></div>
+      </div>
+      <div style="margin-top:24px;text-align:center"><div style="display:inline-block;border:1px dashed rgba(108,172,228,.3);border-radius:2px;padding:10px 24px;font-size:12px;font-weight:700;color:#5A6470;letter-spacing:.06em;text-transform:uppercase">Replace with WordPress feed block / shortcode</div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-label"><div class="section-label-bar"></div><h2>Key Virginia Elections</h2></div>
+      <p class="section-sub">The most consequential races on the 2026 Virginia ballot</p>
+      <div class="race-grid">
+        <a class="race-card" href="#"><div class="race-icon">&#127963;</div><div class="race-name">U.S. Senate</div><div class="race-candidates">Tim Kaine (D) vs. TBD (R)</div><p class="race-desc">Sen. Tim Kaine seeks a third term in one of 2026&rsquo;s most-watched races. Republicans have fielded multiple primary challengers vying for the nomination in a state growing increasingly competitive at the federal level.</p><div class="race-more">Learn more &rarr;</div></a>
+        <a class="race-card" href="#"><div class="race-icon">&#128499;</div><div class="race-name">U.S. House &mdash; All 11 Districts</div><div class="race-candidates">Multiple incumbents &amp; challengers</div><p class="race-desc">Virginia&rsquo;s full congressional delegation is on the ballot. Seats in VA-02 (Hampton Roads), VA-05 (Southside), and VA-07 (Richmond suburbs) are rated as toss-ups or lean seats by major election forecasters.</p><div class="race-more">Learn more &rarr;</div></a>
+        <a class="race-card" href="#"><div class="race-icon">&#9878;</div><div class="race-name">State Corporation Commission</div><div class="race-candidates">To be determined</div><p class="race-desc">Voters will elect members to Virginia&rsquo;s powerful regulatory body overseeing utilities, insurance, and financial institutions &mdash; decisions that affect every Virginian&rsquo;s power bills and insurance rates.</p><div class="race-more">Learn more &rarr;</div></a>
+      </div>
+    </div>
+  </section>
+  <section class="section-alt">
+    <div class="section-inner">
+      <div class="section-label"><div class="section-label-bar"></div><h2>Key Regional Races</h2></div>
+      <p class="section-sub">Find competitive congressional contests near you</p>
+      <div class="region-grid">
+        <a class="region-card" href="#"><div class="region-bar" style="background:#6CACE4;"></div><div class="region-body"><div class="region-name">Northern Virginia</div><div class="region-district" style="color:#6CACE4;">VA-10 &amp; VA-11</div><div class="region-counties"><span class="region-county">Fairfax County</span><span class="region-county">Arlington</span><span class="region-county">Alexandria City</span><span class="region-county">Prince William</span></div><p class="region-note">The DC suburbs anchor competitive open-seat contests in two of the state&rsquo;s most closely divided districts.</p></div></a>
+        <a class="region-card" href="#"><div class="region-bar" style="background:#EE2737;"></div><div class="region-body"><div class="region-name">Hampton Roads</div><div class="region-district" style="color:#EE2737;">VA-02</div><div class="region-counties"><span class="region-county">Virginia Beach</span><span class="region-county">Norfolk</span><span class="region-county">Chesapeake</span><span class="region-county">Newport News</span></div><p class="region-note">VA-02 is consistently one of Virginia&rsquo;s most competitive congressional seats, with a heavy military and veteran presence.</p></div></a>
+        <a class="region-card" href="#"><div class="region-bar" style="background:#E0E721;"></div><div class="region-body"><div class="region-name">Richmond Metro</div><div class="region-district" style="color:#E0E721;">VA-04 &amp; VA-07</div><div class="region-counties"><span class="region-county">Richmond City</span><span class="region-county">Henrico</span><span class="region-county">Chesterfield</span></div><p class="region-note">The capital region&rsquo;s diverse electorate makes VA-07 a key bellwether for statewide trends in 2026.</p></div></a>
+        <a class="region-card" href="#"><div class="region-bar" style="background:#6CACE4;"></div><div class="region-body"><div class="region-name">Shenandoah Valley</div><div class="region-district" style="color:#6CACE4;">VA-06</div><div class="region-counties"><span class="region-county">Roanoke</span><span class="region-county">Lynchburg</span><span class="region-county">Augusta County</span></div><p class="region-note">A safe Republican district. Local races &mdash; school boards, sheriff, commonwealth&rsquo;s attorney &mdash; will draw the most competitive contests.</p></div></a>
+        <a class="region-card" href="#"><div class="region-bar" style="background:#EE2737;"></div><div class="region-body"><div class="region-name">Southwest Virginia</div><div class="region-district" style="color:#EE2737;">VA-09</div><div class="region-counties"><span class="region-county">Bristol</span><span class="region-county">Wise County</span><span class="region-county">Lee County</span></div><p class="region-note">The coalfields region has trended heavily Republican. Down-ballot races for local offices carry high stakes for communities.</p></div></a>
+        <a class="region-card" href="#"><div class="region-bar" style="background:#E0E721;"></div><div class="region-body"><div class="region-name">Eastern Shore &amp; Rural East</div><div class="region-district" style="color:#E0E721;">VA-01</div><div class="region-counties"><span class="region-county">Accomack</span><span class="region-county">Northampton</span><span class="region-county">King William</span></div><p class="region-note">Part of VA-01, covering the Northern Neck and Eastern Shore. Competitive local races on water rights and rural broadband.</p></div></a>
+      </div>
+    </div>
+  </section>
+  <div style="background:#002244;border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);padding:14px 24px"><div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;flex-wrap:wrap"><span style="font-size:11px;font-weight:700;color:#5A6470;letter-spacing:.08em;text-transform:uppercase;margin-right:20px">Voter Resources</span><a href="#" target="_blank" style="font-size:13px;font-weight:600;color:#6CACE4;text-decoration:none;padding:6px 16px;border-left:1px solid rgba(255,255,255,.08)">Find Your Ballot &#8599;</a><a href="#" target="_blank" style="font-size:13px;font-weight:600;color:#6CACE4;text-decoration:none;padding:6px 16px;border-left:1px solid rgba(255,255,255,.08)">Check Registration &#8599;</a><a href="#" target="_blank" style="font-size:13px;font-weight:600;color:#6CACE4;text-decoration:none;padding:6px 16px;border-left:1px solid rgba(255,255,255,.08)">Early Voting Info &#8599;</a></div></div>
+
+  <div class="accent-bar"></div>
+  <section class="faq-section">
+    <div class="faq-inner">
+      <div class="section-label"><div class="section-label-bar"></div><h2>Voting FAQ</h2></div>
+      <p class="section-sub">Everything you need to cast your ballot in Virginia</p>
+      <div class="faq-list" id="faq-list">
+        <div class="faq-item"><button class="faq-btn" aria-expanded="false"><span class="faq-q">How do I register to vote in Virginia?</span><span class="faq-icon">&#8964;</span></button><p class="faq-answer">Register online at vote.virginia.gov, by mail, or in person at your local registrar&rsquo;s office. The deadline to register is 15 days before the election &mdash; October 19 for the November 3 general election.</p></div>
+        <div class="faq-item"><button class="faq-btn" aria-expanded="false"><span class="faq-q">Can I vote early or by absentee ballot?</span><span class="faq-icon">&#8964;</span></button><p class="faq-answer">Yes. Virginia offers no-excuse absentee voting. You can request an absentee ballot online, by mail, or in person at your registrar&rsquo;s office. Early in-person voting begins 45 days before the election.</p></div>
+        <div class="faq-item"><button class="faq-btn" aria-expanded="false"><span class="faq-q">What ID do I need to bring to vote?</span><span class="faq-icon">&#8964;</span></button><p class="faq-answer">Virginia requires a photo ID to vote in person. Acceptable forms include a Virginia driver&rsquo;s license, U.S. passport, military ID, or a free Virginia voter photo ID card from your registrar.</p></div>
+        <div class="faq-item"><button class="faq-btn" aria-expanded="false"><span class="faq-q">What if I make a mistake on my ballot?</span><span class="faq-icon">&#8964;</span></button><p class="faq-answer">If you haven&rsquo;t yet deposited your ballot or fed it into the scanner, ask a poll worker for a replacement. Spoiled ballots are noted in the poll book. For mailed ballots, contact your registrar.</p></div>
+        <div class="faq-item"><button class="faq-btn" aria-expanded="false"><span class="faq-q">How do I find my polling place?</span><span class="faq-icon">&#8964;</span></button><p class="faq-answer">Enter your address at vote.virginia.gov/VoterInformation to find your assigned polling place, view your sample ballot, and check your registration status.</p></div>
+        <div class="faq-item"><button class="faq-btn" aria-expanded="false"><span class="faq-q">Can I vote if I have a felony conviction?</span><span class="faq-icon">&#8964;</span></button><p class="faq-answer">Rights restoration in Virginia is now automatic upon completion of your sentence, including any period of probation or parole, under a 2021 executive order made permanent by the General Assembly.</p></div>
+        <div class="faq-item"><button class="faq-btn" aria-expanded="false"><span class="faq-q">Can I vote in person on Election Day?</span><span class="faq-icon">&#8964;</span></button><p class="faq-answer">Yes. Polls are open from 6 a.m. to 7 p.m. on Election Day. If you are in line by 7 p.m., you are entitled to vote regardless of how long it takes.</p></div>
+      </div>
+      <div class="faq-callout">
+        <p>Still have questions? Virginia&rsquo;s Department of Elections has resources available in multiple languages.</p>
+        <a href="https://www.elections.virginia.gov" target="_blank" rel="noopener noreferrer">elections.virginia.gov <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+      </div>
+    </div>
+  </section>
+  <section class="newsletter">
+    <div class="newsletter-inner">
+      <span class="eyebrow" style="color:#E0E721;">Stay Informed</span>
+      <h2>VPM Elections Newsletter</h2>
+      <p>Get the latest Virginia election news, candidate profiles, and voting reminders delivered to your inbox.</p>
+      <form class="newsletter-form" onsubmit="handleSubscribe(event)">
+        <input class="newsletter-input" type="email" placeholder="Your email address" required />
+        <button class="btn-subscribe" type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
+  <!-- Site footer rendered by Brightspot -->
+  <div style="background:#002244;border-top:2px dashed rgba(108,172,228,0.3);padding:12px 24px;display:flex;align-items:center;justify-content:center;gap:10px">
+    <span style="font-size:12px;font-weight:600;color:#5A6470;letter-spacing:0.06em;text-transform:uppercase">Site Footer &mdash; Rendered by Brightspot</span>
+  </div>
+</div>
+<script>
+  document.querySelectorAll('#faq-list .faq-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var item=this.closest('.faq-item');
+      var isOpen=item.classList.contains('open');
+      document.querySelectorAll('#faq-list .faq-item').forEach(function(i){
+        i.classList.remove('open');
+        i.querySelector('.faq-btn').setAttribute('aria-expanded','false');
+      });
+      if(!isOpen){item.classList.add('open');this.setAttribute('aria-expanded','true');}
+    });
+  });
+  function handleSubscribe(e){
+    e.preventDefault();
+    var btn=e.target.querySelector('.btn-subscribe');
+    btn.textContent='Subscribed â';
+    btn.style.background='#003865';
+    btn.style.color='#6CACE4';
+    btn.disabled=true;
+  }
+</script>
+
+<!-- ELECTION RESULTS + ADMIN TOGGLE -->
+<style>
+  .vpm-results{background:#080f18;padding:64px 24px;border-top:1px solid rgba(255,255,255,.06)}
+  .vpm-results .res-inner{max-width:1200px;margin:0 auto}
+  .vpm-results .res-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:12px}
+  .vpm-results .res-title-group{display:flex;align-items:center;gap:12px}
+  .vpm-results .res-bar{width:3px;height:28px;background:#EE2737;flex-shrink:0}
+  .vpm-results .res-h2{font-family:'Inter','Helvetica Neue',Arial,sans-serif;font-size:clamp(20px,2.4vw,28px);font-weight:800;color:#fff;letter-spacing:-.01em}
+  .vpm-results .res-live{display:flex;align-items:center;gap:5px;background:#EE2737;border-radius:2px;padding:3px 8px}
+  .vpm-results .res-live-dot{width:6px;height:6px;border-radius:50%;background:#fff;display:inline-block;animation:vpm-pulse 1.4s ease-in-out infinite}
+  .vpm-results .res-live-txt{font-size:10px;font-weight:800;letter-spacing:.1em;color:#fff;text-transform:uppercase}
+  .vpm-results .res-ap span:first-child{font-size:11px;color:#5A6470}
+  .vpm-results .res-ap span:last-child{font-size:12px;font-weight:800;color:#B9C8D8}
+  .vpm-results .res-sub{color:#5A6470;font-size:14px;margin-bottom:32px;padding-left:15px}
+  .vpm-results .res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+  .vpm-results .race-card{background:#0d1520;border:1px solid rgba(255,255,255,.07);border-radius:2px;padding:20px 20px 18px}
+  .vpm-results .race-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:14px}
+  .vpm-results .race-office{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#7B8591;margin-bottom:3px}
+  .vpm-results .race-seat{font-size:15px;font-weight:700;color:#fff;line-height:1.2}
+  .vpm-results .race-badge{display:flex;align-items:center;gap:5px;border-radius:2px;padding:4px 8px;flex-shrink:0;border:1px solid}
+  .vpm-results .race-badge.called{background:rgba(0,56,101,.6);border-color:rgba(108,172,228,.3)}
+  .vpm-results .race-badge.pending{background:rgba(61,70,82,.4);border-color:rgba(255,255,255,.08)}
+  .vpm-results .race-badge-txt{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .vpm-results .race-badge.called .race-badge-txt{color:#6CACE4}
+  .vpm-results .race-badge.pending .race-badge-txt{color:#7B8591}
+  .vpm-results .prct-row{display:flex;justify-content:space-between;margin-bottom:4px}
+  .vpm-results .prct-label{font-size:11px;color:#5A6470}
+  .vpm-results .prct-val{font-size:11px;font-weight:700;color:#B9C8D8}
+  .vpm-results .prct-track{height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;margin-bottom:14px}
+  .vpm-results .prct-fill{height:100%;border-radius:2px}
+  .vpm-results .cand-list{display:flex;flex-direction:column;gap:8px}
+  .vpm-results .cand-row{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+  .vpm-results .cand-party{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;color:#fff;font-size:10px;font-weight:800;border-radius:2px;flex-shrink:0}
+  .vpm-results .cand-name{font-size:14px;flex:1;line-height:1}
+  .vpm-results .cand-pct{font-size:14px;font-weight:700;min-width:40px;text-align:right}
+  .vpm-results .cand-count{font-size:12px;color:#5A6470;min-width:68px;text-align:right}
+  .vpm-results .cand-bar-track{height:6px;background:rgba(255,255,255,.06);border-radius:1px;overflow:hidden}
+  .vpm-results .cand-bar-fill{height:100%;border-radius:1px}
+  .vpm-results .race-called-time{margin-top:12px;font-size:11px;color:#5A6470}
+  .vpm-results .res-note{font-size:11px;color:#3D4652;margin-top:24px;text-align:center}
+  .vpm-admin-toggle{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+  .vpm-admin-panel{background:#002244;border:1px solid rgba(108,172,228,.3);border-radius:4px;padding:16px 18px;box-shadow:0 8px 32px rgba(0,0,0,.5);min-width:260px;display:none}
+  .vpm-admin-panel.open{display:block}
+  .vpm-admin-panel-title{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#E0E721;margin-bottom:10px}
+  .vpm-admin-status{font-size:12px;color:#7B8591;margin-bottom:12px}
+  .vpm-admin-btns{display:flex;gap:6px}
+  .vpm-admin-btn{flex:1;padding:7px 0;border-radius:2px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.06);color:#7B8591}
+  .vpm-admin-btn.active{background:#003865;color:#E0E721;border-color:rgba(224,231,33,.4)}
+  .vpm-admin-hint{margin-top:10px;font-size:11px;color:#3D4652}
+  .vpm-admin-trigger{background:#003865;border:1px solid rgba(108,172,228,.3);border-radius:3px;padding:8px 14px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:0 4px 16px rgba(0,0,0,.4);color:#6CACE4}
+  .vpm-admin-trigger .adot{width:7px;height:7px;border-radius:50%}
+  @keyframes vpm-pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  @media(max-width:600px){.vpm-results .res-grid{grid-template-columns:1fr}}
+</style>
+
+<div id="vpm-results-section" class="vpm-results" style="display:none">
+  <div class="res-inner">
+    <div class="res-header">
+      <div class="res-title-group">
+        <div class="res-bar"></div>
+        <h2 class="res-h2">Election Results</h2>
+        <div class="res-live"><span class="res-live-dot"></span><span class="res-live-txt">Live</span></div>
+      </div>
+      <div class="res-ap"><span>Powered by</span><span>AP Elections</span></div>
+    </div>
+    <p class="res-sub">Results update automatically. * denotes incumbent. All times ET.</p>
+    <div class="res-grid" id="vpm-race-grid"></div>
+    <p class="res-note">Data is for demonstration. Replace the races array in the script with a live AP Elections API fetch.</p>
+  </div>
+</div>
+
+<div class="vpm-admin-toggle">
+  <div class="vpm-admin-panel" id="vpm-admin-panel">
+    <div class="vpm-admin-panel-title">Results Panel - Editor Control</div>
+    <div class="vpm-admin-status" id="vpm-admin-status"></div>
+    <div class="vpm-admin-btns">
+      <button class="vpm-admin-btn" id="vpm-btn-auto" onclick="setResultsMode('auto')">Auto</button>
+      <button class="vpm-admin-btn" id="vpm-btn-on"   onclick="setResultsMode('on')">Force On</button>
+      <button class="vpm-admin-btn" id="vpm-btn-off"  onclick="setResultsMode('off')">Force Off</button>
+    </div>
+    <div class="vpm-admin-hint">Saved to localStorage - persists across page loads.</div>
+  </div>
+  <button class="vpm-admin-trigger" id="vpm-admin-trigger" onclick="toggleAdminPanel()">
+    <span class="adot" id="vpm-mode-dot"></span>
+    <span id="vpm-mode-label">Results: Auto</span>
+  </button>
+</div>
+
+<script>
+  /* Mock data - AP Elections API shape. Replace with fetch when you have credentials:
+     GET https://api.ap.org/v3/elections/2026-11-03?apiKey=YOUR_KEY&statePostal=VA&resultsType=l */
+  var races=[
+    {id:'va-senate',officeName:'U.S. Senate',seatName:'Virginia',called:true,calledTime:'10:34 PM ET',precinctsReporting:3847,precinctsTotal:4102,
+      candidates:[{first:'Tim',last:'Kaine',party:'Dem',voteCount:1284402,votePercent:52.1,winner:true,incumbent:true},{first:'Mike',last:'Donovan',party:'GOP',voteCount:1142311,votePercent:46.3,winner:false,incumbent:false},{first:'Laura',last:'Simms',party:'Lib',voteCount:37890,votePercent:1.5,winner:false,incumbent:false}]},
+    {id:'va-02',officeName:'U.S. House',seatName:'Virginia 2nd District',called:false,precinctsReporting:312,precinctsTotal:489,
+      candidates:[{first:'Jen',last:'Kiggans',party:'GOP',voteCount:87441,votePercent:50.8,winner:false,incumbent:true},{first:'Missy',last:'Cotter Smasal',party:'Dem',voteCount:84112,votePercent:48.9,winner:false,incumbent:false}]},
+    {id:'va-07',officeName:'U.S. House',seatName:'Virginia 7th District',called:true,calledTime:'11:02 PM ET',precinctsReporting:401,precinctsTotal:401,
+      candidates:[{first:'Eugene',last:'Vindman',party:'Dem',voteCount:112044,votePercent:53.4,winner:true,incumbent:true},{first:'Paul',last:'Templeton',party:'GOP',voteCount:96881,votePercent:46.2,winner:false,incumbent:false}]},
+    {id:'va-10',officeName:'U.S. House',seatName:'Virginia 10th District',called:false,precinctsReporting:198,precinctsTotal:521,
+      candidates:[{first:'Suhas',last:'Subramanyam',party:'Dem',voteCount:44203,votePercent:51.2,winner:false,incumbent:true},{first:'Rob',last:'Hartwell',party:'GOP',voteCount:40918,votePercent:47.4,winner:false,incumbent:false}]},
+    {id:'va-05',officeName:'U.S. House',seatName:'Virginia 5th District',called:true,calledTime:'9:48 PM ET',precinctsReporting:611,precinctsTotal:611,
+      candidates:[{first:'Bob',last:'Good',party:'GOP',voteCount:134002,votePercent:58.1,winner:true,incumbent:true},{first:'Gloria',last:'Barry',party:'Dem',voteCount:93441,votePercent:40.5,winner:false,incumbent:false}]}
+  ];
+  var PC={Dem:'#1A6AA8',GOP:'#C8202F',Ind:'#7B8591',Lib:'#D4A017'};
+  var PL={Dem:'D',GOP:'R',Ind:'I',Lib:'L'};
+  function buildCard(r){
+    var p=Math.round(r.precinctsReporting/r.precinctsTotal*100);
+    var s=r.candidates.slice().sort(function(a,b){return b.votePercent-a.votePercent;});
+    var mp=s[0].votePercent,lc=PC[s[0].party]||'#6CACE4';
+    var bc=r.called?lc:'#3D4652',fc=r.called?'#6CACE4':'#3D4652';
+    var ch=r.candidates.map(function(c){
+      var bw=(c.votePercent/mp*100).toFixed(1),col=PC[c.party]||'#7B8591';
+      var ns=c.winner?'font-weight:700;color:#fff;':'font-weight:500;color:#B9C8D8;';
+      var wm=c.winner?'<svg style="display:inline;vertical-align:middle;margin-right:4px" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E0E721" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':'';
+      var im=c.incumbent?'<span style="font-size:10px;color:#5A6470;margin-left:4px">*</span>':'';
+      return '<div><div class="cand-row"><span class="cand-party" style="background:'+col+'">'+PL[c.party]+'</span><span class="cand-name" style="'+ns+'">'+wm+c.first+' '+c.last+im+'</span><span class="cand-pct" style="'+ns+'">'+c.votePercent.toFixed(1)+'%</span><span class="cand-count">'+c.voteCount.toLocaleString()+'</span></div><div class="cand-bar-track"><div class="cand-bar-fill" style="width:'+bw+'%;background:'+(c.winner?col:col+'88')+'"></div></div></div>';
+    }).join('');
+    var badge=r.called?'<div class="race-badge called"><span class="race-badge-txt">AP Calls</span></div>':'<div class="race-badge pending"><span class="race-badge-txt">In Progress</span></div>';
+    var ct=(r.called&&r.calledTime)?'<div class="race-called-time">Called '+r.calledTime+'</div>':'';
+    return '<div class="race-card" style="border-top:3px solid '+bc+'"><div class="race-top"><div><div class="race-office">'+r.officeName+'</div><div class="race-seat">'+r.seatName+'</div></div>'+badge+'</div><div class="prct-row"><span class="prct-label">Precincts reporting</span><span class="prct-val">'+r.precinctsReporting.toLocaleString()+'/'+r.precinctsTotal.toLocaleString()+' ('+p+'%)</span></div><div class="prct-track"><div class="prct-fill" style="width:'+p+'%;background:'+fc+'"></div></div><div class="cand-list">'+ch+'</div>'+ct+'</div>';
+  }
+  function renderRaces(){var g=document.getElementById('vpm-race-grid');if(g)g.innerHTML=races.map(buildCard).join('');}
+  var ES=new Date('2026-11-01T00:00:00'),EE=new Date('2026-11-04T23:59:59');
+  function isEW(){var n=new Date();return n>=ES&&n<=EE;}
+  function getMode(){try{var v=localStorage.getItem('vpm_results_mode');if(v==='on'||v==='off')return v;}catch(e){}return 'auto';}
+  function setResultsMode(m){try{if(m==='auto')localStorage.removeItem('vpm_results_mode');else localStorage.setItem('vpm_results_mode',m);}catch(e){}applyMode();}
+  function applyMode(){
+    var m=getMode(),aw=isEW(),show=(m==='on')||(m==='auto'&&aw);
+    var sec=document.getElementById('vpm-results-section');if(sec)sec.style.display=show?'block':'none';
+    var dc=m==='on'?'#E0E721':m==='off'?'#EE2737':'#6CACE4';
+    var d=document.getElementById('vpm-mode-dot');if(d)d.style.background=dc;
+    var l=document.getElementById('vpm-mode-label');if(l)l.textContent='Results: '+(m==='on'?'Forced On':m==='off'?'Forced Off':'Auto ('+(aw?'on':'off')+')');
+    var t=document.getElementById('vpm-admin-trigger');if(t)t.style.color=dc;
+    ['auto','on','off'].forEach(function(x){var b=document.getElementById('vpm-btn-'+x);if(b)b.className='vpm-admin-btn'+(m===x?' active':'');});
+    var st=document.getElementById('vpm-admin-status');if(st)st.innerHTML='Auto-show window: <span style="color:'+(aw?'#6CACE4':'#EE2737')+';font-weight:700">'+(aw?'ACTIVE (election week)':'inactive')+'</span>';
+  }
+  function toggleAdminPanel(){var p=document.getElementById('vpm-admin-panel');if(p)p.classList.toggle('open');}
+  renderRaces();
+  applyMode();
+</script>
+</body>
+</html>
