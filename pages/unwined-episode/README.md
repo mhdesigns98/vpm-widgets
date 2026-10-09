@@ -44,7 +44,7 @@ committed `unwined-page.css` is the artifact; nothing at runtime reaches into `w
 
 ## Page assembly — the jump-link anchors
 
-`#recipes` and `#vineyards` are owned by the **page**, not by either block. Neither block
+`#vineyards` is owned by the **page**, not by either block. Neither block
 contains an `id`, so they stay safe to place more than once. Wrap each target block in the page:
 
 ```html
@@ -52,9 +52,22 @@ contains an `id`, so they stay safe to place more than once. Wrap each target bl
 <!-- links-with-map block goes here -->
 ```
 
-`scroll-margin-top` keeps the sticky site header from covering the heading you just jumped to;
-tune it to the real header height. Do the same with `id="recipes"` on the recipes block. If the
-page has no recipes section, delete that jump link rather than leaving it pointing at nothing.
+The `scroll-margin-top` is optional: vpm.org's header isn't sticky, so jump links need no offset
+(see `CLAUDE.md`). Leave it in if the header ever becomes sticky.
+
+There is no Recipes jump link, because the page has no recipes section. If one is added, put a
+`<a class="vpm-unwined__jump-link" href="#recipes">Recipes</a>` back in the `<nav>` in `html.html`
+and wrap the recipes block in `<div id="recipes"></div>`. Never leave a jump link pointing at nothing.
+
+### Paste order (top to bottom of the page)
+
+1. **This block**: `html.html` in the ACF HTML field and `css.css` in the CSS field (or
+   `unwined-page.css` once for the whole page, instead of one stylesheet per block).
+2. **The anchor wrapper**: `<div id="vineyards" style="scroll-margin-top: 96px;"></div>`, placed
+   immediately above the widget so the `#vineyards` jump link lands on the map.
+3. **The `links-with-map` widget** (`widgets/links-with-map/html.html` and `css.css`), directly below.
+
+**Live URL:** not recorded yet. Add it here once the page is published.
 
 ## What changed from the previous version
 
@@ -72,3 +85,13 @@ page has no recipes section, delete that jump link rather than leaving it pointi
   source doesn't reach) so it no longer shifts layout while loading.
 - Sponsor logo `alt` "virginia wine" → "Virginia Wine Board"; it's the link's accessible name.
 - Typo: "Saturdays afternoons" → "Saturday afternoons".
+
+## Changes from the `/ship` check (2026-10-09)
+
+- Removed the dead `#recipes` jump link and the `|` separator (the page has no recipes section).
+- Inline `em`/`strong` set `font-size: inherit`, so a host `em { font-size }` no longer shrinks the
+  "Un-Wine'd" lockup. The separator `<span>` that a host `span` rule resized is gone.
+- The "Stream more", jump, and "Become a Sponsor" links are 44px tall; inline links in prose are
+  exempt. The 62 winery list links belong to `links-with-map`, not this block.
+- Focus ring is dark blue (it was light blue, ~2.4:1 on white).
+- Paste order is now spelled out above.
