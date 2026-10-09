@@ -15,9 +15,9 @@ YouTube's playlist feed (`https://www.youtube.com/feeds/videos.xml?playlist_id=P
 4. **Dead videos:** the existing thumbnail check already drops deleted or private videos.
 
 ## What's needed
-- Who owns the Cloudflare account and where Workers get deployed (the `pbs-show-playlist` Worker is the template).
+- ~~Cloudflare account~~: confirmed, VPM owns it. Still open: where Workers get deployed (the `pbs-show-playlist` Worker is the template).
 - A Worker route/domain and an agreed CORS origin list. The preview site and staging also need allowing.
-- Confirm the playlist stays public, since private playlists have no feed.
+- ~~Playlist public~~: confirmed, it stays public.
 - Decide whether editors need to hide a video (an exclusion list in the Worker, or unlist it on YouTube).
 - Localhost CORS gap: the harness can't hit the live Worker (see `harness/README.md`, "Known gap"), so the success path needs a manual or mock test.
 
