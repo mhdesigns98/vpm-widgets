@@ -5,3 +5,9 @@ Horizontal variant of `youtube-shorts-embed`: VPM News Shorts side by side as 9:
 **Source:** adapted from `youtube-shorts-embed`. Namespace `vpm-shortsrow-`. Single-file HTML embed, no dependencies.
 
 **Updating videos:** edit the `SHORTS` array in the script (`id` + `title`). Playlist feed for fresh IDs: `https://www.youtube.com/feeds/videos.xml?playlist_id=PLDpD9qYyo0hJUThx2RuUgE_TH9LN05ua3`. The list is hand-edited, so it won't pick up new Shorts on its own.
+
+**Analytics:** pushes `vpm_shorts_play` (`video_id`, `video_title`) and `vpm_shorts_cta_click` to `window.dataLayer` and fires the same names as DOM events from the widget root. Needs a GTM/GA4 trigger on those event names to actually record anything.
+
+**Hosting needs:** the page's CSP must allow `img-src i.ytimg.com` and `frame-src www.youtube.com`.
+
+**Self-updating list:** outlined in `FEED-SPEC.md` (not built).

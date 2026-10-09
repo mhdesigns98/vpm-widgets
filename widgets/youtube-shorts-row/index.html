@@ -11,6 +11,7 @@
     --vpm-shortsrow-navy: #003865;
     --vpm-shortsrow-blue: #6CACE4;
     --vpm-shortsrow-yellow: #E0E721;
+    --vpm-shortsrow-yellow-200: #F2F5A2;
     --vpm-shortsrow-black: #101820;
     --vpm-shortsrow-white: #FFFFFF;
     --vpm-shortsrow-card: 200px;
@@ -46,7 +47,7 @@
     font-size: 13px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
     text-decoration: none !important; transition: background 0.2s, border-color 0.2s;
   }
-  .vpm-shortsrow .vpm-shortsrow__btn:hover { background: #F2F5A2; border-color: #F2F5A2; color: var(--vpm-shortsrow-navy) !important; }
+  .vpm-shortsrow .vpm-shortsrow__btn:hover { background: var(--vpm-shortsrow-yellow-200); border-color: var(--vpm-shortsrow-yellow-200); color: var(--vpm-shortsrow-navy) !important; }
   .vpm-shortsrow .vpm-shortsrow__btn:focus-visible,
   .vpm-shortsrow__card:focus-visible,
   .vpm-shortsrow__nav:focus-visible { outline: 3px solid var(--vpm-shortsrow-blue); outline-offset: 3px; }
@@ -84,6 +85,7 @@
     position: absolute; left: 12px; right: 12px; bottom: 12px; font-size: 14px; font-weight: 700; line-height: 1.25;
     display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
   }
+  .vpm-shortsrow__player { position: relative; width: 100%; aspect-ratio: 9 / 16; border-radius: 8px; overflow: hidden; background: var(--vpm-shortsrow-black); }
   .vpm-shortsrow__frame { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
 
   .vpm-shortsrow__nav {
@@ -113,13 +115,14 @@
         <span class="vpm-shortsrow__eyebrow">Shorts</span>
         <h2 class="vpm-shortsrow__title">VPM on YouTube</h2>
       </div>
-      <a class="vpm-shortsrow__btn" href="https://www.youtube.com/playlist?list=PLDpD9qYyo0hJUThx2RuUgE_TH9LN05ua3" target="_blank" rel="noopener">Watch all Shorts on YouTube<span class="vpm-shortsrow__sr"> (opens in a new tab)</span></a>
+      <a class="vpm-shortsrow__btn" href="https://www.youtube.com/playlist?list=PLDpD9qYyo0hJUThx2RuUgE_TH9LN05ua3" data-vpm-shortsrow-cta target="_blank" rel="noopener">Watch all Shorts<span class="vpm-shortsrow__sr"> on YouTube (opens in a new tab)</span></a>
     </div>
   </div>
 
   <div class="vpm-shortsrow__rail">
     <button type="button" class="vpm-shortsrow__nav vpm-shortsrow__nav--prev" aria-label="Previous Shorts" hidden>&#8249;</button>
     <ul class="vpm-shortsrow__track" role="list"></ul>
+    <p class="vpm-shortsrow__sr" role="status" aria-live="polite" data-vpm-shortsrow-status></p>
     <button type="button" class="vpm-shortsrow__nav vpm-shortsrow__nav--next" aria-label="Next Shorts">&#8250;</button>
   </div>
 </section>
@@ -148,6 +151,9 @@
     var prev = root.querySelector('.vpm-shortsrow__nav--prev');
     var next = root.querySelector('.vpm-shortsrow__nav--next');
     if (!track) return;
+    var status = root.querySelector('[data-vpm-shortsrow-status]');
+    var cta = root.querySelector('[data-vpm-shortsrow-cta]');
+    if (cta) cta.addEventListener('click', function () { track_('vpm_shorts_cta_click', {}); });
 
     SHORTS.forEach(function (v) {
       var li = document.createElement('li');
@@ -161,10 +167,24 @@
         '<span class="vpm-shortsrow__scrim"></span><span class="vpm-shortsrow__play" aria-hidden="true"></span>' +
         '<span class="vpm-shortsrow__label"></span>';
       btn.querySelector('.vpm-shortsrow__label').textContent = v.title;
+      var img = btn.querySelector('img');
+      // Drop cards for deleted/private videos (404, or YouTube's 120px grey placeholder).
+      img.addEventListener('error', function () { drop(li); });
+      img.addEventListener('load', function () { if (img.naturalWidth <= 120) drop(li); });
       btn.addEventListener('click', function () { play(li, btn, v); });
       li.appendChild(btn);
       track.appendChild(li);
     });
+
+    function drop(li) { if (li.parentNode) { li.parentNode.removeChild(li); sync(); } }
+
+    // Analytics: pushes to the page's dataLayer (GTM/GA4) and fires a DOM event for any other listener.
+    function track_(name, detail) {
+      try {
+        (window.dataLayer = window.dataLayer || []).push(Object.assign({ event: name }, detail));
+        root.dispatchEvent(new CustomEvent(name, { bubbles: true, detail: detail }));
+      } catch (e) {}
+    }
 
     function play(li, btn, v) {
       var open = track.querySelector('.vpm-shortsrow__frame');
@@ -180,11 +200,13 @@
       frame.allow = 'autoplay; encrypted-media; picture-in-picture; web-share';
       frame.allowFullscreen = true;
       var holder = document.createElement('div');
-      holder.style.cssText = 'position:relative;width:100%;aspect-ratio:9/16;border-radius:8px;overflow:hidden;background:#101820';
+      holder.className = 'vpm-shortsrow__player';
       holder.appendChild(frame);
       li._restore = function () { wrap.replaceChild(btn, holder); li._restore = null; };
       wrap.replaceChild(holder, btn);
       frame.focus();
+      if (status) status.textContent = 'Now playing: ' + v.title;
+      track_('vpm_shorts_play', { video_id: v.id, video_title: v.title });
     }
 
     function step() { return (track.querySelector('.vpm-shortsrow__item') || {}).offsetWidth * 2 + 32 || 400; }
@@ -196,7 +218,11 @@
     prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
     next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
     track.addEventListener('scroll', sync, { passive: true });
-    window.addEventListener('resize', sync);
+    function onResize() {
+      if (!root.isConnected) { window.removeEventListener('resize', onResize); return; } // CMS re-render detached us
+      sync();
+    }
+    window.addEventListener('resize', onResize);
     sync();
   }
 })();
