@@ -132,7 +132,7 @@ anything separately.
 
   (build the widget here — describe what you want, iterate in the session)
 
-/ship-widget vpm-pledge27-banner
+/ship vpm-pledge27-banner
   → runs the harness, fixes anything it finds, prints the deploy-ready code blocks
 
 git add widgets/vpm-pledge27-banner INDEX.md index.html
@@ -140,4 +140,4 @@ git commit -m "Add pledge-drive-banner-2027 widget"
 ```
 
 Then open a PR — don't push straight to `main` (see "Working on a widget" above). Once it's
-merged, paste the blocks `/ship-widget` printed into the CMS.
+merged, paste the blocks `/ship` printed into the CMS.
