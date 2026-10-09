@@ -43,6 +43,8 @@
   align-items: center;
   gap: 12px;
   max-width: 960px;
+  margin: 0;
+  padding: 0;
   text-align: center;
 }
 
@@ -56,8 +58,11 @@
 
 /* !important on the link: host themes commonly force color/underline on every `a` */
 .vpm-banner a.vpm-banner__button {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   padding: 8px 20px;
+  white-space: nowrap;
   border-radius: var(--radius-md);
   background-color: var(--vpm-yellow);
   color: var(--vpm-black) !important;
