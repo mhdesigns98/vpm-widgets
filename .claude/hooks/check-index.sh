@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Widget Lab drift check: every widgets/<slug>/ and pages/<slug>/ must appear in INDEX.md and have a README.md.
+# Widget Lab drift check: every widgets/<slug>/ and pages/<slug>/ must appear in INDEX.md and the index.html gallery and have a README.md.
 #
 # INDEX.md is the slug/namespace-collision lookup that CLAUDE.md tells Claude to consult before
 # picking a prefix. When it drifts, that check silently stops working — hence this script.
@@ -16,6 +16,7 @@ cd "$repo" || exit 0
 
 missing_index=()
 missing_readme=()
+missing_gallery=()
 stale_index=()
 
 # Folder -> INDEX.md, and folder -> README.md
@@ -24,6 +25,7 @@ for d in widgets/*/ pages/*/; do
   path="${d%/}"
   grep -qE -- "\`$path/?\`" INDEX.md || missing_index+=("$path")
   [ -f "$d/README.md" ] || missing_readme+=("$path")
+  grep -q -- "slug: '$(basename "$path")'" index.html || missing_gallery+=("$path")
 done
 
 # INDEX.md -> folder. Catches rows left behind when a widget is deleted (as happened to
@@ -33,12 +35,13 @@ while read -r slug; do
   [ -d "$slug" ] || stale_index+=("$slug")
 done < <(grep -oE '^\| `[^`]+`' INDEX.md | sed -E 's/^\| `//; s/\/?`$//')
 
-[ ${#missing_index[@]} -eq 0 ] && [ ${#missing_readme[@]} -eq 0 ] && [ ${#stale_index[@]} -eq 0 ] && exit 0
+[ ${#missing_index[@]} -eq 0 ] && [ ${#missing_readme[@]} -eq 0 ] && [ ${#stale_index[@]} -eq 0 ] && [ ${#missing_gallery[@]} -eq 0 ] && exit 0
 
 report=""
 add() { [ -n "$report" ] && report="$report"$'\n'; report="${report}$1"; }
 [ ${#missing_index[@]} -gt 0 ] && add "not in INDEX.md: ${missing_index[*]}"
 [ ${#missing_readme[@]} -gt 0 ] && add "no README.md: ${missing_readme[*]}"
+[ ${#missing_gallery[@]} -gt 0 ] && add "not in gallery (index.html): ${missing_gallery[*]}"
 [ ${#stale_index[@]} -gt 0 ] && add "in INDEX.md but no folder: ${stale_index[*]}"
 
 if [ "${1:-}" = "--json" ]; then
