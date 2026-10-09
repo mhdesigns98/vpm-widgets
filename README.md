@@ -44,7 +44,7 @@ committed to this repo, so VPM brand tokens and the build/ship slash commands lo
 [**"Using Claude Code on this repo"** in `CONTRIBUTING.md`](CONTRIBUTING.md#using-claude-code-on-this-repo)
 for install steps, what each command does, and a first-widget walkthrough.
 
-Page builds use `/new-page` and `/ship-page`, which have their own checklist in `CLAUDE.md`.
+Page builds use `/new-page`; `/ship` checks both kinds against the checklist in `CLAUDE.md`.
 
 ## Structure
 
@@ -99,7 +99,7 @@ single list — check it before picking a new slug so prefixes don't collide.
 3. `/new-widget [short-name]` — scaffolds `widgets/[short-name]/` with tokens inlined, or create
    `index.html` (or the ACF split files) and a `README.md` by hand
 4. Namespace all classes and ids (e.g. `vpm-pledge26-`)
-5. `/ship-widget [name]` — runs the harness and the pre-ship checklist in [`CLAUDE.md`](CLAUDE.md);
+5. `/ship [name]` — runs the harness and the pre-ship checklist in [`CLAUDE.md`](CLAUDE.md);
    required before it goes near a CMS
 6. Add a row to [`INDEX.md`](INDEX.md) (`/new-widget` does this for you)
 7. Open a PR. Pages preview: `https://mhdesigns98.github.io/vpm-widgets/widgets/[name]/`
