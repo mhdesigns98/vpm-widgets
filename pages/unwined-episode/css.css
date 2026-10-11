@@ -3,7 +3,8 @@
    Namespace: vpm-unwined-
    Tokens inlined from tokens.css (widget must stay self-contained)
 
-   Every selector is scoped to .vpm-unwined. The block this replaces styled
+   Every selector is scoped to .vpm-unwined. Inline `em`/`strong` set
+   font-size: inherit, so a host `em { font-size: … }` can't resize them. The block this replaces styled
    bare `img` in a page-level <style>, which hit every image on the page.
    ============================================ */
 
@@ -97,10 +98,15 @@
 
 .vpm-unwined a:focus-visible,
 .vpm-unwined .vpm-unwined__sponsor-link:focus-visible {
-  outline: 2px solid var(--vpm-unwined-light-blue);
+  /* dark blue, not light blue: light blue on white is ~2.4:1, below the 3:1 WCAG asks of a focus ring */
+  outline: 2px solid var(--vpm-unwined-dark-blue);
   outline-offset: 3px;
   border-radius: var(--vpm-unwined-radius-md);
 }
+
+/* Host themes size bare em/strong; keep them at the surrounding text size. */
+.vpm-unwined em,
+.vpm-unwined strong { font-size: inherit; }
 
 /* ---- Lockup ---- */
 .vpm-unwined .vpm-unwined__lockup {
@@ -114,8 +120,17 @@
 }
 
 .vpm-unwined .vpm-unwined__show {
+  font-size: inherit;
   font-style: italic;
   color: var(--vpm-unwined-dark-blue);
+}
+
+/* 44px tap target on the standalone links (inline links in prose are exempt) */
+.vpm-unwined .vpm-unwined__lockup-link,
+.vpm-unwined .vpm-unwined__jump-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 
 /* ---- Jump links ---- */
@@ -123,16 +138,11 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: baseline;
+  align-items: center;
   gap: var(--vpm-unwined-space-3);
   margin: 0 0 var(--vpm-unwined-space-6);
   padding: 0;
   font-size: var(--vpm-unwined-fs-body-lg);
-}
-
-.vpm-unwined .vpm-unwined__jump-sep {
-  color: var(--vpm-unwined-gray-600);
-  user-select: none;
 }
 
 /* ---- Player ----
@@ -283,14 +293,17 @@
   letter-spacing: normal;
 }
 
+.vpm-unwined .vpm-unwined__become .vpm-unwined__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
 /* ---- Narrow ---- */
 @container vpm-unwined (max-width: 480px) {
   .vpm-unwined .vpm-unwined__lockup { font-size: clamp(26px, 8cqw, 34px); }
   .vpm-unwined .vpm-unwined__sponsor-name { font-size: var(--vpm-unwined-fs-body-lg); }
   .vpm-unwined .vpm-unwined__sponsor-list { gap: var(--vpm-unwined-space-5); }
-  /* Stack the jump links rather than let them wrap and strand the separator */
-  .vpm-unwined .vpm-unwined__jump { flex-direction: column; gap: var(--vpm-unwined-space-2); }
-  .vpm-unwined .vpm-unwined__jump-sep { display: none; }
 }
 
 /* ---- Motion ---- */
