@@ -1,9 +1,13 @@
 /* ── Core: shared by every brand ──
-   Every layout element carries `.vpm-nls` plus its brand class (`.vpm-nls--mm`), so any one
+   Every layout is wrapped in `.vpm-nls` plus its brand class (`.vpm-nls--mm`), so any one
    variant can be pasted on its own and still pick up the reset, fonts and brand variables.
    Brand variables live on the brand class, not :root, so two brands on one page can't
-   overwrite each other's colors. */
+   overwrite each other's colors.
+   The wrapper is also a size container: the layouts respond to the width of the column
+   they're pasted into (@container vpm-nls), not the viewport, so a Full-width variant in a
+   narrow column stacks the same way it does on a phone. */
 .vpm-nls {
+  container: vpm-nls / inline-size;
   --vpm-black:   #101820;
   --vpm-red-700: #B81E2A;
   --radius-md:   4px;
@@ -83,3 +87,9 @@
 }
 .vpm-nls__status[hidden] { display: none; }
 .vpm-nls__status--err { color: var(--vpm-red-700); }
+
+/* Narrow containers: email above a full-width button */
+@container vpm-nls (max-width: 439px) {
+  .vpm-nls__row { flex-direction: column; }
+  .vpm-nls__row .vpm-nls__btn { width: 100%; }
+}

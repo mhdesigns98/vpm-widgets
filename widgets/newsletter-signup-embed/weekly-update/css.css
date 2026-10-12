@@ -5,11 +5,15 @@
    ================================================ */
 
 /* ── Core: shared by every brand ──
-   Every layout element carries `.vpm-nls` plus its brand class (`.vpm-nls--mm`), so any one
+   Every layout is wrapped in `.vpm-nls` plus its brand class (`.vpm-nls--mm`), so any one
    variant can be pasted on its own and still pick up the reset, fonts and brand variables.
    Brand variables live on the brand class, not :root, so two brands on one page can't
-   overwrite each other's colors. */
+   overwrite each other's colors.
+   The wrapper is also a size container: the layouts respond to the width of the column
+   they're pasted into (@container vpm-nls), not the viewport, so a Full-width variant in a
+   narrow column stacks the same way it does on a phone. */
 .vpm-nls {
+  container: vpm-nls / inline-size;
   --vpm-black:   #101820;
   --vpm-red-700: #B81E2A;
   --radius-md:   4px;
@@ -90,6 +94,12 @@
 .vpm-nls__status[hidden] { display: none; }
 .vpm-nls__status--err { color: var(--vpm-red-700); }
 
+/* Narrow containers: email above a full-width button */
+@container vpm-nls (max-width: 439px) {
+  .vpm-nls__row { flex-direction: column; }
+  .vpm-nls__row .vpm-nls__btn { width: 100%; }
+}
+
 /* ── Weekly Update ── navy card, light-blue CTA, yellow "weekly" accent */
 .vpm-nls--wu {
   --vpm-yellow:     #E0E721;
@@ -127,7 +137,7 @@
 }
 
 /* FULL */
-.vpm-nls--wu.vpm-nls__full {
+.vpm-nls--wu .vpm-nls__full {
   background: var(--wu-bg);
   border-radius: 6px;
   overflow: hidden;
@@ -138,24 +148,24 @@
   gap: 40px;
   align-items: center;
 }
-.vpm-nls--wu.vpm-nls__full > img { max-width: 220px; }
+.vpm-nls--wu .vpm-nls__full > img { max-width: 220px; }
 .vpm-nls--wu .vpm-nls__full-content { display: flex; flex-direction: column; gap: 14px; }
 .vpm-nls--wu .vpm-nls__full-content .vpm-nls__title { font-size: 26px; line-height: 1.15; }
 .vpm-nls--wu .vpm-nls__full-content .vpm-nls__dek { color: rgba(255,255,255,0.85); font-size: 14px; font-weight: 600; }
-.vpm-nls--wu.vpm-nls__full .vpm-nls__row { max-width: 620px; }
+.vpm-nls--wu .vpm-nls__full .vpm-nls__row { max-width: 620px; }
 
 /* INLINE */
-.vpm-nls--wu.vpm-nls__inline {
+.vpm-nls--wu .vpm-nls__inline {
   background: var(--wu-bg);
   border-radius: 6px;
   padding: 28px 32px;
 }
-.vpm-nls--wu.vpm-nls__inline .vpm-nls__title { font-size: 20px; margin-bottom: 6px; }
-.vpm-nls--wu.vpm-nls__inline p { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.85); margin-bottom: 14px; max-width: 620px; }
-.vpm-nls--wu.vpm-nls__inline .vpm-nls__row { max-width: 620px; }
+.vpm-nls--wu .vpm-nls__inline .vpm-nls__title { font-size: 20px; margin-bottom: 6px; }
+.vpm-nls--wu .vpm-nls__inline p { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.85); margin-bottom: 14px; max-width: 620px; }
+.vpm-nls--wu .vpm-nls__inline .vpm-nls__row { max-width: 620px; }
 
 /* SIDEBAR: navy throughout; the lockup sits on its own white badge. */
-.vpm-nls--wu.vpm-nls__sidebar {
+.vpm-nls--wu .vpm-nls__sidebar {
   max-width: 340px;
   border-radius: 6px;
   overflow: hidden;
@@ -180,4 +190,12 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+/* Narrow containers: lockup above the copy, tighter padding. */
+@container vpm-nls (max-width: 599px) {
+  .vpm-nls--wu .vpm-nls__full { grid-template-columns: 1fr; gap: 20px; padding: 24px; }
+  .vpm-nls--wu .vpm-nls__full > img { max-width: 180px; }
+  .vpm-nls--wu .vpm-nls__full-content .vpm-nls__title { font-size: 22px; }
+  .vpm-nls--wu .vpm-nls__inline { padding: 24px 20px; }
 }

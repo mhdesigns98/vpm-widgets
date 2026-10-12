@@ -5,11 +5,15 @@
    ================================================ */
 
 /* ── Core: shared by every brand ──
-   Every layout element carries `.vpm-nls` plus its brand class (`.vpm-nls--mm`), so any one
+   Every layout is wrapped in `.vpm-nls` plus its brand class (`.vpm-nls--mm`), so any one
    variant can be pasted on its own and still pick up the reset, fonts and brand variables.
    Brand variables live on the brand class, not :root, so two brands on one page can't
-   overwrite each other's colors. */
+   overwrite each other's colors.
+   The wrapper is also a size container: the layouts respond to the width of the column
+   they're pasted into (@container vpm-nls), not the viewport, so a Full-width variant in a
+   narrow column stacks the same way it does on a phone. */
 .vpm-nls {
+  container: vpm-nls / inline-size;
   --vpm-black:   #101820;
   --vpm-red-700: #B81E2A;
   --radius-md:   4px;
@@ -90,6 +94,12 @@
 .vpm-nls__status[hidden] { display: none; }
 .vpm-nls__status--err { color: var(--vpm-red-700); }
 
+/* Narrow containers: email above a full-width button */
+@container vpm-nls (max-width: 439px) {
+  .vpm-nls__row { flex-direction: column; }
+  .vpm-nls__row .vpm-nls__btn { width: 100%; }
+}
+
 /* ── Virginia Home Grown ── green sub-brand with the leaf-pattern panel */
 .vpm-nls--vhg {
   --vhg-green:      #2E8B57;
@@ -116,12 +126,11 @@
   border-radius: var(--radius-md);
   margin-bottom: 14px;
 }
-.vpm-nls--vhg.vpm-nls__inline .vpm-nls__badge { background: #fff; color: var(--vhg-green-dark); }
+.vpm-nls--vhg .vpm-nls__inline .vpm-nls__badge { background: #fff; color: var(--vhg-green-dark); }
 
 .vpm-nls--vhg .vpm-nls__title { font-family: var(--nls-display); font-weight: 700; text-transform: uppercase; line-height: 1.1; }
 .vpm-nls--vhg .vpm-nls__title em { font-style: normal; color: var(--vhg-green-dark); }
 
-.vpm-nls--vhg.vpm-nls__leaf,
 .vpm-nls--vhg .vpm-nls__leaf {
   background-color: var(--vhg-green);
   background-image: url('https://mhdesigns98.github.io/vpm-widgets/widgets/newsletter-signup-embed/assets/leaf-pattern.svg');
@@ -130,7 +139,7 @@
 }
 
 /* FULL: split panel, matches Figma */
-.vpm-nls--vhg.vpm-nls__full {
+.vpm-nls--vhg .vpm-nls__full {
   display: grid;
   grid-template-columns: 1fr 1fr;
   border-radius: 6px;
@@ -155,16 +164,16 @@
 }
 
 /* INLINE */
-.vpm-nls--vhg.vpm-nls__inline {
+.vpm-nls--vhg .vpm-nls__inline {
   border-radius: 6px;
   padding: 28px 32px;
 }
-.vpm-nls--vhg.vpm-nls__inline .vpm-nls__title { font-size: 22px; color: #fff; margin-bottom: 6px; }
-.vpm-nls--vhg.vpm-nls__inline p { font-size: 14px; color: rgba(255,255,255,0.9); margin-bottom: 14px; max-width: 620px; text-align: left; font-weight: 600; }
-.vpm-nls--vhg.vpm-nls__inline .vpm-nls__row { max-width: 620px; }
+.vpm-nls--vhg .vpm-nls__inline .vpm-nls__title { font-size: 22px; color: #fff; margin-bottom: 6px; }
+.vpm-nls--vhg .vpm-nls__inline p { font-size: 14px; color: rgba(255,255,255,0.9); margin-bottom: 14px; max-width: 620px; text-align: left; font-weight: 600; }
+.vpm-nls--vhg .vpm-nls__inline .vpm-nls__row { max-width: 620px; }
 
 /* SIDEBAR */
-.vpm-nls--vhg.vpm-nls__sidebar {
+.vpm-nls--vhg .vpm-nls__sidebar {
   max-width: 340px;
   border-radius: 6px;
   overflow: hidden;
@@ -179,4 +188,13 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+/* Narrow containers: leaf panel above the form, tighter padding. */
+@container vpm-nls (max-width: 599px) {
+  .vpm-nls--vhg .vpm-nls__full { grid-template-columns: 1fr; }
+  .vpm-nls--vhg .vpm-nls__full-left,
+  .vpm-nls--vhg .vpm-nls__full-right { padding: 28px 24px; }
+  .vpm-nls--vhg .vpm-nls__full-left .vpm-nls__title { font-size: 24px; }
+  .vpm-nls--vhg .vpm-nls__inline { padding: 24px 20px; }
 }

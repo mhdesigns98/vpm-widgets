@@ -8,11 +8,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ── Core: shared by every brand ──
-   Every layout element carries `.vpm-nls` plus its brand class (`.vpm-nls--mm`), so any one
+   Every layout is wrapped in `.vpm-nls` plus its brand class (`.vpm-nls--mm`), so any one
    variant can be pasted on its own and still pick up the reset, fonts and brand variables.
    Brand variables live on the brand class, not :root, so two brands on one page can't
-   overwrite each other's colors. */
+   overwrite each other's colors.
+   The wrapper is also a size container: the layouts respond to the width of the column
+   they're pasted into (@container vpm-nls), not the viewport, so a Full-width variant in a
+   narrow column stacks the same way it does on a phone. */
 .vpm-nls {
+  container: vpm-nls / inline-size;
   --vpm-black:   #101820;
   --vpm-red-700: #B81E2A;
   --radius-md:   4px;
@@ -93,6 +97,12 @@
 .vpm-nls__status[hidden] { display: none; }
 .vpm-nls__status--err { color: var(--vpm-red-700); }
 
+/* Narrow containers: email above a full-width button */
+@container vpm-nls (max-width: 439px) {
+  .vpm-nls__row { flex-direction: column; }
+  .vpm-nls__row .vpm-nls__btn { width: 100%; }
+}
+
 /* ── Weekly Update ── navy card, light-blue CTA, yellow "weekly" accent */
 .vpm-nls--wu {
   --vpm-yellow:     #E0E721;
@@ -130,7 +140,7 @@
 }
 
 /* FULL */
-.vpm-nls--wu.vpm-nls__full {
+.vpm-nls--wu .vpm-nls__full {
   background: var(--wu-bg);
   border-radius: 6px;
   overflow: hidden;
@@ -141,24 +151,24 @@
   gap: 40px;
   align-items: center;
 }
-.vpm-nls--wu.vpm-nls__full > img { max-width: 220px; }
+.vpm-nls--wu .vpm-nls__full > img { max-width: 220px; }
 .vpm-nls--wu .vpm-nls__full-content { display: flex; flex-direction: column; gap: 14px; }
 .vpm-nls--wu .vpm-nls__full-content .vpm-nls__title { font-size: 26px; line-height: 1.15; }
 .vpm-nls--wu .vpm-nls__full-content .vpm-nls__dek { color: rgba(255,255,255,0.85); font-size: 14px; font-weight: 600; }
-.vpm-nls--wu.vpm-nls__full .vpm-nls__row { max-width: 620px; }
+.vpm-nls--wu .vpm-nls__full .vpm-nls__row { max-width: 620px; }
 
 /* INLINE */
-.vpm-nls--wu.vpm-nls__inline {
+.vpm-nls--wu .vpm-nls__inline {
   background: var(--wu-bg);
   border-radius: 6px;
   padding: 28px 32px;
 }
-.vpm-nls--wu.vpm-nls__inline .vpm-nls__title { font-size: 20px; margin-bottom: 6px; }
-.vpm-nls--wu.vpm-nls__inline p { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.85); margin-bottom: 14px; max-width: 620px; }
-.vpm-nls--wu.vpm-nls__inline .vpm-nls__row { max-width: 620px; }
+.vpm-nls--wu .vpm-nls__inline .vpm-nls__title { font-size: 20px; margin-bottom: 6px; }
+.vpm-nls--wu .vpm-nls__inline p { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.85); margin-bottom: 14px; max-width: 620px; }
+.vpm-nls--wu .vpm-nls__inline .vpm-nls__row { max-width: 620px; }
 
 /* SIDEBAR: navy throughout; the lockup sits on its own white badge. */
-.vpm-nls--wu.vpm-nls__sidebar {
+.vpm-nls--wu .vpm-nls__sidebar {
   max-width: 340px;
   border-radius: 6px;
   overflow: hidden;
@@ -185,6 +195,14 @@
   gap: 12px;
 }
 
+/* Narrow containers: lockup above the copy, tighter padding. */
+@container vpm-nls (max-width: 599px) {
+  .vpm-nls--wu .vpm-nls__full { grid-template-columns: 1fr; gap: 20px; padding: 24px; }
+  .vpm-nls--wu .vpm-nls__full > img { max-width: 180px; }
+  .vpm-nls--wu .vpm-nls__full-content .vpm-nls__title { font-size: 22px; }
+  .vpm-nls--wu .vpm-nls__inline { padding: 24px 20px; }
+}
+
 
   body { margin: 0; padding: 0 24px 48px; background: #fff; }
   .vpm-nls__section-label {
@@ -209,11 +227,29 @@
 </head>
 <body>
 <div class="vpm-nls__section-label">Full-width</div>
-<div class="vpm-nls vpm-nls--wu vpm-nls__full">
-  <img src="https://mhdesigns98.github.io/vpm-widgets/widgets/newsletter-signup-embed/assets/weekly-update-lockup.png" alt="VPM Weekly Update" />
-  <div class="vpm-nls__full-content">
-    <h2 class="vpm-nls__title">Arts &amp; Culture, News and Education, <em>Weekly</em></h2>
-    <p class="vpm-nls__dek">Every Monday morning, get a curated blend of what to watch, read and listen to – plus events and more from VPM.</p>
+<div class="vpm-nls vpm-nls--wu">
+  <div class="vpm-nls__full">
+    <img src="https://mhdesigns98.github.io/vpm-widgets/widgets/newsletter-signup-embed/assets/weekly-update-lockup.png" alt="VPM Weekly Update" />
+    <div class="vpm-nls__full-content">
+      <h2 class="vpm-nls__title">Arts &amp; Culture, News and Education, <em>Weekly</em></h2>
+      <p class="vpm-nls__dek">Every Monday morning, get a curated blend of what to watch, read and listen to – plus events and more from VPM.</p>
+      <form class="vpm-nls__row" data-nls-form action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=e675e6efd6" method="post" target="_blank" novalidate>
+        <input type="email" class="vpm-nls__input" name="EMAIL" placeholder="Enter your email address" aria-label="Email address" required>
+        <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_e675e6efd6" tabindex="-1" value=""></div>
+        <button type="submit" class="vpm-nls__btn">Keep Me Informed</button>
+      </form>
+      <div class="vpm-nls__status" data-nls-status role="status" aria-live="polite" hidden></div>
+      <p class="vpm-nls__privacy vpm-nls__privacy--dark">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
+    </div>
+  </div>
+</div>
+
+<div class="vpm-nls__section-label">Inline</div>
+<div class="vpm-nls vpm-nls--wu">
+  <div class="vpm-nls__inline">
+    <span class="vpm-nls__eyebrow">Weekly Update</span>
+    <h3 class="vpm-nls__title">Arts &amp; Culture, News and Education, <em>Weekly</em></h3>
+    <p>Every Monday morning, get a curated blend of what to watch, read and listen to – plus events and more from VPM.</p>
     <form class="vpm-nls__row" data-nls-form action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=e675e6efd6" method="post" target="_blank" novalidate>
       <input type="email" class="vpm-nls__input" name="EMAIL" placeholder="Enter your email address" aria-label="Email address" required>
       <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_e675e6efd6" tabindex="-1" value=""></div>
@@ -224,36 +260,24 @@
   </div>
 </div>
 
-<div class="vpm-nls__section-label">Inline</div>
-<div class="vpm-nls vpm-nls--wu vpm-nls__inline">
-  <span class="vpm-nls__eyebrow">Weekly Update</span>
-  <h3 class="vpm-nls__title">Arts &amp; Culture, News and Education, <em>Weekly</em></h3>
-  <p>Every Monday morning, get a curated blend of what to watch, read and listen to – plus events and more from VPM.</p>
-  <form class="vpm-nls__row" data-nls-form action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=e675e6efd6" method="post" target="_blank" novalidate>
-    <input type="email" class="vpm-nls__input" name="EMAIL" placeholder="Enter your email address" aria-label="Email address" required>
-    <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_e675e6efd6" tabindex="-1" value=""></div>
-    <button type="submit" class="vpm-nls__btn">Keep Me Informed</button>
-  </form>
-  <div class="vpm-nls__status" data-nls-status role="status" aria-live="polite" hidden></div>
-  <p class="vpm-nls__privacy vpm-nls__privacy--dark">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
-</div>
-
 <div class="vpm-nls__section-label">Sidebar</div>
-<div class="vpm-nls vpm-nls--wu vpm-nls__sidebar">
-  <div class="vpm-nls__sidebar-top">
-    <div class="vpm-nls__sidebar-badge">
-      <img src="https://mhdesigns98.github.io/vpm-widgets/widgets/newsletter-signup-embed/assets/weekly-update-lockup.svg" alt="VPM Weekly Update" />
+<div class="vpm-nls vpm-nls--wu">
+  <div class="vpm-nls__sidebar">
+    <div class="vpm-nls__sidebar-top">
+      <div class="vpm-nls__sidebar-badge">
+        <img src="https://mhdesigns98.github.io/vpm-widgets/widgets/newsletter-signup-embed/assets/weekly-update-lockup.svg" alt="VPM Weekly Update" />
+      </div>
+      <h3 class="vpm-nls__title">Arts &amp; Culture, News and Education, <em>Weekly</em></h3>
     </div>
-    <h3 class="vpm-nls__title">Arts &amp; Culture, News and Education, <em>Weekly</em></h3>
-  </div>
-  <div class="vpm-nls__sidebar-bottom">
-    <form class="vpm-nls__stack" data-nls-form action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=e675e6efd6" method="post" target="_blank" novalidate>
-      <input type="email" class="vpm-nls__input" name="EMAIL" placeholder="Enter your email address" aria-label="Email address" required>
-      <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_e675e6efd6" tabindex="-1" value=""></div>
-      <button type="submit" class="vpm-nls__btn">Keep Me Informed</button>
-    </form>
-    <div class="vpm-nls__status" data-nls-status role="status" aria-live="polite" hidden></div>
-    <p class="vpm-nls__privacy vpm-nls__privacy--dark">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
+    <div class="vpm-nls__sidebar-bottom">
+      <form class="vpm-nls__stack" data-nls-form action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=e675e6efd6" method="post" target="_blank" novalidate>
+        <input type="email" class="vpm-nls__input" name="EMAIL" placeholder="Enter your email address" aria-label="Email address" required>
+        <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_e675e6efd6" tabindex="-1" value=""></div>
+        <button type="submit" class="vpm-nls__btn">Keep Me Informed</button>
+      </form>
+      <div class="vpm-nls__status" data-nls-status role="status" aria-live="polite" hidden></div>
+      <p class="vpm-nls__privacy vpm-nls__privacy--dark">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
+    </div>
   </div>
 </div>
 

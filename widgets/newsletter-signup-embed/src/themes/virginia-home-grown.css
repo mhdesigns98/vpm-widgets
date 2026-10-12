@@ -24,12 +24,11 @@
   border-radius: var(--radius-md);
   margin-bottom: 14px;
 }
-.vpm-nls--vhg.vpm-nls__inline .vpm-nls__badge { background: #fff; color: var(--vhg-green-dark); }
+.vpm-nls--vhg .vpm-nls__inline .vpm-nls__badge { background: #fff; color: var(--vhg-green-dark); }
 
 .vpm-nls--vhg .vpm-nls__title { font-family: var(--nls-display); font-weight: 700; text-transform: uppercase; line-height: 1.1; }
 .vpm-nls--vhg .vpm-nls__title em { font-style: normal; color: var(--vhg-green-dark); }
 
-.vpm-nls--vhg.vpm-nls__leaf,
 .vpm-nls--vhg .vpm-nls__leaf {
   background-color: var(--vhg-green);
   background-image: url('{{asset:leaf-pattern.svg}}');
@@ -38,7 +37,7 @@
 }
 
 /* FULL: split panel, matches Figma */
-.vpm-nls--vhg.vpm-nls__full {
+.vpm-nls--vhg .vpm-nls__full {
   display: grid;
   grid-template-columns: 1fr 1fr;
   border-radius: 6px;
@@ -63,16 +62,16 @@
 }
 
 /* INLINE */
-.vpm-nls--vhg.vpm-nls__inline {
+.vpm-nls--vhg .vpm-nls__inline {
   border-radius: 6px;
   padding: 28px 32px;
 }
-.vpm-nls--vhg.vpm-nls__inline .vpm-nls__title { font-size: 22px; color: #fff; margin-bottom: 6px; }
-.vpm-nls--vhg.vpm-nls__inline p { font-size: 14px; color: rgba(255,255,255,0.9); margin-bottom: 14px; max-width: 620px; text-align: left; font-weight: 600; }
-.vpm-nls--vhg.vpm-nls__inline .vpm-nls__row { max-width: 620px; }
+.vpm-nls--vhg .vpm-nls__inline .vpm-nls__title { font-size: 22px; color: #fff; margin-bottom: 6px; }
+.vpm-nls--vhg .vpm-nls__inline p { font-size: 14px; color: rgba(255,255,255,0.9); margin-bottom: 14px; max-width: 620px; text-align: left; font-weight: 600; }
+.vpm-nls--vhg .vpm-nls__inline .vpm-nls__row { max-width: 620px; }
 
 /* SIDEBAR */
-.vpm-nls--vhg.vpm-nls__sidebar {
+.vpm-nls--vhg .vpm-nls__sidebar {
   max-width: 340px;
   border-radius: 6px;
   overflow: hidden;
@@ -87,4 +86,13 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+/* Narrow containers: leaf panel above the form, tighter padding. */
+@container vpm-nls (max-width: 599px) {
+  .vpm-nls--vhg .vpm-nls__full { grid-template-columns: 1fr; }
+  .vpm-nls--vhg .vpm-nls__full-left,
+  .vpm-nls--vhg .vpm-nls__full-right { padding: 28px 24px; }
+  .vpm-nls--vhg .vpm-nls__full-left .vpm-nls__title { font-size: 24px; }
+  .vpm-nls--vhg .vpm-nls__inline { padding: 24px 20px; }
 }

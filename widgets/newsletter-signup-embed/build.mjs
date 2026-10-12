@@ -51,6 +51,10 @@ function layoutsFor(slug, brand) {
   const found = {};
   for (let i = 1; i < parts.length; i += 2) found[parts[i]] = parts[i + 1].trimEnd();
   for (const { id } of LAYOUTS) if (!found[id]) throw new Error(`${slug}: missing @layout ${id}`);
+  // Each layout gets the scoping/container wrapper, so a single variant pastes on its own.
+  for (const { id } of LAYOUTS) {
+    found[id] = `<div class="vpm-nls vpm-nls--${brand.key}">\n${found[id].replace(/^/gm, '  ')}\n</div>`;
+  }
   return found;
 }
 

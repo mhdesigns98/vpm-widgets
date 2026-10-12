@@ -8,11 +8,15 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ── Core: shared by every brand ──
-   Every layout element carries `.vpm-nls` plus its brand class (`.vpm-nls--mm`), so any one
+   Every layout is wrapped in `.vpm-nls` plus its brand class (`.vpm-nls--mm`), so any one
    variant can be pasted on its own and still pick up the reset, fonts and brand variables.
    Brand variables live on the brand class, not :root, so two brands on one page can't
-   overwrite each other's colors. */
+   overwrite each other's colors.
+   The wrapper is also a size container: the layouts respond to the width of the column
+   they're pasted into (@container vpm-nls), not the viewport, so a Full-width variant in a
+   narrow column stacks the same way it does on a phone. */
 .vpm-nls {
+  container: vpm-nls / inline-size;
   --vpm-black:   #101820;
   --vpm-red-700: #B81E2A;
   --radius-md:   4px;
@@ -93,6 +97,12 @@
 .vpm-nls__status[hidden] { display: none; }
 .vpm-nls__status--err { color: var(--vpm-red-700); }
 
+/* Narrow containers: email above a full-width button */
+@container vpm-nls (max-width: 439px) {
+  .vpm-nls__row { flex-direction: column; }
+  .vpm-nls__row .vpm-nls__btn { width: 100%; }
+}
+
 /* ── Morning Monitor ──
    --mm-bg/--mm-circle map the Figma comp's off-palette blues (#C1E2FF, #0952A2 — neither
    exists in tokens.css) to the nearest real brand tokens (--vpm-blue-100, --vpm-blue-600),
@@ -120,7 +130,7 @@
 /* FULL: single light-blue card; the logo lockup sits inside a dark-blue pill badge (flush
    left, huge right-side border-radius) so the white/yellow logo text has a dark background
    to read against. */
-.vpm-nls--mm.vpm-nls__full {
+.vpm-nls--mm .vpm-nls__full {
   display: grid;
   grid-template-columns: minmax(220px, 300px) 1fr;
   align-items: stretch;
@@ -155,7 +165,7 @@
 .vpm-nls--mm .vpm-nls__full-right .vpm-nls__title { font-size: 28px; line-height: 1.15; }
 
 /* INLINE */
-.vpm-nls--mm.vpm-nls__inline {
+.vpm-nls--mm .vpm-nls__inline {
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
@@ -173,11 +183,11 @@
   align-items: center;
 }
 .vpm-nls--mm .vpm-nls__inline-badge img { width: 100%; max-width: 150px; }
-.vpm-nls--mm.vpm-nls__inline .vpm-nls__title { font-size: 22px; margin-bottom: 4px; }
-.vpm-nls--mm.vpm-nls__inline p { font-size: 14px; color: var(--vpm-dark-blue); margin-bottom: 12px; font-weight: 600; }
+.vpm-nls--mm .vpm-nls__inline .vpm-nls__title { font-size: 22px; margin-bottom: 4px; }
+.vpm-nls--mm .vpm-nls__inline p { font-size: 14px; color: var(--vpm-dark-blue); margin-bottom: 12px; font-weight: 600; }
 
 /* SIDEBAR */
-.vpm-nls--mm.vpm-nls__sidebar {
+.vpm-nls--mm .vpm-nls__sidebar {
   max-width: 340px;
   background: var(--mm-bg);
   border-radius: 6px;
@@ -206,6 +216,25 @@
   gap: 12px;
 }
 
+/* Narrow containers (phones, narrow columns): stack the pill badge above the content. The
+   badge turns into the same rounded-bottom band the sidebar layout uses. */
+@container vpm-nls (max-width: 599px) {
+  .vpm-nls--mm .vpm-nls__full { grid-template-columns: 1fr; }
+  .vpm-nls--mm .vpm-nls__full-left {
+    border-radius: 0 0 50% 50% / 0 0 32px 32px;
+    padding: 28px 24px 40px;
+    align-items: center;
+    text-align: center;
+  }
+  .vpm-nls--mm .vpm-nls__full-left img { max-width: 170px; }
+  .vpm-nls--mm .vpm-nls__full-right { padding: 24px; }
+  .vpm-nls--mm .vpm-nls__full-right .vpm-nls__title { font-size: 24px; }
+
+  .vpm-nls--mm .vpm-nls__inline { grid-template-columns: 1fr; gap: 16px; padding: 0 0 20px; }
+  .vpm-nls--mm .vpm-nls__inline-badge { justify-self: start; }
+  .vpm-nls--mm .vpm-nls__inline-content { padding: 0 20px; }
+}
+
 
   body { margin: 0; padding: 0 24px 48px; background: #fff; }
   .vpm-nls__section-label {
@@ -230,57 +259,63 @@
 </head>
 <body>
 <div class="vpm-nls__section-label">Full-width</div>
-<div class="vpm-nls vpm-nls--mm vpm-nls__full">
-  <div class="vpm-nls__full-left">
-    <img src="https://mhdesigns98.github.io/vpm-widgets/widgets/newsletter-signup-embed/assets/morning-monitor-lockup.svg" alt="VPM News Morning Monitor" />
-    <p>News from across the Commonwealth every weekday morning.</p>
-  </div>
-  <div class="vpm-nls__full-right">
-    <h2 class="vpm-nls__title">Start Your Day with Virginia's Top Stories</h2>
-    <form class="vpm-nls__row" data-nls-form action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=26497cf3ad" method="post" target="_blank" novalidate>
-      <input type="email" class="vpm-nls__input" name="EMAIL" placeholder="Enter your email address" aria-label="Email address" required>
-      <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_26497cf3ad" tabindex="-1" value=""></div>
-      <button type="submit" class="vpm-nls__btn">Keep Me Informed</button>
-    </form>
-    <div class="vpm-nls__status" data-nls-status role="status" aria-live="polite" hidden></div>
-    <p class="vpm-nls__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
+<div class="vpm-nls vpm-nls--mm">
+  <div class="vpm-nls__full">
+    <div class="vpm-nls__full-left">
+      <img src="https://mhdesigns98.github.io/vpm-widgets/widgets/newsletter-signup-embed/assets/morning-monitor-lockup.svg" alt="VPM News Morning Monitor" />
+      <p>News from across the Commonwealth every weekday morning.</p>
+    </div>
+    <div class="vpm-nls__full-right">
+      <h2 class="vpm-nls__title">Start Your Day with Virginia's Top Stories</h2>
+      <form class="vpm-nls__row" data-nls-form action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=26497cf3ad" method="post" target="_blank" novalidate>
+        <input type="email" class="vpm-nls__input" name="EMAIL" placeholder="Enter your email address" aria-label="Email address" required>
+        <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_26497cf3ad" tabindex="-1" value=""></div>
+        <button type="submit" class="vpm-nls__btn">Keep Me Informed</button>
+      </form>
+      <div class="vpm-nls__status" data-nls-status role="status" aria-live="polite" hidden></div>
+      <p class="vpm-nls__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
+    </div>
   </div>
 </div>
 
 <div class="vpm-nls__section-label">Inline</div>
-<div class="vpm-nls vpm-nls--mm vpm-nls__inline">
-  <div class="vpm-nls__inline-badge">
-    <img src="https://mhdesigns98.github.io/vpm-widgets/widgets/newsletter-signup-embed/assets/morning-monitor-lockup.svg" alt="VPM News Morning Monitor" />
-  </div>
-  <div>
-    <h3 class="vpm-nls__title">Start Your Day with Virginia's Top Stories</h3>
-    <p>News from across the Commonwealth every weekday morning.</p>
-    <form class="vpm-nls__row" data-nls-form action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=26497cf3ad" method="post" target="_blank" novalidate>
-      <input type="email" class="vpm-nls__input" name="EMAIL" placeholder="Enter your email address" aria-label="Email address" required>
-      <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_26497cf3ad" tabindex="-1" value=""></div>
-      <button type="submit" class="vpm-nls__btn">Keep Me Informed</button>
-    </form>
-    <div class="vpm-nls__status" data-nls-status role="status" aria-live="polite" hidden></div>
-    <p class="vpm-nls__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
+<div class="vpm-nls vpm-nls--mm">
+  <div class="vpm-nls__inline">
+    <div class="vpm-nls__inline-badge">
+      <img src="https://mhdesigns98.github.io/vpm-widgets/widgets/newsletter-signup-embed/assets/morning-monitor-lockup.svg" alt="VPM News Morning Monitor" />
+    </div>
+    <div class="vpm-nls__inline-content">
+      <h3 class="vpm-nls__title">Start Your Day with Virginia's Top Stories</h3>
+      <p>News from across the Commonwealth every weekday morning.</p>
+      <form class="vpm-nls__row" data-nls-form action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=26497cf3ad" method="post" target="_blank" novalidate>
+        <input type="email" class="vpm-nls__input" name="EMAIL" placeholder="Enter your email address" aria-label="Email address" required>
+        <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_26497cf3ad" tabindex="-1" value=""></div>
+        <button type="submit" class="vpm-nls__btn">Keep Me Informed</button>
+      </form>
+      <div class="vpm-nls__status" data-nls-status role="status" aria-live="polite" hidden></div>
+      <p class="vpm-nls__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
+    </div>
   </div>
 </div>
 
 <div class="vpm-nls__section-label">Sidebar</div>
-<div class="vpm-nls vpm-nls--mm vpm-nls__sidebar">
-  <div class="vpm-nls__sidebar-top">
-    <div class="vpm-nls__sidebar-badge">
-      <img src="https://mhdesigns98.github.io/vpm-widgets/widgets/newsletter-signup-embed/assets/morning-monitor-lockup.svg" alt="VPM News Morning Monitor" />
+<div class="vpm-nls vpm-nls--mm">
+  <div class="vpm-nls__sidebar">
+    <div class="vpm-nls__sidebar-top">
+      <div class="vpm-nls__sidebar-badge">
+        <img src="https://mhdesigns98.github.io/vpm-widgets/widgets/newsletter-signup-embed/assets/morning-monitor-lockup.svg" alt="VPM News Morning Monitor" />
+      </div>
+      <p>News from across the Commonwealth every weekday morning.</p>
     </div>
-    <p>News from across the Commonwealth every weekday morning.</p>
-  </div>
-  <div class="vpm-nls__sidebar-bottom">
-    <form class="vpm-nls__stack" data-nls-form action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=26497cf3ad" method="post" target="_blank" novalidate>
-      <input type="email" class="vpm-nls__input" name="EMAIL" placeholder="Enter your email address" aria-label="Email address" required>
-      <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_26497cf3ad" tabindex="-1" value=""></div>
-      <button type="submit" class="vpm-nls__btn">Keep Me Informed</button>
-    </form>
-    <div class="vpm-nls__status" data-nls-status role="status" aria-live="polite" hidden></div>
-    <p class="vpm-nls__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
+    <div class="vpm-nls__sidebar-bottom">
+      <form class="vpm-nls__stack" data-nls-form action="https://vpm.us3.list-manage.com/subscribe/post?u=6fe41b3055c403be08140ec95&amp;id=26497cf3ad" method="post" target="_blank" novalidate>
+        <input type="email" class="vpm-nls__input" name="EMAIL" placeholder="Enter your email address" aria-label="Email address" required>
+        <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_6fe41b3055c403be08140ec95_26497cf3ad" tabindex="-1" value=""></div>
+        <button type="submit" class="vpm-nls__btn">Keep Me Informed</button>
+      </form>
+      <div class="vpm-nls__status" data-nls-status role="status" aria-live="polite" hidden></div>
+      <p class="vpm-nls__privacy">We respect your privacy. Your information will never be sold. Unsubscribe at any time.</p>
+    </div>
   </div>
 </div>
 

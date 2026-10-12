@@ -52,10 +52,17 @@ iframe versions need redeploying.
 
 ## Scoping
 
-Every layout's root element carries `.vpm-nls` and its brand class (`.vpm-nls--mm`, `--wu`, `--vhg`),
-so any single variant can be pasted alone. Brand variables live on the brand class, not `:root`, so
+Every layout is wrapped in `<div class="vpm-nls vpm-nls--mm">` (or `--wu`, `--vhg`), added by the
+build, so any single variant can be pasted alone. Brand variables live on the brand class, not `:root`, so
 two brands on one page can't overwrite each other. The reset is scoped to `.vpm-nls *`; never widen
 it to a global selector, because the ACF CSS field loads site-wide.
+
+## Narrow screens
+
+The wrapper is a CSS size container, so layouts respond to the width of the column they're pasted
+into, not the viewport. Below 600px the Full-width and Inline layouts stack (logo/panel above the
+form); below 440px the email field and button stack. Desktop rendering is unchanged. Browsers
+without container queries (pre-2023) get the old desktop layout.
 
 ## Changes from the three old widgets
 
@@ -64,6 +71,8 @@ it to a global selector, because the ACF CSS field loads site-wide.
   light privacy style the other dark layouts use.
 - The CMS paste files now ship the in-page confirmation JS. Before, only the old `index.html`
   previews had it; pasted blocks always opened Mailchimp in a new tab.
+- Full-width and Inline layouts no longer break on phones (the old ones squeezed the email field to
+  a sliver and scrolled sideways at 375px).
 - All email inputs have `aria-label="Email address"` (only Morning Monitor did before).
 
 ## Assets and legacy URLs

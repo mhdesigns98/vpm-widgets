@@ -25,7 +25,7 @@
 /* FULL: single light-blue card; the logo lockup sits inside a dark-blue pill badge (flush
    left, huge right-side border-radius) so the white/yellow logo text has a dark background
    to read against. */
-.vpm-nls--mm.vpm-nls__full {
+.vpm-nls--mm .vpm-nls__full {
   display: grid;
   grid-template-columns: minmax(220px, 300px) 1fr;
   align-items: stretch;
@@ -60,7 +60,7 @@
 .vpm-nls--mm .vpm-nls__full-right .vpm-nls__title { font-size: 28px; line-height: 1.15; }
 
 /* INLINE */
-.vpm-nls--mm.vpm-nls__inline {
+.vpm-nls--mm .vpm-nls__inline {
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
@@ -78,11 +78,11 @@
   align-items: center;
 }
 .vpm-nls--mm .vpm-nls__inline-badge img { width: 100%; max-width: 150px; }
-.vpm-nls--mm.vpm-nls__inline .vpm-nls__title { font-size: 22px; margin-bottom: 4px; }
-.vpm-nls--mm.vpm-nls__inline p { font-size: 14px; color: var(--vpm-dark-blue); margin-bottom: 12px; font-weight: 600; }
+.vpm-nls--mm .vpm-nls__inline .vpm-nls__title { font-size: 22px; margin-bottom: 4px; }
+.vpm-nls--mm .vpm-nls__inline p { font-size: 14px; color: var(--vpm-dark-blue); margin-bottom: 12px; font-weight: 600; }
 
 /* SIDEBAR */
-.vpm-nls--mm.vpm-nls__sidebar {
+.vpm-nls--mm .vpm-nls__sidebar {
   max-width: 340px;
   background: var(--mm-bg);
   border-radius: 6px;
@@ -109,4 +109,23 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+/* Narrow containers (phones, narrow columns): stack the pill badge above the content. The
+   badge turns into the same rounded-bottom band the sidebar layout uses. */
+@container vpm-nls (max-width: 599px) {
+  .vpm-nls--mm .vpm-nls__full { grid-template-columns: 1fr; }
+  .vpm-nls--mm .vpm-nls__full-left {
+    border-radius: 0 0 50% 50% / 0 0 32px 32px;
+    padding: 28px 24px 40px;
+    align-items: center;
+    text-align: center;
+  }
+  .vpm-nls--mm .vpm-nls__full-left img { max-width: 170px; }
+  .vpm-nls--mm .vpm-nls__full-right { padding: 24px; }
+  .vpm-nls--mm .vpm-nls__full-right .vpm-nls__title { font-size: 24px; }
+
+  .vpm-nls--mm .vpm-nls__inline { grid-template-columns: 1fr; gap: 16px; padding: 0 0 20px; }
+  .vpm-nls--mm .vpm-nls__inline-badge { justify-self: start; }
+  .vpm-nls--mm .vpm-nls__inline-content { padding: 0 20px; }
 }
