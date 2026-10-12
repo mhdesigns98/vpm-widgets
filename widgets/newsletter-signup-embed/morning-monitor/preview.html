@@ -116,7 +116,7 @@
   --nls-btn-bg:    var(--vpm-dark-blue);
   --nls-btn-fg:    #fff;
   --nls-btn-hover: #00294a;
-  --nls-privacy:   #777;
+  --nls-privacy:   #5A6470; /* --vpm-gray-600 (--fg-muted): 4.8:1 on --mm-bg; old #777 was 3.6:1 */
 }
 
 /* Sentence case per VPM voice canon — uppercase is reserved for eyebrows and CTA buttons,
@@ -185,6 +185,9 @@
 .vpm-nls--mm .vpm-nls__inline-badge img { width: 100%; max-width: 150px; }
 .vpm-nls--mm .vpm-nls__inline .vpm-nls__title { font-size: 22px; margin-bottom: 4px; }
 .vpm-nls--mm .vpm-nls__inline p { font-size: 14px; color: var(--vpm-dark-blue); margin-bottom: 12px; font-weight: 600; }
+/* The rule above also caught the privacy line (14px bold dark blue); keep it the small grey
+   line it is in every other layout. */
+.vpm-nls--mm .vpm-nls__inline .vpm-nls__privacy { font-size: 12px; font-weight: 400; color: var(--nls-privacy); margin-bottom: 0; }
 
 /* SIDEBAR */
 .vpm-nls--mm .vpm-nls__sidebar {

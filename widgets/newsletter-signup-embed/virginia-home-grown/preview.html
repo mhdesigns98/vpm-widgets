@@ -107,12 +107,13 @@
 .vpm-nls--vhg {
   --vhg-green:      #2E8B57;
   --vhg-green-dark: #194225;
+  --vpm-yellow-200: #F2F5A2;
   --nls-display:      'Oswald', Arial, sans-serif;
   --nls-focus:        var(--vhg-green);
   --nls-btn-bg:       var(--vhg-green-dark);
   --nls-btn-fg:       #fff;
   --nls-btn-hover:    #0f2b18;
-  --nls-privacy:      #777;
+  --nls-privacy:      #5A6470; /* --vpm-gray-600 (--fg-muted): 6.0:1 on white; old #777 was 4.48:1 */
   --nls-privacy-dark: rgba(255,255,255,0.75);
 }
 
@@ -132,7 +133,9 @@
 .vpm-nls--vhg .vpm-nls__inline .vpm-nls__badge { background: #fff; color: var(--vhg-green-dark); }
 
 .vpm-nls--vhg .vpm-nls__title { font-family: var(--nls-display); font-weight: 700; text-transform: uppercase; line-height: 1.1; }
-.vpm-nls--vhg .vpm-nls__title em { font-style: normal; color: var(--vhg-green-dark); }
+/* Pale yellow, not the old dark green: on the green panel dark green was 2.7:1, under the 3:1
+   large-text minimum. --vpm-yellow-200 is 3.7:1 (headlines are 20px+ bold, so large text). */
+.vpm-nls--vhg .vpm-nls__title em { font-style: normal; color: var(--vpm-yellow-200); }
 
 .vpm-nls--vhg .vpm-nls__leaf {
   background-color: var(--vhg-green);

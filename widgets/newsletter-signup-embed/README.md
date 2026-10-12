@@ -66,13 +66,19 @@ without container queries (pre-2023) get the old desktop layout.
 
 ## Changes from the three old widgets
 
-- Rendering checked with a pixel diff of old vs new paste files: 8 of 9 layouts are identical.
+- Rendering checked with a pixel diff of old vs new paste files: before the fixes below, 8 of 9
+  layouts were identical; everything that differs now is one of the listed fixes.
 - **Weekly Update sidebar:** the privacy line was near-black on navy (unreadable). It now uses the
   light privacy style the other dark layouts use.
 - The CMS paste files now ship the in-page confirmation JS. Before, only the old `index.html`
   previews had it; pasted blocks always opened Mailchimp in a new tab.
 - Full-width and Inline layouts no longer break on phones (the old ones squeezed the email field to
   a sliver and scrolled sideways at 375px).
+- **Contrast:** the VHG headline emphasis was dark green on the green panel (2.7:1); it's now
+  `--vpm-yellow-200` (3.7:1, large text). The grey privacy line (`#777`) failed AA on Morning
+  Monitor's light blue (3.6:1) and on VHG's white (4.48:1); it's now `--vpm-gray-600` (4.8:1, 6.0:1).
+- **Morning Monitor Inline:** the privacy line had picked up the dek's 14px bold dark-blue style;
+  it's now the same small grey line as every other layout.
 - All email inputs have `aria-label="Email address"` (only Morning Monitor did before).
 
 ## Assets and legacy URLs
