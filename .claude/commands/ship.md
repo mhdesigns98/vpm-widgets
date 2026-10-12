@@ -3,7 +3,7 @@ description: Pre-deploy check for any widget or page build. Usage: /ship [slug] 
 effort: high
 ---
 
-Verify a build is ready to paste into a real CMS. **This is the only pre-CMS gate** for widgets and pages; a generic accessibility review does not substitute for it. The checklist is canonical in `CLAUDE.md` ("Pre-Ship Checklist": Core, Widget only, Page only). Read it first. This file says how to run it, and `CLAUDE.md` wins if they diverge.
+Verify a build is ready to paste into a real CMS. **This is the only pre-CMS gate** for widgets and pages; a generic accessibility review does not substitute for it. The checklist is canonical in `SHIP-CHECKLIST.md` (Core, Widget only, Page only). Read it first. This file says how to run it, and `SHIP-CHECKLIST.md` wins if they diverge.
 
 **Arguments:** $ARGUMENTS
 
@@ -35,7 +35,7 @@ Preview URL: widgets `http://localhost:$PORT/harness/harness.html?widget=SLUG` (
 
 ## Step 3 — Core checks (both modes)
 
-Run the **Core** list from `CLAUDE.md`. How:
+Run the **Core** list from `SHIP-CHECKLIST.md`. How:
 
 - **Desktop and 320px screenshots.** Chrome's window won't shrink below ~500px, so get 320px by loading the page in a 320px-wide iframe. A widget's harness already has a 320px sidebar copy; check that too. Measure tap targets at 320px.
 - **Scoping.** Inject ordinary hostile host CSS (non-`!important`) on every element type the build uses: `a{color:red}`, `h1,h2,h3,h4,h5,h6{font-size:48px}`, `ul{padding-left:60px}`, `li{margin:20px}`, `p{margin:30px;font-size:30px}`, `div{padding:20px;margin:20px}`, `span,em{font-size:30px}`, `button{padding:30px;background:red}`. Compare box sizes and fonts before and after; nothing may move. Separately, inject `a{color:red!important;text-decoration:underline!important}` and confirm each CTA/text link keeps its designed color and decoration.
@@ -80,4 +80,4 @@ End with: `SLUG is ship-ready. Commit any fixes, open a PR, then paste the block
 
 ## Step 7 — Grow the checks
 
-If a failure turned up that no item caught, add it to the right list in `CLAUDE.md` (Core only if it applies to both kinds; a block-in-CMS failure goes under Widget, with a harness scenario in `harness/harness.html` and a note in `harness/README.md`). If nothing new turned up, say so, so it's clear it was considered.
+If a failure turned up that no item caught, add it to the right list in `SHIP-CHECKLIST.md` (Core only if it applies to both kinds; a block-in-CMS failure goes under Widget, with a harness scenario in `harness/harness.html` and a note in `harness/README.md`). If nothing new turned up, say so, so it's clear it was considered.

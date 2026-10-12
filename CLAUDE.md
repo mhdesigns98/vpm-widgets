@@ -1,7 +1,7 @@
 # Widget Lab
 
 ## Purpose
-This project is for building standalone HTML/CSS/JS embeds and web components for VPM and personal use. It holds two kinds of build in one GitHub repo (https://github.com/mhdesigns98/vpm-widgets): **widgets** (reusable blocks, `widgets/`) and **page builds** (full pages for vpm.org, `pages/`). Page builds used to live in a separate `vpm-pages` repo, merged in here with its history.
+This project is for building standalone HTML/CSS/JS embeds and web components for VPM and personal use. It holds two kinds of build in one GitHub repo (https://github.com/mhdesigns98/vpm-widgets): **widgets** (reusable blocks, `widgets/`) and **page builds** (full pages for vpm.org, `pages/`).
 
 ## ⚠️ This repo is PUBLIC
 
@@ -28,7 +28,6 @@ Those are known and judged acceptable. **Do not add worse.** Specifically, never
 
 If a page genuinely needs sensitive material to be useful, keep that file outside the repo and
 reference it by path from the page `README.md` — don't commit it and don't paraphrase it.
-
 
 ## Widget or page?
 
@@ -72,7 +71,7 @@ both. It's a pilot for merging look-alike widgets. Don't add a build step to ano
 without asking.
 
 ## Design Tokens
-`tokens.css` in the repo root is the **canonical VPM design token file** for widgets and pages (migrated from the deprecated vpm-component-library). There is deliberately only one — two token files would drift, and the drift would stay invisible until two pages disagreed about VPM blue. Widgets and pages must stay self-contained, so copy the custom properties you need into the widget's scoped `<style>` — never link the file externally. No hard-coded hex values.
+`tokens.css` in the repo root is the **canonical VPM design token file** for widgets and pages. There is deliberately only one — two token files would drift, and the drift would stay invisible until two pages disagreed about VPM blue. Widgets and pages must stay self-contained, so copy the custom properties you need into the widget's scoped `<style>` — never link the file externally. No hard-coded hex values.
 
 Read the file rather than recalling values — the display face and body face have both been
 changed since the tokens were written. Proposing a *change* to a token is a reviewed process:
@@ -95,7 +94,7 @@ see `CONTRIBUTING.md`.
 2. Scaffold with `/new-widget`, then build in a Claude Code conversation
 3. When satisfied, add it under `/widgets/[name]/` following the structure above (`/new-widget --from file.html` does this; `/save-component` is an alias)
 4. Write a one-paragraph `README.md` describing purpose, source, and usage
-5. **Pre-ship check** (`/ship`) — required before pasting into any CMS, see checklist below
+5. **Pre-ship check** (`/ship`) — required before pasting into any CMS, see `SHIP-CHECKLIST.md`
 6. Add a row to `INDEX.md`, then open a PR — this repo is shared and public, don't push to `main`
 7. GitHub Pages preview: `https://mhdesigns98.github.io/vpm-widgets/widgets/[name]/`
    — to send it to someone, use the share link instead (`/share [name]`): `https://mhdesigns98.github.io/vpm-widgets/share/?w=[name]`
@@ -108,61 +107,8 @@ invoke anything.
 
 ## Pre-Ship Checklist
 
-**This is the one canonical checklist** — `/ship` enforces it (`/ship-widget` and `/ship-page` are
-aliases for the same command). Don't restate it elsewhere; link here instead.
-
-`/ship <slug>` looks the slug up (`widgets/` or `pages/`), runs **Core** for everything, then
-**Widget** or **Page** depending on what it is. The two extra lists are separate on purpose: the
-Widget items exist because a block can be dropped into a hostile page more than once and re-injected;
-the Page items exist because a page owns its URL. Don't move items between them to make something pass.
-
-### Core (widgets and pages)
-
-- [ ] Every selector namespaced; no bare element selectors in a page-level `<style>`. Unaffected by
-      ordinary hostile host CSS (non-`!important` rules on `a`, `h1`–`h6`, `ul`/`li`, `p`, `div`,
-      `span`). Host `!important` element rules can't be beaten by a class selector, so the exception is
-      a **link**: a CTA must hold its color and underline against a host `a { … !important }` rule
-      (use `!important` on the link's color and text-decoration only)
-- [ ] Decorative separators and inline `em`/`span` set their own `font-size`, and inner wrapper `div`s reset `margin`/`padding`, so ordinary host rules on those elements don't move them
-- [ ] No focus loss or overlap with the sticky Stream Player; nothing important in the bottom ~90px. Fails are a focus trap or content hidden behind the player; the player grabbing focus is the simulation, not a defect
-- [ ] Degrades gracefully at 320px: no horizontal scroll, no clipped text, tap targets ≥44px
-- [ ] Keyboard accessible (DOM order matches visual order, including absolutely positioned controls such
-      as a close button; no traps), visible focus, WCAG 2.1 AA contrast in every state including hover
-      and focus (focus outlines need 3:1 against the colors next to them), `prefers-reduced-motion` respected
-- [ ] Semantics: images have real `alt` (or `alt=""` if decorative), iframes have `title`, headings
-      don't skip levels. Don't require an `<h1>`: a block pasted into a CMS page sits under that
-      page's own title
-- [ ] No hard-coded hex (values inlined from the root `tokens.css`, never a second token file);
-      `px` not `rem` for font-size and spacing
-- [ ] No console errors (ignore the dev server's `favicon.ico` 404, the Quirks Mode notice a
-      doctype-less fragment always gets, and warnings from third-party embeds such as the PBS player)
-- [ ] Dated content is current: no past event dates, "TBD" live URLs, or expired deadlines
-
-### Widget only (run in the CMS harness: `/harness/harness.html?widget=[name]`, see `/harness/README.md`)
-
-- [ ] Survives delayed hydration + one detach/re-inject cycle (no double-init, listeners intact)
-- [ ] CTAs clickable after the click-interceptor overlay clears
-- [ ] No `id` attributes, or none that duplicate when the block is placed twice on one page
-- [ ] Widget scopes itself to its own container (e.g. `document.currentScript.previousElementSibling`), not a page-wide selector — two copies on one page must initialize independently, not just avoid literal duplicate ids
-- [ ] Any third-party script (vendor embed, resizer, player SDK) loads **once per page** — guarded with a `querySelector` check, not a bare `<script src>` that re-appends on every re-render
-- [ ] A single-file widget's CSS uses absolute URLs (not relative `url(...)`) for any local asset — a relative path resolves against whichever document the browser thinks it's in, which breaks for an iframe-embedded widget the moment its markup gets tested by injection (as this harness does) rather than by a real iframe
-
-### Page only (the harness is deliberately not used)
-
-- [ ] Every jump link resolves to an anchor that exists, including anchors supplied by a widget
-      pasted below the page markup; click each one and confirm it lands
-- [ ] Paste order documented (`README.md`, or `PASTE-ORDER.md` for `sections`) and matches what was
-      rendered; verified against the live page when there is one
-- [ ] Each consumed widget's copy matches the current `widgets/` source (report drift, don't sync it)
-
-Not on the Page list, because they're block-in-CMS artifacts: duplicate-`id` collisions from placing
-a block twice, detach/re-inject double-init, and click-interceptor overlay timing. If a page build
-ever faces one, add it to the Page list with a note explaining why. `scroll-margin-top` is also not
-required: vpm.org's header isn't sticky and the theme's `pjax.js` ignores `#` links (see
-`~/Projects/research/vpm-theme-anchor-links.md`). Older page READMEs still prescribe it; it's harmless.
-
-## Repo Consolidation
-When asked to consolidate, audit existing repos and Gists, identify widget/embed code, and migrate it into the structure above. Archive source repos after migration.
+`SHIP-CHECKLIST.md` is the one canonical checklist (Core, Widget only, Page only). `/ship <slug>`
+runs it and is required before pasting anything into a CMS. Build to pass it from the start.
 
 ## Page Builds
 
@@ -222,11 +168,8 @@ Uses widget: links-with-map
 ```
 
 That line is the only thing making the dependency findable later, so it isn't optional. When a
-widget changes in `vpm-widgets`, grep this repo for its name to find the pages carrying a now-stale
+widget changes, grep this repo for its name to find the pages carrying a now-stale
 copy.
-
-Live example: `unwined-episode` sits directly above the `links-with-map` widget on the same URL, and
-supplies the page-level anchor targets its jump links point at.
 
 On vpm.org, the theme's `pjax.js` ignores `#` links and the header isn't sticky, so jump links
 need no scroll offset. See `~/Projects/research/vpm-theme-anchor-links.md`.
@@ -241,10 +184,6 @@ need no scroll offset. See `~/Projects/research/vpm-theme-anchor-links.md`.
   covering purpose, live URL, paste order, and any `Uses widget:` lines. `/consolidate-page <url>`
   rebuilds an existing live page as one build.
 - GitHub Pages preview: `https://mhdesigns98.github.io/vpm-widgets/pages/[slug]/`
-
-### Page Pre-Ship Checklist
-
-See **Pre-Ship Checklist** above (Core + Page only). `/ship <slug>` runs it.
 
 ## Index
 

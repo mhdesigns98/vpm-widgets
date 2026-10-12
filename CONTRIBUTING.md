@@ -21,7 +21,7 @@ find-and-replace, not an archaeology project.
 
 ## Working on a widget
 
-1. Read `CLAUDE.md` in the repo root — conventions and the pre-ship checklist are canonical there.
+1. Read `CLAUDE.md` in the repo root — conventions are canonical there, the pre-ship checklist in `SHIP-CHECKLIST.md`.
 2. Check `INDEX.md` before picking a folder slug or namespace prefix, so they don't collide.
 3. Namespace every class and id with a widget-specific prefix (`vpm-elec26-`, `vpm-mm-`). The
    host CMS page is hostile: global heading styles, `!important` link rules, a sticky stream
@@ -37,7 +37,7 @@ find-and-replace, not an archaeology project.
    # open http://localhost:8471/harness/harness.html?widget=SLUG
    ```
    The harness simulates the parts of Brightspot and WordPress that break widgets. Work the
-   full pre-ship checklist in `CLAUDE.md`.
+   full pre-ship checklist in `SHIP-CHECKLIST.md`.
 7. Add a row to `INDEX.md` and to the table in `README.md`.
 8. Open a PR. Pages preview: `https://mhdesigns98.github.io/vpm-widgets/widgets/[slug]/`
 
@@ -119,7 +119,7 @@ anything separately.
 | `/brief [idea]` | Asks you a handful of questions (who's it for, what does "done" look like, what's out of scope, where does it get deployed) and writes the answers to `widgets/[slug]/BRIEF.md`. | First, before any code — for anything beyond a trivial tweak. Saves a round trip where the shape of the widget gets renegotiated mid-build. |
 | `/new-widget [name]` | Creates `widgets/[slug]/` with the right file layout (single file or ACF split files), namespaces the CSS, inlines the brand tokens it needs, writes a `README.md` stub, and adds it to `INDEX.md`. Add `--from file.html` instead of a name if you already have a working file from earlier in the conversation. | Once you know what you're building — either to start a blank scaffold, or to file something you already built. |
 | `/save-component [file.html]` | Same as `/new-widget --from`, just shorter to type. | Interchangeable with the line above — pick whichever you remember. |
-| `/ship [slug]` (aliases `/ship-widget`, `/ship-page`) | Loads the widget into the CMS test harness and checks it against the things that have actually broken widgets in production before (a sticky player stealing focus, delayed hydration, hostile host CSS), then runs an accessibility pass and prints copy-paste-ready HTML/CSS/JS blocks for WordPress or Brightspot. | Required before pasting anything into a real CMS field. Not optional — see the Pre-Ship Checklist in `CLAUDE.md`. |
+| `/ship [slug]` (aliases `/ship-widget`, `/ship-page`) | Loads the widget into the CMS test harness and checks it against the things that have actually broken widgets in production before (a sticky player stealing focus, delayed hydration, hostile host CSS), then runs an accessibility pass and prints copy-paste-ready HTML/CSS/JS blocks for WordPress or Brightspot. | Required before pasting anything into a real CMS field. Not optional — see `SHIP-CHECKLIST.md`. |
 
 ### Building your first widget, start to finish
 
