@@ -13,13 +13,12 @@ Lookup table for every widget and page build — check here before picking a new
 | `widgets/live-updates-rail/` | widget | multiple | Vertical rail of short reporter dispatches (text/image/audio/embed posts) with per-post share + copy-link, expandable long bodies, and a "Load more" reveal for older items; for a sidebar, topic page, or mobile "Updates" tab (namespace `vpm-lur-`, WordPress ACF split-file) |
 | `widgets/links-with-map/` | widget | multiple | Reusable map-beside-directory block — Google My Maps embed + multi-column outbound link list; first instance is Virginia wineries A–Z (WordPress ACF split-file format, no JS). Consumed by the `unwined-episode` page |
 | `widgets/listen-stream-bar/` | widget | multiple | Quick-access audio stream bar for the Listen page — eyebrow label + four stream/podcast buttons on VPM dark blue (WordPress HTML block) |
-| `widgets/morning-monitor-signup/` | widget | multiple | Morning Monitor newsletter signup embed (Full/Inline/Sidebar), POSTs directly to Mailchimp via JSONP with in-page confirmation — no backend |
+| `widgets/newsletter-signup-embed/` | widget | multiple | Mailchimp newsletter signup for Morning Monitor, Weekly Update and Virginia Home Grown (Full/Inline/Sidebar each), one shared form engine + per-brand theme; in-page JSONP confirmation with native-POST fallback, no backend. **Generated:** edit `src/`, run `node build.mjs` (namespace `vpm-nls-`, WordPress ACF split-file per brand). Also feeds `hosted/signup-forms` |
 | `widgets/most-popular-today/` | widget | multiple | Post-page sidebar widget showing top 5 trending stories (trailing 24h) from Chartbeat; stub pending a real data endpoint (namespace `vpm-mpt-`, WordPress Custom HTML widget) |
 | `widgets/newsletter-signup-cta/` | widget | multiple | Compact inline CTA banner linking out to the combined newsletter signup page (vpm.org/stay-connected-to-what-matters); for reuse across many pages that shouldn't embed the full form (WordPress ACF split-file format, namespace `vpm-nlcta-`, no JS) |
 | `widgets/pbs-show-playlist/` | widget | multiple | API-driven PBS show episode playlist — main PBS partner player + 5-episode thumbnail strip, autoplay to next; fetches from CF Worker proxy of PBS Media Manager API (namespace `vpm-psp-`, WordPress iframe embed) — generic template other PBS shows duplicate from |
 | `widgets/video-promo-section/` | widget | multiple | Two-column video promo — poster with optional LIVE bug, click-to-load Vimeo player, title + CTA links (namespace `vpm-ls`) |
 | `widgets/virginia-home-grown-playlist/` | widget | multiple | Same as `pbs-show-playlist` but restyled to VHG's green sub-brand (leaf-pattern background, `--vhg-green`); replaces `pbs-show-playlist` on the live VHG show page (namespace `vpm-vhgp-`, WordPress iframe embed) |
-| `widgets/virginia-home-grown-signup/` | widget | multiple | Virginia Home Grown newsletter signup embed (Full/Inline/Sidebar), POSTs directly to Mailchimp via JSONP with in-page confirmation — no backend |
 | `widgets/related-stories/` | widget | multiple | **Staging prototype; production build handed to WPP (`WPP-SPEC.md`).** Article-aside list of the 4 VPM stories most related to the current article, ranked by tag specificity (category top-up), sticky for the top half of the article then hands off to the sidebar ad; runs on any article type including NPR stories, results VPM-only; reads the site's own WP REST API (namespace `vpm-rel-`, WordPress Code Block in the article sidebar) |
 | `widgets/vpm-banner/` | widget | multiple | General-purpose promotional banner component |
 | `widgets/vpm-load-more/` | widget | multiple | Collapsible content section with "Continue reading" expand button, for hiding most of a long-form section (e.g. an interview transcript) behind a click; content stays in the DOM for SEO/a11y (namespace `vpm-lm-`, WordPress Custom HTML block) |
@@ -27,7 +26,6 @@ Lookup table for every widget and page build — check here before picking a new
 | `widgets/vpm-spotlight-homepage/` | widget | multiple | Homepage spotlight with admin UI and JSON content queue |
 | `widgets/vpm-spotlight-leadontop/` | widget | multiple | Homepage spotlight variant — full-width lead story over a two-card row (static) |
 | `widgets/watch-page-header/` | widget | multiple | Channel selector header for the Watch live page |
-| `widgets/weekly-update-signup/` | widget | multiple | Weekly Update newsletter signup embed (Full/Inline/Sidebar), POSTs directly to Mailchimp via JSONP with in-page confirmation — no backend |
 | `widgets/youtube-shorts-embed/` | widget | multiple | VPM News Shorts carousel embed |
 | `widgets/youtube-shorts-row/` | widget | multiple | Horizontal row of 9:16 VPM News Shorts cards (click to play in place, one at a time) with a button to the YouTube Shorts playlist; hand-edited `SHORTS` array (namespace `vpm-shortsrow-`, single-file embed) |
 | `pages/annual-report-2025/` | page, single-file | one URL | 2025 Annual Report interactive page |
@@ -46,3 +44,7 @@ Lookup table for every widget and page build — check here before picking a new
 ## Moved from widgets to pages
 
 `annual-report-2025`, `basics-virginia`, `ecp-partners-team`, `elections-2026-primary`, `how-federal-funding-works`, `impact-report-2025`, `unwined-episode`.
+
+## Merged widgets (asset folders only)
+
+`morning-monitor-signup`, `weekly-update-signup`, `virginia-home-grown-signup` → `newsletter-signup-embed` (2026-10-09). Their folders keep only `assets/`, because live CMS blocks and the Morning Monitor popup load those files by URL. Don't reuse these slugs or the `vpm-mm-`, `vpm-wu-`, `vpm-vhg-` prefixes.
