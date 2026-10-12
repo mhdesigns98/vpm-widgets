@@ -183,6 +183,8 @@ need no scroll offset. See `~/Projects/research/vpm-theme-anchor-links.md`.
 - Page workflow: `/brief` → `/new-page` → build → `/ship` → PR. Page folders hold a `README.md`
   covering purpose, live URL, paste order, and any `Uses widget:` lines. `/consolidate-page <url>`
   rebuilds an existing live page as one build.
+- Measured facts about vpm.org's `wpp-base` theme (root font-size, inherited type, widths) are in
+  `HOST-THEME.md`. Read it before building a page's type scale or converting a Rich Text section.
 - GitHub Pages preview: `https://mhdesigns98.github.io/vpm-widgets/pages/[slug]/`
 
 ## Index

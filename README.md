@@ -55,6 +55,7 @@ brand-guide.html  ← the same material rendered for visual review
 INDEX.md          ← every widget and page, its purpose, where it's used, namespace prefix
 CLAUDE.md         ← conventions
 SHIP-CHECKLIST.md ← canonical pre-ship checklist
+HOST-THEME.md     ← measured facts about the vpm.org WordPress theme
 CONTRIBUTING.md   ← how to build, and how to propose a token change
 harness/          ← CMS test harness (simulates the hostile parts of Brightspot/WordPress)
 tools/            ← paste-to-codepen helper
