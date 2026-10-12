@@ -21,8 +21,8 @@ in this repo.
 This command **ends by handing off to `/ship-page`**. It does not duplicate that checklist — don't
 inline the checks here, and don't declare the page shippable yourself.
 
-Read `CLAUDE.md` in the repo root first. Its **host theme** section carries the measured
-`wpp-base` facts this command depends on; if it and this file ever disagree, that file wins.
+Read `CLAUDE.md` in the repo root first, then `HOST-THEME.md`, which carries the measured
+`wpp-base` facts this command depends on; if it and this file ever disagree, `HOST-THEME.md` wins.
 
 ## Step 1 — Extract, don't browse
 

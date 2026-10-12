@@ -24,7 +24,7 @@ Pick the row that matches what you came for.
 | Look up an exact token value | [`tokens.css`](tokens.css) — the source of truth for widgets and pages. [`BRAND_GUIDE.md`](BRAND_GUIDE.md) has the same values as tables plus a paste-ready `:root` block. |
 | Find or reuse an existing widget | [`INDEX.md`](INDEX.md) — every widget and page build, what it does, where it's used, its namespace. Live previews at [mhdesigns98.github.io/vpm-widgets](https://mhdesigns98.github.io/vpm-widgets/). |
 | Send someone a link to one widget or page | `https://mhdesigns98.github.io/vpm-widgets/share/?w=<widget>` or `?p=<page>`. Opens with a title, a plain-language summary, where it goes, and a wide/desktop/tablet/mobile toggle at true widths, so they don't have to find it in the gallery. Add `&note=…` for what you want from them. `/share` builds the link. |
-| Build or change something | [`CONTRIBUTING.md`](CONTRIBUTING.md), then [`CLAUDE.md`](CLAUDE.md) for conventions and the pre-ship checklist. |
+| Build or change something | [`CONTRIBUTING.md`](CONTRIBUTING.md), then [`CLAUDE.md`](CLAUDE.md) for conventions and [`SHIP-CHECKLIST.md`](SHIP-CHECKLIST.md) for the pre-ship checklist. |
 | Use Claude Code on VPM work | Just clone this repo and open a session in it. See below. |
 
 **Two things to know before you build anything:**
@@ -44,7 +44,7 @@ committed to this repo, so VPM brand tokens and the build/ship slash commands lo
 [**"Using Claude Code on this repo"** in `CONTRIBUTING.md`](CONTRIBUTING.md#using-claude-code-on-this-repo)
 for install steps, what each command does, and a first-widget walkthrough.
 
-Page builds use `/new-page`; `/ship` checks both kinds against the checklist in `CLAUDE.md`.
+Page builds use `/new-page`; `/ship` checks both kinds against the checklist in `SHIP-CHECKLIST.md`.
 
 ## Structure
 
@@ -53,7 +53,9 @@ tokens.css        ← canonical design tokens (105 custom properties)
 BRAND_GUIDE.md    ← brand reference: tables, conventions, paste-ready :root block
 brand-guide.html  ← the same material rendered for visual review
 INDEX.md          ← every widget and page, its purpose, where it's used, namespace prefix
-CLAUDE.md         ← conventions + canonical pre-ship checklist
+CLAUDE.md         ← conventions
+SHIP-CHECKLIST.md ← canonical pre-ship checklist
+HOST-THEME.md     ← measured facts about the vpm.org WordPress theme
 CONTRIBUTING.md   ← how to build, and how to propose a token change
 harness/          ← CMS test harness (simulates the hostile parts of Brightspot/WordPress)
 tools/            ← paste-to-codepen helper
@@ -99,7 +101,7 @@ single list — check it before picking a new slug so prefixes don't collide.
 3. `/new-widget [short-name]` — scaffolds `widgets/[short-name]/` with tokens inlined, or create
    `index.html` (or the ACF split files) and a `README.md` by hand
 4. Namespace all classes and ids (e.g. `vpm-pledge26-`)
-5. `/ship [name]` — runs the harness and the pre-ship checklist in [`CLAUDE.md`](CLAUDE.md);
+5. `/ship [name]` — runs the harness and the pre-ship checklist in [`SHIP-CHECKLIST.md`](SHIP-CHECKLIST.md);
    required before it goes near a CMS
 6. Add a row to [`INDEX.md`](INDEX.md) (`/new-widget` does this for you)
 7. Open a PR. Pages preview: `https://mhdesigns98.github.io/vpm-widgets/widgets/[name]/`
