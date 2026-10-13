@@ -60,6 +60,8 @@
 /* 3-stripe accent bar */
 .vpm-nlcta .vpm-nlcta__bar {
   height: 4px;
+  margin: 0;
+  padding: 0;
   width: 100%;
   background: linear-gradient(90deg,
     var(--vpm-nlcta-light-blue) 0%,
@@ -73,6 +75,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: var(--vpm-nlcta-space-4);
+  margin: 0;
   padding: var(--vpm-nlcta-space-5);
 }
 
@@ -82,6 +85,8 @@
   flex: 1 1 auto;
   min-width: 0;
   gap: var(--vpm-nlcta-space-2);
+  margin: 0;
+  padding: 0;
 }
 
 .vpm-nlcta .vpm-nlcta__eyebrow {
@@ -122,6 +127,7 @@
   align-items: center;
   gap: var(--vpm-nlcta-space-2);
   flex-shrink: 0;
+  min-height: 44px;
   padding: var(--vpm-nlcta-space-3) var(--vpm-nlcta-space-5);
   background: var(--vpm-nlcta-light-blue);
   /* !important only where hostile host CSS uses it too (forced link colors) */
@@ -157,6 +163,8 @@
 }
 
 .vpm-nlcta .vpm-nlcta__arrow {
+  font-size: inherit;
+  line-height: 1;
   transition: transform var(--vpm-nlcta-dur-base) var(--vpm-nlcta-ease);
 }
 
