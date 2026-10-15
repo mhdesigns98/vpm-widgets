@@ -70,7 +70,7 @@ No harness (a page exists once, on one URL; don't add a pages mode to it).
 
 List every item (Core, then Widget-only or Page-only) as **pass / fail / unverified**, failures first with a concrete fix. Attach or describe screenshots (the screenshot tools reject paths outside the workspace). "n/a" counts as pass only when the build genuinely has nothing of that kind (no jump links, no consumed widgets). **Any fail → stop; don't emit blocks for a build that isn't ready.**
 
-On a clean pass, emit the deploy blocks:
+On a clean pass, commit any fixes to the build folder, then stamp it: run `node tools/drift-check/stamp.mjs SLUG` from the repo root and add the attributes it prints for each HTML file to that block's root element (the first element that isn't `<style>`, `<script>` or `<link>`; the `<iframe>` for an iframe embed). Stamp only the emitted blocks, never the repo files. The script refuses if the folder has uncommitted changes. The spec is in `tools/drift-check/STAMP.md`. Then emit the deploy blocks:
 
 - **single** — one fenced block, the whole `index.html` (Brightspot: note whether it goes in a raw HTML module or Custom Head Elements).
 - **acf-split** — one fenced block per ACF field, labeled `HTML` / `CSS` / `JS`. A page that consumes a widget has a block set per source (the page, the anchor wrappers, then the widget): label each and number them in the README's paste order. If the README states no explicit order, that's a Page-only **fail** (paste order undocumented), not something to infer.

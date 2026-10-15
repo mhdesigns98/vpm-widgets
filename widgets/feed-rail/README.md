@@ -1,5 +1,7 @@
 # Feed Rail
 
+Placement: pasted (per-page content, so it stays out of Shared Modules; see `tools/drift-check/BRIEF.md`)
+
 A reusable vertical rail of short updates (video, articles, audio, quick text notes) for
 placement alongside a main story or on a landing page — the same idea as the Voter Guide
 design's "Shorts" rail, made general-purpose.
