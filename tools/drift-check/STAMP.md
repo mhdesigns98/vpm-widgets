@@ -10,7 +10,7 @@ node tools/drift-check/stamp.mjs <slug> --dry-run   # allows uncommitted changes
 
 | Attribute | Value |
 |---|---|
-| `data-vpm-build` | First 12 hex chars of the last commit touching the build folder (`git log -1 --format=%H -- <folder>`). The script refuses if the folder has uncommitted changes. Merges use `--merge`, not squash, so the commit stays on `main`. |
+| `data-vpm-build` | First 12 hex chars of the last commit touching the pasted files (`git log -1 --format=%H -- <html, css, js files>`), so README or preview edits don't change it. The script refuses if those files have uncommitted changes. Merges use `--merge`, not squash, so the commit stays on `main`. |
 | `data-vpm-hash` | One `name:hash` pair per pasted part, joined with `;`. ACF-split: `html:…;css:…;js:…` (only the parts that exist). Sections and extra `html-*.html` files: one stamp per HTML file, each with its own `html` hash and the shared `css`/`js`. Single file: `block:…` for the whole `index.html`. Per-part hashes say which field was hand-edited. |
 | `data-vpm-source` | `module` for widgets, `page` for page builds and for widgets whose README has a `Placement: pasted` line (per-page content, e.g. `feed-rail`, `live-updates-rail`). |
 

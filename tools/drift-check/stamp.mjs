@@ -59,25 +59,31 @@ function main() {
   const dir = join(kind, slug);
   const git = (...args) => execFileSync('git', args, { encoding: 'utf8' }).trim();
 
-  let build = 'uncommitted';
-  if (git('status', '--porcelain', '--', dir)) {
-    if (!dryRun) {
-      console.error(`${dir} has uncommitted changes. Commit them first so the stamp names a real commit.`);
-      process.exit(2);
-    }
-  } else {
-    build = git('log', '-1', '--format=%H', '--', dir).slice(0, 12);
-  }
-
   const readme = join(dir, 'README.md');
-  const pasted = existsSync(readme) && /^Placement:\s*pasted\b/im.test(read(readme));
-  const source = kind === 'pages' || pasted ? 'page' : 'module';
+  const placedOnPage = existsSync(readme) && /^Placement:\s*pasted\b/im.test(read(readme));
+  const source = kind === 'pages' || placedOnPage ? 'page' : 'module';
 
   const sets = blockSets(dir);
   if (!sets.length) {
     console.error(`No pasteable HTML found in ${dir}.`);
     process.exit(1);
   }
+
+  // Only the pasted files count, so README or preview edits don't change the stamp.
+  const pasted = [...new Set(sets.flatMap(({ file }) => {
+    const base = file.slice(0, file.lastIndexOf('/'));
+    return [file, join(base, 'css.css'), join(base, 'js.js')].filter(existsSync);
+  }))];
+  let build = 'uncommitted';
+  if (git('status', '--porcelain', '--', ...pasted)) {
+    if (!dryRun) {
+      console.error(`Uncommitted changes in ${dir}'s pasted files. Commit them first so the stamp names a real commit.`);
+      process.exit(2);
+    }
+  } else {
+    build = git('log', '-1', '--format=%H', '--', ...pasted).slice(0, 12);
+  }
+
   for (const { file, parts } of sets) {
     const h = Object.entries(parts).map(([k, v]) => `${k}:${v}`).join(';');
     console.log(`${file}\n  data-vpm-build="${build}" data-vpm-hash="${h}" data-vpm-source="${source}"`);
