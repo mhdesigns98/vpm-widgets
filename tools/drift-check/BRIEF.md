@@ -21,9 +21,14 @@ confirms the module matches the repo build and that no page still carries an old
 - **Drift check:** (a) module code vs repo build for each widget, via REST once WPP opens it;
   (b) a sitemap crawl that lists every stamp and namespace prefix per URL and flags widget code
   with `data-vpm-source="page"` or no stamp at all (stray copies). Output feeds INDEX.md "Used on".
-- **WPP ask sent:** turn on "Show in REST API" for the Shared Modules post type and its Code Block
-  field group, readable by administrators only. Mention the crawler first, since script requests
-  without a browser User-Agent get 403.
+- **Snapshot before edit:** before `/ship` changes a Shared Module, it saves the live module's
+  current code into the repo (from rendered HTML now, from REST once WPP enables it). Modules keep
+  no revisions, so that snapshot is the undo. The repo stamp alone isn't a backup, because the live
+  copy may have been hand-edited.
+- **WPP asks sent, in order:** (1) turn on revision history for the Shared Modules post type;
+  (2) turn on "Show in REST API" for that post type and its Code Block field group, readable by
+  administrators only. Mention the crawler too, since script requests without a browser
+  User-Agent get 403.
 
 ## Out of scope (v1)
 - Central serving from Cloudflare (superseded; `hosting.md` unchanged).
@@ -35,21 +40,26 @@ confirms the module matches the repo build and that no page still carries an old
 ## Deploy target & constraints
 Repo tooling under `tools/drift-check/` plus a `/ship` change. Read-only against vpm.org; crawl
 with a browser User-Agent and a dedicated low-role account, not the admin Application Password.
+Staging doesn't track production content, so staging or the `/ship` harness can test that a
+module renders and behaves correctly, but not the production content around it.
 
 ## Answered (2026-10-15)
 - **Does page HTML show module code?** No. The homepage's module (sidebar newsletter iframe)
   renders as `section.page-section.page-code-block`, the same wrapper as code pasted on
   `/shows/mending-walls/`. Hence `data-vpm-source` in the stamp. (Assumes that sidebar block is
   the module; it's the homepage's only Code Block.)
-- **Revisions?** No (Mark). One bad edit breaks every page with no undo: test each module edit on
-  staging first, and the repo stamp is the only backup.
+- **Revisions?** No (Mark). One bad edit breaks every page with no undo, hence the
+  snapshot-before-edit step and the first WPP ask.
 - **Per-page overrides?** No, all-or-nothing (Mark).
 
 ## Open questions
-- Will WPP enable REST for Shared Modules? Until then, check (a) works only by reading rendered
-  HTML on one page per module.
+- Will WPP turn on revisions and REST for Shared Modules? Until REST is on, check (a) and the
+  snapshot work only from rendered HTML on one page per module.
 - Do iframe embeds and the GTM Shadow DOM popup need their own stamp check (inner code isn't in
   the host HTML)?
 - Are the Brightspot-era embeds (`ap-election-results`, `basics-virginia`, `ecp-partners-team`)
   still live anywhere?
-- Which low-role account runs the crawl, and does Kinsta need to allow it?
+- Crawl account: Mark can create a low-role user easily, but the role depends on WPP's REST
+  decision. If modules become publicly readable over REST, the crawler needs no login; if WPP
+  restricts reads to logged-in users, use the lowest role their restriction allows. Kinsta may
+  still need to allow the crawler.
