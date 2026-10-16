@@ -24,7 +24,7 @@
 - [ ] Optional: build the Cloudflare Worker that serves the Shorts playlist feed so the row updates itself, per `widgets/youtube-shorts-row/FEED-SPEC.md` (VPM owns the Cloudflare account; only open question is the Worker route/domain).
 - [ ] Before the first `hosted/signup-forms` deploy: pick the Cloudflare account. `npm run deploy` targets the old VPM account (`e017b19d…`), which can't serve a `vpm.org` subdomain (see Gotchas). Then replace `SIGNUP-HOST` in its README embed snippet with the real host.
 - [ ] Nice-to-haves from the review, not started: plain-language width labels ("Desktop" instead of "1280px wide, scaled to 40%"), "Note from the sender" label on the note box.
-- [ ] When vpm.org domain access exists: Cloudflare Pages project, `widgets.vpm.org`, `PBS_API_KEY`/`PBS_API_SECRET` as Pages secrets, verify `/api/pbs-episodes?show-id=...`, then update the 4 hardcoded `pbs-api.vpm-e01.workers.dev` references (`widgets/pbs-show-playlist/index.html`, its README, `widgets/virginia-home-grown-playlist/index.html`, its README), retire the old `pbs-api` Worker (`~/Projects/vpm/pbs-api/`), and fix the `mhdesigns98.github.io` doc references.
+- [ ] When vpm.org domain access exists: Cloudflare Pages project, `widgets.vpm.org`, `PBS_API_KEY`/`PBS_API_SECRET` as Pages secrets, verify `/api/pbs-episodes?show-id=...`, then update the 4 hardcoded `pbs-api.vpm-e01.workers.dev` references (`widgets/pbs-video-playlist/template/index.html`, its README, `widgets/pbs-video-playlist/virginia-home-grown/index.html`, its README), retire the old `pbs-api` Worker (`~/Projects/vpm/pbs-api/`), and fix the `mhdesigns98.github.io` doc references.
 
 ## Gotchas / things that will bite you
 
@@ -33,7 +33,7 @@
 
 - **Share links are public and unauthenticated** (public repo on a personal GitHub account). Don't send embargoed or sensitive builds this way.
 - GitHub Pages serves `main` only: a widget on a branch or open PR gives "Preview not found". Pages caches for 10 minutes, so the page appends `?fresh=<timestamp>` to the preview URL.
-- The two iframe widgets (`pbs-show-playlist`, `virginia-home-grown-playlist`) depend on `mhdesigns98.github.io` URLs, and a `postMessage` origin check for it is pasted in the live Brightspot page, outside any repo. Confirm what's live in the CMS before any domain cutover.
+- The two iframe widgets (the two `pbs-video-playlist` versions) depend on `mhdesigns98.github.io` URLs, and a `postMessage` origin check for it is pasted in the live Brightspot page, outside any repo. Confirm what's live in the CMS before any domain cutover.
 - Cloudflare Pages custom domains need the project and the DNS zone in the same account. The old "VPM" account (`e017b19d2e3e1827adbd6f5907d81aac`) is the wrong one for this.
 - The vestigial "Workers Builds: vpm-widgets" check was deleted 2026-10-01 (`wrangler delete`). Don't recreate it.
 - `widgets/youtube-shorts-row/` — Shorts row widget (`index.html`, `README.md`, `FEED-SPEC.md` for the self-updating-list outline)

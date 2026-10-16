@@ -31,9 +31,9 @@ Widget (`index.html`) and its Cloudflare Worker (`~/Projects/vpm/pbs-api/`) both
 - **An iframe embed needs an explicit auto-resize mechanism — `aspect-ratio` on the `<iframe>` tag does nothing.** `aspect-ratio` only derives a size when the element has *some* natural ratio to work from; a plain iframe doesn't have one, so it silently falls back to the browser default height. Confirmed by a real ACF paste: the widget rendered inside a ~100px box with the whole thing scrolling internally. Fixed with a `postMessage`-based resize (widget → parent page), but the first attempt at this used `document.documentElement.scrollHeight`, which is **floored by the iframe's own current viewport height** — it can grow the iframe but can never report a smaller value once the iframe has already grown once (confirmed: stayed pinned at 714px after a viewport narrow-down that should have shrunk the 16:9 player significantly). The fix is to measure the widget's own root element (`root.getBoundingClientRect().height`) instead — its box height is driven purely by its content, not the iframe's current size. If any future iframe-embedded widget needs this pattern, use the root-element approach from the start.
 
 ## Key files
-- `~/Projects/vpm/vpm-widgets/widgets/pbs-show-playlist/index.html` — the widget itself (player, thumbnail strip, autoplay logic)
-- `~/Projects/vpm/vpm-widgets/widgets/pbs-show-playlist/BRIEF.md` — original brief with user moment, done criteria, out-of-scope list
-- `~/Projects/vpm/vpm-widgets/widgets/pbs-show-playlist/README.md` — widget usage notes, config values to update per show
+- `~/Projects/vpm/vpm-widgets/widgets/pbs-video-playlist/template/index.html` — the widget itself (player, thumbnail strip, autoplay logic)
+- `~/Projects/vpm/vpm-widgets/widgets/pbs-video-playlist/template/BRIEF.md` — original brief with user moment, done criteria, out-of-scope list
+- `~/Projects/vpm/vpm-widgets/widgets/pbs-video-playlist/template/README.md` — widget usage notes, config values to update per show
 - `~/Projects/vpm/pbs-api/src/index.js` — the CF Worker: proxies PBS `/assets/` endpoint (full-length only), Basic Auth, 1-hour cache, CORS
 - `~/Projects/vpm/pbs-api/wrangler.jsonc` — Worker config, `account_id` pinned to VPM's CF account (`e017b19d2e3e1827adbd6f5907d81aac`)
 - `~/Projects/vpm/pbs-api/README.md` — deploy commands, route spec

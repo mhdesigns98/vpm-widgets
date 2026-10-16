@@ -23,9 +23,12 @@ stale_index=()
 for d in widgets/*/ pages/*/; do
   [ -d "$d" ] || continue
   path="${d%/}"
+  # Stub folders (README title marked "(merged)" or "(moved)") exist only so live URLs keep
+  # resolving. They need an INDEX.md row but no gallery entry.
+  stub=0; head -1 "$d/README.md" 2>/dev/null | grep -qE '\((merged|moved)\)' && stub=1
   grep -qE -- "\`$path/?\`" INDEX.md || missing_index+=("$path")
   [ -f "$d/README.md" ] || missing_readme+=("$path")
-  grep -q -- "slug: '$(basename "$path")'" index.html || missing_gallery+=("$path")
+  [ "$stub" -eq 1 ] || grep -q -- "slug: '$(basename "$path")'" index.html || missing_gallery+=("$path")
 done
 
 # INDEX.md -> folder. Catches rows left behind when a widget is deleted (as happened to
