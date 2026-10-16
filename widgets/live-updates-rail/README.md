@@ -1,5 +1,7 @@
 # Live Updates Rail
 
+Placement: pasted (per-page content, so it stays out of Shared Modules; see `tools/drift-check/BRIEF.md`)
+
 A vertical rail of short reporter dispatches (microblog-style) for placement beside a story, on
 a landing/topic page, or in a mobile "Updates" tab. Imported from a Claude Design mock; the
 mock's reporter names and quotes were replaced with generic placeholders before filing here (see
