@@ -12,7 +12,7 @@ the Page items exist because a page owns its URL. Don't move items between them 
 
 - [ ] Every selector namespaced; no bare element selectors in a page-level `<style>`. Unaffected by
       ordinary hostile host CSS (non-`!important` rules on `a`, `h1`–`h6`, `ul`/`li`, `p`, `div`,
-      `span`). Host `!important` element rules can't be beaten by a class selector, so the exception is
+      `span`, `img`: hosts such as `.article-body img` add borders and padding to logos). Host `!important` element rules can't be beaten by a class selector, so the exception is
       a **link**: a CTA must hold its color and underline against a host `a { … !important }` rule
       (use `!important` on the link's color and text-decoration only)
 - [ ] Decorative separators and inline `em`/`span` set their own `font-size`, and inner wrapper `div`s reset `margin`/`padding`, so ordinary host rules on those elements don't move them

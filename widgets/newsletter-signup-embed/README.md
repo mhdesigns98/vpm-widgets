@@ -1,7 +1,8 @@
 # Newsletter Signup Embed
 
 Mailchimp signup for VPM's single-audience newsletters: **Morning Monitor**, **Weekly Update** and
-**Virginia Home Grown**, each in three layouts (Full-width, Inline, Sidebar). Merged on 2026-10-09
+**Virginia Home Grown**, one responsive block per brand that fits any column, from a full-width
+section to a sidebar. Merged on 2026-10-09
 from `morning-monitor-signup`, `weekly-update-signup` and `virginia-home-grown-signup`, which were
 the same form copied three times (nine files that had drifted apart).
 
@@ -30,7 +31,7 @@ src/
   core.css             ← reset, input, button, row/stack, privacy, status (all brands)
   core.js              ← JSONP submit (all brands)
   themes/<brand>.css   ← brand variables + that brand's layout styling
-  layouts/<brand>.html ← that brand's three layouts; {{form:row|stack}}, {{privacy[:dark]}}, {{asset:file}}
+  layouts/<brand>.html ← that brand's one block; {{form}}, {{privacy[:dark]}}, {{asset:file}}
 build.mjs              ← node build.mjs
 ```
 
@@ -38,9 +39,9 @@ Generated (committed, never hand-edited):
 
 | File | Purpose |
 |---|---|
-| `index.html` | Lab preview: every brand, every layout, live JS |
-| `<brand>/preview.html` | One brand's preview; also the input to `hosted/signup-forms` |
-| `<brand>/html.html` | ACF HTML field: three variants, delete the two you don't need |
+| `index.html` | Lab preview: every brand, shown in 1000/680/480/320px columns, live JS |
+| `<brand>/preview.html` | One brand's preview at the same widths |
+| `<brand>/html.html` | ACF HTML field: the one block, paste as-is |
 | `<brand>/css.css` | ACF CSS field: core + that brand's theme, all scoped to `.vpm-nls` |
 | `<brand>/js.js` | ACF JS field: identical for every brand |
 
@@ -52,17 +53,31 @@ iframe versions need redeploying.
 
 ## Scoping
 
-Every layout is wrapped in `<div class="vpm-nls vpm-nls--mm">` (or `--wu`, `--vhg`), added by the
-build, so any single variant can be pasted alone. Brand variables live on the brand class, not `:root`, so
+Each block is wrapped in `<div class="vpm-nls vpm-nls--mm">` (or `--wu`, `--vhg`), added by the
+build. Brand variables live on the brand class, not `:root`, so
 two brands on one page can't overwrite each other. The reset is scoped to `.vpm-nls *`; never widen
 it to a global selector, because the ACF CSS field loads site-wide.
 
-## Narrow screens
+## One block, any width
 
-The wrapper is a CSS size container, so layouts respond to the width of the column they're pasted
-into, not the viewport. Below 600px the Full-width and Inline layouts stack (logo/panel above the
-form); below 440px the email field and button stack. Desktop rendering is unchanged. Browsers
-without container queries (pre-2023) get the old desktop layout.
+There are no layout variants to pick. The wrapper is a CSS size container, so the block responds
+to the width of the column it's pasted into, not the viewport:
+
+| Column width | What it looks like |
+|---|---|
+| 800px+ | Wide card: brand panel beside the headline and form (the old Full-width) |
+| 600–799px | Same card, compact padding and type (the old Inline size) |
+| under 600px | Stacked: brand panel above the form (the sidebar and phone look) |
+
+The email field and button share a line until the field would drop under 180px, then the button
+wraps onto its own full-width line. That's flexbox wrapping, not a breakpoint, so it works in any
+tier. Browsers without container queries (pre-2023) get the wide card.
+
+**2026-10-15: Full-width, Inline and Sidebar merged into this one block.** Blocks already pasted on
+vpm.org with the old variant markup (`vpm-nls__full`, `__inline`, `__sidebar`) keep working only
+until their CSS field is re-pasted from this version, so re-paste the HTML and CSS fields together.
+Content trimmed in the merge: Weekly Update's Inline eyebrow and Sidebar's SVG lockup (the PNG is
+used everywhere now), and Morning Monitor's Sidebar no longer omits the headline.
 
 ## Changes from the three old widgets
 
@@ -80,11 +95,16 @@ without container queries (pre-2023) get the old desktop layout.
 - **Morning Monitor Inline:** the privacy line had picked up the dek's 14px bold dark-blue style;
   it's now the same small grey line as every other layout.
 - All email inputs have `aria-label="Email address"` (only Morning Monitor did before).
+- **/ship fixes (2026-10-16):** host `img` rules (border, padding) and host `em` font-size no
+  longer reach the block; the input border is `--vpm-gray-500` (3.7:1, was 1.5:1); inputs and
+  buttons get a 2px brand focus ring (`--nls-ring`); Weekly Update's button hover is
+  `--vpm-blue-100` (10:1, was 3.9:1); VHG green nudged `#2E8B57` → `#2B8552` and its description
+  is full white (4.5:1, was 3.9:1); transitions off under `prefers-reduced-motion`.
 
 ## Assets and legacy URLs
 
 `assets/` here is the canonical copy. The old folders keep their `assets/` because live CMS blocks
 and the Morning Monitor popup (`LOGO_URL`) load them by URL. See `INDEX.md`.
 
-Known: `weekly-update-lockup.svg` (sidebar) is 1.7 MB. The full layout uses the 300 KB PNG of the
-same lockup. Worth swapping or optimizing in a follow-up.
+`weekly-update-lockup.svg` (1.7 MB) is no longer used by this widget; the block uses the 300 KB PNG.
+It stays in `assets/` in case an older pasted Sidebar block still loads it.

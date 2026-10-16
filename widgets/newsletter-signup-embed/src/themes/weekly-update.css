@@ -6,36 +6,24 @@
   --wu-yellow: #DEE22B;
   --nls-display:      'Oswald', Arial, sans-serif;
   --nls-focus:        var(--wu-bg);
+  --nls-ring:    var(--vpm-yellow);
   --nls-btn-bg:       var(--vpm-light-blue);
   --nls-btn-fg:       var(--wu-bg);
-  --nls-btn-hover:    #5a99cf;
+  --nls-btn-hover:    #D6E8F6; /* --vpm-blue-100: navy text 10:1; old #5a99cf was 3.9:1 */
   --nls-privacy-dark: rgba(255,255,255,0.7);
 }
 
 .vpm-nls--wu .vpm-nls__title {
   font-family: var(--nls-display);
   font-weight: 700;
-  color: #fff;
+  color: var(--vpm-white);
   text-transform: uppercase;
 }
 .vpm-nls--wu .vpm-nls__title em { font-style: normal; color: var(--wu-yellow); }
 
-.vpm-nls--wu .vpm-nls__eyebrow {
-  display: inline-block;
-  font-family: var(--nls-display);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  background: var(--vpm-yellow);
-  color: var(--wu-bg);
-  padding: 5px 12px;
-  border-radius: var(--radius-md);
-  margin-bottom: 14px;
-}
 
-/* FULL */
-.vpm-nls--wu .vpm-nls__full {
+/* One card at every width: lockup beside the copy when there's room, above it when not. */
+.vpm-nls--wu .vpm-nls__card {
   background: var(--wu-bg);
   border-radius: 6px;
   overflow: hidden;
@@ -46,54 +34,22 @@
   gap: 40px;
   align-items: center;
 }
-.vpm-nls--wu .vpm-nls__full > img { max-width: 220px; }
-.vpm-nls--wu .vpm-nls__full-content { display: flex; flex-direction: column; gap: 14px; }
-.vpm-nls--wu .vpm-nls__full-content .vpm-nls__title { font-size: 26px; line-height: 1.15; }
-.vpm-nls--wu .vpm-nls__full-content .vpm-nls__dek { color: rgba(255,255,255,0.85); font-size: 14px; font-weight: 600; }
-.vpm-nls--wu .vpm-nls__full .vpm-nls__row { max-width: 620px; }
+.vpm-nls--wu .vpm-nls__card > img { max-width: 220px; }
+.vpm-nls--wu .vpm-nls__main { display: flex; flex-direction: column; gap: 14px; }
+.vpm-nls--wu .vpm-nls__main .vpm-nls__title { font-size: 26px; line-height: 1.15; }
+.vpm-nls--wu .vpm-nls__main .vpm-nls__dek { color: rgba(255,255,255,0.85); font-size: 14px; font-weight: 600; }
+.vpm-nls--wu .vpm-nls__card .vpm-nls__row { max-width: 620px; }
 
-/* INLINE */
-.vpm-nls--wu .vpm-nls__inline {
-  background: var(--wu-bg);
-  border-radius: 6px;
-  padding: 28px 32px;
-}
-.vpm-nls--wu .vpm-nls__inline .vpm-nls__title { font-size: 20px; margin-bottom: 6px; }
-.vpm-nls--wu .vpm-nls__inline p { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.85); margin-bottom: 14px; max-width: 620px; }
-.vpm-nls--wu .vpm-nls__inline .vpm-nls__row { max-width: 620px; }
-
-/* SIDEBAR: navy throughout; the lockup sits on its own white badge. */
-.vpm-nls--wu .vpm-nls__sidebar {
-  max-width: 340px;
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-}
-.vpm-nls--wu .vpm-nls__sidebar-top {
-  background: var(--wu-bg);
-  padding: 24px 24px 20px;
-  text-align: center;
-}
-.vpm-nls--wu .vpm-nls__sidebar-badge {
-  background: #fff;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  margin-bottom: 16px;
-}
-.vpm-nls--wu .vpm-nls__sidebar-badge img { display: block; width: 100%; }
-.vpm-nls--wu .vpm-nls__sidebar-top .vpm-nls__title { font-size: 20px; line-height: 1.15; text-align: left; }
-.vpm-nls--wu .vpm-nls__sidebar-bottom {
-  background: var(--wu-bg);
-  padding: 0 24px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+/* Mid-width columns (the old Inline size): smaller lockup, tighter padding. */
+@container vpm-nls (max-width: 799px) {
+  .vpm-nls--wu .vpm-nls__card { padding: 28px 32px; gap: 28px; }
+  .vpm-nls--wu .vpm-nls__card > img { max-width: 160px; }
+  .vpm-nls--wu .vpm-nls__main { gap: 12px; }
+  .vpm-nls--wu .vpm-nls__main .vpm-nls__title { font-size: 22px; }
 }
 
-/* Narrow containers: lockup above the copy, tighter padding. */
+/* Narrow columns (sidebars, phones): lockup above the copy. */
 @container vpm-nls (max-width: 599px) {
-  .vpm-nls--wu .vpm-nls__full { grid-template-columns: 1fr; gap: 20px; padding: 24px; }
-  .vpm-nls--wu .vpm-nls__full > img { max-width: 180px; }
-  .vpm-nls--wu .vpm-nls__full-content .vpm-nls__title { font-size: 22px; }
-  .vpm-nls--wu .vpm-nls__inline { padding: 24px 20px; }
+  .vpm-nls--wu .vpm-nls__card { grid-template-columns: 1fr; gap: 20px; padding: 24px; }
+  .vpm-nls--wu .vpm-nls__card > img { max-width: 180px; }
 }

@@ -1,14 +1,17 @@
 /* ── Core: shared by every brand ──
-   Every layout is wrapped in `.vpm-nls` plus its brand class (`.vpm-nls--mm`), so any one
-   variant can be pasted on its own and still pick up the reset, fonts and brand variables.
+   Each brand's block is wrapped in `.vpm-nls` plus its brand class (`.vpm-nls--mm`), so it
+   picks up the reset, fonts and brand variables wherever it's pasted.
    Brand variables live on the brand class, not :root, so two brands on one page can't
    overwrite each other's colors.
-   The wrapper is also a size container: the layouts respond to the width of the column
-   they're pasted into (@container vpm-nls), not the viewport, so a Full-width variant in a
-   narrow column stacks the same way it does on a phone. */
+   The wrapper is also a size container: there is one layout per brand, and it responds to the
+   width of the column it's pasted into (@container vpm-nls), not the viewport. Tiers:
+   800px+ wide card, 600-799px compact card, under 600px stacked (sidebar/phone). The email
+   field and button wrap on their own (see .vpm-nls__row). */
 .vpm-nls {
   container: vpm-nls / inline-size;
   --vpm-black:   #101820;
+  --vpm-white:   #FFFFFF;
+  --vpm-gray-500: #7B8591; /* input border: 3.7:1 on white, clears the 3:1 non-text minimum */
   --vpm-red-700: #B81E2A;
   --radius-md:   4px;
   --shadow-md:   0 8px 24px rgba(0,0,0,0.12);
@@ -26,19 +29,27 @@
   padding: 0;
 }
 
+/* Host themes style bare images (borders, padding, shadows): e.g. `.article-body img`. Two
+   classes plus the element beat that; brand themes set the sizes. */
+.vpm-nls .vpm-nls__card img { border: 0; border-radius: 0; box-shadow: none; height: auto; }
+
 .vpm-nls__input {
   font-family: 'Public Sans', Arial, sans-serif;
   font-size: 15px;
   width: 100%;
   padding: 13px 16px;
-  border: 1.5px solid #d0d4d8;
+  border: 1.5px solid var(--vpm-gray-500);
   border-radius: var(--radius-md);
   outline: none;
   transition: border-color 0.2s;
-  background: #fff;
+  background: var(--vpm-white);
   color: var(--vpm-black);
 }
 .vpm-nls__input:focus { border-color: var(--nls-focus); }
+/* Visible keyboard focus on every brand's card color: --nls-ring is set per brand to clear 3:1
+   against the surface the form sits on. */
+.vpm-nls .vpm-nls__input:focus-visible,
+.vpm-nls .vpm-nls__btn:focus-visible { outline: 2px solid var(--nls-ring); outline-offset: 2px; }
 
 .vpm-nls__btn {
   font-family: var(--nls-display);
@@ -58,18 +69,20 @@
 .vpm-nls__btn:hover { background: var(--nls-btn-hover); }
 .vpm-nls__btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-/* Email + button side by side (full and inline layouts) */
-.vpm-nls__row { display: flex; gap: 10px; }
-.vpm-nls__row .vpm-nls__input { flex: 1; }
-.vpm-nls__row .vpm-nls__btn { width: auto; }
-/* Email over button (sidebar layout) */
-.vpm-nls__stack { display: flex; flex-direction: column; gap: 12px; }
+/* Email + button side by side. When the field would drop under 180px the button wraps onto
+   its own line and fills it, so no breakpoint is needed (the field takes nearly all the
+   spare room while they share a line: 999 vs 1). */
+.vpm-nls__row { display: flex; flex-wrap: wrap; gap: 10px; }
+.vpm-nls__row .vpm-nls__input { flex: 999 1 180px; min-width: 0; }
+.vpm-nls__row .vpm-nls__btn { flex: 1 0 auto; }
 /* The JS hides the form on success; the display rules above would otherwise beat [hidden]. */
 .vpm-nls form[hidden] { display: none; }
 
 /* Two classes so a host rule like `.article-body p` (class + element) can't resize it. */
 .vpm-nls .vpm-nls__privacy { font-size: 12px; color: var(--nls-privacy, inherit); margin-top: 12px; line-height: 1.5; }
 .vpm-nls .vpm-nls__privacy--dark { color: var(--nls-privacy-dark); }
+/* Headline accents size with the headline, not a host `em { font-size }` rule. */
+.vpm-nls .vpm-nls__title em { font-size: inherit; }
 
 /* Given its own white surface rather than sitting straight on the card: the brands have
    light-blue, dark-navy and green backgrounds, and no single text colour clears WCAG AA on
@@ -80,7 +93,7 @@
   font-weight: 600;
   line-height: 1.5;
   color: var(--vpm-black);
-  background: #fff;
+  background: var(--vpm-white);
   border-radius: var(--radius-md);
   padding: 10px 14px;
   margin-top: 6px;
@@ -88,8 +101,7 @@
 .vpm-nls__status[hidden] { display: none; }
 .vpm-nls__status--err { color: var(--vpm-red-700); }
 
-/* Narrow containers: email above a full-width button */
-@container vpm-nls (max-width: 439px) {
-  .vpm-nls__row { flex-direction: column; }
-  .vpm-nls__row .vpm-nls__btn { width: 100%; }
+@media (prefers-reduced-motion: reduce) {
+  .vpm-nls__input,
+  .vpm-nls__btn { transition: none; }
 }
