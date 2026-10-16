@@ -73,7 +73,7 @@ one page and throws error 110200 if it happens. Fixed and confirmed live 2026-09
 ## Customization points
 
 - **Copy** — headline, tagline, button label, privacy line, all inline
-- **Logo** — hosted on GitHub Pages (`morning-monitor-signup` widget's `assets/` folder)
+- **Logo** — hosted on GitHub Pages (`newsletter-signup-embed/assets/morning-monitor-lockup.svg`). Changing `LOGO_URL` only takes effect once the GTM tag is re-pasted from this file
 - **Timings and cooldowns** — the three trigger thresholds and both cooldown windows are constants
   near the top of the script
 
