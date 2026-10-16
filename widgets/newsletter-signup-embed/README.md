@@ -95,6 +95,11 @@ used everywhere now), and Morning Monitor's Sidebar no longer omits the headline
 - **Morning Monitor Inline:** the privacy line had picked up the dek's 14px bold dark-blue style;
   it's now the same small grey line as every other layout.
 - All email inputs have `aria-label="Email address"` (only Morning Monitor did before).
+- **/ship fixes (2026-10-16):** host `img` rules (border, padding) and host `em` font-size no
+  longer reach the block; the input border is `--vpm-gray-500` (3.7:1, was 1.5:1); inputs and
+  buttons get a 2px brand focus ring (`--nls-ring`); Weekly Update's button hover is
+  `--vpm-blue-100` (10:1, was 3.9:1); VHG green nudged `#2E8B57` → `#2B8552` and its description
+  is full white (4.5:1, was 3.9:1); transitions off under `prefers-reduced-motion`.
 
 ## Assets and legacy URLs
 

@@ -8,6 +8,7 @@
   --mm-circle: #0B4F85; /* --vpm-blue-600 */
   --nls-display:   'IBM Plex Sans Condensed', Arial, sans-serif;
   --nls-focus:     var(--mm-circle);
+  --nls-ring:    var(--vpm-dark-blue);
   --nls-btn-bg:    var(--vpm-dark-blue);
   --nls-btn-fg:    #fff;
   --nls-btn-hover: #00294a;
@@ -44,7 +45,7 @@
 }
 .vpm-nls--mm .vpm-nls__aside img { max-width: 190px; margin-bottom: 16px; }
 .vpm-nls--mm .vpm-nls__aside p {
-  color: #fff;
+  color: var(--vpm-white);
   font-size: 14px;
   line-height: 1.5;
   max-width: 260px;

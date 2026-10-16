@@ -19,6 +19,8 @@
 .vpm-nls {
   container: vpm-nls / inline-size;
   --vpm-black:   #101820;
+  --vpm-white:   #FFFFFF;
+  --vpm-gray-500: #7B8591; /* input border: 3.7:1 on white, clears the 3:1 non-text minimum */
   --vpm-red-700: #B81E2A;
   --radius-md:   4px;
   --shadow-md:   0 8px 24px rgba(0,0,0,0.12);
@@ -36,19 +38,27 @@
   padding: 0;
 }
 
+/* Host themes style bare images (borders, padding, shadows): e.g. `.article-body img`. Two
+   classes plus the element beat that; brand themes set the sizes. */
+.vpm-nls .vpm-nls__card img { border: 0; border-radius: 0; box-shadow: none; height: auto; }
+
 .vpm-nls__input {
   font-family: 'Public Sans', Arial, sans-serif;
   font-size: 15px;
   width: 100%;
   padding: 13px 16px;
-  border: 1.5px solid #d0d4d8;
+  border: 1.5px solid var(--vpm-gray-500);
   border-radius: var(--radius-md);
   outline: none;
   transition: border-color 0.2s;
-  background: #fff;
+  background: var(--vpm-white);
   color: var(--vpm-black);
 }
 .vpm-nls__input:focus { border-color: var(--nls-focus); }
+/* Visible keyboard focus on every brand's card color: --nls-ring is set per brand to clear 3:1
+   against the surface the form sits on. */
+.vpm-nls .vpm-nls__input:focus-visible,
+.vpm-nls .vpm-nls__btn:focus-visible { outline: 2px solid var(--nls-ring); outline-offset: 2px; }
 
 .vpm-nls__btn {
   font-family: var(--nls-display);
@@ -80,6 +90,8 @@
 /* Two classes so a host rule like `.article-body p` (class + element) can't resize it. */
 .vpm-nls .vpm-nls__privacy { font-size: 12px; color: var(--nls-privacy, inherit); margin-top: 12px; line-height: 1.5; }
 .vpm-nls .vpm-nls__privacy--dark { color: var(--nls-privacy-dark); }
+/* Headline accents size with the headline, not a host `em { font-size }` rule. */
+.vpm-nls .vpm-nls__title em { font-size: inherit; }
 
 /* Given its own white surface rather than sitting straight on the card: the brands have
    light-blue, dark-navy and green backgrounds, and no single text colour clears WCAG AA on
@@ -90,7 +102,7 @@
   font-weight: 600;
   line-height: 1.5;
   color: var(--vpm-black);
-  background: #fff;
+  background: var(--vpm-white);
   border-radius: var(--radius-md);
   padding: 10px 14px;
   margin-top: 6px;
@@ -98,14 +110,19 @@
 .vpm-nls__status[hidden] { display: none; }
 .vpm-nls__status--err { color: var(--vpm-red-700); }
 
+@media (prefers-reduced-motion: reduce) {
+  .vpm-nls__input,
+  .vpm-nls__btn { transition: none; }
+}
 
 /* ── Virginia Home Grown ── green sub-brand with the leaf-pattern panel */
 .vpm-nls--vhg {
-  --vhg-green:      #2E8B57;
+  --vhg-green:      #2B8552; /* nudged from #2E8B57 so 14px white body text clears 4.5:1 (was 3.9:1) */
   --vhg-green-dark: #194225;
   --vpm-yellow-200: #F2F5A2;
   --nls-display:      'Oswald', Arial, sans-serif;
   --nls-focus:        var(--vhg-green);
+  --nls-ring:    var(--vhg-green-dark);
   --nls-btn-bg:       var(--vhg-green-dark);
   --nls-btn-fg:       #fff;
   --nls-btn-hover:    #0f2b18;
@@ -121,7 +138,7 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   background: var(--vhg-green-dark);
-  color: #fff;
+  color: var(--vpm-white);
   padding: 4px 10px;
   border-radius: var(--radius-md);
   margin-bottom: 14px;
@@ -154,10 +171,10 @@
   flex-direction: column;
   justify-content: center;
 }
-.vpm-nls--vhg .vpm-nls__aside .vpm-nls__title { font-size: 30px; color: #fff; margin-bottom: 12px; }
-.vpm-nls--vhg .vpm-nls__aside p { color: rgba(255,255,255,0.92); font-size: 15px; line-height: 1.5; max-width: 340px; text-align: left; }
+.vpm-nls--vhg .vpm-nls__aside .vpm-nls__title { font-size: 30px; color: var(--vpm-white); margin-bottom: 12px; }
+.vpm-nls--vhg .vpm-nls__aside p { color: var(--vpm-white); font-size: 15px; line-height: 1.5; max-width: 340px; text-align: left; }
 .vpm-nls--vhg .vpm-nls__main {
-  background: #fff;
+  background: var(--vpm-white);
   padding: 48px;
   display: flex;
   flex-direction: column;

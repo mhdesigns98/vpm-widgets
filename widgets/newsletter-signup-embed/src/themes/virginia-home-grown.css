@@ -1,10 +1,11 @@
 /* ── Virginia Home Grown ── green sub-brand with the leaf-pattern panel */
 .vpm-nls--vhg {
-  --vhg-green:      #2E8B57;
+  --vhg-green:      #2B8552; /* nudged from #2E8B57 so 14px white body text clears 4.5:1 (was 3.9:1) */
   --vhg-green-dark: #194225;
   --vpm-yellow-200: #F2F5A2;
   --nls-display:      'Oswald', Arial, sans-serif;
   --nls-focus:        var(--vhg-green);
+  --nls-ring:    var(--vhg-green-dark);
   --nls-btn-bg:       var(--vhg-green-dark);
   --nls-btn-fg:       #fff;
   --nls-btn-hover:    #0f2b18;
@@ -20,7 +21,7 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   background: var(--vhg-green-dark);
-  color: #fff;
+  color: var(--vpm-white);
   padding: 4px 10px;
   border-radius: var(--radius-md);
   margin-bottom: 14px;
@@ -53,10 +54,10 @@
   flex-direction: column;
   justify-content: center;
 }
-.vpm-nls--vhg .vpm-nls__aside .vpm-nls__title { font-size: 30px; color: #fff; margin-bottom: 12px; }
-.vpm-nls--vhg .vpm-nls__aside p { color: rgba(255,255,255,0.92); font-size: 15px; line-height: 1.5; max-width: 340px; text-align: left; }
+.vpm-nls--vhg .vpm-nls__aside .vpm-nls__title { font-size: 30px; color: var(--vpm-white); margin-bottom: 12px; }
+.vpm-nls--vhg .vpm-nls__aside p { color: var(--vpm-white); font-size: 15px; line-height: 1.5; max-width: 340px; text-align: left; }
 .vpm-nls--vhg .vpm-nls__main {
-  background: #fff;
+  background: var(--vpm-white);
   padding: 48px;
   display: flex;
   flex-direction: column;
