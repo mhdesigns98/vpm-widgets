@@ -64,7 +64,7 @@ Some widgets (e.g. `vpm-banner`) use a split-file format for WordPress ACF:
 ### Generated widgets (pilot)
 
 `newsletter-signup-embed` is the one widget with a build step: shared `src/` (form engine, base
-CSS, per-brand theme and layouts) → `node build.mjs` → one split-file set per brand. Its output is
+CSS, per-brand theme and layout) → `node build.mjs` → one split-file set per brand. Its output is
 still plain, self-contained paste files, so CMS rules are unchanged; only the *source* is shared.
 Never hand-edit its generated files (each says so at the top); edit `src/` and rebuild, and commit
 both. It's a pilot for merging look-alike widgets. Don't add a build step to another widget

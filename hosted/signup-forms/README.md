@@ -1,10 +1,12 @@
 # Hosted signup forms (Cloudflare Pages)
 
 Iframe-embeddable versions of `morning-monitor-signup`, `virginia-home-grown-signup` and
-`weekly-update-signup`, one page per layout: `<slug>/full.html`, `inline.html`, `sidebar.html`.
+`weekly-update-signup`, one page per newsletter: `<slug>/`. Each is the same responsive form the
+CMS blocks use, so it fits whatever width the iframe is given.
 
-**The widget folders stay the source.** `build.mjs` slices each widget's `index.html` into
-per-variant pages, so a copy fix in the widget plus `npm run deploy` updates every embed. Never
+**`widgets/newsletter-signup-embed` stays the source.** `build.mjs` wraps each brand's generated
+`html.html`, `css.css` and `js.js` in an iframe page, so a copy fix in the widget plus
+`npm run deploy` updates every embed. Never
 edit `public/<slug>/` by hand: it is regenerated. (Hand-written: `_headers` at the project root, copied in by the build.)
 
 ## Deploy
@@ -16,7 +18,7 @@ npm run deploy     # Pages project vpm-signup-forms, VPM account
 
 ## Embed
 ```html
-<iframe src="https://SIGNUP-HOST/morning-monitor-signup/inline.html"
+<iframe src="https://SIGNUP-HOST/morning-monitor-signup/"
         title="Morning Monitor newsletter signup" loading="lazy"
         style="width:100%;border:0;height:230px"></iframe>
 ```
@@ -34,7 +36,7 @@ if (!window.__vpmEmbedResize) {
 }
 </script>
 ```
-Without the script the iframe keeps its fixed `height`; set it to fit the layout (about 230px full/inline at desktop width, 440px sidebar).
+Without the script the iframe keeps its fixed `height`; set it to fit the column (roughly 260px in a wide column, 520px in a sidebar).
 
 ## Notes
 - `_headers` limits framing to vpm.org and subdomains (`frame-ancestors`). Add the CMS preview

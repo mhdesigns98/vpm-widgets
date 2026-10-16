@@ -5,13 +5,14 @@
    ================================================ */
 
 /* ── Core: shared by every brand ──
-   Every layout is wrapped in `.vpm-nls` plus its brand class (`.vpm-nls--mm`), so any one
-   variant can be pasted on its own and still pick up the reset, fonts and brand variables.
+   Each brand's block is wrapped in `.vpm-nls` plus its brand class (`.vpm-nls--mm`), so it
+   picks up the reset, fonts and brand variables wherever it's pasted.
    Brand variables live on the brand class, not :root, so two brands on one page can't
    overwrite each other's colors.
-   The wrapper is also a size container: the layouts respond to the width of the column
-   they're pasted into (@container vpm-nls), not the viewport, so a Full-width variant in a
-   narrow column stacks the same way it does on a phone. */
+   The wrapper is also a size container: there is one layout per brand, and it responds to the
+   width of the column it's pasted into (@container vpm-nls), not the viewport. Tiers:
+   800px+ wide card, 600-799px compact card, under 600px stacked (sidebar/phone). The email
+   field and button wrap on their own (see .vpm-nls__row). */
 .vpm-nls {
   container: vpm-nls / inline-size;
   --vpm-black:   #101820;
@@ -64,12 +65,12 @@
 .vpm-nls__btn:hover { background: var(--nls-btn-hover); }
 .vpm-nls__btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-/* Email + button side by side (full and inline layouts) */
-.vpm-nls__row { display: flex; gap: 10px; }
-.vpm-nls__row .vpm-nls__input { flex: 1; }
-.vpm-nls__row .vpm-nls__btn { width: auto; }
-/* Email over button (sidebar layout) */
-.vpm-nls__stack { display: flex; flex-direction: column; gap: 12px; }
+/* Email + button side by side. When the field would drop under 180px the button wraps onto
+   its own line and fills it, so no breakpoint is needed (the field takes nearly all the
+   spare room while they share a line: 999 vs 1). */
+.vpm-nls__row { display: flex; flex-wrap: wrap; gap: 10px; }
+.vpm-nls__row .vpm-nls__input { flex: 999 1 180px; min-width: 0; }
+.vpm-nls__row .vpm-nls__btn { flex: 1 0 auto; }
 /* The JS hides the form on success; the display rules above would otherwise beat [hidden]. */
 .vpm-nls form[hidden] { display: none; }
 
@@ -94,11 +95,6 @@
 .vpm-nls__status[hidden] { display: none; }
 .vpm-nls__status--err { color: var(--vpm-red-700); }
 
-/* Narrow containers: email above a full-width button */
-@container vpm-nls (max-width: 439px) {
-  .vpm-nls__row { flex-direction: column; }
-  .vpm-nls__row .vpm-nls__btn { width: 100%; }
-}
 
 /* ── Virginia Home Grown ── green sub-brand with the leaf-pattern panel */
 .vpm-nls--vhg {
@@ -126,8 +122,8 @@
   padding: 4px 10px;
   border-radius: var(--radius-md);
   margin-bottom: 14px;
+  align-self: flex-start; /* the panel is a flex column; don't stretch the badge across it */
 }
-.vpm-nls--vhg .vpm-nls__inline .vpm-nls__badge { background: #fff; color: var(--vhg-green-dark); }
 
 .vpm-nls--vhg .vpm-nls__title { font-family: var(--nls-display); font-weight: 700; text-transform: uppercase; line-height: 1.1; }
 /* Pale yellow, not the old dark green: on the green panel dark green was 2.7:1, under the 3:1
@@ -141,23 +137,23 @@
   background-size: 280px 140px;
 }
 
-/* FULL: split panel, matches Figma */
-.vpm-nls--vhg .vpm-nls__full {
+/* One card at every width: leaf panel beside the form when there's room, above it when not. */
+.vpm-nls--vhg .vpm-nls__card {
   display: grid;
   grid-template-columns: 1fr 1fr;
   border-radius: 6px;
   overflow: hidden;
   box-shadow: var(--shadow-md);
 }
-.vpm-nls--vhg .vpm-nls__full-left {
+.vpm-nls--vhg .vpm-nls__aside {
   padding: 48px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-.vpm-nls--vhg .vpm-nls__full-left .vpm-nls__title { font-size: 30px; color: #fff; margin-bottom: 12px; }
-.vpm-nls--vhg .vpm-nls__full-left p { color: rgba(255,255,255,0.92); font-size: 15px; line-height: 1.5; max-width: 340px; text-align: left; }
-.vpm-nls--vhg .vpm-nls__full-right {
+.vpm-nls--vhg .vpm-nls__aside .vpm-nls__title { font-size: 30px; color: #fff; margin-bottom: 12px; }
+.vpm-nls--vhg .vpm-nls__aside p { color: rgba(255,255,255,0.92); font-size: 15px; line-height: 1.5; max-width: 340px; text-align: left; }
+.vpm-nls--vhg .vpm-nls__main {
   background: #fff;
   padding: 48px;
   display: flex;
@@ -166,38 +162,18 @@
   gap: 14px;
 }
 
-/* INLINE */
-.vpm-nls--vhg .vpm-nls__inline {
-  border-radius: 6px;
-  padding: 28px 32px;
-}
-.vpm-nls--vhg .vpm-nls__inline .vpm-nls__title { font-size: 22px; color: #fff; margin-bottom: 6px; }
-.vpm-nls--vhg .vpm-nls__inline p { font-size: 14px; color: rgba(255,255,255,0.9); margin-bottom: 14px; max-width: 620px; text-align: left; font-weight: 600; }
-.vpm-nls--vhg .vpm-nls__inline .vpm-nls__row { max-width: 620px; }
-
-/* SIDEBAR */
-.vpm-nls--vhg .vpm-nls__sidebar {
-  max-width: 340px;
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-}
-.vpm-nls--vhg .vpm-nls__sidebar-top { padding: 24px 24px 20px; }
-.vpm-nls--vhg .vpm-nls__sidebar-top .vpm-nls__title { font-size: 20px; color: #fff; margin-bottom: 8px; }
-.vpm-nls--vhg .vpm-nls__sidebar-top p { font-size: 13px; color: rgba(255,255,255,0.9); line-height: 1.5; text-align: left; }
-.vpm-nls--vhg .vpm-nls__sidebar-bottom {
-  background: #fff;
-  padding: 20px 24px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+/* Mid-width columns (the old Inline size): tighter padding, smaller headline. */
+@container vpm-nls (max-width: 799px) {
+  .vpm-nls--vhg .vpm-nls__aside,
+  .vpm-nls--vhg .vpm-nls__main { padding: 28px 32px; }
+  .vpm-nls--vhg .vpm-nls__aside .vpm-nls__title { font-size: 24px; }
+  .vpm-nls--vhg .vpm-nls__aside p { font-size: 14px; }
 }
 
-/* Narrow containers: leaf panel above the form, tighter padding. */
+/* Narrow columns (sidebars, phones): leaf panel above the form. */
 @container vpm-nls (max-width: 599px) {
-  .vpm-nls--vhg .vpm-nls__full { grid-template-columns: 1fr; }
-  .vpm-nls--vhg .vpm-nls__full-left,
-  .vpm-nls--vhg .vpm-nls__full-right { padding: 28px 24px; }
-  .vpm-nls--vhg .vpm-nls__full-left .vpm-nls__title { font-size: 24px; }
-  .vpm-nls--vhg .vpm-nls__inline { padding: 24px 20px; }
+  .vpm-nls--vhg .vpm-nls__card { grid-template-columns: 1fr; }
+  .vpm-nls--vhg .vpm-nls__aside,
+  .vpm-nls--vhg .vpm-nls__main { padding: 24px; }
+  .vpm-nls--vhg .vpm-nls__aside .vpm-nls__title { font-size: 22px; }
 }

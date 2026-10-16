@@ -5,13 +5,14 @@
    ================================================ */
 
 /* ── Core: shared by every brand ──
-   Every layout is wrapped in `.vpm-nls` plus its brand class (`.vpm-nls--mm`), so any one
-   variant can be pasted on its own and still pick up the reset, fonts and brand variables.
+   Each brand's block is wrapped in `.vpm-nls` plus its brand class (`.vpm-nls--mm`), so it
+   picks up the reset, fonts and brand variables wherever it's pasted.
    Brand variables live on the brand class, not :root, so two brands on one page can't
    overwrite each other's colors.
-   The wrapper is also a size container: the layouts respond to the width of the column
-   they're pasted into (@container vpm-nls), not the viewport, so a Full-width variant in a
-   narrow column stacks the same way it does on a phone. */
+   The wrapper is also a size container: there is one layout per brand, and it responds to the
+   width of the column it's pasted into (@container vpm-nls), not the viewport. Tiers:
+   800px+ wide card, 600-799px compact card, under 600px stacked (sidebar/phone). The email
+   field and button wrap on their own (see .vpm-nls__row). */
 .vpm-nls {
   container: vpm-nls / inline-size;
   --vpm-black:   #101820;
@@ -64,12 +65,12 @@
 .vpm-nls__btn:hover { background: var(--nls-btn-hover); }
 .vpm-nls__btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-/* Email + button side by side (full and inline layouts) */
-.vpm-nls__row { display: flex; gap: 10px; }
-.vpm-nls__row .vpm-nls__input { flex: 1; }
-.vpm-nls__row .vpm-nls__btn { width: auto; }
-/* Email over button (sidebar layout) */
-.vpm-nls__stack { display: flex; flex-direction: column; gap: 12px; }
+/* Email + button side by side. When the field would drop under 180px the button wraps onto
+   its own line and fills it, so no breakpoint is needed (the field takes nearly all the
+   spare room while they share a line: 999 vs 1). */
+.vpm-nls__row { display: flex; flex-wrap: wrap; gap: 10px; }
+.vpm-nls__row .vpm-nls__input { flex: 999 1 180px; min-width: 0; }
+.vpm-nls__row .vpm-nls__btn { flex: 1 0 auto; }
 /* The JS hides the form on success; the display rules above would otherwise beat [hidden]. */
 .vpm-nls form[hidden] { display: none; }
 
@@ -94,11 +95,6 @@
 .vpm-nls__status[hidden] { display: none; }
 .vpm-nls__status--err { color: var(--vpm-red-700); }
 
-/* Narrow containers: email above a full-width button */
-@container vpm-nls (max-width: 439px) {
-  .vpm-nls__row { flex-direction: column; }
-  .vpm-nls__row .vpm-nls__btn { width: 100%; }
-}
 
 /* ── Morning Monitor ──
    --mm-bg/--mm-circle map the Figma comp's off-palette blues (#C1E2FF, #0952A2 — neither
@@ -124,10 +120,10 @@
   color: var(--vpm-dark-blue);
 }
 
-/* FULL: single light-blue card; the logo lockup sits inside a dark-blue pill badge (flush
-   left, huge right-side border-radius) so the white/yellow logo text has a dark background
-   to read against. */
-.vpm-nls--mm .vpm-nls__full {
+/* One card at every width. Wide: the logo lockup sits inside a dark-blue pill (flush left,
+   huge right-side radius) so the white/yellow logo text has a dark background to read
+   against, with the headline and form beside it. */
+.vpm-nls--mm .vpm-nls__card {
   display: grid;
   grid-template-columns: minmax(220px, 300px) 1fr;
   align-items: stretch;
@@ -136,7 +132,7 @@
   overflow: hidden;
   box-shadow: var(--shadow-md);
 }
-.vpm-nls--mm .vpm-nls__full-left {
+.vpm-nls--mm .vpm-nls__aside {
   background: var(--mm-circle);
   border-radius: 0 9999px 9999px 0;
   padding: 40px 48px 40px 32px;
@@ -144,93 +140,42 @@
   flex-direction: column;
   justify-content: center;
 }
-.vpm-nls--mm .vpm-nls__full-left img { max-width: 190px; margin-bottom: 16px; }
-.vpm-nls--mm .vpm-nls__full-left p {
+.vpm-nls--mm .vpm-nls__aside img { max-width: 190px; margin-bottom: 16px; }
+.vpm-nls--mm .vpm-nls__aside p {
   color: #fff;
   font-size: 14px;
   line-height: 1.5;
   max-width: 260px;
   font-weight: 600;
 }
-.vpm-nls--mm .vpm-nls__full-right {
+.vpm-nls--mm .vpm-nls__main {
   padding: 40px 48px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 14px;
 }
-.vpm-nls--mm .vpm-nls__full-right .vpm-nls__title { font-size: 28px; line-height: 1.15; }
+.vpm-nls--mm .vpm-nls__main .vpm-nls__title { font-size: 28px; line-height: 1.15; }
 
-/* INLINE */
-.vpm-nls--mm .vpm-nls__inline {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  gap: 28px;
-  background: var(--mm-bg);
-  border-radius: 6px;
-  overflow: hidden;
-  padding: 20px 28px 20px 0;
-}
-.vpm-nls--mm .vpm-nls__inline-badge {
-  background: var(--mm-circle);
-  border-radius: 0 9999px 9999px 0;
-  padding: 20px 28px 20px 20px;
-  display: flex;
-  align-items: center;
-}
-.vpm-nls--mm .vpm-nls__inline-badge img { width: 100%; max-width: 150px; }
-.vpm-nls--mm .vpm-nls__inline .vpm-nls__title { font-size: 22px; margin-bottom: 4px; }
-.vpm-nls--mm .vpm-nls__inline p { font-size: 14px; color: var(--vpm-dark-blue); margin-bottom: 12px; font-weight: 600; }
-/* The rule above also caught the privacy line (14px bold dark blue); keep it the small grey
-   line it is in every other layout. */
-.vpm-nls--mm .vpm-nls__inline .vpm-nls__privacy { font-size: 12px; font-weight: 400; color: var(--nls-privacy); margin-bottom: 0; }
-
-/* SIDEBAR */
-.vpm-nls--mm .vpm-nls__sidebar {
-  max-width: 340px;
-  background: var(--mm-bg);
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-}
-.vpm-nls--mm .vpm-nls__sidebar-top { padding: 0 28px; text-align: center; }
-.vpm-nls--mm .vpm-nls__sidebar-badge {
-  background: var(--mm-circle);
-  border-radius: 0 0 50% 50%;
-  padding: 32px 32px 56px;
-  margin: 0 -28px;
-}
-.vpm-nls--mm .vpm-nls__sidebar-badge img { max-width: 170px; }
-.vpm-nls--mm .vpm-nls__sidebar-top p {
-  padding-top: 18px;
-  font-size: 14px;
-  color: var(--vpm-dark-blue);
-  font-weight: 600;
-  line-height: 1.5;
-}
-.vpm-nls--mm .vpm-nls__sidebar-bottom {
-  padding: 20px 24px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+/* Mid-width columns (the old Inline size): smaller pill, tighter padding. */
+@container vpm-nls (max-width: 799px) {
+  .vpm-nls--mm .vpm-nls__card { grid-template-columns: minmax(180px, 230px) 1fr; }
+  .vpm-nls--mm .vpm-nls__aside { padding: 24px 32px 24px 20px; }
+  .vpm-nls--mm .vpm-nls__aside img { max-width: 150px; margin-bottom: 12px; }
+  .vpm-nls--mm .vpm-nls__aside p { font-size: 13px; }
+  .vpm-nls--mm .vpm-nls__main { padding: 24px 28px; gap: 12px; }
+  .vpm-nls--mm .vpm-nls__main .vpm-nls__title { font-size: 22px; }
 }
 
-/* Narrow containers (phones, narrow columns): stack the pill badge above the content. The
-   badge turns into the same rounded-bottom band the sidebar layout uses. */
+/* Narrow columns (sidebars, phones): the pill becomes a rounded-bottom band above the form. */
 @container vpm-nls (max-width: 599px) {
-  .vpm-nls--mm .vpm-nls__full { grid-template-columns: 1fr; }
-  .vpm-nls--mm .vpm-nls__full-left {
+  .vpm-nls--mm .vpm-nls__card { grid-template-columns: 1fr; }
+  .vpm-nls--mm .vpm-nls__aside {
     border-radius: 0 0 50% 50% / 0 0 32px 32px;
     padding: 28px 24px 40px;
     align-items: center;
     text-align: center;
   }
-  .vpm-nls--mm .vpm-nls__full-left img { max-width: 170px; }
-  .vpm-nls--mm .vpm-nls__full-right { padding: 24px; }
-  .vpm-nls--mm .vpm-nls__full-right .vpm-nls__title { font-size: 24px; }
-
-  .vpm-nls--mm .vpm-nls__inline { grid-template-columns: 1fr; gap: 16px; padding: 0 0 20px; }
-  .vpm-nls--mm .vpm-nls__inline-badge { justify-self: start; }
-  .vpm-nls--mm .vpm-nls__inline-content { padding: 0 20px; }
+  .vpm-nls--mm .vpm-nls__aside img { max-width: 170px; }
+  .vpm-nls--mm .vpm-nls__main { padding: 24px; }
 }

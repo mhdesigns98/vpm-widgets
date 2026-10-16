@@ -1,11 +1,12 @@
 /* ── Core: shared by every brand ──
-   Every layout is wrapped in `.vpm-nls` plus its brand class (`.vpm-nls--mm`), so any one
-   variant can be pasted on its own and still pick up the reset, fonts and brand variables.
+   Each brand's block is wrapped in `.vpm-nls` plus its brand class (`.vpm-nls--mm`), so it
+   picks up the reset, fonts and brand variables wherever it's pasted.
    Brand variables live on the brand class, not :root, so two brands on one page can't
    overwrite each other's colors.
-   The wrapper is also a size container: the layouts respond to the width of the column
-   they're pasted into (@container vpm-nls), not the viewport, so a Full-width variant in a
-   narrow column stacks the same way it does on a phone. */
+   The wrapper is also a size container: there is one layout per brand, and it responds to the
+   width of the column it's pasted into (@container vpm-nls), not the viewport. Tiers:
+   800px+ wide card, 600-799px compact card, under 600px stacked (sidebar/phone). The email
+   field and button wrap on their own (see .vpm-nls__row). */
 .vpm-nls {
   container: vpm-nls / inline-size;
   --vpm-black:   #101820;
@@ -58,12 +59,12 @@
 .vpm-nls__btn:hover { background: var(--nls-btn-hover); }
 .vpm-nls__btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-/* Email + button side by side (full and inline layouts) */
-.vpm-nls__row { display: flex; gap: 10px; }
-.vpm-nls__row .vpm-nls__input { flex: 1; }
-.vpm-nls__row .vpm-nls__btn { width: auto; }
-/* Email over button (sidebar layout) */
-.vpm-nls__stack { display: flex; flex-direction: column; gap: 12px; }
+/* Email + button side by side. When the field would drop under 180px the button wraps onto
+   its own line and fills it, so no breakpoint is needed (the field takes nearly all the
+   spare room while they share a line: 999 vs 1). */
+.vpm-nls__row { display: flex; flex-wrap: wrap; gap: 10px; }
+.vpm-nls__row .vpm-nls__input { flex: 999 1 180px; min-width: 0; }
+.vpm-nls__row .vpm-nls__btn { flex: 1 0 auto; }
 /* The JS hides the form on success; the display rules above would otherwise beat [hidden]. */
 .vpm-nls form[hidden] { display: none; }
 
@@ -88,8 +89,3 @@
 .vpm-nls__status[hidden] { display: none; }
 .vpm-nls__status--err { color: var(--vpm-red-700); }
 
-/* Narrow containers: email above a full-width button */
-@container vpm-nls (max-width: 439px) {
-  .vpm-nls__row { flex-direction: column; }
-  .vpm-nls__row .vpm-nls__btn { width: 100%; }
-}
