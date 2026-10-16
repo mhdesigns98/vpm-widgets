@@ -164,8 +164,7 @@
       // same relative path would resolve correctly there, so this is a
       // static lint, not a live pass/fail: it only flags widgets whose CSS
       // assumes a document context this harness doesn't replicate. Use an
-      // absolute URL (see virginia-home-grown-signup, virginia-home-grown-
-      // playlist) for any asset a single-file widget loads via CSS.
+      // absolute URL (see newsletter-signup-embed, pbs-video-playlist/virginia-home-grown) for any asset a single-file widget loads via CSS.
       const relativeAssets = [...css.matchAll(/url\(\s*(['"]?)(?!https?:|data:|#)([^'")]+)\1\s*\)/g)];
       if (relativeAssets.length) {
         log(`⚠ CSS references relative asset path(s) (${relativeAssets.map(m => m[2]).join(', ')}) — will resolve against the wrong document here; use an absolute URL if this widget is iframe-embedded`, 'warn');

@@ -572,18 +572,14 @@ body {
       ],
     },
     {
-      slug: 'pbs-show-playlist',
-      name: 'PBS Show Playlist',
-      desc: 'API-driven episode playlist — main PBS partner player + 5-episode thumbnail strip with autoplay. Fetches from PBS Media Manager API via CF Worker. WordPress iframe embed.',
+      slug: 'pbs-video-playlist',
+      name: 'PBS Video Playlist',
+      desc: 'API-driven PBS episode playlist: main PBS partner player + 5-episode thumbnail strip with autoplay, from the PBS Media Manager API via CF Worker. One version per production: the generic template and Virginia Home Grown (green sub-brand, live on the VHG show page). WordPress iframe embed.',
       preview: 'index.html',
-      files: [{ label: 'HTML', file: 'index.html' }],
-    },
-    {
-      slug: 'virginia-home-grown-playlist',
-      name: 'Virginia Home Grown Playlist',
-      desc: 'Same as PBS Show Playlist, restyled to Virginia Home Grown\'s green sub-brand (leaf-pattern background). Replaces PBS Show Playlist on the live VHG show page. WordPress iframe embed.',
-      preview: 'index.html',
-      files: [{ label: 'HTML', file: 'index.html' }],
+      files: [
+        { label: 'VHG HTML',      file: 'virginia-home-grown/index.html' },
+        { label: 'Template HTML', file: 'template/index.html'            },
+      ],
     },
     {
       slug: 'most-popular-today',

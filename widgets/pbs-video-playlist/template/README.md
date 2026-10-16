@@ -1,4 +1,4 @@
-# PBS Show Playlist
+# PBS Video Playlist: template (formerly pbs-show-playlist)
 
 API-driven video playlist widget for a PBS show. Loads the 5 most recent episodes from the PBS Media Manager API (via a VPM Cloudflare Worker proxy), renders them in a thumbnail strip, and plays the selected episode in an embedded PBS partner player. Autoplays the next episode on completion.
 
@@ -11,13 +11,13 @@ itself by, so the widget posts its real content height to the parent page —
 paste both the iframe and the small listener script together in the ACF code
 block:
 ```html
-<iframe src="https://mhdesigns98.github.io/vpm-widgets/widgets/pbs-show-playlist/" width="100%" height="500" style="border:0;display:block;" title="Virginia Home Grown Episodes"></iframe>
+<iframe src="https://mhdesigns98.github.io/vpm-widgets/widgets/pbs-video-playlist/template/" width="100%" height="500" style="border:0;display:block;" title="Virginia Home Grown Episodes"></iframe>
 <script>
 (function () {
   window.addEventListener("message", function (e) {
     if (e.origin !== "https://mhdesigns98.github.io") return;
     if (!e.data || typeof e.data.vpmPspHeight !== "number") return;
-    document.querySelectorAll('iframe[src*="pbs-show-playlist"]').forEach(function (f) {
+    document.querySelectorAll('iframe[src*="pbs-video-playlist/template"]').forEach(function (f) {
       if (f.contentWindow === e.source) f.style.height = e.data.vpmPspHeight + "px";
     });
   });
