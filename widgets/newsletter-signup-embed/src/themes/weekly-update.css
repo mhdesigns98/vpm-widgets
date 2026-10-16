@@ -48,8 +48,8 @@
   .vpm-nls--wu .vpm-nls__main .vpm-nls__title { font-size: 22px; }
 }
 
-/* Narrow columns (sidebars, phones): lockup above the copy. */
+/* Narrow columns (sidebars, phones): lockup centered above the copy. */
 @container vpm-nls (max-width: 599px) {
   .vpm-nls--wu .vpm-nls__card { grid-template-columns: 1fr; gap: 20px; padding: 24px; }
-  .vpm-nls--wu .vpm-nls__card > img { max-width: 180px; }
+  .vpm-nls--wu .vpm-nls__card > img { max-width: 180px; justify-self: center; }
 }
