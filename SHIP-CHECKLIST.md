@@ -16,6 +16,10 @@ the Page items exist because a page owns its URL. Don't move items between them 
       a **link**: a CTA must hold its color and underline against a host `a { … !important }` rule
       (use `!important` on the link's color and text-decoration only)
 - [ ] Decorative separators and inline `em`/`span` set their own `font-size`, and inner wrapper `div`s reset `margin`/`padding`, so ordinary host rules on those elements don't move them
+- [ ] A link wrapping more than its label (a rank numeral, icon or meta line) sets the link's own
+      `color` and `text-decoration`, so the browser's default blue underline doesn't land on the
+      extra content. Check in WebKit too. First caught in `most-popular-today` (2026-10-19): rank
+      numerals carried a `#0000EE` underline, visible on the navy election hero
 - [ ] No focus loss or overlap with the sticky Stream Player; nothing important in the bottom ~90px. Fails are a focus trap or content hidden behind the player; the player grabbing focus is the simulation, not a defect
 - [ ] Degrades gracefully at 320px: no horizontal scroll, no clipped text, tap targets ≥44px
 - [ ] Keyboard accessible (DOM order matches visual order, including absolutely positioned controls such

@@ -59,4 +59,21 @@
       list is short enough it no longer reaches the player in harness
       testing. Still worth a quick visual confirmation on the real vpm.org
       post page once deployed, but no longer a known blocker.
+- [x] **Homepage hero presets (2026-10-19)**: the widget now also runs in the
+      homepage hero's Shared Module slot, where wpp-base adds
+      `.hero-theme-election` / `-breaking` / `-pledge` to `.hero-section`.
+      Colors moved to `--mpt-*` roles; each preset only reassigns those.
+      The theme paints `section.page-code-block` white, so one
+      `:has(.vpm-mpt)` rule clears it inside a themed hero only. Breaking and
+      pledge drop the widget's top rule because the hero grid already draws
+      one. Verified by injecting this build into staging and toggling all four
+      classes. Staging still runs an older paste (8 items, no #1 divider):
+      re-paste from this file.
+- [x] **/ship fixes (2026-10-19)**: root and `li` now reset `margin` (host
+      `div`/`li` margins were moving the list), and the link sets its own color
+      and `text-decoration: none` so the default link underline no longer lands
+      on the rank numeral (seen in Chromium and WebKit).
+- [x] **Pledge gold vs tokens.css (2026-10-19)**: `#f2a900` / `#7a5200` and the
+      theme's red are copied from wpp-base `homepage-extras.css`. Mark's call:
+      recorded as a theme-owned exception in README, not added to tokens.css.
 - [ ] Not yet pasted into wp-admin → Widgets sidebar area
