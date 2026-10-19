@@ -73,7 +73,7 @@
       `div`/`li` margins were moving the list), and the link sets its own color
       and `text-decoration: none` so the default link underline no longer lands
       on the rank numeral (seen in Chromium and WebKit).
-- [ ] **Open: pledge gold isn't in tokens.css.** `#f2a900` and `#7a5200` are
-      copied from wpp-base `homepage-extras.css`. Either add them to
-      `tokens.css` and inline from there, or record a theme-owned exception.
+- [x] **Pledge gold vs tokens.css (2026-10-19)**: `#f2a900` / `#7a5200` and the
+      theme's red are copied from wpp-base `homepage-extras.css`. Mark's call:
+      recorded as a theme-owned exception in README, not added to tokens.css.
 - [ ] Not yet pasted into wp-admin → Widgets sidebar area

@@ -39,6 +39,11 @@ Chartbeat API, "most read" / most popular endpoint, trailing 24h window. Reuse t
 API credentials from `chartbeat-weekly` if accessible; otherwise new API access needs to be
 requested. No manual content maintenance after launch — fully automated.
 
+## Scope addendum (2026-10-19)
+Also placed in the **homepage hero sidebar** (Shared Module slot). There it has to follow the
+theme's hero presets (election navy, breaking red, pledge gold). Same content and behavior; only
+colors change. Colors are mirrored from the theme, see README.
+
 ## Open questions
 - **Can the Chartbeat API key be safely exposed client-side**, or does it need a proxy
   (e.g. a small Cloudflare Worker, similar to how `chartbeat-weekly` already calls the
