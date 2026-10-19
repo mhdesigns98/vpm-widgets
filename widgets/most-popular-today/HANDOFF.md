@@ -59,4 +59,14 @@
       list is short enough it no longer reaches the player in harness
       testing. Still worth a quick visual confirmation on the real vpm.org
       post page once deployed, but no longer a known blocker.
+- [x] **Homepage hero presets (2026-10-19)**: the widget now also runs in the
+      homepage hero's Shared Module slot, where wpp-base adds
+      `.hero-theme-election` / `-breaking` / `-pledge` to `.hero-section`.
+      Colors moved to `--mpt-*` roles; each preset only reassigns those.
+      The theme paints `section.page-code-block` white, so one
+      `:has(.vpm-mpt)` rule clears it inside a themed hero only. Breaking and
+      pledge drop the widget's top rule because the hero grid already draws
+      one. Verified by injecting this build into staging and toggling all four
+      classes. Staging still runs an older paste (8 items, no #1 divider):
+      re-paste from this file.
 - [ ] Not yet pasted into wp-admin → Widgets sidebar area

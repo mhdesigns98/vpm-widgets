@@ -17,8 +17,19 @@
       --space-3: 12px;
       --space-4: 16px;
 
+      /* Color roles. The hero-theme blocks at the end of this style only
+         change these, never the rules that use them. */
+      --mpt-rule:       var(--vpm-yellow);
+      --mpt-top-rule:   3px solid var(--mpt-rule);
+      --mpt-eyebrow:    var(--vpm-dark-blue);
+      --mpt-link:       var(--vpm-blue-700);
+      --mpt-link-hover: var(--vpm-blue-900);
+      --mpt-rank:       var(--vpm-gray-600);
+      --mpt-divider:    var(--vpm-gray-200);
+      --mpt-focus:      var(--vpm-dark-blue);
+
       font-family: var(--font-sans);
-      border-top: 3px solid var(--vpm-yellow);
+      border-top: var(--mpt-top-rule);
       padding: var(--space-4) 0 0;
     }
 
@@ -27,7 +38,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      color: var(--vpm-dark-blue);
+      color: var(--mpt-eyebrow);
       margin: 0 0 var(--space-3);
     }
 
@@ -42,13 +53,13 @@
     }
 
     .vpm-mpt__item {
-      border-bottom: 1px solid var(--vpm-gray-200);
+      border-bottom: 1px solid var(--mpt-divider);
     }
 
     .vpm-mpt__item:last-child { border-bottom: none; }
 
     .vpm-mpt__item--top {
-      border-bottom: 2px solid var(--vpm-yellow);
+      border-bottom: 2px solid var(--mpt-rule);
       padding-bottom: var(--space-2);
     }
 
@@ -65,7 +76,7 @@
        The widget previously hid this behind hover-only styling, which is
        why the title read as plain text until interaction. */
     .vpm-mpt.vpm-mpt .vpm-mpt__link .vpm-mpt__title {
-      color: var(--vpm-blue-700) !important;
+      color: var(--mpt-link) !important;
       text-decoration: underline !important;
       text-decoration-thickness: 1px;
       text-underline-offset: 3px;
@@ -73,18 +84,18 @@
 
     .vpm-mpt.vpm-mpt .vpm-mpt__link:hover .vpm-mpt__title,
     .vpm-mpt.vpm-mpt .vpm-mpt__link:focus-visible .vpm-mpt__title {
-      color: var(--vpm-blue-900) !important;
+      color: var(--mpt-link-hover) !important;
     }
 
     .vpm-mpt__link:focus-visible {
-      outline: 2px solid var(--vpm-dark-blue);
+      outline: 2px solid var(--mpt-focus);
       outline-offset: 2px;
     }
 
     .vpm-mpt__rank {
       font-weight: 700;
       font-size: var(--fs-body-sm);
-      color: var(--vpm-gray-600);
+      color: var(--mpt-rank);
       flex: 0 0 auto;
     }
 
@@ -99,8 +110,49 @@
 
     .vpm-mpt__status {
       font-size: var(--fs-body-sm);
-      color: var(--vpm-gray-600);
+      color: var(--mpt-rank);
       padding: var(--space-2) 0;
+    }
+
+    /* ---- Homepage hero presets (wpp-base homepage-extras.css) ----
+       The hero adds .hero-theme-election / -breaking / -pledge to
+       .hero-section; no class is the standard white hero. Colors match
+       that file, which owns them: red and gold are the theme's values,
+       not tokens.css. Contrast (text on background): election links
+       #fff on #003865 12:1, rank 8.2:1; pledge rank #5A6470 on #fff8e8
+       5.7:1. */
+
+    /* The theme paints the code-block wrapper white. Clear it only for
+       the box holding this widget, so the hero color shows through. */
+    [class*="hero-theme-"] .page-code-block:has(.vpm-mpt) {
+      background: transparent;
+    }
+
+    .hero-theme-election .vpm-mpt {
+      --mpt-eyebrow:    #fff;
+      --mpt-link:       #fff;
+      --mpt-link-hover: var(--vpm-yellow);
+      --mpt-rank:       rgba(255, 255, 255, 0.8);
+      --mpt-divider:    rgba(255, 255, 255, 0.2);
+      --mpt-focus:      var(--vpm-yellow);
+    }
+
+    /* Breaking and pledge already draw a full-width accent rule across
+       the hero grid, so the widget drops its own to avoid a double line. */
+    .hero-theme-breaking .vpm-mpt,
+    .hero-theme-pledge .vpm-mpt {
+      --mpt-top-rule:   none;
+    }
+
+    .hero-theme-breaking .vpm-mpt {
+      --mpt-rule:       var(--red, #c8102e);
+      --mpt-link-hover: var(--red, #c8102e);
+    }
+
+    .hero-theme-pledge .vpm-mpt {
+      --mpt-rule:       #f2a900;
+      --mpt-link-hover: #7a5200;
+      --mpt-divider:    rgba(16, 24, 32, 0.12);
     }
 
     @media (prefers-reduced-motion: reduce) {
