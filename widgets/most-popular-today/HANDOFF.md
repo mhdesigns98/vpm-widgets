@@ -69,4 +69,11 @@
       one. Verified by injecting this build into staging and toggling all four
       classes. Staging still runs an older paste (8 items, no #1 divider):
       re-paste from this file.
+- [x] **/ship fixes (2026-10-19)**: root and `li` now reset `margin` (host
+      `div`/`li` margins were moving the list), and the link sets its own color
+      and `text-decoration: none` so the default link underline no longer lands
+      on the rank numeral (seen in Chromium and WebKit).
+- [ ] **Open: pledge gold isn't in tokens.css.** `#f2a900` and `#7a5200` are
+      copied from wpp-base `homepage-extras.css`. Either add them to
+      `tokens.css` and inline from there, or record a theme-owned exception.
 - [ ] Not yet pasted into wp-admin → Widgets sidebar area

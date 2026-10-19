@@ -5,6 +5,7 @@
       --vpm-blue-700:   #003865;
       --vpm-blue-900:   #002244;
       --vpm-yellow:     #E0E721;
+      --vpm-white:      #FFFFFF;
       --vpm-gray-900:   #1A1F26;
       --vpm-gray-600:   #5A6470;
       --vpm-gray-200:   #E5E7E9;
@@ -30,6 +31,7 @@
 
       font-family: var(--font-sans);
       border-top: var(--mpt-top-rule);
+      margin: 0;
       padding: var(--space-4) 0 0;
     }
 
@@ -53,6 +55,8 @@
     }
 
     .vpm-mpt__item {
+      margin: 0;
+      padding: 0;
       border-bottom: 1px solid var(--mpt-divider);
     }
 
@@ -69,6 +73,10 @@
       align-items: baseline;
       padding: var(--space-3) 0;
       line-height: var(--lh-normal);
+      /* Only the title is underlined. Without this the browser's (or a
+         host's) link underline and color also land on the rank numeral. */
+      color: var(--mpt-link) !important;
+      text-decoration: none !important;
     }
 
     /* Link at rest reads as a link: VPM's own base <a> convention is
@@ -129,8 +137,8 @@
     }
 
     .hero-theme-election .vpm-mpt {
-      --mpt-eyebrow:    #fff;
-      --mpt-link:       #fff;
+      --mpt-eyebrow:    var(--vpm-white);
+      --mpt-link:       var(--vpm-white);
       --mpt-link-hover: var(--vpm-yellow);
       --mpt-rank:       rgba(255, 255, 255, 0.8);
       --mpt-divider:    rgba(255, 255, 255, 0.2);
