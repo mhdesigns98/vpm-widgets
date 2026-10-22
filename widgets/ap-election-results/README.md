@@ -24,13 +24,14 @@ split-file shape some other widgets use.
 
 ## Customizing
 
-- **AP layout** — the `src` on `.vpm-apres__frame` points at AP layout `57278/30777`.
-  Swap the URL to point at a different published AP layout.
+- **AP layout** — the `src` on `.vpm-apres__frame` points at AP layout `57278/30777`, which is the
+  **Aug. 4 primary** layout. **Swap it for the general-election layout before Nov. 3** —
+  AP publishes each election as its own layout.
 - **Copy** — eyebrow, status pill, `<h2>`, dek, panel label and note are plain text.
   Keep the copy **day-agnostic**: name dates rather than saying "today," so the same
   block runs the day before, on Election Day, and through the certification days.
-- **Status pill** — "Polls closed 7 p.m." is the one line that genuinely changes on the
-  day. Before polls close, something like "Polls close 7 p.m." reads correctly.
+- **Status pill** — currently "Polls close 7 p.m. Nov. 3", correct up to poll close.
+  Flip it to "Polls closed 7 p.m." on the night; it is the one line that changes on the day.
 
 ## Notes
 
