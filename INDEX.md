@@ -33,7 +33,7 @@ Related page builds: `pages/elections-2026-primary/`, `pages/voter-guide-2026/`.
 | Path | Shape | Used on | Description |
 |---|---|---|---|
 | `widgets/ap-election-results/` | widget | multiple | AP live election results embed — full-bleed dark hero over a white results panel, AP iframe + auto-resizer, race-call disclosure note (Brightspot HTML embed, namespace `vpm-apres-`) |
-| `widgets/elections-2026-primary-cta/` | widget | multiple | 2026 Virginia Primary homepage CTA — photo + dark-blue panel linking to vpm.org/elections (WordPress ACF split-file format) |
+| `widgets/elections-2026-cta/` | widget | multiple | 2026 Virginia elections CTA, currently for the Nov. 3 general (ran for the Aug. 4 primary as `elections-2026-primary-cta`) — photo + dark-blue panel linking to vpm.org/elections, placed on article pages (WordPress ACF split-file format, namespace `vpm-elec26cta-`) |
 
 ## Rails and feeds
 

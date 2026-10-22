@@ -60,6 +60,6 @@ a small script so the 62 links live in one place in that file. Nothing in `previ
   respond to its own container query, only its descendants can.
 - The sticky map is height-capped with `--vpm-lwm-player-clearance` so the fixed Stream Player
   can't cover its lower edge.
-- Link color carries `!important`, matching `elections-2026-primary-cta`. It's the one place the
+- Link color carries `!important`, matching `elections-2026-cta`. It's the one place the
   host fights back with `!important` of its own (`.article-body a { color: … !important }`), and
   without it the links render in the host's forced color.

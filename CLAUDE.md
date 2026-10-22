@@ -36,8 +36,8 @@ reference it by path from the page `README.md` — don't commit it and don't par
 
 Both live in this repo and share one `INDEX.md` with a **Used on** column. The test is **reuse, not
 size**: `elections-2026-primary` was a small ACF split-file block and is a page build, because it only
-ever appeared on the primary page. Its sibling `elections-2026-primary-cta` is a widget, because it's
-a homepage CTA reused across placements. Which kind it is decides only which checklist runs
+ever appeared on the primary page. Its sibling `elections-2026-cta` (formerly `elections-2026-primary-cta`) is a widget, because
+it's an election CTA reused across placements and races. Which kind it is decides only which checklist runs
 (`/ship` picks it from the slug).
 
 If you're about to build the second copy of a page build's block for another page, that's the signal
