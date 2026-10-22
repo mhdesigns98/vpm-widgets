@@ -1,0 +1,58 @@
+/* VPM: AP layout 57278/35752, custom CSS field.
+   AP places blocks with inline styles and its own fixed heights, so most
+   overrides need !important. Every selector uses AP's customer hooks
+   (custom-css class names), not its generated sc-* classes, so if AP renames
+   one, that rule just stops matching and AP's default comes back. */
+
+/* ---- Compact spacing (all widths) ----
+   Tested at 398px (the vpm.org sidebar): 878px -> 706px tall. */
+
+/* Space between races: AP default is 32px */
+.visualization-container { row-gap: 20px !important; }
+
+/* Race title to status note */
+.summary-table-header-container { margin-bottom: 8px !important; }
+
+/* Extra 16px under each "Updated ..." line */
+.timestamp { margin-bottom: 0 !important; }
+
+/* "AP will report available results after polls close." box */
+[data-testid="status-notification"] {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+
+/* Yes/No and candidate rows: AP default is 31px */
+.candidates-table-legend-row-row { height: 26px !important; }
+.candidates-table-legend-row-row > td {
+  height: 26px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+/* min-height, not height: a name that wraps to two lines grows the row
+   instead of spilling over the next one */
+.candidates-table-legend-row-candidate-name > div,
+.candidates-table-legend-row-candidate-name > div > div {
+  height: auto !important;
+  min-height: 26px !important;
+}
+
+/* Optional, saves about 115px more before polls close: hides the
+   "AP will report available results..." box. Take it out on election night
+   if you're unsure what AP will put in that slot.
+[data-testid="status-notification"] { display: none !important; }
+*/
+
+/* ---- Wide placements only: ballot measures side by side ----
+   No effect in the sidebar. Below 560px AP uses its own one-column layout. */
+@media (min-width: 560px) {
+  .visualization-container {
+    display: grid !important;
+    /* auto-fit, not auto-fill: three measures stretch to the full width
+       instead of leaving an empty fourth column on wide pages */
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
+    gap: 20px 24px !important;
+  }
+  .visualization-container > * { grid-area: auto / 1 / auto / -1 !important; }
+  .visualization-container > :has(.summary-table-container) { grid-area: auto !important; }
+}
