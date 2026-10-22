@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>VPM 2026 Primary — Homepage CTA</title>
+<title>VPM 2026 Elections — CTA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700;800&display=swap" rel="stylesheet" />
@@ -13,7 +13,7 @@
   .preview-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #7B8591; margin: 0 0 12px; }
   .preview-narrow { max-width: 320px; }
 /* ============================================
-   VPM 2026 Primary — Homepage CTA
+   VPM 2026 Elections — CTA
    Namespace: vpm-elec26cta-
    Tokens inlined from tokens.css (widget must stay self-contained)
    ============================================ */
@@ -76,6 +76,8 @@
 .vpm-elec26cta .vpm-elec26cta__bar {
   height: 4px;
   width: 100%;
+  margin: 0;
+  padding: 0;
   background: linear-gradient(90deg,
     var(--vpm-elec26cta-light-blue) 0%,
     var(--vpm-elec26cta-light-blue) 30%,
@@ -88,6 +90,8 @@
 .vpm-elec26cta .vpm-elec26cta__grid {
   display: grid;
   grid-template-columns: 1fr;
+  margin: 0;
+  padding: 0;
 }
 
 /* ---- Media ---- */
@@ -105,12 +109,15 @@
   max-width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
+  margin: 0;
+  padding: 0;
   border: 0;
   border-radius: 0;
 }
 
 /* ---- Panel ---- */
 .vpm-elec26cta .vpm-elec26cta__panel {
+  margin: 0;
   padding: var(--vpm-elec26cta-space-6) var(--vpm-elec26cta-space-5);
   display: flex;
   flex-direction: column;
@@ -156,6 +163,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--vpm-elec26cta-space-2);
+  min-height: 44px;
   margin-top: var(--vpm-elec26cta-space-2);
   padding: var(--vpm-elec26cta-space-3) var(--vpm-elec26cta-space-5);
   background: var(--vpm-elec26cta-light-blue);
@@ -191,6 +199,9 @@
 }
 
 .vpm-elec26cta .vpm-elec26cta__arrow {
+  /* Hosts size bare spans; keep the arrow at the label's size */
+  font-size: inherit;
+  line-height: 1;
   transition: transform var(--vpm-elec26cta-dur-base) var(--vpm-elec26cta-ease);
 }
 
@@ -274,8 +285,8 @@
 <body>
 
 <div class="preview-shell">
-  <p class="preview-label">Homepage CTA — full width</p>
-<!-- VPM 2026 Primary — Homepage CTA -->
+  <p class="preview-label">Full width (article body)</p>
+<!-- VPM 2026 Elections — CTA -->
 <!-- No id attributes anywhere: this block may be placed more than once on a
      page, and duplicate ids are invalid and confuse screen readers. -->
 <section class="vpm-elec26cta">
@@ -301,12 +312,13 @@
       <p class="vpm-elec26cta__eyebrow">VPM News &middot; Election Coverage</p>
 
       <h2 class="vpm-elec26cta__title">
-        Virginia's 2026 primary election
+        Virginia's 2026 general election
       </h2>
 
       <p class="vpm-elec26cta__body">
-        Virginians choose their party nominees Tuesday, Aug. 4. VPM News has what's
-        on your ballot, where and when to vote, and live results as they come in.
+        Virginians elect a U.S. senator and all 11 members of the U.S. House on Tuesday,
+        Nov. 3. VPM News has what's on your ballot, where and when to vote, and live
+        results after polls close at 7 p.m.
       </p>
 
       <a class="vpm-elec26cta__link" href="https://vpm.org/elections">
@@ -322,7 +334,7 @@
 
 <div class="preview-shell preview-narrow">
   <p class="preview-label">320px column</p>
-<!-- VPM 2026 Primary — Homepage CTA -->
+<!-- VPM 2026 Elections — CTA -->
 <!-- No id attributes anywhere: this block may be placed more than once on a
      page, and duplicate ids are invalid and confuse screen readers. -->
 <section class="vpm-elec26cta">
@@ -348,12 +360,13 @@
       <p class="vpm-elec26cta__eyebrow">VPM News &middot; Election Coverage</p>
 
       <h2 class="vpm-elec26cta__title">
-        Virginia's 2026 primary election
+        Virginia's 2026 general election
       </h2>
 
       <p class="vpm-elec26cta__body">
-        Virginians choose their party nominees Tuesday, Aug. 4. VPM News has what's
-        on your ballot, where and when to vote, and live results as they come in.
+        Virginians elect a U.S. senator and all 11 members of the U.S. House on Tuesday,
+        Nov. 3. VPM News has what's on your ballot, where and when to vote, and live
+        results after polls close at 7 p.m.
       </p>
 
       <a class="vpm-elec26cta__link" href="https://vpm.org/elections">

@@ -31,7 +31,7 @@ split-file shape some other widgets use.
   Keep the copy **day-agnostic**: name dates rather than saying "today," so the same
   block runs the day before, on Election Day, and through the certification days.
 - **Coverage CTA** — the hero button ("More election coverage") links to
-  `https://vpm.org/elections` in the same tab. It reuses the `elections-2026-primary-cta`
+  `https://vpm.org/elections` in the same tab. It reuses the `elections-2026-cta`
   button treatment (light blue, sharp corners, white on hover). The last word and arrow sit
   in a `nowrap` span so the arrow never wraps alone in a narrow column.
 - **Status pill** — "Polls close 7 p.m. Nov. 3" with a static red dot. The dot does not
