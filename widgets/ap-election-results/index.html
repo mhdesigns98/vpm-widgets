@@ -73,6 +73,9 @@
   --vpm-apres-frame-pad:    4px 12px 12px;
   --vpm-apres-note-gap:     16px;
   --vpm-apres-note-pad:     12px 14px;
+  /* Below 600px the label usually wraps, which leaves the separator dot
+     hanging at the end of the first line. */
+  --vpm-apres-sep-display:  none;
 
   --vpm-apres-radius-md: 4px;
   --vpm-apres-shadow-md: 0 8px 24px rgba(16, 24, 32, 0.10);
@@ -173,6 +176,7 @@
 }
 
 .vpm-apres .vpm-apres__sep {
+  display: var(--vpm-apres-sep-display);
   width: 5px;
   height: 5px;
   border-radius: 999px;
@@ -431,6 +435,7 @@
     --vpm-apres-frame-pad:    8px 16px 24px;
     --vpm-apres-note-gap:     24px;
     --vpm-apres-note-pad:     16px 18px;
+    --vpm-apres-sep-display:  block;
   }
 }
 
@@ -468,6 +473,7 @@
       --vpm-apres-frame-pad:    8px 16px 24px;
       --vpm-apres-note-gap:     24px;
       --vpm-apres-note-pad:     16px 18px;
+      --vpm-apres-sep-display:  block;
     }
   }
   @media (min-width: 900px) {
