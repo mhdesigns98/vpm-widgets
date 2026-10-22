@@ -64,6 +64,12 @@
   --vpm-apres-panel-offset: 0px;
   --vpm-apres-panel-inset:  0px;
 
+  --vpm-apres-radius-md: 4px;
+  --vpm-apres-shadow-md: 0 8px 24px rgba(16, 24, 32, 0.10);
+  --vpm-apres-dur-fast:  120ms;
+  --vpm-apres-dur-base:  200ms;
+  --vpm-apres-ease:      cubic-bezier(0.2, 0, 0, 1);
+
   --vpm-apres-shadow-panel: 0 18px 48px rgba(16, 24, 32, 0.14);
   --vpm-apres-shadow-focus: 0 0 0 3px rgba(108, 172, 228, 0.65);
   --vpm-apres-frame-min:    520px;
@@ -163,6 +169,7 @@
   background: var(--vpm-apres-light-blue);
   opacity: 0.5;
   flex: none;
+  font-size: 0; /* empty decorative box: host span rules can't touch it */
 }
 
 .vpm-apres .vpm-apres__status {
@@ -182,6 +189,7 @@
   border-radius: 999px;
   background: var(--vpm-apres-red);
   flex: none;
+  font-size: 0;
   animation: vpmApresPulse 2s infinite;
 }
 
@@ -211,6 +219,83 @@
   color: var(--vpm-apres-on-dark-muted);
   max-width: 640px;
   text-wrap: pretty;
+}
+
+/* Same treatment as the elections-2026-primary-cta button, so the two read
+   as one family. !important only on color and decoration, where hostile
+   host link rules use it too. */
+/* inline-block, not inline-flex: when the label wraps in a narrow column the
+   arrow stays on the last word instead of floating off as its own flex item. */
+.vpm-apres .vpm-apres__cta {
+  display: inline-block;
+  align-self: flex-start;
+  min-height: 44px;
+  margin-top: 6px;
+  padding: var(--vpm-apres-space-3) var(--vpm-apres-space-5);
+  background: var(--vpm-apres-light-blue);
+  color: var(--vpm-apres-blue-900) !important;
+  font-family: var(--vpm-apres-font);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-decoration: none !important;
+  border: 0;
+  border-radius: var(--vpm-apres-radius-md);
+  transition:
+    background-color var(--vpm-apres-dur-fast) var(--vpm-apres-ease),
+    transform var(--vpm-apres-dur-base) var(--vpm-apres-ease),
+    box-shadow var(--vpm-apres-dur-base) var(--vpm-apres-ease);
+}
+
+.vpm-apres .vpm-apres__cta:hover,
+.vpm-apres .vpm-apres__cta:focus-visible {
+  background: var(--vpm-apres-white);
+  color: var(--vpm-apres-blue-900) !important;
+  text-decoration: none !important;
+  transform: translateY(-2px);
+  box-shadow: var(--vpm-apres-shadow-md);
+}
+
+.vpm-apres .vpm-apres__cta:focus-visible {
+  outline: 2px solid var(--vpm-apres-white);
+  outline-offset: 2px;
+  box-shadow: var(--vpm-apres-shadow-focus);
+}
+
+/* Keeps the arrow on the same line as the last word. Restates the CTA's type
+   because the `.vpm-apres span` reset would otherwise clear it. */
+.vpm-apres .vpm-apres__ctanowrap {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.vpm-apres .vpm-apres__ctaarrow {
+  display: inline-block;
+  margin-left: var(--vpm-apres-space-2);
+  font-size: 14px;
+  transition: transform var(--vpm-apres-dur-base) var(--vpm-apres-ease);
+}
+
+.vpm-apres .vpm-apres__cta:hover .vpm-apres__ctaarrow,
+.vpm-apres .vpm-apres__cta:focus-visible .vpm-apres__ctaarrow {
+  transform: translateX(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vpm-apres .vpm-apres__cta,
+  .vpm-apres .vpm-apres__ctaarrow { transition: none; }
+  .vpm-apres .vpm-apres__cta:hover,
+  .vpm-apres .vpm-apres__cta:focus-visible,
+  .vpm-apres .vpm-apres__cta:hover .vpm-apres__ctaarrow,
+  .vpm-apres .vpm-apres__cta:focus-visible .vpm-apres__ctaarrow { transform: none; }
+}
+
+@media (forced-colors: active) {
+  .vpm-apres .vpm-apres__cta { border: 1px solid currentColor; }
 }
 
 /* ============================================
@@ -386,11 +471,11 @@
     <div class="vpm-apres__heroinner">
 
       <div class="vpm-apres__kicker">
-        <span class="vpm-apres__eyebrow">2026 Virginia Primary</span>
+        <span class="vpm-apres__eyebrow">2026 Virginia General Election</span>
         <span class="vpm-apres__sep" aria-hidden="true"></span>
         <span class="vpm-apres__status">
           <span class="vpm-apres__dot" aria-hidden="true"></span>
-          Polls closed 7 p.m.
+          Polls close 7 p.m. Nov. 3
         </span>
       </div>
 
@@ -403,6 +488,10 @@
         Associated Press and refreshed automatically. Numbers are unofficial until
         certified.
       </p>
+
+      <a class="vpm-apres__cta" href="https://vpm.org/elections">
+        More election <span class="vpm-apres__ctanowrap">coverage<span class="vpm-apres__ctaarrow" aria-hidden="true">&rarr;</span></span>
+      </a>
 
     </div>
   </div>
@@ -422,7 +511,7 @@
       <iframe
         class="vpm-apres__frame ap-embed"
         title="Live election results via the Associated Press"
-        src="https://interactives.apelections.org/election-results/customers/layouts/organization-layouts/published/57278/30777.html"
+        src="https://interactives.apelections.org/election-results/customers/layouts/organization-layouts/published/57278/35752.html"
         width="100%"
         height="520"
         frameborder="0"
