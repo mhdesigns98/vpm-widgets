@@ -104,6 +104,6 @@ Run through the CMS harness — **passes**:
 
 Contrast (all pass AA): dek 10.7:1, eyebrow 6.6:1, source credit 6.0:1, note link 10.8:1.
 
-`/ship-widget ap-election-results` **passed** on 2026-08-04. All eight harness scenarios,
+`/ship ap-election-results` **passed** on 2026-10-22 against the general layout `57278/35752` (first passed 2026-08-04). All eight harness scenarios,
 accessibility, and convention audit green; see the session report. Re-run it if the AP
 layout URL or the resizer dependency changes.
