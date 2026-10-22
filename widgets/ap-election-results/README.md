@@ -78,10 +78,15 @@ a copy in a 320px sidebar lays out narrow even on a 1440px page. Three steps:
 |---|---|---|---|
 | ≥ 900px | 120px | −96px | 40px |
 | 600–899px | 72px | −56px | 24px |
-| < 600px | 32px | none | 0 |
+| < 600px | 24px | none | 0 |
 
-The overlap is decoration and is dropped entirely below 600px, where it would otherwise
-eat the dek. A `@supports` viewport fallback covers engines without container queries —
+The overlap is decoration and is dropped entirely below 600px.
+
+**Narrow columns (< 600px, e.g. the vpm.org sidebar)** also hide the dek and tighten the
+hero, panel header, frame and note padding, all through `--vpm-apres-*` vars restored in
+the 600px query. That cuts the wrapper by about 180px at 414px wide, so results start
+higher. The dek's "unofficial until certified" line is the one thing lost there; the
+AP disclosure note still shows. A `@supports` viewport fallback covers engines without container queries —
 approximate only, since it keys off the window.
 
 The container queries target `.vpm-apres__inner`, not `.vpm-apres`. That wrapper exists
@@ -108,6 +113,6 @@ Run through the CMS harness — **passes**:
 
 Contrast (all pass AA): CTA 6.6:1 (white hover 16:1), dek 10.7:1, eyebrow 6.6:1, source credit 6.0:1, note link 10.8:1.
 
-`/ship ap-election-results` **passed** on 2026-10-22 against the general layout `57278/35752`, re-checked the same day after adding the coverage CTA (first passed 2026-08-04). All eight harness scenarios,
+`/ship ap-election-results` **passed** on 2026-10-22 against the general layout `57278/35752`, re-checked the same day after adding the coverage CTA and again after the narrow-column tightening (first passed 2026-08-04). All eight harness scenarios,
 accessibility, and convention audit green; see the session report. Re-run it if the AP
 layout URL or the resizer dependency changes.

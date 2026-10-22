@@ -58,11 +58,21 @@
      @container rule styles a container's DESCENDANTS, never the container
      element itself. The vars are inherited, so overriding them one level in
      reaches everything that consumes them. */
-  --vpm-apres-hero-pad-x:   24px;
-  --vpm-apres-hero-pad-top: 32px;
-  --vpm-apres-hero-pad-bot: 32px;
+  --vpm-apres-hero-pad-x:   20px;
+  --vpm-apres-hero-pad-top: 24px;
+  --vpm-apres-hero-pad-bot: 24px;
   --vpm-apres-panel-offset: 0px;
   --vpm-apres-panel-inset:  0px;
+
+  /* Narrow columns (the vpm.org sidebar) get a tighter frame and no dek:
+     the disclosure note under the results already credits AP, and every
+     line here pushes the results further down. Restored at 600px. */
+  --vpm-apres-hero-gap:     10px;
+  --vpm-apres-dek-display:  none;
+  --vpm-apres-panelhd-pad:  12px 16px;
+  --vpm-apres-frame-pad:    4px 12px 12px;
+  --vpm-apres-note-gap:     16px;
+  --vpm-apres-note-pad:     12px 14px;
 
   --vpm-apres-radius-md: 4px;
   --vpm-apres-shadow-md: 0 8px 24px rgba(16, 24, 32, 0.10);
@@ -143,7 +153,7 @@
   max-width: 900px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: var(--vpm-apres-hero-gap);
 }
 
 .vpm-apres .vpm-apres__kicker {
@@ -214,6 +224,7 @@
 }
 
 .vpm-apres .vpm-apres__dek {
+  display: var(--vpm-apres-dek-display);
   font-size: var(--vpm-apres-fs-dek);
   line-height: var(--vpm-apres-lh-loose);
   color: var(--vpm-apres-on-dark-muted);
@@ -330,7 +341,7 @@
   justify-content: space-between;
   gap: var(--vpm-apres-space-4);
   flex-wrap: wrap;
-  padding: var(--vpm-apres-space-4) var(--vpm-apres-space-5);
+  padding: var(--vpm-apres-panelhd-pad);
   border-bottom: 1px solid var(--vpm-apres-gray-200);
 }
 
@@ -353,7 +364,7 @@
 }
 
 .vpm-apres .vpm-apres__framewrap {
-  padding: var(--vpm-apres-space-2) var(--vpm-apres-space-4) var(--vpm-apres-space-5);
+  padding: var(--vpm-apres-frame-pad);
 }
 
 /* min-height is the floor: if AP's resizer is blocked or fails, the panel
@@ -369,8 +380,8 @@
    Disclosure note
    ============================================ */
 .vpm-apres .vpm-apres__note {
-  margin: var(--vpm-apres-space-5) var(--vpm-apres-panel-inset) 0;
-  padding: var(--vpm-apres-space-4) 18px;
+  margin: var(--vpm-apres-note-gap) var(--vpm-apres-panel-inset) 0;
+  padding: var(--vpm-apres-note-pad);
   background: var(--vpm-apres-blue-050);
   border-left: 3px solid var(--vpm-apres-light-blue);
   font-size: var(--vpm-apres-fs-body-sm);
@@ -405,7 +416,7 @@
 /* ============================================
    Responsive — driven by the widget's own width.
    The panel/hero overlap is decoration: it is dropped entirely below 600px,
-   where it would otherwise eat the dek.
+   along with the dek, so a narrow column reaches the results sooner.
    ============================================ */
 @container vpm-apres (min-width: 600px) {
   .vpm-apres .vpm-apres__inner {
@@ -414,6 +425,12 @@
     --vpm-apres-hero-pad-bot: 72px;
     --vpm-apres-panel-offset: -56px;
     --vpm-apres-panel-inset:  24px;
+    --vpm-apres-hero-gap:     14px;
+    --vpm-apres-dek-display:  block;
+    --vpm-apres-panelhd-pad:  16px 24px;
+    --vpm-apres-frame-pad:    8px 16px 24px;
+    --vpm-apres-note-gap:     24px;
+    --vpm-apres-note-pad:     16px 18px;
   }
 }
 
@@ -445,6 +462,12 @@
       --vpm-apres-panel-offset: -56px;
       --vpm-apres-panel-inset:  24px;
       --vpm-apres-fs-title:     44px;
+      --vpm-apres-hero-gap:     14px;
+      --vpm-apres-dek-display:  block;
+      --vpm-apres-panelhd-pad:  16px 24px;
+      --vpm-apres-frame-pad:    8px 16px 24px;
+      --vpm-apres-note-gap:     24px;
+      --vpm-apres-note-pad:     16px 18px;
     }
   }
   @media (min-width: 900px) {
