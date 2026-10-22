@@ -34,8 +34,9 @@ split-file shape some other widgets use.
   `https://vpm.org/elections` in the same tab. It reuses the `elections-2026-primary-cta`
   button treatment (light blue, sharp corners, white on hover). The last word and arrow sit
   in a `nowrap` span so the arrow never wraps alone in a narrow column.
-- **Status pill** — currently "Polls close 7 p.m. Nov. 3", correct up to poll close.
-  Flip it to "Polls closed 7 p.m." on the night; it is the one line that changes on the day.
+- **Status pill** — "Polls close 7 p.m. Nov. 3" with a static red dot. The dot does not
+  pulse: before results exist a pulse reads as "live", and the text stays true after polls
+  close, so no election-night edit is needed. Change it only if the copy changes.
 
 ## Notes
 
@@ -87,8 +88,8 @@ separator dot between the label and the status (the label wraps there, which lef
 hanging at the end of the first line), and tighten the
 hero, panel header, frame and note padding, all through `--vpm-apres-*` vars restored in
 the 600px query. That cuts the wrapper by about 180px at 414px wide, so results start
-higher. The dek's "unofficial until certified" line is the one thing lost there; the
-AP disclosure note still shows.
+higher. The dek's "Numbers are unofficial until certified." line moves into the panel header
+there (`.vpm-apres__unofficial`, shown only below 600px), so it stays above the results.
 
 A `@supports` viewport fallback covers engines without container queries —
 approximate only, since it keys off the window.

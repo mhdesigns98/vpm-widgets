@@ -76,6 +76,9 @@
   /* Below 600px the label usually wraps, which leaves the separator dot
      hanging at the end of the first line. */
   --vpm-apres-sep-display:  none;
+  /* The dek carries "unofficial until certified" at 600px and up; below that
+     the dek is hidden, so the panel header says it instead. */
+  --vpm-apres-unofficial-display: block;
 
   --vpm-apres-radius-md: 4px;
   --vpm-apres-shadow-md: 0 8px 24px rgba(16, 24, 32, 0.10);
@@ -204,17 +207,8 @@
   background: var(--vpm-apres-red);
   flex: none;
   font-size: 0;
-  animation: vpmApresPulse 2s infinite;
-}
-
-@keyframes vpmApresPulse {
-  0%   { box-shadow: 0 0 0 0   rgba(238, 39, 55, 0.65); }
-  70%  { box-shadow: 0 0 0 7px rgba(238, 39, 55, 0); }
-  100% { box-shadow: 0 0 0 0   rgba(238, 39, 55, 0); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .vpm-apres .vpm-apres__dot { animation: none !important; }
+  /* Static on purpose: a pulse reads as "live" while no votes are counted,
+     and the pill text stays true without an election-night edit. */
 }
 
 .vpm-apres .vpm-apres__title {
@@ -343,7 +337,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--vpm-apres-space-4);
+  /* Rows only form in narrow columns (label, source, unofficial line), where a
+     full 16px between them would push the results down. */
+  gap: 4px var(--vpm-apres-space-4);
   flex-wrap: wrap;
   padding: var(--vpm-apres-panelhd-pad);
   border-bottom: 1px solid var(--vpm-apres-gray-200);
@@ -365,6 +361,14 @@
 .vpm-apres .vpm-apres__source strong {
   font-weight: 600;
   color: var(--vpm-apres-dark-blue);
+}
+
+.vpm-apres .vpm-apres__unofficial {
+  display: var(--vpm-apres-unofficial-display);
+  flex-basis: 100%;
+  font-size: var(--vpm-apres-fs-caption);
+  line-height: var(--vpm-apres-lh-normal);
+  color: var(--vpm-apres-gray-700);
 }
 
 .vpm-apres .vpm-apres__framewrap {
@@ -436,6 +440,7 @@
     --vpm-apres-note-gap:     24px;
     --vpm-apres-note-pad:     16px 18px;
     --vpm-apres-sep-display:  block;
+    --vpm-apres-unofficial-display: none;
   }
 }
 
@@ -474,6 +479,7 @@
       --vpm-apres-note-gap:     24px;
       --vpm-apres-note-pad:     16px 18px;
       --vpm-apres-sep-display:  block;
+      --vpm-apres-unofficial-display: none;
     }
   }
   @media (min-width: 900px) {
@@ -531,6 +537,7 @@
     <div class="vpm-apres__panelhd">
       <span class="vpm-apres__panellabel">Results by race</span>
       <span class="vpm-apres__source">Source: <strong>Associated Press</strong></span>
+      <span class="vpm-apres__unofficial">Numbers are unofficial until certified.</span>
     </div>
 
     <!-- `ap-embed` is the ONLY un-namespaced class here, and it is required:
