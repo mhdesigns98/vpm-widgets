@@ -1,0 +1,224 @@
+/* ============================================
+   VPM 2026 Elections — Strip
+   Namespace: vpm-elec26strip-
+   Short, image-free sibling of elections-2026-cta for under the homepage
+   menu bar. Stays under 150px tall down to a 320px viewport.
+   Tokens inlined from tokens.css (widget must stay self-contained)
+   ============================================ */
+
+.vpm-elec26strip {
+  /* Brand core */
+  --vpm-elec26strip-dark-blue:  #003865;
+  --vpm-elec26strip-blue-900:   #002244;
+  --vpm-elec26strip-light-blue: #6CACE4;
+  --vpm-elec26strip-yellow:     #E0E721;
+  --vpm-elec26strip-red:        #EE2737;
+  --vpm-elec26strip-white:      #FFFFFF;
+  --vpm-elec26strip-on-dark-muted: #B9C8D8;
+
+  /* Type */
+  --vpm-elec26strip-font: 'Public Sans', 'GT America', 'Helvetica Neue', Arial, sans-serif;
+  --vpm-elec26strip-fs-body: 16px;
+  --vpm-elec26strip-fs-eyebrow: 13px;
+  --vpm-elec26strip-tracking-eyebrow: 0.12em;
+
+  /* Space / shape / motion */
+  --vpm-elec26strip-space-1: 4px;
+  --vpm-elec26strip-space-2: 8px;
+  --vpm-elec26strip-space-3: 12px;
+  --vpm-elec26strip-space-4: 16px;
+  --vpm-elec26strip-space-5: 24px;
+  --vpm-elec26strip-radius-md: 4px;
+  --vpm-elec26strip-shadow-md: 0 8px 24px rgba(16, 24, 32, 0.10);
+  --vpm-elec26strip-shadow-focus: 0 0 0 3px rgba(108, 172, 228, 0.55);
+  --vpm-elec26strip-ease: cubic-bezier(0.2, 0, 0, 1);
+  --vpm-elec26strip-dur-fast: 120ms;
+  --vpm-elec26strip-dur-base: 200ms;
+
+  /* Reset against hostile host CSS */
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: var(--vpm-elec26strip-font);
+  background: var(--vpm-elec26strip-dark-blue);
+  position: relative;
+  isolation: isolate;
+
+  /* Responds to its own width, not the viewport's */
+  container-type: inline-size;
+  container-name: vpm-elec26strip;
+}
+
+.vpm-elec26strip *,
+.vpm-elec26strip *::before,
+.vpm-elec26strip *::after { box-sizing: border-box; }
+
+/* 3-stripe accent bar */
+.vpm-elec26strip .vpm-elec26strip__bar {
+  height: 4px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(90deg,
+    var(--vpm-elec26strip-light-blue) 0%,
+    var(--vpm-elec26strip-light-blue) 30%,
+    var(--vpm-elec26strip-yellow)     30%,
+    var(--vpm-elec26strip-yellow)     70%,
+    var(--vpm-elec26strip-red)        70%,
+    var(--vpm-elec26strip-red)        100%);
+}
+
+/* Narrow: text above the button. Wide: one row. */
+.vpm-elec26strip .vpm-elec26strip__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--vpm-elec26strip-space-2);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--vpm-elec26strip-space-3) var(--vpm-elec26strip-space-4);
+}
+
+.vpm-elec26strip .vpm-elec26strip__text {
+  margin: 0;
+  padding: 0;
+  font-family: var(--vpm-elec26strip-font);
+  font-size: var(--vpm-elec26strip-fs-body);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--vpm-elec26strip-on-dark-muted);
+  text-wrap: balance;
+}
+
+/* Eyebrow only shows once there's room; the date carries the meaning */
+.vpm-elec26strip .vpm-elec26strip__eyebrow {
+  display: none;
+  font-size: var(--vpm-elec26strip-fs-eyebrow);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--vpm-elec26strip-tracking-eyebrow);
+  color: var(--vpm-elec26strip-yellow);
+  margin: 0 var(--vpm-elec26strip-space-3) 0 0;
+  padding: 0;
+}
+
+.vpm-elec26strip .vpm-elec26strip__lead {
+  font-size: inherit;
+  font-weight: 700;
+  color: var(--vpm-elec26strip-white);
+  margin: 0;
+  padding: 0;
+}
+
+.vpm-elec26strip .vpm-elec26strip__sub {
+  font-size: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---- CTA (same treatment as elections-2026-cta) ---- */
+.vpm-elec26strip .vpm-elec26strip__link {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: var(--vpm-elec26strip-space-2);
+  min-height: 44px;
+  margin: 0;
+  padding: var(--vpm-elec26strip-space-2) var(--vpm-elec26strip-space-4);
+  background: var(--vpm-elec26strip-light-blue);
+  /* !important only where hostile host CSS uses it too (forced link colors) */
+  color: var(--vpm-elec26strip-blue-900) !important;
+  font-family: var(--vpm-elec26strip-font);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  text-decoration: none !important;
+  border: 0;
+  border-radius: var(--vpm-elec26strip-radius-md);
+  transition:
+    background-color var(--vpm-elec26strip-dur-fast) var(--vpm-elec26strip-ease),
+    transform var(--vpm-elec26strip-dur-base) var(--vpm-elec26strip-ease),
+    box-shadow var(--vpm-elec26strip-dur-base) var(--vpm-elec26strip-ease);
+}
+
+.vpm-elec26strip .vpm-elec26strip__link:hover,
+.vpm-elec26strip .vpm-elec26strip__link:focus-visible {
+  background: var(--vpm-elec26strip-white);
+  color: var(--vpm-elec26strip-blue-900) !important;
+  text-decoration: none !important;
+  transform: translateY(-2px);
+  box-shadow: var(--vpm-elec26strip-shadow-md);
+}
+
+.vpm-elec26strip .vpm-elec26strip__link:focus-visible {
+  outline: 2px solid var(--vpm-elec26strip-white);
+  outline-offset: 2px;
+  box-shadow: var(--vpm-elec26strip-shadow-focus);
+}
+
+.vpm-elec26strip .vpm-elec26strip__arrow {
+  /* Hosts size bare spans; keep the arrow at the label's size */
+  font-size: inherit;
+  line-height: 1;
+  transition: transform var(--vpm-elec26strip-dur-base) var(--vpm-elec26strip-ease);
+}
+
+.vpm-elec26strip .vpm-elec26strip__link:hover .vpm-elec26strip__arrow,
+.vpm-elec26strip .vpm-elec26strip__link:focus-visible .vpm-elec26strip__arrow {
+  transform: translateX(3px);
+}
+
+/* ---- One row once the strip is wide enough ---- */
+@container vpm-elec26strip (min-width: 640px) {
+  .vpm-elec26strip .vpm-elec26strip__inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--vpm-elec26strip-space-5);
+    padding: var(--vpm-elec26strip-space-3) var(--vpm-elec26strip-space-5);
+  }
+}
+
+@container vpm-elec26strip (min-width: 900px) {
+  .vpm-elec26strip .vpm-elec26strip__eyebrow { display: inline; }
+}
+
+/* Fallback for engines without container queries */
+@supports not (container-type: inline-size) {
+  @media (min-width: 640px) {
+    .vpm-elec26strip .vpm-elec26strip__inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--vpm-elec26strip-space-5);
+      padding: var(--vpm-elec26strip-space-3) var(--vpm-elec26strip-space-5);
+    }
+  }
+  @media (min-width: 900px) {
+    .vpm-elec26strip .vpm-elec26strip__eyebrow { display: inline; }
+  }
+}
+
+/* ---- Motion preference ---- */
+@media (prefers-reduced-motion: reduce) {
+  .vpm-elec26strip .vpm-elec26strip__link,
+  .vpm-elec26strip .vpm-elec26strip__arrow {
+    transition: none;
+  }
+  .vpm-elec26strip .vpm-elec26strip__link:hover,
+  .vpm-elec26strip .vpm-elec26strip__link:focus-visible,
+  .vpm-elec26strip .vpm-elec26strip__link:hover .vpm-elec26strip__arrow,
+  .vpm-elec26strip .vpm-elec26strip__link:focus-visible .vpm-elec26strip__arrow {
+    transform: none;
+  }
+}
+
+/* ---- Forced colors ---- */
+@media (forced-colors: active) {
+  .vpm-elec26strip .vpm-elec26strip__link { border: 1px solid currentColor; }
+}
