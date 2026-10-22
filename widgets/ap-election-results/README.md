@@ -24,9 +24,9 @@ split-file shape some other widgets use.
 
 ## Customizing
 
-- **AP layout** — the `src` on `.vpm-apres__frame` points at AP layout `57278/30777`, which is the
-  **Aug. 4 primary** layout. **Swap it for the general-election layout before Nov. 3** —
-  AP publishes each election as its own layout.
+- **AP layout** — the `src` on `.vpm-apres__frame` points at AP layout `57278/35752`, the
+  **Nov. 3 general** layout (the Aug. 4 primary was `57278/30777`). AP publishes each
+  election as its own layout, so swap the URL each cycle.
 - **Copy** — eyebrow, status pill, `<h2>`, dek, panel label and note are plain text.
   Keep the copy **day-agnostic**: name dates rather than saying "today," so the same
   block runs the day before, on Election Day, and through the certification days.
