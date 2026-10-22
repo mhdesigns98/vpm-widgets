@@ -30,6 +30,10 @@ split-file shape some other widgets use.
 - **Copy** — eyebrow, status pill, `<h2>`, dek, panel label and note are plain text.
   Keep the copy **day-agnostic**: name dates rather than saying "today," so the same
   block runs the day before, on Election Day, and through the certification days.
+- **Coverage CTA** — the hero button ("More election coverage") links to
+  `https://vpm.org/elections` in the same tab. It reuses the `elections-2026-primary-cta`
+  button treatment (light blue, sharp corners, white on hover). The last word and arrow sit
+  in a `nowrap` span so the arrow never wraps alone in a narrow column.
 - **Status pill** — currently "Polls close 7 p.m. Nov. 3", correct up to poll close.
   Flip it to "Polls closed 7 p.m." on the night; it is the one line that changes on the day.
 
@@ -102,8 +106,8 @@ Run through the CMS harness — **passes**:
 - No horizontal scroll at 320px; no console errors
 - Visible focus ring on the note link; no z-index fight with the sticky Stream Player
 
-Contrast (all pass AA): dek 10.7:1, eyebrow 6.6:1, source credit 6.0:1, note link 10.8:1.
+Contrast (all pass AA): CTA 6.6:1 (white hover 16:1), dek 10.7:1, eyebrow 6.6:1, source credit 6.0:1, note link 10.8:1.
 
-`/ship ap-election-results` **passed** on 2026-10-22 against the general layout `57278/35752` (first passed 2026-08-04). All eight harness scenarios,
+`/ship ap-election-results` **passed** on 2026-10-22 against the general layout `57278/35752`, re-checked the same day after adding the coverage CTA (first passed 2026-08-04). All eight harness scenarios,
 accessibility, and convention audit green; see the session report. Re-run it if the AP
 layout URL or the resizer dependency changes.
