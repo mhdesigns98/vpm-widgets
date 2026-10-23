@@ -121,3 +121,9 @@ Contrast (all pass AA): CTA 6.6:1 (white hover 16:1), dek 10.7:1, eyebrow 6.6:1,
 `/ship ap-election-results` **passed** on 2026-10-22 against the general layout `57278/35752`, re-checked the same day after adding the coverage CTA, after the narrow-column tightening, and after hiding the narrow separator (first passed 2026-08-04). All eight harness scenarios,
 accessibility, and convention audit green; see the session report. Re-run it if the AP
 layout URL or the resizer dependency changes.
+
+## Analytics hooks
+GTM reads these attributes for the GA4 `module_view` and `module_click` events (setup: `docs/election-tracking.md`). Don't remove or rename them.
+- The outer wrapper has `data-module="results"`.
+- Every link has `data-module="results"` and `data-module-position`, 1-based in DOM order. `.vpm-apres__cta` ("More election coverage") is position 1 and `.vpm-apres__notelink` ("How AP counts the vote") is position 2. Both the homepage and /elections use this one block; GA4's `page_location` tells them apart. The AP iframe is not tracked.
+- A new link gets the next position number. Only links carry a position; GTM's view trigger relies on that to match wrappers only.

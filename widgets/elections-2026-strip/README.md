@@ -38,3 +38,9 @@ at 320–375px (text above the button). Under the 150px ceiling at every width.
   day-agnostic: name the date, not "today."
 - **CTA target:** `href` on `.vpm-elec26strip__link`.
 - **Max width:** `max-width` on `.vpm-elec26strip__inner`, to line up with the homepage grid.
+
+## Analytics hooks
+GTM reads these attributes for the GA4 `module_view` and `module_click` events (setup: `docs/election-tracking.md`). Don't remove or rename them.
+- The outer wrapper has `data-module="promo-small"`.
+- Every link has `data-module="promo-small"` and `data-module-position`, 1-based in DOM order. `.vpm-elec26strip__link` ("Explore our coverage") is position 1.
+- A new link gets the next position number. Only links carry a position; GTM's view trigger relies on that to match wrappers only.
