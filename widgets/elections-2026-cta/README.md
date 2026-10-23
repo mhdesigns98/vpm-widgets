@@ -48,3 +48,9 @@ re-injects it.
   a swap. Keep it that way when editing.
 - The `<h2>` assumes the block sits below the article's `<h1>`. Fine in-body or in a sidebar.
 - It goes stale once the general is old news. Plan to pull it rather than let it sit.
+
+## Analytics hooks
+GTM reads these attributes for the GA4 `module_view` and `module_click` events (setup: `docs/election-tracking.md`). Don't remove or rename them.
+- The outer wrapper has `data-module="promo-large"`.
+- Every link has `data-module="promo-large"` and `data-module-position`, 1-based in DOM order. `.vpm-elec26cta__link` is position 1.
+- A new link gets the next position number. Only links carry a position; GTM's view trigger relies on that to match wrappers only.
