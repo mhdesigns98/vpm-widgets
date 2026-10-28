@@ -7,7 +7,10 @@
   section-nav.html, then the rest).
 
   What changed from header-section.html:
-  - Title: "Virginia Election Results", with "VPM Voter Guide" in the eyebrow.
+  - Title changes by time (script after the header markup): "Virginia Voter Guide"
+    until polls close at 7 p.m. ET Nov. 3, "Virginia Election Results" overnight,
+    "Virginia Election Analysis" from 6 a.m. ET Nov. 4. Status line and dek change
+    with it. Test with ?vg-phase=guide|results|analysis on the page URL.
   - The Important Dates card is gone. The AP live results embed takes its place,
     moved from the narrow sidebar to a full-width white panel under the title:
     AP's layout is a multi-race table and is unreadable at 340px.
@@ -1606,6 +1609,8 @@
     .vpm-vg .vg-results-framewrap {padding:4px 8px 16px;}
     .vpm-vg .vg-results-framewrap iframe {min-height:440px;}
   }
+  /* Before polls close nothing is live yet: steady yellow dot, no pulse */
+  .vpm-vg.vg-header[data-vg-phase="guide"] .vg-live-dot {animation:none;background:var(--yellow-52);}
   @media (prefers-reduced-motion:reduce){
     .vpm-vg .vg-live-dot {animation:none;}
   }
@@ -1618,13 +1623,15 @@
         <p class="vg-eyebrow">VPM Voter Guide · 2026 General Election</p>
         <h1 class="vg-headline vg-results-headline vg-heading-font">
           <span class="vg-hl vg-l1">Virginia</span>
-          <span class="vg-hl vg-l2">Election <em>Results</em></span>
+          <span class="vg-hl vg-l2" data-vg-slot="title">Election <em>Results</em></span>
         </h1>
       </div>
 
+      <!-- The title line, status and dek below change with the phase script that follows
+           this block. The text written here is the "results" phase, shown if JS is off. -->
       <div class="vg-results-meta">
-        <p class="vg-results-status"><span class="vg-live-dot" aria-hidden="true"></span>Updates automatically</p>
-        <p class="vg-hero-dek">Returns from every Virginia county and independent city, tabulated by the Associated Press. Numbers are unofficial until certified.</p>
+        <p class="vg-results-status"><span class="vg-live-dot" aria-hidden="true"></span><span data-vg-slot="status">Updates automatically</span></p>
+        <p class="vg-hero-dek" data-vg-slot="dek">Returns from every Virginia county and independent city, tabulated by the Associated Press. Numbers are unofficial until certified.</p>
       </div>
     </div>
 
@@ -1657,6 +1664,67 @@
        are h3s, so without this the page jumps h2 -> h3 without context. Hidden, so the design is unchanged. -->
   <h2 class="vg-sr-only">Featured Stories</h2>
 </div>
+
+<script>
+/* Title phases. Must sit directly after the .vg-header div above: it finds that div as
+   its previous sibling, so two copies on one page never touch each other.
+   - guide:    until polls close, 7 p.m. ET Tuesday, Nov. 3
+   - results:  polls close until 6 a.m. ET Wednesday, Nov. 4
+   - analysis: from then on
+   Times are fixed UTC instants (Nov. 3 is after DST ends, so ET = UTC-5) and are read
+   from the reader's clock. Re-checked every minute so an open tab flips at 7 p.m.
+   Preview a phase with ?vg-phase=guide|results|analysis on the page URL. */
+(function () {
+  var root = document.currentScript && document.currentScript.previousElementSibling;
+  if (!root || !root.classList.contains('vg-header')) return;
+
+  var POLLS_CLOSE = Date.parse('2026-11-04T00:00:00Z');
+  var DAY_AFTER   = Date.parse('2026-11-04T11:00:00Z');
+
+  // Static, author-written strings only: `title` is set as HTML for the <em>.
+  var PHASES = {
+    guide: {
+      title:  'Voter <em>Guide</em>',
+      status: 'Polls close 7 p.m. Tuesday, Nov. 3',
+      dek:    'Candidates, issues and key dates for Virginia voters. Results from the Associated Press appear here after polls close.'
+    },
+    results: {
+      title:  'Election <em>Results</em>',
+      status: 'Updates automatically',
+      dek:    'Returns from every Virginia county and independent city, tabulated by the Associated Press. Numbers are unofficial until certified.'
+    },
+    analysis: {
+      title:  'Election <em>Analysis</em>',
+      status: 'Results still updating',
+      dek:    'What the results mean for Virginia, from VPM News and its public media partners. AP returns below keep updating until every race is called.'
+    }
+  };
+
+  var forced = (location.search.match(/[?&]vg-phase=(guide|results|analysis)\b/) || [])[1];
+  var slot = function (name) { return root.querySelector('[data-vg-slot="' + name + '"]'); };
+  var current;
+
+  function pick() {
+    if (forced) return forced;
+    var now = Date.now();
+    return now < POLLS_CLOSE ? 'guide' : now < DAY_AFTER ? 'results' : 'analysis';
+  }
+
+  function apply() {
+    var phase = pick();
+    if (phase === current) return;
+    current = phase;
+    var p = PHASES[phase];
+    slot('title').innerHTML = p.title;
+    slot('status').textContent = p.status;
+    slot('dek').textContent = p.dek;
+    root.setAttribute('data-vg-phase', phase);
+  }
+
+  apply();
+  if (!forced) setInterval(apply, 60000);
+})();
+</script>
 
 <script>
 /* AP's resizeClient.js keeps the iframe sized to its content as races expand.
