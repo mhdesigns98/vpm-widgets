@@ -8,6 +8,11 @@ aliases for the same command). Don't restate it elsewhere; link here instead.
 Widget items exist because a block can be dropped into a hostile page more than once and re-injected;
 the Page items exist because a page owns its URL. Don't move items between them to make something pass.
 
+`/ship` runs `tools/ship-lint/` first, which checks the parts of these items a file scan can see
+(namespacing, hex, rem, alt and titles, heading order, ids, script loading, jump-link targets,
+paste-order files). It is part of how the checklist gets enforced, not a separate list: this file
+stays canonical, and the lint's README says which items it covers.
+
 ## Core (widgets and pages)
 
 - [ ] Every selector namespaced; no bare element selectors in a page-level `<style>`. Unaffected by

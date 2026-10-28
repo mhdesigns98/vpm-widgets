@@ -19,6 +19,21 @@ Verify a build is ready to paste into a real CMS. **This is the only pre-CMS gat
 - Read every file in the folder, plus `README.md` and `BRIEF.md` if present. If a `BRIEF.md` exists, check the build against it and flag scope drift first: a build that passes everything but doesn't do what the brief agreed isn't shippable.
 - Note the shape: widget = `single` / `acf-split`; page = `single` / `acf-split` / `sections`. It decides what Step 6 emits. **`html.html` present = `acf-split`**, even if an `index.html` preview sits beside it (the harness's default mode also prefers the split files).
 
+## Step 1b — Run ship-lint
+
+Run the mechanical checks before any browser work, from the repo root:
+
+```bash
+node tools/ship-lint/ship-lint.mjs SLUG
+```
+
+For a folder with sub-builds (it prints a `note: sub-builds` line), run it on each one you're shipping. What it covers and how its allow comments work: `tools/ship-lint/README.md`.
+
+- **Its fails are checklist fails.** Carry each one into the Step 6 report as it stands, with its `file:line`. Don't re-check those items by hand, and don't overrule a fail except where the README says the lint can't tell, and then say why.
+- **Its warns are leads, not passes.** Look at each one (past dates, page-wide queries, inline elements with no font-size, `ship-lint: allow` overrides) and record pass or fail with the reason.
+- **Everything else in Steps 3–5 still runs.** The lint only reads files. Hostile host CSS, 320px, keyboard, contrast, console and the harness need the browser.
+- Fails don't stop the run: finish Steps 2–5 so the report lists everything at once. Step 6 still emits nothing while any fail stands.
+
 ## Step 2 — Serve it
 
 Pick a free port (don't reuse a fixed one; other sessions run servers) and serve the repo root:
@@ -42,7 +57,7 @@ Run the **Core** list from `SHIP-CHECKLIST.md`. How:
 - **Keyboard.** Compare DOM order against visual order directly (this is what catches an absolutely positioned close button), then Tab through and confirm visible focus. Start Tab from the element just before the build, since the harness has many focusables. If the tool can't send real key presses, use programmatic focus, check `:focus-visible` and the outline, and mark real key handling **unverified**.
 - **Console.** Read it. Ignore `favicon.ico` 404, the Quirks Mode notice a doctype-less fragment always gets, and warnings from third-party embeds (PBS/video player, ads); any other error fails.
 - **Contrast** in every state (hover, focus), watching `--vpm-yellow` on white and `--vpm-light-blue` text on white. Focus outlines are measured against the colors next to them (3:1). **Dated content**: past dates, "TBD" live URL, expired deadlines.
-- **Tokens / px.** Hex only inside scoped custom-property definitions; no `rem` in font-size or spacing.
+- **Tokens / px, alt and titles, heading order, `id`s, bare `<script src>`, jump-link targets, paste-order files.** Step 1b's lint already checked these; take its result.
 
 ## Step 4 — Widget mode: CMS harness
 
@@ -80,4 +95,4 @@ End with: `SLUG is ship-ready. Commit any fixes, open a PR, then paste the block
 
 ## Step 7 — Grow the checks
 
-If a failure turned up that no item caught, add it to the right list in `SHIP-CHECKLIST.md` (Core only if it applies to both kinds; a block-in-CMS failure goes under Widget, with a harness scenario in `harness/harness.html` and a note in `harness/README.md`). If nothing new turned up, say so, so it's clear it was considered.
+If a failure turned up that a file scan could have caught, add a check to `tools/ship-lint/` (see "Adding a check" in its README) as well as the checklist item. If a failure turned up that no item caught, add it to the right list in `SHIP-CHECKLIST.md` (Core only if it applies to both kinds; a block-in-CMS failure goes under Widget, with a harness scenario in `harness/harness.html` and a note in `harness/README.md`). If nothing new turned up, say so, so it's clear it was considered.
