@@ -19,9 +19,10 @@
   header-section.html, it must be on the page for every other section to render.
   If you change a shared rule, change it in both files.
 
-  BEFORE ELECTION NIGHT: the AP layout URL below (57278/30777) is the one the
-  ap-election-results widget used for the June primaries. Confirm or swap in the
-  general-election layout ID from AP before this goes live.
+  PLACEHOLDER: the AP layout URL below (57278/35752) is a stand-in, not the final
+  election-night layout. Swap in the final layout ID from AP before this goes live.
+  Keep the guarded resizer loader at the bottom rather than AP's bare
+  <script src> tag: the guard stops a re-injected block loading it twice.
 
   The one un-prefixed class is "ap-embed": AP's resizeClient.js finds frames by
   `iframe.ap-embed`. Renaming it silently breaks auto-resize.
@@ -1632,12 +1633,12 @@
         <h2 id="vg-results-title">Results by race</h2>
         <p class="vg-results-source">Source: <strong>Associated Press</strong></p>
       </div>
-      <!-- `ap-embed` is required: AP's resizeClient.js sizes `iframe.ap-embed` to its content. -->
+      <!-- PLACEHOLDER layout (57278/35752): swap for the final AP layout. `ap-embed` is required: AP's resizeClient.js sizes `iframe.ap-embed` to its content. -->
       <div class="vg-results-framewrap">
         <iframe
           class="ap-embed"
           title="Live Virginia election results from the Associated Press"
-          src="https://interactives.apelections.org/election-results/customers/layouts/organization-layouts/published/57278/30777.html"
+          src="https://interactives.apelections.org/election-results/customers/layouts/organization-layouts/published/57278/35752.html"
           width="100%"
           height="520"
           frameborder="0"
