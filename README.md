@@ -58,7 +58,7 @@ SHIP-CHECKLIST.md ← canonical pre-ship checklist
 HOST-THEME.md     ← measured facts about the vpm.org WordPress theme
 CONTRIBUTING.md   ← how to build, and how to propose a token change
 harness/          ← CMS test harness (simulates the hostile parts of Brightspot/WordPress)
-tools/            ← paste-to-codepen helper
+tools/            ← paste-to-codepen helper, Code Block prompt for outside tools
 widgets/          ← reusable blocks (used on more than one page)
 pages/            ← full page builds (used on exactly one URL)
 .claude/skills/   ← shared vpm-design skill for Claude Code
