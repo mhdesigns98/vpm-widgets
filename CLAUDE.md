@@ -98,6 +98,8 @@ see `CONTRIBUTING.md`.
 6. Add a row to `INDEX.md`, then open a PR — this repo is shared and public, don't push to `main`
 7. GitHub Pages preview: `https://mhdesigns98.github.io/vpm-widgets/widgets/[name]/`
    — to send it to someone, use the share link instead (`/share [name]`): `https://mhdesigns98.github.io/vpm-widgets/share/?w=[name]`
+   — before merge, every PR has a Netlify deploy preview of the whole repo:
+   `https://deploy-preview-[PR]--vpm-widgets.netlify.app/share/?w=[name]` (`/share` builds it)
 
 **If a `BRIEF.md` exists in the widget folder, read it before building** and flag requests that contradict or expand its scope.
 

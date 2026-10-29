@@ -27,8 +27,13 @@ viewer a "Preview not found" page.
 git fetch -q origin main && git ls-tree -d origin/main widgets/<slug>   # or pages/<slug>
 ```
 
-If it isn't on `origin/main` yet, say so plainly. Don't hand over a link that will 404. Offer to
-send the link once the PR is merged. Also check that the folder has a `README.md`, because its
+If it isn't on `origin/main` yet, look for an open PR that carries it. Every PR gets a Netlify
+deploy preview of the whole repo (see `netlify.toml`), so the share page works there too: swap the
+origin in Step 3 for `https://deploy-preview-<PR number>--vpm-widgets.netlify.app`. Say it's a
+preview of unmerged work that stops updating once the PR closes, and offer the GitHub Pages link
+for after the merge. If there's no PR either, say so plainly and don't hand over a link that will
+404. Netlify posts its preview link on the PR; if that comment is missing, the deploy failed or
+the site isn't connected yet, so check the link loads before sending it. Also check that the folder has a `README.md`, because its
 H1 and first sentence become the title and summary people see. If the first sentence is internal
 shorthand (namespaces, "imported from…"), suggest a plain-language rewrite rather than shipping it.
 

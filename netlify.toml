@@ -1,0 +1,13 @@
+# Netlify deploy previews: every PR gets its own live copy of the whole repo at
+# https://deploy-preview-<PR number>--vpm-widgets.netlify.app/
+# GitHub Pages (mhdesigns98.github.io/vpm-widgets) still serves main and stays the
+# canonical preview; Netlify exists so reviewers can see a PR before it merges.
+#
+# No build step: the repo root is published as-is, same as GitHub Pages.
+# Netlify doesn't serve dotfiles/dot-folders (.claude/, .vercel/) and its default
+# functions directory is netlify/functions, so functions/ (a Cloudflare Pages
+# Function, not deployed) is left alone.
+
+[build]
+  publish = "."
+  command = ""
