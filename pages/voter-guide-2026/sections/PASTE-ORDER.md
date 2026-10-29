@@ -101,4 +101,4 @@ live page — the theme-collision bugs only show up against the real theme.
 
 ## Election-night variant
 
-On election night, paste `results-header-section.html` in Block 1's place instead of `header-section.html` (never both). It swaps the Important Dates card for the AP live results embed and carries the same shared stylesheet. Confirm the AP layout ID in its header comment first.
+On election night, paste `results-header-section.html` in Block 1's place instead of `header-section.html` (never both). It swaps the Important Dates card for the AP live results embed and carries the same shared stylesheet. Its title changes by phase on its own; see the header comment.

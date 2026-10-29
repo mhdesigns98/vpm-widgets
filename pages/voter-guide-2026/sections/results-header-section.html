@@ -22,8 +22,7 @@
   header-section.html, it must be on the page for every other section to render.
   If you change a shared rule, change it in both files.
 
-  PLACEHOLDER: the AP layout URL below (57278/37902) is a stand-in, not the final
-  election-night layout. Swap in the final layout ID from AP before this goes live.
+  AP layout: 57278/37902 ("Virginia races" table), the final election-night layout.
   Keep the guarded resizer loader at the bottom rather than AP's bare
   <script src> tag: the guard stops a re-injected block loading it twice.
 
@@ -1640,7 +1639,7 @@
         <h2 id="vg-results-title">Results by race</h2>
         <p class="vg-results-source">Source: <strong>Associated Press</strong></p>
       </div>
-      <!-- PLACEHOLDER layout (57278/37902): swap for the final AP layout. `ap-embed` is required: AP's resizeClient.js sizes `iframe.ap-embed` to its content. -->
+      <!-- `ap-embed` is required: AP's resizeClient.js sizes `iframe.ap-embed` to its content. -->
       <div class="vg-results-framewrap">
         <iframe
           class="ap-embed"
