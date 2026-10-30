@@ -32,4 +32,17 @@
   /* stacked on phones; a leading dot would dangle */
   .ga-banner .ga-tags { flex-direction: column; gap: 4px; }
   .ga-banner .ga-tag + .ga-tag::before { content: none; }
+  /* theme buttons are shrink-to-fit at every width: small chips in a wide
+     column, and two-line labels at 320px. Share the row instead, capped so
+     they don't stretch across a tablet; wrap to full width when 2 won't fit */
+  .ga-banner .ga-btns { flex-wrap: wrap; max-width: 480px; }
+  .ga-banner .ga-btn {
+    flex: 1 1 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    white-space: nowrap;
+    text-align: center;
+  }
 }
