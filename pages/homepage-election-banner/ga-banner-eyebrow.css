@@ -45,4 +45,7 @@
     white-space: nowrap;
     text-align: center;
   }
+  /* theme fixes the photo at 180px tall, which crops it to a thin strip once
+     the column goes full width; keep a photo shape instead */
+  .ga-banner .ga-image { height: auto; aspect-ratio: 16 / 9; max-height: 320px; }
 }
