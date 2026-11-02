@@ -101,7 +101,7 @@ live page — the theme-collision bugs only show up against the real theme.
 
 ## Election-night variant
 
-On election night, paste `results-header-section.html` in Block 1's place instead of `header-section.html` (never both). It swaps the Important Dates card for the AP live results embed and carries the same shared stylesheet. Its title changes by phase on its own; see the header comment.
+On election night, paste `results-header-section.html` in Block 1's place instead of `header-section.html` (never both). It swaps the Important Dates card for the AP live results embed and carries the same shared stylesheet. Its title changes by phase on its own; see the header comment. From 1 p.m. ET Nov. 4 it also moves the AP panel below the live Article List, so the page reads title, stories, results. Set that Article List block to the elections category; the code block can reorder it but can't choose its stories.
 
 ## Optional block, not in the default order
 

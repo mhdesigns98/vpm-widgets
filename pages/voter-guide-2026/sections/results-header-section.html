@@ -9,8 +9,11 @@
   What changed from header-section.html:
   - Title changes by time (script after the header markup): "Virginia Voter Guide"
     until polls close at 7 p.m. ET Nov. 3, "Virginia Election Results" overnight,
-    "Virginia Election Analysis" from 6 a.m. ET Nov. 4. Status line and dek change
+    "Virginia Election Analysis" from 1 p.m. ET Nov. 4. Status line and dek change
     with it. Test with ?vg-phase=guide|results|analysis on the page URL.
+  - In the analysis phase the AP panel moves below the live Article List, so the
+    page reads title, stories, then results. Set that Article List block to the
+    elections category in the CMS; this block only reorders, it can't pick stories.
   - The Important Dates card is gone. The AP live results embed takes its place,
     moved from the narrow sidebar to a full-width white panel under the title:
     AP's layout is a multi-race table and is unreadable at 340px.
@@ -1647,6 +1650,13 @@
     .vpm-vg .vg-results-framewrap {padding:4px 8px 16px;}
     .vpm-vg .vg-results-framewrap iframe {min-height:440px;}
   }
+  /* Analysis phase: the script moves the panel and note into this wrapper, placed right
+     after the live Article List, on the page's #101820 band instead of the navy hero */
+  .vpm-vg.vg-results-later {padding:32px 0 48px;}
+  .vpm-vg.vg-results-later .vg-results-panel {margin-top:0;}
+  @media (max-width:520px){
+    .vpm-vg.vg-results-later {padding:24px 0 32px;}
+  }
   /* Before polls close nothing is live yet: steady yellow dot, no pulse */
   .vpm-vg.vg-header[data-vg-phase="guide"] .vg-live-dot {animation:none;background:var(--yellow-52);}
   @media (prefers-reduced-motion:reduce){
@@ -1707,8 +1717,10 @@
 /* Title phases. Must sit directly after the .vg-header div above: it finds that div as
    its previous sibling, so two copies on one page never touch each other.
    - guide:    until polls close, 7 p.m. ET Tuesday, Nov. 3
-   - results:  polls close until 6 a.m. ET Wednesday, Nov. 4
-   - analysis: from then on
+   - results:  polls close until 1 p.m. ET Wednesday, Nov. 4
+   - analysis: from then on. The AP panel and its note also move below the first live
+     Article List after this block (section.page-article-grid), so stories come first.
+     Moving the iframe reloads it once. No Article List on the page: the panel stays put.
    Times are fixed UTC instants (Nov. 3 is after DST ends, so ET = UTC-5) and are read
    from the reader's clock. Re-checked every minute so an open tab flips at 7 p.m.
    Preview a phase with ?vg-phase=guide|results|analysis on the page URL. */
@@ -1717,7 +1729,7 @@
   if (!root || !root.classList.contains('vg-header')) return;
 
   var POLLS_CLOSE = Date.parse('2026-11-04T00:00:00Z');
-  var DAY_AFTER   = Date.parse('2026-11-04T11:00:00Z');
+  var DAY_AFTER   = Date.parse('2026-11-04T18:00:00Z');
 
   // Static, author-written strings only: `title` is set as HTML for the <em>.
   var PHASES = {
@@ -1741,6 +1753,33 @@
   var forced = (location.search.match(/[?&]vg-phase=(guide|results|analysis)\b/) || [])[1];
   var slot = function (name) { return root.querySelector('[data-vg-slot="' + name + '"]'); };
   var current;
+  var later; // wrapper the panel moves into, once moved
+
+  // First live Article List that comes after this header in the page.
+  function storyList() {
+    var grids = document.querySelectorAll('section.page-article-grid');
+    for (var i = 0; i < grids.length; i++) {
+      if (root.compareDocumentPosition(grids[i]) & Node.DOCUMENT_POSITION_FOLLOWING) return grids[i];
+    }
+    return null;
+  }
+
+  // One way only: phases never run backwards on a real clock.
+  function moveResultsBelowStories() {
+    if (later) return;
+    var grid = storyList();
+    var panel = root.querySelector('.vg-results-panel');
+    if (!grid || !panel) return;
+    later = document.createElement('div');
+    later.className = 'vpm-vg vg-results-later';
+    var wrap = document.createElement('div');
+    wrap.className = 'vg-wrap';
+    wrap.appendChild(panel);
+    var note = root.querySelector('.vg-results-note');
+    if (note) wrap.appendChild(note);
+    later.appendChild(wrap);
+    grid.parentNode.insertBefore(later, grid.nextSibling);
+  }
 
   function pick() {
     if (forced) return forced;
@@ -1750,6 +1789,8 @@
 
   function apply() {
     var phase = pick();
+    // The Article List is parsed after this script, so retry the move until it's found.
+    if (phase === 'analysis') moveResultsBelowStories();
     if (phase === current) return;
     current = phase;
     var p = PHASES[phase];
@@ -1760,6 +1801,7 @@
   }
 
   apply();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', apply);
   if (!forced) setInterval(apply, 60000);
 })();
 </script>
