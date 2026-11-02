@@ -50,6 +50,12 @@
     --border-faint3: rgba(255, 255, 255, 0.08);
     --border-azure-30: rgba(108, 172, 228, 0.3);
     --border-azure-20: rgba(108, 172, 228, 0.2);
+    --azure-6: #0c121a;
+    --azure-82: #c8d0d8;
+    --slate-37: #4a5568;
+    --blue-500: #1a6aa8; /* tokens.css --vpm-blue-500 */
+    --black: #000000;
+    --grey-93: #eeeeee;
   }
 
   .vpm-vg * {
@@ -192,7 +198,7 @@
       box-shadow 0.15s ease;
   }
   .vpm-vg .vg-section-nav a:hover {
-    color: #fff;
+    color: var(--white);
     background: rgba(255, 255, 255, 0.06);
   }
   .vpm-vg .vg-section-nav a.vg-active {
@@ -279,7 +285,7 @@
     font-size: 12px;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: #c8d0d8;
+    color: var(--azure-82);
   }
   /* Larger, mixed-case variant used as each band's real <h2> heading
      (was an inline style="font-size:28px..." before the headings were
@@ -337,6 +343,7 @@
     white-space: nowrap;
     border: 0;
   }
+  /* ship-lint: allow unscoped-selector start */
   /* =========================================================================
      LIVE BLOCK OVERRIDES — Featured Stories article list
      -------------------------------------------------------------------------
@@ -348,6 +355,10 @@
      Do not add any other bare/global selectors to this sheet.
      ========================================================================= */
   section.page-article-grid {
+    --vg-azure-9-2: #0d1520;
+    --vg-white: #ffffff;
+    --vg-red-accent: #f44250;
+    --vg-blue-accent: #5ba8e0;
     --vg-azure-9: #101820;
     --vg-azure-66: #6cace4;
     --vg-yellow-52: #e0e721;
@@ -409,7 +420,7 @@
   /* story with no image: branded placeholder tile instead of a stretched icon */
   section.page-article-grid .page-article-card-media a.bsm-img-ph,
   section.page-article-grid .page-article-card-media .bsm-img-ph {
-    background-color: #0d1520;
+    background-color: var(--vg-azure-9-2);
     background-image: url("https://vpm-voter-guide.vercel.app/assets/icon-video-unavailable.svg");
     background-repeat: no-repeat;
     background-position: center;
@@ -429,7 +440,7 @@
     font-weight: 500;
     font-size: 13px;
     line-height: 19.5px;
-    color: #fff;
+    color: var(--vg-white);
   }
   section.page-article-grid .page-article-title a {
     color: inherit;
@@ -452,12 +463,12 @@
     margin-top: auto;
     height: 3px;
     width: 100%;
-    background: #f44250;
+    background: var(--vg-red-accent);
   }
   section.page-article-grid
     .page-article-grid-inner
     > article:nth-child(3n + 2)::after {
-    background: #5ba8e0;
+    background: var(--vg-blue-accent);
   }
   section.page-article-grid
     .page-article-grid-inner
@@ -507,6 +518,7 @@
     }
   }
   /* ================= end live block overrides ================= */
+  /* ship-lint: end */
 
   /* ---------- Sidebar ---------- */
   .vpm-vg .vg-sidebar {
@@ -517,7 +529,7 @@
     gap: 24px;
     padding-top: 16px;
   }
-  /* Header recolor (campaign-graphic alignment): hero sits on brand navy #00003F; the dates
+  /* Header recolor (campaign-graphic alignment): hero sits on brand navy var(--navy-brand); the dates
      card is white with a red edge and navy text. Scoped to .vg-header so the rest of the page
      keeps its #101820 / yellow system. */
   .vpm-vg.vg-header {
@@ -560,7 +572,7 @@
   }
   .vpm-vg .vg-date-info-sub {
     font-size: 13px;
-    color: #4a5568;
+    color: var(--slate-37);
     margin: 0;
   }
   .vpm-vg .vg-cal-link {
@@ -584,7 +596,7 @@
     border-top: 1px solid rgba(0, 0, 63, 0.12);
     font-size: 13px;
     font-weight: 500;
-    color: #1a6aa8;
+    color: var(--blue-500);
     min-height: 44px;
   }
   .vpm-vg .vg-find-district svg {
@@ -595,7 +607,7 @@
   .vpm-vg .vg-promo-slot {
     border-radius: 4px;
     overflow: hidden;
-    background: #0c121a;
+    background: var(--azure-6);
     border: 1px dashed var(--border-azure-30);
     display: flex;
     align-items: center;
@@ -635,7 +647,7 @@
 
   /* ---------- Leaderboard promo ---------- */
   .vpm-vg .vg-banner-slot {
-    background: #0c121a;
+    background: var(--azure-6);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -671,7 +683,7 @@
     align-items: start;
   }
   .vpm-vg .vg-video-player {
-    background: #000;
+    background: var(--black);
     border-radius: 2px;
     aspect-ratio: 16/9;
     display: flex;
@@ -692,7 +704,7 @@
     opacity: 0.9;
   }
   .vpm-vg .vg-video-player .vg-msg {
-    color: #eee;
+    color: var(--grey-93);
     font-size: 20px;
     text-align: center;
   }
@@ -726,7 +738,7 @@
     align-items: center;
     gap: 8px;
     background: var(--red-54);
-    color: #fff;
+    color: var(--white);
     padding: 12px 22px;
     border-radius: 3px;
     font-size: 13px;
@@ -1193,14 +1205,14 @@
       gap 0.15s ease;
   }
   .vpm-vg .vg-learn-more:hover {
-    color: #fff;
+    color: var(--white);
     gap: 8px;
   }
   .vpm-vg .vg-promo-link:hover {
-    color: #fff;
+    color: var(--white);
   }
   .vpm-vg .vg-find-district:hover {
-    color: #00003f;
+    color: var(--navy-brand);
     gap: 8px;
   }
   .vpm-vg .vg-resources-bar a {
@@ -1226,7 +1238,7 @@
     transition: color 0.15s ease;
   }
   .vpm-vg .vg-faq-footnote a:hover {
-    color: #fff;
+    color: var(--white);
   }
 
   /* button CTAs */
@@ -1297,7 +1309,7 @@
     height: 6px;
     margin-top: -3px;
     border-radius: 50%;
-    background: #fff;
+    background: var(--white);
     box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
     animation: livePulse 2s infinite;
   }
@@ -1491,6 +1503,28 @@
      RESULTS HEADER — election-night variant (results-header-section.html only)
      ========================================================================= */
   .vpm-vg #results {scroll-margin-top:64px;}
+  /* Hostile-host reset for this header's markup. :where() drops .vpm-vg's weight, leaving
+     one class: beats a host's bare `div{}` / `p{}` / `span{}` rule but loses to every
+     `.vpm-vg .vg-…` rule, so designed margins and sizes still apply. */
+  .vpm-vg.vg-header {margin:0;padding:0;}
+  :where(.vpm-vg) .vg-results-hero,
+  :where(.vpm-vg) .vg-results-top,
+  :where(.vpm-vg .vg-results-top) .vg-hero-main,
+  :where(.vpm-vg .vg-results-top) .vg-eyebrow,
+  :where(.vpm-vg) .vg-results-headline,
+  :where(.vpm-vg) .vg-results-meta,
+  :where(.vpm-vg .vg-results-meta) .vg-hero-dek,
+  :where(.vpm-vg) .vg-results-status,
+  :where(.vpm-vg) .vg-results-panel,
+  :where(.vpm-vg) .vg-results-panelhd,
+  :where(.vpm-vg) .vg-results-panelhd h2,
+  :where(.vpm-vg) .vg-results-source,
+  :where(.vpm-vg) .vg-results-framewrap,
+  :where(.vpm-vg) .vg-results-note {margin:0;padding:0;}
+  :where(.vpm-vg) .vg-results-headline,
+  :where(.vpm-vg) .vg-results-headline em,
+  :where(.vpm-vg) .vg-results-status span,
+  :where(.vpm-vg) .vg-results-source strong {font-size:inherit;}
   .vpm-vg .vg-results-hero {
     padding-top:48px;
     padding-bottom:56px;
@@ -1511,6 +1545,7 @@
   /* "Results" shares line two with "Election" but takes the third color */
   .vpm-vg .vg-results-headline em {
     font-style:normal;
+    font-size:inherit;
     color:var(--azure-66);
   }
   .vpm-vg .vg-results-meta {
@@ -1566,9 +1601,9 @@
   .vpm-vg .vg-results-source {
     margin:0;
     font-size:12px;
-    color:#4a5568;
+    color:var(--slate-37);
   }
-  .vpm-vg .vg-results-source strong {color:var(--navy-brand);font-weight:600;}
+  .vpm-vg .vg-results-source strong {color:var(--navy-brand);font-weight:600;font-size:inherit;}
   .vpm-vg .vg-results-framewrap {padding:8px 24px 24px;}
   .vpm-vg .vg-results-framewrap iframe {
     display:block;
@@ -1583,12 +1618,16 @@
     line-height:1.6;
     color:var(--azure-79);
   }
+  /* !important on color and decoration only: holds against a host `a{… !important}` rule */
   .vpm-vg .vg-results-note a {
-    color:var(--azure-66);
-    text-decoration:underline;
+    color:var(--azure-66) !important;
+    text-decoration:underline !important;
     text-underline-offset:2px;
+    display:inline-flex;
+    align-items:center;
+    min-height:44px; /* tap target */
   }
-  .vpm-vg .vg-results-note a:hover {color:var(--white);}
+  .vpm-vg .vg-results-note a:hover {color:var(--white) !important;}
 
   @media (max-width:980px){
     .vpm-vg .vg-results-top {flex-direction:column;align-items:flex-start;}
@@ -1619,7 +1658,7 @@
   <main class="vg-wrap vg-results-hero">
     <div class="vg-results-top">
       <div class="vg-hero-main">
-        <p class="vg-eyebrow">VPM Voter Guide · 2026 General Election</p>
+        <p class="vg-eyebrow">VPM Voter Guide &middot; 2026 General Election</p>
         <h1 class="vg-headline vg-results-headline vg-heading-font">
           <span class="vg-hl vg-l1">Virginia</span>
           <span class="vg-hl vg-l2" data-vg-slot="title">Election <em>Results</em></span>
