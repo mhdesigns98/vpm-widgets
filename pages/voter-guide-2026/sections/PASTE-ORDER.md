@@ -98,3 +98,11 @@ structure above standing in for the live block, load it in a browser and check:
 
 Then paste block 1 + a live Article List block on Kinsta staging before touching the
 live page — the theme-collision bugs only show up against the real theme.
+
+## Election-night variant
+
+On election night, paste `results-header-section.html` in Block 1's place instead of `header-section.html` (never both). It swaps the Important Dates card for the AP live results embed and carries the same shared stylesheet. Its title changes by phase on its own; see the header comment.
+
+## Optional block, not in the default order
+
+`house-races.html` (More U.S. House Races, `#house-races`) is a standalone Code Block for the seven districts without a VPM candidate Q&A. Its own comment says to paste it right after the "Know Your Candidates" article list, which this page doesn't currently have, so it has no slot in the table above. Its candidate lists need editorial sign-off before it goes live, and adding it means adding a `#house-races` link to `section-nav.html`.
