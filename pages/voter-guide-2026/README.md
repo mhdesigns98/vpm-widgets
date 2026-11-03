@@ -90,3 +90,16 @@ custom theme, and a child of it adds a layer without buying self-service.
    export.
 3. Should an elections coverage feed include `npr_story_post` alongside `post`?
 4. Read-only SFTP or git access to `wpp-base`.
+
+## Section nav anchors on CMS blocks
+
+`sections/section-nav.html` links to these ids on CMS blocks, not Code Blocks, so they don't
+exist in this build. Set them in the CMS block's id field; until then the nav script gives the
+block its id by matching the exact h2 text, and hides the link if that heading is gone.
+
+| Anchor | CMS block |
+|---|---|
+| `#need-to-know` | "What You Need to Know" Promo List |
+| `#key-elections` | "Know Your Candidates" Promo List (already set on the live page) |
+| `#amendments` | "Proposed Constitutional Amendments" Promo List |
+| `#latest` | "Latest Coverage" Article List |

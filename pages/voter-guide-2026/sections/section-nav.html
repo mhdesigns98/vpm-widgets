@@ -1,106 +1,159 @@
 <!--
-  VPM Voter Guide — Sticky Section Nav (ACF)
-  =========================================
-  Paste order: this fragment goes directly AFTER the live "Featured Stories"
-  Article List block and BEFORE Video Coverage. See acf-sections/README.md.
+  VPM Voter Guide — Section Nav (ACF)
+  ===================================
+  Paste order: its own Code Block directly AFTER the header block (results-header-section.html).
+  The results header skips Code Blocks when it looks for the stories block under it, so
+  this nav sitting in between doesn't change where the AP panel moves at 1 p.m. Nov. 4.
 
-  Why it's its own Code Block: in the original design the sticky nav sits
-  below the Featured Stories cards. Those cards are now a live CMS Article
-  List block, and a Code Block can't contain one — so the nav had to move out
-  of header-section.html into its own fragment on the far side of the split.
+  Built for the sections on vpm.org/elections as of Nov. 3, 2026:
+    #results        AP panel (results header; moves below the stories on Nov. 4)
+    #need-to-know   "What You Need to Know" Promo List
+    #faq            Voting FAQ Code Block
+    #key-elections  "Know Your Candidates" Promo List (id set in the CMS)
+    #amendments     "Proposed Constitutional Amendments" Promo List
+    #video          VPM Video Coverage Code Block
+    #latest         "Latest Coverage" Article List
 
-  Requires the shared <style> block from header-section.html (or
-  _shared-styles.html) to be present on the page — this fragment carries no
-  CSS of its own.
+  CMS blocks without an id: a link with data-vg-heading finds the section whose h2
+  reads exactly that and gives it the id. Setting the id on the block in the CMS is
+  sturdier; a rename of the heading otherwise drops the link. A link whose section
+  isn't on the page is hidden, never left dead. Links sort into page order, and
+  re-sort when the AP panel moves.
 
-  The links target #video / #elections / #regional / #faq by id;
-  those ids must exist on the final page (they live in the Video Coverage,
-  Key Virginia Elections, Key Regional Races and Voting FAQ fragments)
-  for the links and the scrollspy highlight to work. Remove a <li> if you drop
-  that section.
+  A Code Block is too short a parent for position:sticky, so the script pins the nav
+  (class vg-pinned, CSS in results-header-section.html) once it scrolls past the top.
+  Requires the shared <style> block from results-header-section.html on the page.
 -->
 <div class="vpm-vg">
+  <div class="vg-section-nav-spacer" aria-hidden="true"></div>
   <nav class="vg-section-nav" aria-label="Page sections">
     <div class="vg-wrap vg-section-nav-inner">
       <span class="vg-section-nav-label">On this page</span>
       <ul>
-        <li><a href="#video">Video Coverage</a></li>
-        <li><a href="#elections">Key Elections</a></li>
-        <li><a href="#regional">Regional Races</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#need-to-know" data-vg-heading="What You Need to Know">What You Need to Know</a></li>
         <li><a href="#faq">Voting FAQ</a></li>
+        <li><a href="#key-elections" data-vg-heading="Know Your Candidates">Candidates</a></li>
+        <li><a href="#amendments" data-vg-heading="Proposed Constitutional Amendments">Amendments</a></li>
+        <li><a href="#video">Video</a></li>
+        <li><a href="#latest" data-vg-heading="Latest Coverage">Latest Coverage</a></li>
       </ul>
     </div>
   </nav>
 </div>
 
 <script>
-  // Scrollspy: highlight the current section in the on-page nav
   (function () {
-    var links = Array.prototype.slice.call(document.querySelectorAll('.vg-section-nav a'));
-    if (!links.length) return;
-
-    // Smooth scroll on click. This replaces a global `html{scroll-behavior:smooth}`
-    // rule, which would have leaked out of the fragment and changed scrolling for
-    // the whole site.
+    var script = document.currentScript;
+    var wrap = script && script.previousElementSibling;
+    var nav = wrap && wrap.querySelector('.vg-section-nav');
+    if (!nav) return;
+    var spacer = wrap.querySelector('.vg-section-nav-spacer');
+    var list = nav.querySelector('ul');
+    var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    function idOf(a) { return a.getAttribute('href').slice(1); }
+    function target(a) { return document.getElementById(idOf(a)); }
+
+    // Give un-ided CMS blocks the id their link expects, by exact h2 text.
+    function claimIds() {
+      links.forEach(function (a) {
+        var text = a.getAttribute('data-vg-heading');
+        if (!text || target(a)) return;
+        var heads = document.querySelectorAll('section.page-section h2');
+        for (var i = 0; i < heads.length; i++) {
+          if (heads[i].textContent.trim() !== text) continue;
+          var sec = heads[i].closest('section.page-section');
+          if (sec && !sec.id) { sec.id = idOf(a); return; }
+        }
+      });
+    }
+
+    // Hide links with no section; put the rest in page order.
+    function sortLinks() {
+      var shown = links.filter(function (a) {
+        var ok = !!target(a);
+        a.parentNode.style.display = ok ? '' : 'none'; // not [hidden]: a host li{display} beats it
+        return ok;
+      });
+      shown.sort(function (a, b) {
+        return target(a).compareDocumentPosition(target(b)) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+      });
+      shown.forEach(function (a) { list.appendChild(a.parentNode); });
+      wrap.style.display = shown.length < 2 ? 'none' : '';
+    }
+
+    // Pin to the top once the nav's own spot has scrolled past.
+    function pin() {
+      var past = (spacer.classList.contains('vg-pinned') ? spacer : nav).getBoundingClientRect().top < 0;
+      if (past) spacer.style.height = nav.offsetHeight + 'px';
+      nav.classList.toggle('vg-pinned', past);
+      spacer.classList.toggle('vg-pinned', past);
+    }
+
+    // Smooth scroll that stops below the pinned nav. Done in JS rather than a global
+    // `html{scroll-behavior:smooth}`, which would leak out and change the whole site.
     links.forEach(function (a) {
       a.addEventListener('click', function (e) {
-        var target = document.getElementById(a.getAttribute('href').slice(1));
-        if (!target) return;
+        var t = target(a);
+        if (!t) return;
         e.preventDefault();
-        target.scrollIntoView({
-          behavior: (reduce && reduce.matches) ? 'auto' : 'smooth',
-          block: 'start'
-        });
+        var start = window.pageYOffset;
+        var top = t.getBoundingClientRect().top + start - nav.offsetHeight - 8;
+        window.scrollTo({ top: top, behavior: (reduce && reduce.matches) ? 'auto' : 'smooth' });
+        // Some browsers drop a smooth scroll (seen in Chrome's phone emulation); jump instead.
+        setTimeout(function () {
+          if (window.pageYOffset === start && Math.abs(top - start) > 2) window.scrollTo(0, top);
+        }, 400);
+        history.replaceState(null, '', '#' + idOf(a));
       });
     });
 
-    if (!('IntersectionObserver' in window)) return;
-
-    // The sections this nav points at live in LATER Code Blocks, so they don't
-    // exist yet while this inline script runs. Wait for the full page before
-    // wiring the scrollspy, or it observes nothing and never highlights.
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initScrollspy);
-    } else {
-      initScrollspy();
-    }
-
-    function initScrollspy() {
-    var byId = {};
-    links.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
-
-    var sections = links
-      .map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); })
-      .filter(Boolean);
-
     var visible = {};
+    var observer;
     function setActive() {
       var current = null;
-      // pick the LAST section overlapping the activation band: when one section
-      // is scrolling out just as the next arrives, the incoming one is the one
-      // the reader is now in
-      sections.forEach(function (s) {
-        if (visible[s.id] && (!current || s.offsetTop > current.offsetTop)) current = s;
+      // the LAST section in the activation band: the incoming one is where the reader is
+      links.forEach(function (a) {
+        var t = target(a);
+        if (t && visible[t.id] && (!current || t.getBoundingClientRect().top > current.getBoundingClientRect().top)) current = t;
       });
-      links.forEach(function (a) { a.classList.remove('vg-active'); });
-      if (current && byId[current.id]) byId[current.id].classList.add('vg-active');
+      links.forEach(function (a) {
+        var on = !!current && idOf(a) === current.id;
+        a.classList.toggle('vg-active', on);
+        // on a phone the list scrolls sideways: keep the highlighted link in view
+        if (!on) return;
+        var r = a.getBoundingClientRect(), box = list.getBoundingClientRect();
+        if (r.left < box.left) list.scrollLeft += r.left - box.left - 8;
+        else if (r.right > box.right) list.scrollLeft += r.right - box.right + 8;
+      });
+    }
+    function spy() {
+      if (!('IntersectionObserver' in window)) return;
+      if (observer) observer.disconnect();
+      visible = {};
+      // thin band just under the pinned nav, so the highlight is the section under it
+      observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          visible[e.target.id] = e.isIntersecting && e.intersectionRect.height > 0;
+        });
+        setActive();
+      }, { rootMargin: '-64px 0px -70% 0px', threshold: 0 });
+      links.forEach(function (a) { var t = target(a); if (t) observer.observe(t); });
     }
 
-    var observer = new IntersectionObserver(function (entries) {
-      // require real overlap: a section whose bottom edge exactly meets the top
-      // of the activation band reports isIntersecting with zero height, which
-      // would keep the previous section highlighted
-      entries.forEach(function (e) {
-        visible[e.target.id] = e.isIntersecting && e.intersectionRect.height > 0;
-      });
-      setActive();
-    // thin activation band just below the sticky nav (48px tall + a little
-    // slack), so the highlighted link is the section actually under the nav
-    }, { rootMargin: '-64px 0px -70% 0px', threshold: 0 });
-
-    sections.forEach(function (s) { observer.observe(s); });
-    setActive();
+    // The sections live in later blocks, so wire up once the page is parsed.
+    function init() {
+      claimIds();
+      sortLinks();
+      spy();
+      pin();
+      window.addEventListener('scroll', pin, { passive: true });
+      window.addEventListener('resize', pin);
     }
+    document.addEventListener('vg:results-moved', function () { sortLinks(); spy(); });
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
   })();
 </script>
