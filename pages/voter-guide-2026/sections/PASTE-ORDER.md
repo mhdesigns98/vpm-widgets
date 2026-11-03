@@ -101,7 +101,23 @@ live page — the theme-collision bugs only show up against the real theme.
 
 ## Election-night variant
 
-On election night, paste `results-header-section.html` in Block 1's place instead of `header-section.html` (never both). It swaps the Important Dates card for the AP live results embed and carries the same shared stylesheet. Its title changes by phase on its own; see the header comment. From 1 p.m. ET Nov. 4 it also moves the AP panel below the live Article List, so the page reads title, stories, results. Set that Article List block to the elections category; the code block can reorder it but can't choose its stories.
+On election night, paste `results-header-section.html` in Block 1's place instead of `header-section.html` (never both). It swaps the Important Dates card for the AP live results embed and carries the same shared stylesheet. Its title changes by phase on its own; see the header comment.
+
+The live page at vpm.org/elections doesn't follow the table above. As of Nov. 3, 2026 it runs:
+
+| # | Block | Kind |
+|---|---|---|
+| 1 | `results-header-section.html` | Code Block |
+| 2 | `section-nav.html` | Code Block (new: paste it directly under the header) |
+| 3 | "What You Need to Know" + Voting FAQ (`#faq`) | 2-column row: Promo List (hand-picked) + Code Block |
+| 4 | "Know Your Candidates" (`#key-elections`) | Promo List (hand-picked) |
+| 5 | "Proposed Constitutional Amendments" | Promo List (hand-picked) |
+| 6 | VPM Video Coverage (`#video`) | Code Block |
+| 7 | Morning Monitor newsletter | Code Block |
+| 8 | "Latest Coverage" | Article List (automatic, Virginia Elections) |
+
+- **1 p.m. ET Nov. 4:** the header moves the AP panel below the first block under it that isn't a Code Block, so it skips the nav and lands under row 3. For newest-first election stories above the results, drag "Latest Coverage" (or a copy of it) up into row 3's place; the header doesn't choose stories.
+- **Section nav ids:** `#need-to-know`, `#amendments` and `#latest` are given to blocks by their exact h2 text when the CMS block has no id. Setting those ids on the blocks in the CMS is sturdier. A link whose section is missing is hidden.
 
 ## Optional block, not in the default order
 

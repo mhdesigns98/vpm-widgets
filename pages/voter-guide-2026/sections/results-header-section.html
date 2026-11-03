@@ -11,9 +11,11 @@
     until polls close at 7 p.m. ET Nov. 3, "Virginia Election Results" overnight,
     "Virginia Election Analysis" from 1 p.m. ET Nov. 4. Status line and dek change
     with it. Test with ?vg-phase=guide|results|analysis on the page URL.
-  - In the analysis phase the AP panel moves below the live Article List, so the
-    page reads title, stories, then results. Set that Article List block to the
-    elections category in the CMS; this block only reorders, it can't pick stories.
+  - In the analysis phase the AP panel moves below the CMS block directly under this
+    header (skipping Code Blocks, so a section nav pasted right after it doesn't
+    count), so the page reads title, stories, then results. Whatever block sits
+    there is "the stories": a Promo List or an Article List. This block only moves
+    the panel; it can't choose stories.
   - The Important Dates card is gone. The AP live results embed takes its place,
     moved from the narrow sidebar to a full-width white panel under the title:
     AP's layout is a multi-race table and is unreadable at 340px.
@@ -1651,12 +1653,18 @@
     .vpm-vg .vg-results-framewrap iframe {min-height:440px;}
   }
   /* Analysis phase: the script moves the panel and note into this wrapper, placed right
-     after the live Article List, on the page's #101820 band instead of the navy hero */
+     after the CMS block under the header, on the page's #101820 band instead of the navy hero */
   .vpm-vg.vg-results-later {padding:32px 0 48px;}
   .vpm-vg.vg-results-later .vg-results-panel {margin-top:0;}
   @media (max-width:520px){
     .vpm-vg.vg-results-later {padding:24px 0 32px;}
   }
+  /* section-nav.html: a CMS Code Block is too short a parent for position:sticky to hold,
+     so its script pins the nav with this class once it scrolls past the top, leaving a
+     same-height spacer in its place */
+  .vpm-vg .vg-section-nav.vg-pinned {position:fixed;top:0;left:0;right:0;z-index:1000;}
+  .vpm-vg .vg-section-nav-spacer {display:none;}
+  .vpm-vg .vg-section-nav-spacer.vg-pinned {display:block;}
   /* Before polls close nothing is live yet: steady yellow dot, no pulse */
   .vpm-vg.vg-header[data-vg-phase="guide"] .vg-live-dot {animation:none;background:var(--yellow-52);}
   @media (prefers-reduced-motion:reduce){
@@ -1718,9 +1726,9 @@
    its previous sibling, so two copies on one page never touch each other.
    - guide:    until polls close, 7 p.m. ET Tuesday, Nov. 3
    - results:  polls close until 1 p.m. ET Wednesday, Nov. 4
-   - analysis: from then on. The AP panel and its note also move below the first live
-     Article List after this block (section.page-article-grid), so stories come first.
-     Moving the iframe reloads it once. No Article List on the page: the panel stays put.
+   - analysis: from then on. The AP panel and its note also move below the first CMS
+     block after this one that isn't a Code Block, so stories come first. Moving the
+     iframe reloads it once. Outside the CMS's page sections: the panel stays put.
    Times are fixed UTC instants (Nov. 3 is after DST ends, so ET = UTC-5) and are read
    from the reader's clock. Re-checked every minute so an open tab flips at 7 p.m.
    Preview a phase with ?vg-phase=guide|results|analysis on the page URL. */
@@ -1755,11 +1763,12 @@
   var current;
   var later; // wrapper the panel moves into, once moved
 
-  // First live Article List that comes after this header in the page.
-  function storyList() {
-    var grids = document.querySelectorAll('section.page-article-grid');
-    for (var i = 0; i < grids.length; i++) {
-      if (root.compareDocumentPosition(grids[i]) & Node.DOCUMENT_POSITION_FOLLOWING) return grids[i];
+  // The CMS block under this header: the next page section that isn't a Code Block,
+  // so a section nav pasted directly after the header is skipped.
+  function storyBlock() {
+    var host = root.closest('section.page-section');
+    for (var el = host && host.nextElementSibling; el; el = el.nextElementSibling) {
+      if (el.matches('section.page-section') && !el.classList.contains('page-code-block')) return el;
     }
     return null;
   }
@@ -1767,9 +1776,9 @@
   // One way only: phases never run backwards on a real clock.
   function moveResultsBelowStories() {
     if (later) return;
-    var grid = storyList();
+    var block = storyBlock();
     var panel = root.querySelector('.vg-results-panel');
-    if (!grid || !panel) return;
+    if (!block || !panel) return;
     later = document.createElement('div');
     later.className = 'vpm-vg vg-results-later';
     var wrap = document.createElement('div');
@@ -1778,7 +1787,9 @@
     var note = root.querySelector('.vg-results-note');
     if (note) wrap.appendChild(note);
     later.appendChild(wrap);
-    grid.parentNode.insertBefore(later, grid.nextSibling);
+    block.parentNode.insertBefore(later, block.nextSibling);
+    // section-nav.html re-sorts its links when the results move
+    document.dispatchEvent(new CustomEvent('vg:results-moved'));
   }
 
   function pick() {
@@ -1789,7 +1800,7 @@
 
   function apply() {
     var phase = pick();
-    // The Article List is parsed after this script, so retry the move until it's found.
+    // The block below is parsed after this script, so retry the move until it's found.
     if (phase === 'analysis') moveResultsBelowStories();
     if (phase === current) return;
     current = phase;
