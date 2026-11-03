@@ -6,7 +6,8 @@
   this nav sitting in between doesn't change where the AP panel moves at 1 p.m. Nov. 4.
 
   Built for the sections on vpm.org/elections as of Nov. 3, 2026:
-    #results        AP panel (results header; moves below the stories on Nov. 4)
+    #results        AP panel (results header; moves below the stories on Nov. 4). Hidden
+                    while the panel sits right under the nav; shown after the move.
     #need-to-know   "What You Need to Know" Promo List
     #faq            Voting FAQ Code Block
     #key-elections  "Know Your Candidates" Promo List (id set in the CMS)
@@ -78,10 +79,12 @@
       });
     }
 
-    // Hide links with no section; put the rest in page order.
+    // Hide links with no section, and the one whose section sits right under the nav
+    // (Results, until the 1 p.m. move); put the rest in page order.
     function sortLinks() {
       var shown = links.filter(function (a) {
-        var ok = !!target(a);
+        var t = target(a);
+        var ok = !!t && wrap.nextElementSibling !== t;
         a.parentNode.style.display = ok ? '' : 'none'; // not [hidden]: a host li{display} beats it
         return ok;
       });
@@ -90,14 +93,23 @@
       });
       shown.forEach(function (a) { list.appendChild(a.parentNode); });
       wrap.style.display = shown.length < 2 ? 'none' : '';
+      fit();
+    }
+
+    // In a narrow column, drop the "On this page" label before the links clip.
+    function fit() {
+      nav.classList.remove('vg-tight');
+      nav.classList.toggle('vg-tight', list.scrollWidth > list.clientWidth + 1);
     }
 
     // Pin to the top once the nav's own spot has scrolled past.
     function pin() {
       var past = (spacer.classList.contains('vg-pinned') ? spacer : nav).getBoundingClientRect().top < 0;
       if (past) spacer.style.height = nav.offsetHeight + 'px';
+      if (past === nav.classList.contains('vg-pinned')) return;
       nav.classList.toggle('vg-pinned', past);
       spacer.classList.toggle('vg-pinned', past);
+      fit(); // pinned, the bar is page-wide
     }
 
     // Smooth scroll that stops below the pinned nav. Done in JS rather than a global
@@ -171,8 +183,9 @@
       sortLinks();
       spy();
       pin();
+      if (document.fonts) document.fonts.ready.then(fit); // web fonts change link widths
       window.addEventListener('scroll', pin, { passive: true });
-      window.addEventListener('resize', pin);
+      window.addEventListener('resize', function () { fit(); pin(); });
     }
     document.addEventListener('vg:results-moved', function () { sortLinks(); spy(); });
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

@@ -180,6 +180,13 @@
     text-transform: uppercase;
     color: var(--azure-40);
   }
+  /* links don't fit (narrow column): drop the label, as on phones */
+  .vpm-vg .vg-section-nav.vg-tight .vg-section-nav-label {
+    display: none;
+  }
+  .vpm-vg .vg-section-nav.vg-tight .vg-section-nav-inner {
+    gap: 0;
+  }
   .vpm-vg .vg-section-nav ul {
     display: flex;
     gap: 4px;
