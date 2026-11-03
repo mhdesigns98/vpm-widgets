@@ -117,7 +117,7 @@ The live page at vpm.org/elections doesn't follow the table above. As of Nov. 3,
 | 8 | "Latest Coverage" | Article List (automatic, Virginia Elections) |
 
 - **1 p.m. ET Nov. 4:** the header moves the AP panel below the first block under it that isn't a Code Block, so it skips the nav and lands under row 3. For newest-first election stories above the results, drag "Latest Coverage" (or a copy of it) up into row 3's place; the header doesn't choose stories.
-- **Section nav ids:** `#need-to-know`, `#amendments` and `#latest` are given to blocks by their exact h2 text when the CMS block has no id. Setting those ids on the blocks in the CMS is sturdier. A link whose section is missing is hidden.
+- **Section nav ids:** `#need-to-know`, `#amendments` and `#latest` are given to blocks whose heading starts with the expected name (any case) when the CMS block has no id. Setting those ids on the blocks in the CMS is sturdier. A link whose section is missing is hidden.
 
 ## Optional block, not in the default order
 

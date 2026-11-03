@@ -1718,6 +1718,10 @@
   .vpm-vg .vg-section-nav.vg-pinned {position:fixed;top:0;left:0;right:0;z-index:1000;}
   .vpm-vg .vg-section-nav-spacer {display:none;}
   .vpm-vg .vg-section-nav-spacer.vg-pinned {display:block;}
+  /* section-nav.html moves itself into the hero, between the title and the AP panel */
+  .vpm-vg .vpm-vg.vg-nav-in-hero {background:transparent;margin-top:32px;}
+  .vpm-vg .vg-nav-in-hero .vg-section-nav:not(.vg-pinned) .vg-section-nav-inner {padding-left:16px;padding-right:16px;}
+  .vpm-vg .vg-nav-in-hero + .vg-results-panel {margin-top:24px;}
   /* Before polls close nothing is live yet: steady yellow dot, no pulse */
   .vpm-vg.vg-header[data-vg-phase="guide"] .vg-live-dot {animation:none;background:var(--yellow-52);}
   @media (prefers-reduced-motion:reduce){

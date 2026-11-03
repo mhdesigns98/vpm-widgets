@@ -14,11 +14,14 @@
     #video          VPM Video Coverage Code Block
     #latest         "Latest Coverage" Article List
 
-  CMS blocks without an id: a link with data-vg-heading finds the section whose h2
-  reads exactly that and gives it the id. Setting the id on the block in the CMS is
+  CMS blocks without an id: a link with data-vg-heading finds the section whose h2 or
+  h3 starts with that text (any case; several headings separated by |) and gives it the id. Setting the id on the block in the CMS is
   sturdier; a rename of the heading otherwise drops the link. A link whose section
   isn't on the page is hidden, never left dead. Links sort into page order, and
   re-sort when the AP panel moves.
+
+  With the results header above it, the script moves the nav up into the header, between
+  the title and the AP panel, so it isn't stranded below the full AP table.
 
   A Code Block is too short a parent for position:sticky, so the script pins the nav
   (class vg-pinned, CSS in results-header-section.html) once it scrolls past the top.
@@ -36,7 +39,7 @@
         <li><a href="#key-elections" data-vg-heading="Know Your Candidates">Candidates</a></li>
         <li><a href="#amendments" data-vg-heading="Proposed Constitutional Amendments">Amendments</a></li>
         <li><a href="#video">Video</a></li>
-        <li><a href="#latest" data-vg-heading="Latest Coverage">Latest Coverage</a></li>
+        <li><a href="#latest" data-vg-heading="Latest Coverage|Latest Election Coverage|Latest Stories">Latest Coverage</a></li>
       </ul>
     </div>
   </nav>
@@ -56,14 +59,19 @@
     function idOf(a) { return a.getAttribute('href').slice(1); }
     function target(a) { return document.getElementById(idOf(a)); }
 
-    // Give un-ided CMS blocks the id their link expects, by exact h2 text.
+    function norm(t) { return t.replace(/\s+/g, ' ').trim().toLowerCase(); }
+
+    // Give un-ided CMS blocks the id their link expects, by heading text: a match is a
+    // heading that starts with one of the link's |-separated names, in any case, so
+    // "Latest Election Coverage from VPM" matches "Latest Election Coverage".
     function claimIds() {
       links.forEach(function (a) {
-        var text = a.getAttribute('data-vg-heading');
-        if (!text || target(a)) return;
-        var heads = document.querySelectorAll('section.page-section h2');
+        var names = (a.getAttribute('data-vg-heading') || '').split('|').map(norm).filter(Boolean);
+        if (!names.length || target(a)) return;
+        var heads = document.querySelectorAll('section.page-section h2, section.page-section h3:not(.page-article-title):not(.page-promo-title)');
         for (var i = 0; i < heads.length; i++) {
-          if (heads[i].textContent.trim() !== text) continue;
+          var h = norm(heads[i].textContent);
+          if (!names.some(function (n) { return h.indexOf(n) === 0; })) continue;
           var sec = heads[i].closest('section.page-section');
           if (sec && !sec.id) { sec.id = idOf(a); return; }
         }
@@ -143,8 +151,22 @@
       links.forEach(function (a) { var t = target(a); if (t) observer.observe(t); });
     }
 
+    // Under the results header, sit between the title and the AP panel: pasted as its own
+    // block the nav would land below the whole AP table, thousands of pixels down.
+    function tuckUnderTitle() {
+      var heads = document.querySelectorAll('.vpm-vg.vg-header .vg-results-top');
+      for (var i = heads.length - 1; i >= 0; i--) {
+        if (heads[i].compareDocumentPosition(wrap) & Node.DOCUMENT_POSITION_FOLLOWING) {
+          wrap.classList.add('vg-nav-in-hero');
+          heads[i].parentNode.insertBefore(wrap, heads[i].nextSibling);
+          return;
+        }
+      }
+    }
+
     // The sections live in later blocks, so wire up once the page is parsed.
     function init() {
+      tuckUnderTitle();
       claimIds();
       sortLinks();
       spy();
