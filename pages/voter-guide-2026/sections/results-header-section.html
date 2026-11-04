@@ -19,6 +19,9 @@
   - The Important Dates card is gone. The AP live results embed takes its place,
     moved from the narrow sidebar to a full-width white panel under the title:
     AP's layout is a multi-race table and is unreadable at 340px.
+  - On phones (760px and under) the AP table is cut to 560px with a "Show all races"
+    button, so stories in a stacked sidebar or the next block aren't buried under it.
+    The button only shows when AP's content is taller than the cut.
   - The AP embed comes from widgets/ap-election-results (same iframe, same
     resizer loader), restyled to this page's vg- system instead of vpm-apres-.
 
@@ -176,6 +179,13 @@
     letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--azure-40);
+  }
+  /* links don't fit (narrow column): drop the label, as on phones */
+  .vpm-vg .vg-section-nav.vg-tight .vg-section-nav-label {
+    display: none;
+  }
+  .vpm-vg .vg-section-nav.vg-tight .vg-section-nav-inner {
+    gap: 0;
   }
   .vpm-vg .vg-section-nav ul {
     display: flex;
@@ -1525,6 +1535,7 @@
   :where(.vpm-vg) .vg-results-panelhd h2,
   :where(.vpm-vg) .vg-results-source,
   :where(.vpm-vg) .vg-results-framewrap,
+  :where(.vpm-vg) .vg-results-more,
   :where(.vpm-vg) .vg-results-note {margin:0;padding:0;}
   :where(.vpm-vg) .vg-results-headline,
   :where(.vpm-vg) .vg-results-headline em,
@@ -1659,12 +1670,65 @@
   @media (max-width:520px){
     .vpm-vg.vg-results-later {padding:24px 0 32px;}
   }
+  /* Phone collapse: AP's table runs past 2,000px on a phone, so it's cut to 560px behind a
+     fade until "Show all races". vg-fits (set by the script) skips the cut when it's short. */
+  .vpm-vg .vg-results-more {display:none;}
+  @media (max-width:760px){
+    .vpm-vg .vg-results-panel:not(.vg-open):not(.vg-fits) .vg-results-framewrap {
+      position:relative;
+      max-height:560px;
+      overflow:hidden;
+    }
+    .vpm-vg .vg-results-panel:not(.vg-open):not(.vg-fits) .vg-results-framewrap::after {
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      height:96px;
+      background:linear-gradient(rgba(255,255,255,0),var(--white));
+      pointer-events:none;
+    }
+    .vpm-vg .vg-results-panel:not(.vg-fits) .vg-results-more {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      width:100%;
+      min-height:48px;
+      border:0;
+      border-top:1px solid rgba(0,0,63,0.12);
+      border-radius:0;
+      background:var(--white);
+      color:var(--navy-brand);
+      font:600 14px/1.2 'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
+      letter-spacing:0.3px;
+      text-transform:none;
+      box-shadow:none;
+      cursor:pointer;
+      -webkit-appearance:none;
+      appearance:none;
+    }
+    .vpm-vg .vg-results-more:focus-visible {outline:2px solid var(--navy-brand);outline-offset:-4px;}
+    .vpm-vg .vg-results-more-icon {
+      width:8px;
+      height:8px;
+      border-right:2px solid currentColor;
+      border-bottom:2px solid currentColor;
+      transform:translateY(-2px) rotate(45deg);
+    }
+    .vpm-vg .vg-results-panel.vg-open .vg-results-more-icon {transform:translateY(2px) rotate(-135deg);}
+  }
   /* section-nav.html: a CMS Code Block is too short a parent for position:sticky to hold,
      so its script pins the nav with this class once it scrolls past the top, leaving a
      same-height spacer in its place */
   .vpm-vg .vg-section-nav.vg-pinned {position:fixed;top:0;left:0;right:0;z-index:1000;}
   .vpm-vg .vg-section-nav-spacer {display:none;}
   .vpm-vg .vg-section-nav-spacer.vg-pinned {display:block;}
+  /* section-nav.html moves itself into the hero, between the title and the AP panel */
+  .vpm-vg .vpm-vg.vg-nav-in-hero {background:transparent;margin-top:32px;}
+  .vpm-vg .vg-nav-in-hero .vg-section-nav:not(.vg-pinned) .vg-section-nav-inner {padding-left:16px;padding-right:16px;}
+  .vpm-vg .vg-nav-in-hero + .vg-results-panel {margin-top:24px;}
   /* Before polls close nothing is live yet: steady yellow dot, no pulse */
   .vpm-vg.vg-header[data-vg-phase="guide"] .vg-live-dot {animation:none;background:var(--yellow-52);}
   @media (prefers-reduced-motion:reduce){
@@ -1697,7 +1761,7 @@
         <p class="vg-results-source">Source: <strong>Associated Press</strong></p>
       </div>
       <!-- `ap-embed` is required: AP's resizeClient.js sizes `iframe.ap-embed` to its content. -->
-      <div class="vg-results-framewrap">
+      <div class="vg-results-framewrap" id="vg-results-frame">
         <iframe
           class="ap-embed"
           title="Live Virginia election results from the Associated Press"
@@ -1709,6 +1773,8 @@
           marginheight="0"
         ></iframe>
       </div>
+      <!-- Phones only (CSS): cuts the table to one screen until pressed. Label set by the script. -->
+      <button type="button" class="vg-results-more" aria-expanded="false" aria-controls="vg-results-frame"><span class="vg-results-more-label">Show all races</span><span class="vg-results-more-icon" aria-hidden="true"></span></button>
     </section>
 
     <p class="vg-results-note">
@@ -1809,6 +1875,39 @@
     slot('status').textContent = p.status;
     slot('dek').textContent = p.dek;
     root.setAttribute('data-vg-phase', phase);
+  }
+
+  // Phone collapse (CSS cuts the table; this runs the button). Skips the cut when AP's
+  // content is short, and opens it if keyboard focus enters the cut-off frame.
+  var panel = root.querySelector('.vg-results-panel');
+  var more = panel && panel.querySelector('.vg-results-more');
+  var frame = panel && panel.querySelector('iframe.ap-embed');
+  if (more && frame) {
+    var CUT = 560;
+    var label = more.querySelector('.vg-results-more-label');
+    var setOpen = function (open) {
+      panel.classList.toggle('vg-open', open);
+      more.setAttribute('aria-expanded', String(open));
+      label.textContent = open ? 'Show fewer races' : 'Show all races';
+    };
+    var fit = function () { panel.classList.toggle('vg-fits', frame.offsetHeight <= CUT); };
+    more.addEventListener('click', function () {
+      var open = !panel.classList.contains('vg-open');
+      setOpen(open);
+      // closing from far down the table: bring the reader back to the panel
+      if (!open && panel.getBoundingClientRect().top < 0) panel.scrollIntoView({ block: 'start' });
+    });
+    // AP's frame is cross-origin, so it fires no focus event: tabbing into it shows up as
+    // this window blurring with the frame active. Only on Tab, so a tap inside doesn't open it.
+    var tabbed = 0;
+    document.addEventListener('keydown', function (e) { if (e.key === 'Tab') tabbed = Date.now(); });
+    window.addEventListener('blur', function () {
+      setTimeout(function () {
+        if (document.activeElement === frame && Date.now() - tabbed < 500) setOpen(true);
+      }, 0);
+    });
+    if ('ResizeObserver' in window) new ResizeObserver(fit).observe(frame);
+    fit();
   }
 
   apply();

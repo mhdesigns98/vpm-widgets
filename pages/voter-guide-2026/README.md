@@ -95,7 +95,8 @@ custom theme, and a child of it adds a layer without buying self-service.
 
 `sections/section-nav.html` links to these ids on CMS blocks, not Code Blocks, so they don't
 exist in this build. Set them in the CMS block's id field; until then the nav script gives the
-block its id by matching the exact h2 text, and hides the link if that heading is gone.
+block its id when an h2 or h3 starts with the expected name (any case; `#latest` accepts "Latest
+Coverage", "Latest Election Coverage" or "Latest Stories"), and hides the link if none is found.
 
 | Anchor | CMS block |
 |---|---|
