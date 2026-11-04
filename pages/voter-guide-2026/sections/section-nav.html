@@ -13,7 +13,8 @@
     #key-elections  "Know Your Candidates" Promo List (id set in the CMS)
     #amendments     "Proposed Constitutional Amendments" Promo List
     #video          VPM Video Coverage Code Block
-    #latest         "Latest Coverage" Article List
+    #latest         "Latest Coverage" Article List. Hidden when it starts beside the nav
+                    (a sidebar column); shown when it's further down the page.
 
   CMS blocks without an id: a link with data-vg-heading finds the section whose h2 or
   h3 starts with that text (any case; several headings separated by |) and gives it the id. Setting the id on the block in the CMS is
@@ -79,12 +80,14 @@
       });
     }
 
-    // Hide links with no section, and the one whose section sits right under the nav
-    // (Results, until the 1 p.m. move); put the rest in page order.
+    // Hide links with no section, and links to sections already in view: the one right
+    // under the nav (Results, until the 1 p.m. move) and any that start beside or above
+    // it (a sidebar Latest Coverage list). Put the rest in page order.
     function sortLinks() {
+      var navTop = wrap.getBoundingClientRect().top;
       var shown = links.filter(function (a) {
         var t = target(a);
-        var ok = !!t && wrap.nextElementSibling !== t;
+        var ok = !!t && wrap.nextElementSibling !== t && t.getBoundingClientRect().top > navTop;
         a.parentNode.style.display = ok ? '' : 'none'; // not [hidden]: a host li{display} beats it
         return ok;
       });
@@ -185,7 +188,8 @@
       pin();
       if (document.fonts) document.fonts.ready.then(fit); // web fonts change link widths
       window.addEventListener('scroll', pin, { passive: true });
-      window.addEventListener('resize', function () { fit(); pin(); });
+      // columns stack on phones, which can move a sidebar section below the nav
+      window.addEventListener('resize', function () { sortLinks(); pin(); });
     }
     document.addEventListener('vg:results-moved', function () { sortLinks(); spy(); });
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
