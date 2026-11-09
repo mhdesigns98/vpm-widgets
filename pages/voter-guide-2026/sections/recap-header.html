@@ -1,24 +1,24 @@
 <!--
-  VPM Voter Guide — Recap Header Section (ACF), post-election recap
-  ===================================================================
-  Block 1 of the post-election vpm.org/elections page (from Nov. 2026). Replaces
-  results-header-section.html, which stays in the repo as the election-night record.
-  Never paste both. Paste order: sections/PASTE-ORDER.md, "Post-election recap".
+  VPM Voter Guide — Recap Header + Nav (ACF), post-election
+  ===========================================================
+  Block 1 of the post-election vpm.org/elections page (from Nov. 2026): one Code Block
+  holding the shared stylesheet, the hero (eyebrow, title, status, dek) and the
+  "On this page" jump nav. Replaces results-header-section.html + section-nav.html,
+  which stay in the repo as the election-night version. Never paste both.
+  The AP results are a separate Code Block, results.html, pasted below Latest Coverage.
+  Paste order: sections/PASTE-ORDER.md, "Post-election recap".
 
   What changed from results-header-section.html:
-  - Split into three Code Blocks so each can be edited on its own:
-      recap-header.html  this file: shared stylesheet + hero (eyebrow, title, status, dek)
-      recap.html         "2026 recap" (#recap), news-team copy and race-call links
-      results.html       AP results panel (#results), moved byte-for-byte, + its scripts
-    section-nav.html still goes directly after this block and tucks itself under the title.
-  - The time-phase script is retired: title, status and dek are static and final, and
-    the AP panel no longer moves. ?vg-phase= does nothing now.
+  - The time-phase script is retired: title, status and dek are static and final.
   - No pulsing live dot; status reads "Final unofficial results".
+  - The AP panel moved out to results.html, unchanged.
+  - The nav is a copy of section-nav.html (its comment explains the script). Change
+    the links there and here together.
   - The no-image story tile icon is inlined (was loaded from the old Vercel demo site).
 
   The <style> block is the full shared stylesheet, plus "RESULTS HEADER" and
-  "POST-ELECTION RECAP" sections at the end. It must be on the page for every other
-  section to render. If you change a shared rule, change it in header-section.html too.
+  "POST-ELECTION" sections at the end. It must be on the page for every other section
+  to render. If you change a shared rule, change it in header-section.html too.
 -->
 <style>
   .vpm-vg {
@@ -1719,9 +1719,8 @@
   }
 
   /* =========================================================================
-     POST-ELECTION RECAP (recap-header.html, recap.html, results.html)
+     POST-ELECTION (recap-header.html, results.html)
      ========================================================================= */
-  .vpm-vg #recap {scroll-margin-top:64px;}
   /* Hostile-host resets for the post-election blocks (and the nav and newsletter they
      sit with): one class via :where(), so a host's bare div/li/span rule can't move them
      but every designed .vpm-vg .vg-… rule still wins. */
@@ -1734,74 +1733,11 @@
   :where(.vpm-vg .vg-newsletter-form) div,
   :where(.vpm-vg .vg-section-nav) li {margin:0;padding:0;}
   :where(.vpm-vg) .vg-results-more span {font-size:inherit;}
-  :where(.vpm-vg) .vg-recap-body,
-  :where(.vpm-vg .vg-recap-body) p,
-  :where(.vpm-vg) .vg-recap-subhd,
-  :where(.vpm-vg) .vg-recap-links,
-  :where(.vpm-vg .vg-recap-links) li {margin:0;padding:0;}
-  .vpm-vg .vg-recap-body {max-width:720px;}
-  .vpm-vg .vg-recap-body p {
-    margin:0 0 16px;
-    font-size:17px;
-    line-height:28px;
-    color:var(--azure-82);
-  }
-  .vpm-vg .vg-recap-subhd {
-    margin:32px 0 0;
-    font-size:12px;
-    font-weight:600;
-    letter-spacing:1px;
-    text-transform:uppercase;
-    color:var(--azure-82);
-  }
-  .vpm-vg .vg-recap-links {
-    max-width:720px;
-    margin:12px 0 0;
-    padding:0;
-    list-style:none;
-    border-top:1px solid var(--border-azure-20);
-  }
-  .vpm-vg .vg-recap-links li {
-    list-style:none;
-    font-size:16px;
-    border-bottom:1px solid var(--border-azure-20);
-  }
-  /* !important on color and decoration only: holds against a host `a{… !important}` rule */
-  .vpm-vg .vg-recap-links a {
-    display:flex;
-    align-items:center;
-    min-height:48px;
-    padding:12px 0;
-    font-size:16px;
-    font-weight:600;
-    line-height:22px;
-    color:var(--white) !important;
-    text-decoration:underline !important;
-    text-decoration-color:var(--border-azure-30) !important;
-    text-underline-offset:3px;
-  }
-  .vpm-vg .vg-recap-links a:hover,
-  .vpm-vg .vg-recap-links a:focus-visible {
-    color:var(--azure-66) !important;
-    text-decoration-color:currentColor !important;
-  }
-  .vpm-vg .vg-recap-links a:focus-visible {outline:2px solid var(--azure-66);outline-offset:2px;}
-  /* Unfilled slot for news-team copy. Loud on purpose: it must not ship looking finished. */
-  .vpm-vg .vg-recap .vg-placeholder {
-    margin:0 0 16px;
-    padding:16px;
-    border:2px dashed var(--yellow-52);
-    font-size:14px;
-    line-height:22px;
-    color:var(--yellow-52);
-  }
-  .vpm-vg .vg-recap-links li.vg-placeholder {margin:12px 0;border-bottom:2px dashed var(--yellow-52);}
-  /* results.html: the AP panel's own band, under the recap */
+  /* results.html: the AP panel on its own band, below Latest Coverage */
   .vpm-vg.vg-results-block {margin:0;padding:48px 0 56px;}
   .vpm-vg.vg-results-block .vg-results-panel {margin-top:0;}
   @media (max-width:760px){
     .vpm-vg.vg-results-block {padding:36px 0 40px;}
-    .vpm-vg .vg-recap-body p {font-size:16px;line-height:26px;}
   }
   @media (max-width:520px){
     .vpm-vg.vg-results-block {padding:28px 0 32px;}
@@ -1825,3 +1761,170 @@
     </div>
   </main>
 </div>
+
+<div class="vpm-vg">
+  <div class="vg-section-nav-spacer" aria-hidden="true"></div>
+  <nav class="vg-section-nav" aria-label="Page sections">
+    <div class="vg-wrap vg-section-nav-inner">
+      <span class="vg-section-nav-label">On this page</span>
+      <ul>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#whats-next" data-vg-heading="What happens next">What's Next</a></li>
+        <li><a href="#latest" data-vg-heading="Latest Coverage">Coverage</a></li>
+        <li><a href="#key-elections" data-vg-heading="Who ran">Who Ran</a></li>
+        <li><a href="#amendments" data-vg-heading="The amendments, explained">Amendments</a></li>
+        <li><a href="#video">Video</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<script>
+  (function () {
+    var script = document.currentScript;
+    var wrap = script && script.previousElementSibling;
+    var nav = wrap && wrap.querySelector('.vg-section-nav');
+    if (!nav) return;
+    var spacer = wrap.querySelector('.vg-section-nav-spacer');
+    var list = nav.querySelector('ul');
+    var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    function idOf(a) { return a.getAttribute('href').slice(1); }
+    function target(a) { return document.getElementById(idOf(a)); }
+
+    function norm(t) { return t.replace(/\s+/g, ' ').trim().toLowerCase(); }
+
+    // Give un-ided CMS blocks the id their link expects, by heading text: a match is a
+    // heading that starts with one of the link's |-separated names, in any case, so
+    // "Latest Election Coverage from VPM" matches "Latest Election Coverage".
+    function claimIds() {
+      links.forEach(function (a) {
+        var names = (a.getAttribute('data-vg-heading') || '').split('|').map(norm).filter(Boolean);
+        if (!names.length || target(a)) return;
+        var heads = document.querySelectorAll('section.page-section h2, section.page-section h3:not(.page-article-title):not(.page-promo-title)');
+        for (var i = 0; i < heads.length; i++) {
+          var h = norm(heads[i].textContent);
+          if (!names.some(function (n) { return h.indexOf(n) === 0; })) continue;
+          var sec = heads[i].closest('section.page-section');
+          if (sec && !sec.id) { sec.id = idOf(a); return; }
+        }
+      });
+    }
+
+    // Hide links with no section, and links to sections already in view: the one right
+    // under the nav (Results, until the 1 p.m. move) and any that start beside or above
+    // it (a sidebar Latest Coverage list). Put the rest in page order.
+    function sortLinks() {
+      var navTop = wrap.getBoundingClientRect().top;
+      var shown = links.filter(function (a) {
+        var t = target(a);
+        var ok = !!t && wrap.nextElementSibling !== t && t.getBoundingClientRect().top > navTop;
+        a.parentNode.style.display = ok ? '' : 'none'; // not [hidden]: a host li{display} beats it
+        return ok;
+      });
+      shown.sort(function (a, b) {
+        return target(a).compareDocumentPosition(target(b)) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+      });
+      shown.forEach(function (a) { list.appendChild(a.parentNode); });
+      wrap.style.display = shown.length < 2 ? 'none' : '';
+      fit();
+    }
+
+    // In a narrow column, drop the "On this page" label before the links clip.
+    function fit() {
+      nav.classList.remove('vg-tight');
+      nav.classList.toggle('vg-tight', list.scrollWidth > list.clientWidth + 1);
+    }
+
+    // Pin to the top once the nav's own spot has scrolled past.
+    function pin() {
+      var past = (spacer.classList.contains('vg-pinned') ? spacer : nav).getBoundingClientRect().top < 0;
+      if (past) spacer.style.height = nav.offsetHeight + 'px';
+      if (past === nav.classList.contains('vg-pinned')) return;
+      nav.classList.toggle('vg-pinned', past);
+      spacer.classList.toggle('vg-pinned', past);
+      fit(); // pinned, the bar is page-wide
+    }
+
+    // Smooth scroll that stops below the pinned nav. Done in JS rather than a global
+    // `html{scroll-behavior:smooth}`, which would leak out and change the whole site.
+    links.forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var t = target(a);
+        if (!t) return;
+        e.preventDefault();
+        var start = window.pageYOffset;
+        var top = t.getBoundingClientRect().top + start - nav.offsetHeight - 8;
+        window.scrollTo({ top: top, behavior: (reduce && reduce.matches) ? 'auto' : 'smooth' });
+        // Some browsers drop a smooth scroll (seen in Chrome's phone emulation); jump instead.
+        setTimeout(function () {
+          if (window.pageYOffset === start && Math.abs(top - start) > 2) window.scrollTo(0, top);
+        }, 400);
+        history.replaceState(null, '', '#' + idOf(a));
+      });
+    });
+
+    var visible = {};
+    var observer;
+    function setActive() {
+      var current = null;
+      // the LAST section in the activation band: the incoming one is where the reader is
+      links.forEach(function (a) {
+        var t = target(a);
+        if (t && visible[t.id] && (!current || t.getBoundingClientRect().top > current.getBoundingClientRect().top)) current = t;
+      });
+      links.forEach(function (a) {
+        var on = !!current && idOf(a) === current.id;
+        a.classList.toggle('vg-active', on);
+        // on a phone the list scrolls sideways: keep the highlighted link in view
+        if (!on) return;
+        var r = a.getBoundingClientRect(), box = list.getBoundingClientRect();
+        if (r.left < box.left) list.scrollLeft += r.left - box.left - 8;
+        else if (r.right > box.right) list.scrollLeft += r.right - box.right + 8;
+      });
+    }
+    function spy() {
+      if (!('IntersectionObserver' in window)) return;
+      if (observer) observer.disconnect();
+      visible = {};
+      // thin band just under the pinned nav, so the highlight is the section under it
+      observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          visible[e.target.id] = e.isIntersecting && e.intersectionRect.height > 0;
+        });
+        setActive();
+      }, { rootMargin: '-64px 0px -70% 0px', threshold: 0 });
+      links.forEach(function (a) { var t = target(a); if (t) observer.observe(t); });
+    }
+
+    // Under the results header, sit between the title and the AP panel: pasted as its own
+    // block the nav would land below the whole AP table, thousands of pixels down.
+    function tuckUnderTitle() {
+      var heads = document.querySelectorAll('.vpm-vg.vg-header .vg-results-top');
+      for (var i = heads.length - 1; i >= 0; i--) {
+        if (heads[i].compareDocumentPosition(wrap) & Node.DOCUMENT_POSITION_FOLLOWING) {
+          wrap.classList.add('vg-nav-in-hero');
+          heads[i].parentNode.insertBefore(wrap, heads[i].nextSibling);
+          return;
+        }
+      }
+    }
+
+    // The sections live in later blocks, so wire up once the page is parsed.
+    function init() {
+      tuckUnderTitle();
+      claimIds();
+      sortLinks();
+      spy();
+      pin();
+      if (document.fonts) document.fonts.ready.then(fit); // web fonts change link widths
+      window.addEventListener('scroll', pin, { passive: true });
+      // columns stack on phones, which can move a sidebar section below the nav
+      window.addEventListener('resize', function () { sortLinks(); pin(); });
+    }
+    document.addEventListener('vg:results-moved', function () { sortLinks(); spy(); });
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+  })();
+</script>

@@ -31,7 +31,7 @@ reference/      superseded material, kept for salvage — not the build
 
 ## Where the page actually lives
 
-**Now (Nov. 2026):** vpm.org/elections runs the post-election recap: `recap-header.html`, `section-nav.html`, `recap.html`, `results.html` plus CMS rows. See `sections/PASTE-ORDER.md`, "Post-election recap". `results-header-section.html` is the retired election-night header.
+**Now (Nov. 2026):** vpm.org/elections runs the post-election version: `recap-header.html` (hero + nav) and `results.html` (below Latest Coverage) plus CMS rows. See `sections/PASTE-ORDER.md`, "Post-election recap". `results-header-section.html` + `section-nav.html` are the retired election-night pair.
 
 Anchors the CMS rows supply (set in the editor, or claimed by `section-nav.html` from the row heading): `#whats-next` ("What happens next"), `#latest` ("Latest Coverage"), `#key-elections` ("Who ran"), `#amendments` ("The amendments, explained").
 
