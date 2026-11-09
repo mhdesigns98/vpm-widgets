@@ -1722,6 +1722,18 @@
      POST-ELECTION RECAP (recap-header.html, recap.html, results.html)
      ========================================================================= */
   .vpm-vg #recap {scroll-margin-top:64px;}
+  /* Hostile-host resets for the post-election blocks (and the nav and newsletter they
+     sit with): one class via :where(), so a host's bare div/li/span rule can't move them
+     but every designed .vpm-vg .vg-… rule still wins. */
+  .vpm-vg {margin:0;padding:0;}
+  :where(.vpm-vg) .vg-wrap {padding-top:0;padding-bottom:0;}
+  :where(.vpm-vg) .vg-section-label,
+  :where(.vpm-vg) .vg-section-nav-spacer,
+  :where(.vpm-vg) .vg-nav-in-hero,
+  :where(.vpm-vg) .vg-newsletter-bar,
+  :where(.vpm-vg .vg-newsletter-form) div,
+  :where(.vpm-vg .vg-section-nav) li {margin:0;padding:0;}
+  :where(.vpm-vg) .vg-results-more span {font-size:inherit;}
   :where(.vpm-vg) .vg-recap-body,
   :where(.vpm-vg .vg-recap-body) p,
   :where(.vpm-vg) .vg-recap-subhd,
@@ -1785,7 +1797,7 @@
   }
   .vpm-vg .vg-recap-links li.vg-placeholder {margin:12px 0;border-bottom:2px dashed var(--yellow-52);}
   /* results.html: the AP panel's own band, under the recap */
-  .vpm-vg.vg-results-block {padding:48px 0 56px;}
+  .vpm-vg.vg-results-block {margin:0;padding:48px 0 56px;}
   .vpm-vg.vg-results-block .vg-results-panel {margin-top:0;}
   @media (max-width:760px){
     .vpm-vg.vg-results-block {padding:36px 0 40px;}

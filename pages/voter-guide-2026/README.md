@@ -33,6 +33,8 @@ reference/      superseded material, kept for salvage — not the build
 
 **Now (Nov. 2026):** vpm.org/elections runs the post-election recap: `recap-header.html`, `section-nav.html`, `recap.html`, `results.html` plus CMS rows. See `sections/PASTE-ORDER.md`, "Post-election recap". `results-header-section.html` is the retired election-night header.
 
+Anchors the CMS rows supply (set in the editor, or claimed by `section-nav.html` from the row heading): `#whats-next` ("What happens next"), `#latest` ("Latest Coverage"), `#key-elections` ("Who ran"), `#amendments` ("The amendments, explained").
+
 `https://vpmnews.kinsta.cloud/vpm-news-voter-guide/` (page id 466103), built with the theme's
 **Section Builder** page template (`templates/section-builder.php`), using 8 `block-html`
 layouts. All 7 fragments in `sections/` are already pasted there and verified present.
