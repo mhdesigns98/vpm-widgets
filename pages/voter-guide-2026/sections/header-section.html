@@ -1118,6 +1118,13 @@
     .vpm-vg .vg-section-nav-inner {gap:0;}
     .vpm-vg .vg-section-nav a {font-size:12px;padding:8px 10px;}
   }
+
+  /* Post-election outcomes panel (reuses the dates-box styles above) */
+  .vpm-vg .vg-outcomes-box .vg-date-chip {font-size:20px;}
+  .vpm-vg .vg-outcomes-box a.vg-outcome-link {color:var(--navy-brand);text-decoration:underline;text-decoration-color:rgba(0,0,63,0.35);text-underline-offset:3px;}
+  .vpm-vg .vg-outcomes-box a.vg-outcome-link:hover,
+  .vpm-vg .vg-outcomes-box a.vg-outcome-link:focus-visible {text-decoration-color:currentColor;}
+  .vpm-vg .vg-outcomes-note {margin:8px 0 0;font-size:12px;color:#4a5568;text-align:center;}
 </style>
 
 <div class="vpm-vg vg-header">
@@ -1130,48 +1137,37 @@
           <span class="vg-l2">Voter</span>
           <span class="vg-l3">Guide</span>
         </h1>
-        <p class="vg-hero-dek">Given the extraordinary nature of the 2026 election cycle, Virginia's five public media news stations — VPM, WAMU, WHRO, WMRA and Radio IQ — are partnering to ensure voters across the state get the full breadth of both the federal midterms, state and local elections.
-          
-        From early voting through Election Day and the results, the Virginia Elections Collaborative will provide you with coverage on the candidates and issues so you can make informed decisions at the ballot box.</p>
+        <p class="vg-hero-dek vg-hero-dek-first">Virginia voted Nov. 3. Here's what was on the ballot, what the candidates told us and where to find the results.</p>
+        <p class="vg-hero-dek">Given the extraordinary nature of the 2026 election cycle, Virginia's five public media news stations — VPM, WAMU, WHRO, WMRA and Radio IQ — partnered to give voters across the state the full breadth of both the federal midterms and state and local elections.</p>
       </div>
 
+      <!-- Post-election (Nov. 2026): the Important Dates panel became this outcomes panel.
+           Same box and row styles. List only races VPM has already reported a winner in;
+           everything else goes through the results link. -->
       <aside class="vg-sidebar">
-        <div class="vg-dates-box">
-          <p class="vg-eyebrow">Important Dates</p>
+        <div class="vg-dates-box vg-outcomes-box">
+          <p class="vg-eyebrow">Key results</p>
 
           <div class="vg-date-row">
-            <div class="vg-date-chip">Sep<br>18</div>
+            <div class="vg-date-chip">VA<br>01</div>
             <div>
-              <p class="vg-date-info-title">Early In-Person Voting Begins</p>
-              <p class="vg-date-info-sub">45 days before Election Day</p>
+              <p class="vg-date-info-title"><a class="vg-outcome-link" href="https://www.vpm.org/elections/2026-11-04/va01-wittman-taylor-results-unofficial/">Shannon Taylor unseats Rob Wittman</a></p>
+              <p class="vg-date-info-sub">1st Congressional District</p>
             </div>
           </div>
           <div class="vg-date-row">
-            <div class="vg-date-chip">Oct<br>23</div>
+            <div class="vg-date-chip">VA<br>05</div>
             <div>
-              <p class="vg-date-info-title">Voter Registration Deadline</p>
-              <p class="vg-date-info-sub">Register online at vote.virginia.gov</p>
-            </div>
-          </div>
-          <div class="vg-date-row">
-            <div class="vg-date-chip">Oct<br>31</div>
-            <div>
-              <p class="vg-date-info-title">Last Day of Early Voting</p>
-              <p class="vg-date-info-sub">Saturday before Election Day</p>
-            </div>
-          </div>
-          <div class="vg-date-row">
-            <div class="vg-date-chip">Nov<br>3</div>
-            <div>
-              <p class="vg-date-info-title">Election Day</p>
-              <p class="vg-date-info-sub">Polls open 6 a.m. – 7 p.m.</p>
+              <p class="vg-date-info-title"><a class="vg-outcome-link" href="https://www.vpm.org/elections/2026-11-04/va05-mcguire-perriello-election-results-unofficial/">John McGuire holds off Tom Perriello</a></p>
+              <p class="vg-date-info-sub">5th Congressional District</p>
             </div>
           </div>
 
-          <a class="vg-find-district" href="https://www.vote.virginia.gov/who-represents-me" target="_blank" rel="noopener">
-            Find your district
+          <a class="vg-find-district" href="https://www.vpm.org/elections/#results">
+            See all results
             <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
+          <p class="vg-outcomes-note">Results are unofficial until certified.</p>
         </div>
       </aside>
     </div>
