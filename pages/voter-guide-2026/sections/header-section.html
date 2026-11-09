@@ -20,10 +20,10 @@
     newsroom's stories appear automatically. The CSS that restyles that
     live block to match the old static cards is in the <style> block
     below, in the clearly marked "LIVE BLOCK OVERRIDES" section.
-  - The sticky "On this page" nav moved OUT of this fragment into
-    acf-sections/section-nav.html, because in the design it sits below
-    the Featured Stories cards — i.e. on the far side of the split.
-    Paste it directly after the live Article List block.
+  - POST-ELECTION (Nov. 2026, vpm.org/voterguide): no Featured Stories block
+    under the hero any more, so there is no split. The "On this page" nav is
+    back inside this fragment, in the hero under the title row, as on
+    vpm.org/elections. Don't also paste section-nav.html on this page.
 
   AD PLACEMENT — handled by the page builder, not this fragment:
   Your CMS's own blocks (e.g. "[vpm_section id=...]") can't be nested
@@ -1125,6 +1125,16 @@
   .vpm-vg .vg-outcomes-box a.vg-outcome-link:hover,
   .vpm-vg .vg-outcomes-box a.vg-outcome-link:focus-visible {text-decoration-color:currentColor;}
   .vpm-vg .vg-outcomes-note {margin:8px 0 0;font-size:12px;color:#4a5568;text-align:center;}
+  /* Post-election: "On this page" nav inside the hero (as on vpm.org/elections).
+     A Code Block is too short a parent for position:sticky, so the script pins it. */
+  .vpm-vg .vpm-vg.vg-nav-in-hero {background:transparent;margin:32px 0 0;padding:0;}
+  .vpm-vg .vg-nav-in-hero .vg-section-nav:not(.vg-pinned) .vg-section-nav-inner {max-width:none;padding-left:16px;padding-right:16px;}
+  .vpm-vg .vg-section-nav.vg-pinned {position:fixed;top:0;left:0;right:0;z-index:1000;}
+  .vpm-vg .vg-section-nav-spacer {display:none;margin:0;padding:0;}
+  .vpm-vg .vg-section-nav-spacer.vg-pinned {display:block;}
+  .vpm-vg .vg-section-nav.vg-tight .vg-section-nav-label {display:none;}
+  .vpm-vg .vg-section-nav.vg-tight .vg-section-nav-inner {gap:0;}
+  :where(.vpm-vg .vg-section-nav) li {margin:0;padding:0;}
 </style>
 
 <div class="vpm-vg vg-header">
@@ -1185,11 +1195,161 @@
         </div>
       </aside>
     </div>
+
+    <!-- "On this page" jump nav, inside the hero as on vpm.org/elections. Links whose
+         section isn't on the page are hidden. CMS rows without an id are matched by
+         heading text (data-vg-heading). Script adapted from section-nav.html. -->
+    <div class="vpm-vg vg-nav-in-hero">
+      <div class="vg-section-nav-spacer" aria-hidden="true"></div>
+      <nav class="vg-section-nav" aria-label="Page sections">
+        <div class="vg-wrap vg-section-nav-inner">
+          <span class="vg-section-nav-label">On this page</span>
+          <ul>
+            <li><a href="#need-to-know" data-vg-heading="What You Need to Know">What You Need to Know</a></li>
+            <li><a href="#faq">Voting FAQ</a></li>
+            <li><a href="#key-elections" data-vg-heading="Know Your Candidates">Candidates</a></li>
+            <li><a href="#amendments" data-vg-heading="Proposed Constitutional Amendments|The amendments">Amendments</a></li>
+            <li><a href="#video">Video</a></li>
+            <li><a href="#latest" data-vg-heading="Latest Coverage|Latest Election Coverage">Latest Coverage</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <script>
+      (function () {
+        var script = document.currentScript;
+        var wrap = script && script.previousElementSibling;
+        var nav = wrap && wrap.querySelector('.vg-section-nav');
+        if (!nav) return;
+        var spacer = wrap.querySelector('.vg-section-nav-spacer');
+        var list = nav.querySelector('ul');
+        var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
+        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+
+        function idOf(a) { return a.getAttribute('href').slice(1); }
+        function target(a) { return document.getElementById(idOf(a)); }
+
+        function norm(t) { return t.replace(/\s+/g, ' ').trim().toLowerCase(); }
+
+        // Give un-ided CMS blocks the id their link expects, by heading text: a match is a
+        // heading that starts with one of the link's |-separated names, in any case, so
+        // "Latest Election Coverage from VPM" matches "Latest Election Coverage".
+        function claimIds() {
+          links.forEach(function (a) {
+            var names = (a.getAttribute('data-vg-heading') || '').split('|').map(norm).filter(Boolean);
+            if (!names.length || target(a)) return;
+            var heads = document.querySelectorAll('section.page-section h2, section.page-section h3:not(.page-article-title):not(.page-promo-title)');
+            for (var i = 0; i < heads.length; i++) {
+              var h = norm(heads[i].textContent);
+              if (!names.some(function (n) { return h.indexOf(n) === 0; })) continue;
+              var sec = heads[i].closest('section.page-section');
+              if (sec && !sec.id) { sec.id = idOf(a); return; }
+            }
+          });
+        }
+
+        // Hide links with no section, and links to sections already in view (any that start
+        // beside or above the nav, e.g. a sidebar Latest Coverage list). Put the rest in
+        // page order.
+        function sortLinks() {
+          var navTop = wrap.getBoundingClientRect().top;
+          var shown = links.filter(function (a) {
+            var t = target(a);
+            var ok = !!t && wrap.nextElementSibling !== t && t.getBoundingClientRect().top > navTop;
+            a.parentNode.style.display = ok ? '' : 'none'; // not [hidden]: a host li{display} beats it
+            return ok;
+          });
+          shown.sort(function (a, b) {
+            return target(a).compareDocumentPosition(target(b)) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+          });
+          shown.forEach(function (a) { list.appendChild(a.parentNode); });
+          wrap.style.display = shown.length < 2 ? 'none' : '';
+          fit();
+        }
+
+        // In a narrow column, drop the "On this page" label before the links clip.
+        function fit() {
+          nav.classList.remove('vg-tight');
+          nav.classList.toggle('vg-tight', list.scrollWidth > list.clientWidth + 1);
+        }
+
+        // Pin to the top once the nav's own spot has scrolled past.
+        function pin() {
+          var past = (spacer.classList.contains('vg-pinned') ? spacer : nav).getBoundingClientRect().top < 0;
+          if (past) spacer.style.height = nav.offsetHeight + 'px';
+          if (past === nav.classList.contains('vg-pinned')) return;
+          nav.classList.toggle('vg-pinned', past);
+          spacer.classList.toggle('vg-pinned', past);
+          fit(); // pinned, the bar is page-wide
+        }
+
+        // Smooth scroll that stops below the pinned nav. Done in JS rather than a global
+        // `html{scroll-behavior:smooth}`, which would leak out and change the whole site.
+        links.forEach(function (a) {
+          a.addEventListener('click', function (e) {
+            var t = target(a);
+            if (!t) return;
+            e.preventDefault();
+            var start = window.pageYOffset;
+            var top = t.getBoundingClientRect().top + start - nav.offsetHeight - 8;
+            window.scrollTo({ top: top, behavior: (reduce && reduce.matches) ? 'auto' : 'smooth' });
+            // Some browsers drop a smooth scroll (seen in Chrome's phone emulation); jump instead.
+            setTimeout(function () {
+              if (window.pageYOffset === start && Math.abs(top - start) > 2) window.scrollTo(0, top);
+            }, 400);
+            history.replaceState(null, '', '#' + idOf(a));
+          });
+        });
+
+        var visible = {};
+        var observer;
+        function setActive() {
+          var current = null;
+          // the LAST section in the activation band: the incoming one is where the reader is
+          links.forEach(function (a) {
+            var t = target(a);
+            if (t && visible[t.id] && (!current || t.getBoundingClientRect().top > current.getBoundingClientRect().top)) current = t;
+          });
+          links.forEach(function (a) {
+            var on = !!current && idOf(a) === current.id;
+            a.classList.toggle('vg-active', on);
+            // on a phone the list scrolls sideways: keep the highlighted link in view
+            if (!on) return;
+            var r = a.getBoundingClientRect(), box = list.getBoundingClientRect();
+            if (r.left < box.left) list.scrollLeft += r.left - box.left - 8;
+            else if (r.right > box.right) list.scrollLeft += r.right - box.right + 8;
+          });
+        }
+        function spy() {
+          if (!('IntersectionObserver' in window)) return;
+          if (observer) observer.disconnect();
+          visible = {};
+          // thin band just under the pinned nav, so the highlight is the section under it
+          observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+              visible[e.target.id] = e.isIntersecting && e.intersectionRect.height > 0;
+            });
+            setActive();
+          }, { rootMargin: '-64px 0px -70% 0px', threshold: 0 });
+          links.forEach(function (a) { var t = target(a); if (t) observer.observe(t); });
+        }
+
+        // The sections live in later blocks, so wire up once the page is parsed.
+        function init() {
+          claimIds();
+          sortLinks();
+          spy();
+          pin();
+          if (document.fonts) document.fonts.ready.then(fit); // web fonts change link widths
+          window.addEventListener('scroll', pin, { passive: true });
+          // columns stack on phones, which can move a sidebar section below the nav
+          window.addEventListener('resize', function () { sortLinks(); pin(); });
+        }
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+        else init();
+      })();
+    </script>
   </main>
-  <!-- Screen-reader-only heading for the live Featured Stories block that follows. Its cards
-       are h3s, so without this the page jumps h1 -> h3. Hidden, so the design is unchanged. -->
-  <h2 class="vg-sr-only">Featured Stories</h2>
 </div>
 
-<!-- ===== SPLIT ===== LIVE BLOCK HERE: Featured Stories (article list) ===== -->
 
