@@ -153,6 +153,6 @@ The nav lists links in page order on its own, so moving a row doesn't need a nav
 8. Video Code Block stays as is, after Amendments.
 9. Delete the "What You Need to Know" + Voting FAQ row. `voting-faq.html` stays in this repo for the future standalone voter guide page (it still loads its chevrons from the old Vercel demo; fix that when that page is built).
 
-Why titles go on the row, not the Article List: the shared stylesheet restyles full-width Article Lists as the dark story band and hides the block's own header (`.page-article-grid-header`). The nav finds untagged rows by heading text ("Latest Coverage", "What happens next", "Who ran", "The amendments, explained"), so a retitle that changes those words drops its link unless the id is set.
+Article Lists use the theme's own look on this page: `recap-header.html` no longer carries the dark "Featured Stories" restyle, so each list shows its own title (set it on the list or on the row, not both). The nav finds untagged rows by heading text ("Latest Coverage" or "Election Coverage", "What happens next", "Who ran", "The amendments, explained"), so a retitle that changes those words drops its link unless the id is set.
 
 A recap section with news-team copy was considered and dropped for now (Nov. 2026). It can come back as its own Code Block between the hero and Latest Coverage; see git history for the `recap.html` draft.

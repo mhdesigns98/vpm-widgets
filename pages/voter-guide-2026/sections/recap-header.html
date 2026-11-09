@@ -14,7 +14,8 @@
   - The AP panel moved out to results.html, unchanged.
   - The nav is a copy of section-nav.html (its comment explains the script). Change
     the links there and here together.
-  - The no-image story tile icon is inlined (was loaded from the old Vercel demo site).
+  - The LIVE BLOCK OVERRIDES (dark restyle of every CMS Article List, hidden list titles)
+    are removed: story lists now look like the rest of vpm.org and show their own titles.
 
   The <style> block is the full shared stylesheet, plus "RESULTS HEADER" and
   "POST-ELECTION" sections at the end. It must be on the page for every other section
@@ -341,182 +342,7 @@
     white-space: nowrap;
     border: 0;
   }
-  /* ship-lint: allow unscoped-selector start */
-  /* =========================================================================
-     LIVE BLOCK OVERRIDES — Featured Stories article list
-     -------------------------------------------------------------------------
-     These are the ONLY un-prefixed selectors allowed in this stylesheet. They
-     restyle the CMS's own "Article List" block (inserted by an editor at the
-     SPLIT marker below) so the live story feed matches the retired static
-     Featured Stories cards. The live block renders OUTSIDE .vpm-vg, so it can't
-     inherit the custom properties above — they are redeclared here.
-     Do not add any other bare/global selectors to this sheet.
-     ========================================================================= */
-  section.page-article-grid {
-    --vg-azure-9-2: #0d1520;
-    --vg-white: #ffffff;
-    --vg-red-accent: #f44250;
-    --vg-blue-accent: #5ba8e0;
-    --vg-azure-9: #101820;
-    --vg-azure-66: #6cace4;
-    --vg-yellow-52: #e0e721;
-    --vg-grey-53: #838d99;
-    --vg-border-azure-30: rgba(108, 172, 228, 0.3);
-    background: var(--vg-azure-9);
-    padding: 0 0 8px;
-    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  }
-  section.page-article-grid * {
-    box-sizing: border-box;
-  }
-  /* full-bleed band, content re-centered on the same 1200px/24px grid as .vg-wrap */
-  section.page-article-grid > .container {
-    max-width: none;
-    padding: 0;
-  }
-  section.page-article-grid .page-article-grid-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    background: transparent;
-  }
-  /* the grid-header only renders when the editor sets a title — the preceding
-     fragment already supplies the "Featured Stories" label, so hide it */
-  section.page-article-grid .page-article-grid-header {
-    display: none;
-  }
-
-  section.page-article-grid article.page-article-card {
-    position: relative;
-    background: var(--vg-azure-9);
-    display: flex;
-    flex-direction: column;
-    outline: 1px solid rgba(255, 255, 255, 0.06);
-    transition:
-      transform 0.18s ease,
-      box-shadow 0.18s ease;
-    will-change: transform;
-  }
-  section.page-article-grid .page-article-card-media {
-    width: 100%;
-    aspect-ratio: 16/9.4;
-    overflow: hidden;
-  }
-  section.page-article-grid .page-article-card-media a,
-  section.page-article-grid .page-article-card-media img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    object-fit: cover;
-    transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
-  }
-  /* story with no image: branded placeholder tile instead of a stretched icon */
-  section.page-article-grid .page-article-card-media a.bsm-img-ph,
-  section.page-article-grid .page-article-card-media .bsm-img-ph {
-    background-color: var(--vg-azure-9-2);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Cpath fill='white' fill-opacity='0.7' d='M44 60H52V68H44V60ZM44 28H52V52H44V28ZM47.98 8C25.88 8 8 25.9 8 48C8 70.1 25.88 88 47.98 88C70.08 88 88 70.1 88 48C88 25.9 70.08 8 47.98 8ZM48 80C30.32 80 16 65.68 16 48C16 30.32 30.32 16 48 16C65.68 16 80 30.32 80 48C80 65.68 65.68 80 48 80Z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 36px 36px;
-    opacity: 0.7;
-  }
-  section.page-article-grid .page-article-category {
-    font-size: 10px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--vg-azure-66);
-    padding: 19px 14px 0;
-  }
-  section.page-article-grid .page-article-title {
-    margin: 6px 0 0;
-    padding: 0 14px;
-    font-weight: 500;
-    font-size: 13px;
-    line-height: 19.5px;
-    color: var(--vg-white);
-  }
-  section.page-article-grid .page-article-title a {
-    color: inherit;
-    text-decoration: none;
-    transition: color 0.15s ease;
-  }
-  section.page-article-grid .page-article-byline {
-    padding: 6px 14px 16px;
-    font-size: 11px;
-    color: var(--vg-grey-53);
-  }
-  section.page-article-grid .page-article-excerpt {
-    display: none;
-  }
-  /* 3px accent bar pinned to the bottom of each card, cycling the brand
-     accents in the same order the static cards used (red → blue → yellow) */
-  section.page-article-grid article.page-article-card::after {
-    content: "";
-    display: block;
-    margin-top: auto;
-    height: 3px;
-    width: 100%;
-    background: var(--vg-red-accent);
-  }
-  section.page-article-grid
-    .page-article-grid-inner
-    > article:nth-child(3n + 2)::after {
-    background: var(--vg-blue-accent);
-  }
-  section.page-article-grid
-    .page-article-grid-inner
-    > article:nth-child(3n + 3)::after {
-    background: var(--vg-yellow-52);
-  }
-  /* hover: lift the card, zoom the image, tint the headline */
-  section.page-article-grid article.page-article-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
-    outline-color: var(--vg-border-azure-30);
-    z-index: 1;
-  }
-  section.page-article-grid
-    article.page-article-card:hover
-    .page-article-card-media
-    a,
-  section.page-article-grid
-    article.page-article-card:hover
-    .page-article-card-media
-    img {
-    transform: scale(1.05);
-  }
-  section.page-article-grid
-    article.page-article-card:hover
-    .page-article-title
-    a {
-    color: var(--vg-azure-66);
-  }
-  section.page-article-grid a:focus-visible {
-    outline: 2px solid var(--vg-azure-66);
-    outline-offset: 3px;
-  }
-  @media (max-width: 760px) {
-    section.page-article-grid .page-article-grid-inner {
-      grid-template-columns: 1fr;
-    }
-  }
-  @media (max-width: 520px) {
-    section.page-article-grid .page-article-grid-inner {
-      padding: 0 16px;
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    section.page-article-grid * {
-      transition-duration: 0.001ms !important;
-    }
-  }
-  /* ================= end live block overrides ================= */
-  /* ship-lint: end */
+  /* (Article List restyle removed for the post-election page: CMS story lists use the theme's own look.) */
 
   /* ---------- Sidebar ---------- */
   .vpm-vg .vg-sidebar {
@@ -1770,7 +1596,7 @@
       <ul>
         <li><a href="#results">Results</a></li>
         <li><a href="#whats-next" data-vg-heading="What happens next">What's Next</a></li>
-        <li><a href="#latest" data-vg-heading="Latest Coverage">Coverage</a></li>
+        <li><a href="#latest" data-vg-heading="Latest Coverage|Election Coverage">Coverage</a></li>
         <li><a href="#key-elections" data-vg-heading="Who ran">Who Ran</a></li>
         <li><a href="#amendments" data-vg-heading="The amendments, explained">Amendments</a></li>
         <li><a href="#video">Video</a></li>
