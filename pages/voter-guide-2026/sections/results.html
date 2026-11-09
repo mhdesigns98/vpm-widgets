@@ -2,10 +2,12 @@
   VPM Voter Guide — Results Section (ACF), post-election recap
   ==============================================================
   Its own Code Block on the post-election page, in a row directly below Latest Coverage.
+  Give that CMS row the title "Election Results": it is the section heading (this block
+  has none of its own, just a "Results by race · Source: AP" bar).
   Paste order: sections/PASTE-ORDER.md, "Post-election recap".
 
-  The AP panel, note, iframe and resizer loader are moved unchanged from
-  results-header-section.html. Carries no CSS: needs recap-header.html on the page.
+  The iframe, resizer loader and phone collapse are unchanged from
+  results-header-section.html; only the panel's heading bar differs. Carries no CSS: needs recap-header.html on the page.
   On phones (760px and under) the AP table is cut to 560px behind "Show all races".
 
   AP layout: 57278/37902 ("Virginia races" table), the final election-night layout.
@@ -17,10 +19,10 @@
 -->
 <div class="vpm-vg vg-results-block">
   <div class="vg-wrap">
-    <section class="vg-results-panel" id="results" aria-labelledby="vg-results-title">
+    <!-- The CMS row title ("Election Results") is this section's heading; the panel only names its source. -->
+    <section class="vg-results-panel" id="results" aria-label="Virginia election results by race, from the Associated Press">
       <div class="vg-results-panelhd">
-        <h2 id="vg-results-title">Results by race</h2>
-        <p class="vg-results-source">Source: <strong>Associated Press</strong></p>
+        <p class="vg-results-source">Results by race &middot; Source: <strong>Associated Press</strong></p>
       </div>
       <!-- `ap-embed` is required: AP's resizeClient.js sizes `iframe.ap-embed` to its content. -->
       <div class="vg-results-framewrap" id="vg-results-frame">

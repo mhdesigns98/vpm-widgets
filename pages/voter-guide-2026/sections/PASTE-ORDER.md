@@ -145,7 +145,7 @@ The nav lists links in page order on its own, so moving a row doesn't need a nav
 
 1. Row 1: change to one column. Replace the old header Code Block **and** the separate nav Code Block with `recap-header.html`. Remove the 30% sidebar column.
 2. Latest Coverage row: move it directly under row 1. Keep the row title, **clear the Article List's own title** (it renders a second "Latest Coverage" h2). Set the row id to `latest` if the CMS allows.
-3. New one-column row directly under Latest Coverage with a Code Block holding `results.html`.
+3. New row directly under Latest Coverage with a Code Block holding `results.html`. Give the row the title **"Election Results"**: it is the section heading (the block only has a "Results by race · Source: AP" bar).
 4. "Latest Election Coverage from VPM" Article List: rebuild it as its own full-width row under the results, built like the Latest Coverage row. Put **"What happens next" in the row title**, leave the Article List's own title empty, and set the row id to `whats-next` if the CMS allows. It stays automatic, so it repeats Latest Coverage's stories.
 5. Sponsor ad row, then the Morning Monitor Code Block with the new `newsletter-signup.html`.
 6. "Know Your Candidates" → retitle **"Who ran"** (id `key-elections` already set).

@@ -1559,14 +1559,30 @@
   :where(.vpm-vg .vg-newsletter-form) div,
   :where(.vpm-vg .vg-section-nav) li {margin:0;padding:0;}
   :where(.vpm-vg) .vg-results-more span {font-size:inherit;}
-  /* results.html: the AP panel on its own band, below Latest Coverage */
-  .vpm-vg.vg-results-block {margin:0;padding:48px 0 56px;}
-  .vpm-vg.vg-results-block .vg-results-panel {margin-top:0;}
-  @media (max-width:760px){
-    .vpm-vg.vg-results-block {padding:36px 0 40px;}
+  /* results.html: sits in a CMS row whose row title ("Election Results") is the section
+     heading, so no band or heading of its own: a light bordered panel on the theme's white,
+     with a one-line source bar. */
+  .vpm-vg.vg-results-block {margin:0;padding:0;background:transparent;color:var(--navy-brand);}
+  .vpm-vg.vg-results-block .vg-wrap {max-width:none;padding-left:0;padding-right:0;}
+  .vpm-vg.vg-results-block .vg-results-panel {
+    margin:0;
+    border:1px solid rgba(0,0,63,0.12);
+    border-left:1px solid rgba(0,0,63,0.12);
   }
+  .vpm-vg.vg-results-block .vg-results-panelhd {
+    padding:10px 16px;
+    background:var(--grey-93);
+    border-bottom:1px solid rgba(0,0,63,0.12);
+  }
+  .vpm-vg.vg-results-block .vg-results-source {font-size:13px;line-height:20px;color:var(--slate-37);}
+  .vpm-vg.vg-results-block .vg-results-framewrap {padding:8px 16px 16px;}
+  .vpm-vg.vg-results-block .vg-results-note {color:var(--slate-37);}
+  .vpm-vg.vg-results-block .vg-results-note a {color:var(--blue-500) !important;}
+  .vpm-vg.vg-results-block .vg-results-note a:hover {color:var(--navy-brand) !important;}
   @media (max-width:520px){
-    .vpm-vg.vg-results-block {padding:28px 0 32px;}
+    .vpm-vg.vg-results-block .vg-results-panel {margin:0;border-left-width:1px;}
+    .vpm-vg.vg-results-block .vg-results-panelhd {padding:10px 12px;}
+    .vpm-vg.vg-results-block .vg-results-framewrap {padding:4px 8px 12px;}
   }
 </style>
 
