@@ -1124,7 +1124,8 @@
   .vpm-vg .vg-outcomes-box a.vg-outcome-link {color:var(--navy-brand);text-decoration:underline;text-decoration-color:rgba(0,0,63,0.35);text-underline-offset:3px;}
   .vpm-vg .vg-outcomes-box a.vg-outcome-link:hover,
   .vpm-vg .vg-outcomes-box a.vg-outcome-link:focus-visible {text-decoration-color:currentColor;}
-  .vpm-vg .vg-outcomes-note {margin:8px 0 0;font-size:12px;color:#4a5568;text-align:center;}
+  .vpm-vg .vg-outcomes-box {--vpm-gray-600:#5A6470;--vpm-blue-500:#1A6AA8;} /* tokens.css */
+  .vpm-vg .vg-outcomes-note {margin:8px 0 0;font-size:12px;color:var(--vpm-gray-600);text-align:center;}
   /* Post-election: "On this page" nav inside the hero (as on vpm.org/elections).
      A Code Block is too short a parent for position:sticky, so the script pins it. */
   .vpm-vg .vpm-vg.vg-nav-in-hero {background:transparent;margin:32px 0 0;padding:0;}
@@ -1134,7 +1135,22 @@
   .vpm-vg .vg-section-nav-spacer.vg-pinned {display:block;}
   .vpm-vg .vg-section-nav.vg-tight .vg-section-nav-label {display:none;}
   .vpm-vg .vg-section-nav.vg-tight .vg-section-nav-inner {gap:0;}
-  :where(.vpm-vg .vg-section-nav) li {margin:0;padding:0;}
+  /* Hostile-host resets for the header: one class, so a host's bare div/li rule can't move
+     the hero, while every designed .vpm-vg .vg-... rule (two classes) still wins. */
+  .vpm-vg.vg-header,
+  :where(.vpm-vg).vg-header :where(div) {margin:0;padding:0;}
+  /* Tap targets (44px min): each result row is one big link target; menu links get a
+     44px minimum height. */
+  .vpm-vg .vg-outcomes-box .vg-date-row {position:relative;}
+  .vpm-vg .vg-outcomes-box a.vg-outcome-link::after {content:"";position:absolute;inset:0;}
+  .vpm-vg .vg-section-nav a {display:flex;align-items:center;min-height:44px;}
+  /* Links hold their color and underline against a host a{... !important} rule (checklist). */
+  .vpm-vg .vg-outcomes-box a.vg-outcome-link {color:var(--navy-brand) !important;text-decoration:underline !important;}
+  .vpm-vg .vg-outcomes-box a.vg-find-district {color:var(--vpm-blue-500) !important;text-decoration:none !important;}
+  .vpm-vg .vg-section-nav a {color:var(--azure-79) !important;text-decoration:none !important;}
+  .vpm-vg .vg-section-nav a:hover {color:var(--white) !important;}
+  .vpm-vg .vg-section-nav a.vg-active {color:var(--azure-9) !important;}
+  :where(.vpm-vg) .vg-section-nav :where(li) {margin:0;padding:0;}
 </style>
 
 <div class="vpm-vg vg-header">
