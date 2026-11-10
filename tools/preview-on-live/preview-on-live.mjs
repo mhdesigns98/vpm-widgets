@@ -36,5 +36,6 @@ const inject = readFileSync(new URL('./inject.js', import.meta.url), 'utf8');
 const snippet = `(function(){${inject}\nconsole.info('[preview] ' + previewOnLive(${JSON.stringify(paste)}, ${JSON.stringify(replace)}));})();`;
 
 if (print) { process.stdout.write(snippet + '\n'); process.exit(0); }
-execSync('pbcopy', { input: snippet });
+// UTF-8 locale, or pbcopy reads the bytes as Mac Roman and — becomes ,Äî.
+execSync('pbcopy', { input: snippet, env: { ...process.env, LC_CTYPE: 'en_US.UTF-8', LANG: 'en_US.UTF-8' } });
 console.log(`Preview snippet copied (${snippet.length} characters). Open the live page, press Cmd+Option+J, paste, press Enter. Refresh to undo.`);

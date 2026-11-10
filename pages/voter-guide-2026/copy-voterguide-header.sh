@@ -12,6 +12,8 @@
 # Add --print to print instead of copying, or --preview to copy a console snippet that
 # previews it on the live page (tools/preview-on-live). Flags combine: --pre --preview.
 cd "$(dirname "$0")" || exit 1
+# pbcopy reads bytes in the shell's locale; without UTF-8 it turns — into ,Äî on the clipboard.
+export LC_CTYPE=en_US.UTF-8 LANG=en_US.UTF-8
 phase=post mode=copy
 for a in "$@"; do
   case "$a" in
