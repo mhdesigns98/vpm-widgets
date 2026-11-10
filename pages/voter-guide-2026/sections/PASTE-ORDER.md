@@ -5,6 +5,17 @@ Paste-ready HTML fragments for the VPM News Voter Guide, built to the
 every class prefixed and scoped under a single `.vpm-vg` wrapper, no frameworks, no
 font imports, no build step, images as absolute URLs.
 
+## Header by phase
+
+Block 1 changes with the election calendar. Each phase has its own file, kept so it can be
+pasted again next cycle. Paste exactly one; all three carry the shared stylesheet.
+
+| Phase | File | What the hero sidebar shows | Copy it |
+|---|---|---|---|
+| Pre-election | `header-section.html` | Important Dates calendar | `copy-voterguide-header.sh --pre` |
+| Election night | `results-header-section.html` | AP live results embed | `copy-voterguide-header.sh --results` |
+| Post-election | `post-election-header-section.html` | Key results, linked to stories | `copy-voterguide-header.sh` (default) |
+
 ## Paste order
 
 | # | Block | File |
@@ -128,7 +139,7 @@ The live page at vpm.org/elections doesn't follow the table above. As of Nov. 3,
 vpm.org/voterguide is now its own page; vpm.org/elections carries the results. On
 /voterguide the header block changed:
 
-- `header-section.html` is the whole top of the page: hero, Key results panel and the
+- `post-election-header-section.html` is the whole top of the page: hero, Key results panel and the
   "On this page" nav, which now sits inside the hero (as on /elections).
 - **No Featured Stories Article List under it**, and no split: paste the fragment whole.
 - **Don't paste `section-nav.html`** on this page; the nav is already in the header.

@@ -1,4 +1,9 @@
 <!--
+  PHASE: PRE-ELECTION (calendar). Block 1 has one file per phase; paste exactly one:
+    header-section.html (pre-election calendar), results-header-section.html
+    (election night), post-election-header-section.html (results recap).
+    See PASTE-ORDER.md, "Header by phase".
+
   VPM Voter Guide — Header Section (ACF)
   =======================================
   This fragment carries the page-level scaffolding:
@@ -20,10 +25,10 @@
     newsroom's stories appear automatically. The CSS that restyles that
     live block to match the old static cards is in the <style> block
     below, in the clearly marked "LIVE BLOCK OVERRIDES" section.
-  - POST-ELECTION (Nov. 2026, vpm.org/voterguide): no Featured Stories block
-    under the hero any more, so there is no split. The "On this page" nav is
-    back inside this fragment, in the hero under the title row, as on
-    vpm.org/elections. Don't also paste section-nav.html on this page.
+  - The sticky "On this page" nav moved OUT of this fragment into
+    acf-sections/section-nav.html, because in the design it sits below
+    the Featured Stories cards — i.e. on the far side of the split.
+    Paste it directly after the live Article List block.
 
   AD PLACEMENT — handled by the page builder, not this fragment:
   Your CMS's own blocks (e.g. "[vpm_section id=...]") can't be nested
@@ -1118,66 +1123,6 @@
     .vpm-vg .vg-section-nav-inner {gap:0;}
     .vpm-vg .vg-section-nav a {font-size:12px;padding:8px 10px;}
   }
-
-  /* Post-election outcomes panel (reuses the dates-box styles above) */
-  .vpm-vg .vg-outcomes-box .vg-date-chip {font-size:20px;}
-  .vpm-vg .vg-outcomes-box a.vg-outcome-link {color:var(--navy-brand);text-decoration:underline;text-decoration-color:rgba(0,0,63,0.35);text-underline-offset:3px;}
-  .vpm-vg .vg-outcomes-box a.vg-outcome-link:hover,
-  .vpm-vg .vg-outcomes-box a.vg-outcome-link:focus-visible {text-decoration-color:currentColor;}
-  .vpm-vg .vg-outcomes-box {--vpm-gray-600:#5A6470;--vpm-blue-500:#1A6AA8;} /* tokens.css */
-  .vpm-vg .vg-outcomes-note {margin:8px 0 0;font-size:12px;color:var(--vpm-gray-600);text-align:center;}
-  /* Wider and shorter than the old dates card: results sit in a 2x2 grid, and the results
-     link and the "unofficial" note share one footer line. One column on small phones. */
-  @media (min-width:981px){ /* side by side only; below this the row stacks, so a basis would set height */
-    .vpm-vg .vg-sidebar.vg-outcomes-sidebar {width:auto;flex:0 1 560px;padding-top:0;}
-  }
-  .vpm-vg .vg-outcomes-box.vg-dates-box {padding:20px 24px 8px;}
-  .vpm-vg .vg-outcomes-box .vg-eyebrow {margin-bottom:4px;}
-  .vpm-vg .vg-outcomes-list {display:grid;grid-template-columns:1fr 1fr;column-gap:24px;}
-  .vpm-vg .vg-outcomes-list .vg-date-row {gap:12px;padding:12px 0;border-bottom:1px solid rgba(0,0,63,0.12);}
-  .vpm-vg .vg-outcomes-list .vg-date-row:nth-last-child(-n+2) {border-bottom:none;}
-  .vpm-vg .vg-outcomes-box .vg-date-chip {min-width:44px;font-size:18px;}
-  .vpm-vg .vg-outcomes-foot {display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0 16px;margin-top:4px;border-top:1px solid rgba(0,0,63,0.12);}
-  .vpm-vg .vg-outcomes-foot a.vg-find-district {width:auto;margin:0;padding:0;border:0;}
-  .vpm-vg .vg-outcomes-foot .vg-outcomes-note {margin:0;}
-  @media (max-width:560px){
-    .vpm-vg .vg-outcomes-list {grid-template-columns:1fr;}
-    .vpm-vg .vg-outcomes-list .vg-date-row {padding:10px 0;}
-    .vpm-vg .vg-outcomes-list .vg-date-row:nth-last-child(2) {border-bottom:1px solid rgba(0,0,63,0.12);}
-    .vpm-vg .vg-outcomes-foot {justify-content:center;padding-bottom:8px;}
-  }
-  /* Post-election: "Virginia Voter Guide" on one line, sized to the column it sits in
-     (8.6 is the text's width in ems). Falls back to a vw size where cqw isn't supported. */
-  .vpm-vg .vg-hero-main {container-type:inline-size;}
-  @media (max-width:980px){ .vpm-vg .vg-hero-main {width:100%;} } /* stacked: a size container can't shrink-to-fit */
-  /* The size goes on the h1, so the spaces between words are headline-sized too. */
-  .vpm-vg .vg-headline.vg-headline-one-line {font-size:clamp(36px,5vw,64px);font-size:min(72px,calc(100cqw / 8.8));line-height:0.92;}
-  .vpm-vg .vg-headline.vg-headline-one-line span {display:inline;font-size:1em;}
-  /* Post-election: "On this page" nav inside the hero (as on vpm.org/elections).
-     A Code Block is too short a parent for position:sticky, so the script pins it. */
-  .vpm-vg .vpm-vg.vg-nav-in-hero {background:transparent;margin:32px 0 0;padding:0;}
-  .vpm-vg .vg-nav-in-hero .vg-section-nav:not(.vg-pinned) .vg-section-nav-inner {max-width:none;padding-left:16px;padding-right:16px;}
-  .vpm-vg .vg-section-nav.vg-pinned {position:fixed;top:0;left:0;right:0;z-index:1000;}
-  .vpm-vg .vg-section-nav-spacer {display:none;margin:0;padding:0;}
-  .vpm-vg .vg-section-nav-spacer.vg-pinned {display:block;}
-  .vpm-vg .vg-section-nav.vg-tight .vg-section-nav-label {display:none;}
-  .vpm-vg .vg-section-nav.vg-tight .vg-section-nav-inner {gap:0;}
-  /* Hostile-host resets for the header: one class, so a host's bare div/li rule can't move
-     the hero, while every designed .vpm-vg .vg-... rule (two classes) still wins. */
-  .vpm-vg.vg-header,
-  :where(.vpm-vg).vg-header :where(div) {margin:0;padding:0;}
-  /* Tap targets (44px min): each result row is one big link target; menu links get a
-     44px minimum height. */
-  .vpm-vg .vg-outcomes-box .vg-date-row {position:relative;}
-  .vpm-vg .vg-outcomes-box a.vg-outcome-link::after {content:"";position:absolute;inset:0;}
-  .vpm-vg .vg-section-nav a {display:flex;align-items:center;min-height:44px;}
-  /* Links hold their color and underline against a host a{... !important} rule (checklist). */
-  .vpm-vg .vg-outcomes-box a.vg-outcome-link {color:var(--navy-brand) !important;text-decoration:underline !important;}
-  .vpm-vg .vg-outcomes-box a.vg-find-district {color:var(--vpm-blue-500) !important;text-decoration:none !important;}
-  .vpm-vg .vg-section-nav a {color:var(--azure-79) !important;text-decoration:none !important;}
-  .vpm-vg .vg-section-nav a:hover {color:var(--white) !important;}
-  .vpm-vg .vg-section-nav a.vg-active {color:var(--azure-9) !important;}
-  :where(.vpm-vg) .vg-section-nav :where(li) {margin:0;padding:0;}
 </style>
 
 <div class="vpm-vg vg-header">
@@ -1185,218 +1130,61 @@
     <div class="vg-hero-row">
       <div class="vg-hero-main">
         <p class="vg-eyebrow">Virginia · 2026 General Election</p>
-        <h1 class="vg-headline vg-heading-font vg-headline-one-line">
+        <h1 class="vg-headline vg-heading-font">
           <span class="vg-l1">Virginia</span>
           <span class="vg-l2">Voter</span>
           <span class="vg-l3">Guide</span>
         </h1>
-        <p class="vg-hero-dek vg-hero-dek-first">Virginia voted Nov. 3. Here's what was on the ballot, what the candidates told us and where to find the results.</p>
-        <p class="vg-hero-dek">Given the extraordinary nature of the 2026 election cycle, Virginia's five public media news stations — VPM, WAMU, WHRO, WMRA and Radio IQ — partnered to give voters across the state the full breadth of both the federal midterms and state and local elections.</p>
+        <p class="vg-hero-dek">Given the extraordinary nature of the 2026 election cycle, Virginia's five public media news stations — VPM, WAMU, WHRO, WMRA and Radio IQ — are partnering to ensure voters across the state get the full breadth of both the federal midterms, state and local elections.
+          
+        From early voting through Election Day and the results, the Virginia Elections Collaborative will provide you with coverage on the candidates and issues so you can make informed decisions at the ballot box.</p>
       </div>
 
-      <!-- Post-election (Nov. 2026): the Important Dates panel became this outcomes panel.
-           Same box and row styles. List only races VPM has already reported a winner in;
-           everything else goes through the results link. -->
-      <aside class="vg-sidebar vg-outcomes-sidebar">
-        <div class="vg-dates-box vg-outcomes-box">
-          <p class="vg-eyebrow">Key results</p>
+      <aside class="vg-sidebar">
+        <div class="vg-dates-box">
+          <p class="vg-eyebrow">Important Dates</p>
 
-          <div class="vg-outcomes-list">
           <div class="vg-date-row">
-            <div class="vg-date-chip">US<br>SEN</div>
+            <div class="vg-date-chip">Sep<br>18</div>
             <div>
-              <p class="vg-date-info-title"><a class="vg-outcome-link" href="https://www.vpm.org/npr-story/us-senate-mark-warner-bert-mizusawa-election-results-unofficial/">Mark Warner defeats Bert Mizusawa</a></p>
-              <p class="vg-date-info-sub">U.S. Senate</p>
+              <p class="vg-date-info-title">Early In-Person Voting Begins</p>
+              <p class="vg-date-info-sub">45 days before Election Day</p>
             </div>
           </div>
           <div class="vg-date-row">
-            <div class="vg-date-chip">VA<br>01</div>
+            <div class="vg-date-chip">Oct<br>23</div>
             <div>
-              <p class="vg-date-info-title"><a class="vg-outcome-link" href="https://www.vpm.org/elections/2026-11-04/va01-wittman-taylor-results-unofficial/">Shannon Taylor unseats Rob Wittman</a></p>
-              <p class="vg-date-info-sub">1st Congressional District</p>
+              <p class="vg-date-info-title">Voter Registration Deadline</p>
+              <p class="vg-date-info-sub">Register online at vote.virginia.gov</p>
             </div>
           </div>
           <div class="vg-date-row">
-            <div class="vg-date-chip">VA<br>05</div>
+            <div class="vg-date-chip">Oct<br>31</div>
             <div>
-              <p class="vg-date-info-title"><a class="vg-outcome-link" href="https://www.vpm.org/elections/2026-11-04/va05-mcguire-perriello-election-results-unofficial/">John McGuire holds off Tom Perriello</a></p>
-              <p class="vg-date-info-sub">5th Congressional District</p>
+              <p class="vg-date-info-title">Last Day of Early Voting</p>
+              <p class="vg-date-info-sub">Saturday before Election Day</p>
             </div>
           </div>
           <div class="vg-date-row">
-            <div class="vg-date-chip">Q<br>1–3</div>
+            <div class="vg-date-chip">Nov<br>3</div>
             <div>
-              <p class="vg-date-info-title"><a class="vg-outcome-link" href="https://www.vpm.org/elections/2026-11-03/va-constitutional-amendments-results/">Voters approve all 3 amendments</a></p>
-              <p class="vg-date-info-sub">Reproductive rights, marriage equality, voting rights</p>
+              <p class="vg-date-info-title">Election Day</p>
+              <p class="vg-date-info-sub">Polls open 6 a.m. – 7 p.m.</p>
             </div>
-          </div>
           </div>
 
-          <div class="vg-outcomes-foot">
-            <a class="vg-find-district" href="https://www.vpm.org/elections/#results">
-              See all results
-              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-            <p class="vg-outcomes-note">Results are unofficial until certified.</p>
-          </div>
+          <a class="vg-find-district" href="https://www.vote.virginia.gov/who-represents-me" target="_blank" rel="noopener">
+            Find your district
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
         </div>
       </aside>
     </div>
-
-    <!-- "On this page" jump nav, inside the hero as on vpm.org/elections. Links whose
-         section isn't on the page are hidden. CMS rows without an id are matched by
-         heading text (data-vg-heading). Script adapted from section-nav.html. -->
-    <div class="vpm-vg vg-nav-in-hero">
-      <div class="vg-section-nav-spacer" aria-hidden="true"></div>
-      <nav class="vg-section-nav" aria-label="Page sections">
-        <div class="vg-wrap vg-section-nav-inner">
-          <span class="vg-section-nav-label">On this page</span>
-          <ul>
-            <li><a href="#need-to-know" data-vg-heading="What You Need to Know">What You Need to Know</a></li>
-            <li><a href="#faq">Voting FAQ</a></li>
-            <li><a href="#key-elections" data-vg-heading="Know Your Candidates">Candidates</a></li>
-            <li><a href="#amendments" data-vg-heading="Proposed Constitutional Amendments|The amendments">Amendments</a></li>
-            <li><a href="#video">Video</a></li>
-            <li><a href="#latest" data-vg-heading="Latest Coverage|Latest Election Coverage">Latest Coverage</a></li>
-          </ul>
-        </div>
-      </nav>
-    </div>
-    <script>
-      (function () {
-        var script = document.currentScript;
-        var wrap = script && script.previousElementSibling;
-        var nav = wrap && wrap.querySelector('.vg-section-nav');
-        if (!nav) return;
-        var spacer = wrap.querySelector('.vg-section-nav-spacer');
-        var list = nav.querySelector('ul');
-        var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
-        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
-
-        function idOf(a) { return a.getAttribute('href').slice(1); }
-        function target(a) { return document.getElementById(idOf(a)); }
-
-        function norm(t) { return t.replace(/\s+/g, ' ').trim().toLowerCase(); }
-
-        // Give un-ided CMS blocks the id their link expects, by heading text: a match is a
-        // heading that starts with one of the link's |-separated names, in any case, so
-        // "Latest Election Coverage from VPM" matches "Latest Election Coverage".
-        function claimIds() {
-          links.forEach(function (a) {
-            var names = (a.getAttribute('data-vg-heading') || '').split('|').map(norm).filter(Boolean);
-            if (!names.length || target(a)) return;
-            var heads = document.querySelectorAll('section.page-section h2, section.page-section h3:not(.page-article-title):not(.page-promo-title)');
-            for (var i = 0; i < heads.length; i++) {
-              var h = norm(heads[i].textContent);
-              if (!names.some(function (n) { return h.indexOf(n) === 0; })) continue;
-              var sec = heads[i].closest('section.page-section');
-              if (sec && !sec.id) { sec.id = idOf(a); return; }
-            }
-          });
-        }
-
-        // Hide links with no section, and links to sections already in view (any that start
-        // beside or above the nav, e.g. a sidebar Latest Coverage list). Put the rest in
-        // page order.
-        function sortLinks() {
-          var navTop = wrap.getBoundingClientRect().top;
-          var shown = links.filter(function (a) {
-            var t = target(a);
-            var ok = !!t && wrap.nextElementSibling !== t && t.getBoundingClientRect().top > navTop;
-            a.parentNode.style.display = ok ? '' : 'none'; // not [hidden]: a host li{display} beats it
-            return ok;
-          });
-          shown.sort(function (a, b) {
-            return target(a).compareDocumentPosition(target(b)) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
-          });
-          shown.forEach(function (a) { list.appendChild(a.parentNode); });
-          wrap.style.display = shown.length < 2 ? 'none' : '';
-          fit();
-        }
-
-        // In a narrow column, drop the "On this page" label before the links clip.
-        function fit() {
-          nav.classList.remove('vg-tight');
-          nav.classList.toggle('vg-tight', list.scrollWidth > list.clientWidth + 1);
-        }
-
-        // Pin to the top once the nav's own spot has scrolled past.
-        function pin() {
-          var past = (spacer.classList.contains('vg-pinned') ? spacer : nav).getBoundingClientRect().top < 0;
-          if (past) spacer.style.height = nav.offsetHeight + 'px';
-          if (past === nav.classList.contains('vg-pinned')) return;
-          nav.classList.toggle('vg-pinned', past);
-          spacer.classList.toggle('vg-pinned', past);
-          fit(); // pinned, the bar is page-wide
-        }
-
-        // Smooth scroll that stops below the pinned nav. Done in JS rather than a global
-        // `html{scroll-behavior:smooth}`, which would leak out and change the whole site.
-        links.forEach(function (a) {
-          a.addEventListener('click', function (e) {
-            var t = target(a);
-            if (!t) return;
-            e.preventDefault();
-            var start = window.pageYOffset;
-            var top = t.getBoundingClientRect().top + start - nav.offsetHeight - 8;
-            window.scrollTo({ top: top, behavior: (reduce && reduce.matches) ? 'auto' : 'smooth' });
-            // Some browsers drop a smooth scroll (seen in Chrome's phone emulation); jump instead.
-            setTimeout(function () {
-              if (window.pageYOffset === start && Math.abs(top - start) > 2) window.scrollTo(0, top);
-            }, 400);
-            history.replaceState(null, '', '#' + idOf(a));
-          });
-        });
-
-        var visible = {};
-        var observer;
-        function setActive() {
-          var current = null;
-          // the LAST section in the activation band: the incoming one is where the reader is
-          links.forEach(function (a) {
-            var t = target(a);
-            if (t && visible[t.id] && (!current || t.getBoundingClientRect().top > current.getBoundingClientRect().top)) current = t;
-          });
-          links.forEach(function (a) {
-            var on = !!current && idOf(a) === current.id;
-            a.classList.toggle('vg-active', on);
-            // on a phone the list scrolls sideways: keep the highlighted link in view
-            if (!on) return;
-            var r = a.getBoundingClientRect(), box = list.getBoundingClientRect();
-            if (r.left < box.left) list.scrollLeft += r.left - box.left - 8;
-            else if (r.right > box.right) list.scrollLeft += r.right - box.right + 8;
-          });
-        }
-        function spy() {
-          if (!('IntersectionObserver' in window)) return;
-          if (observer) observer.disconnect();
-          visible = {};
-          // thin band just under the pinned nav, so the highlight is the section under it
-          observer = new IntersectionObserver(function (entries) {
-            entries.forEach(function (e) {
-              visible[e.target.id] = e.isIntersecting && e.intersectionRect.height > 0;
-            });
-            setActive();
-          }, { rootMargin: '-64px 0px -70% 0px', threshold: 0 });
-          links.forEach(function (a) { var t = target(a); if (t) observer.observe(t); });
-        }
-
-        // The sections live in later blocks, so wire up once the page is parsed.
-        function init() {
-          claimIds();
-          sortLinks();
-          spy();
-          pin();
-          if (document.fonts) document.fonts.ready.then(fit); // web fonts change link widths
-          window.addEventListener('scroll', pin, { passive: true });
-          // columns stack on phones, which can move a sidebar section below the nav
-          window.addEventListener('resize', function () { sortLinks(); pin(); });
-        }
-        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-        else init();
-      })();
-    </script>
   </main>
+  <!-- Screen-reader-only heading for the live Featured Stories block that follows. Its cards
+       are h3s, so without this the page jumps h1 -> h3. Hidden, so the design is unchanged. -->
+  <h2 class="vg-sr-only">Featured Stories</h2>
 </div>
 
+<!-- ===== SPLIT ===== LIVE BLOCK HERE: Featured Stories (article list) ===== -->
 
