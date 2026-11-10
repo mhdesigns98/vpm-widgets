@@ -53,7 +53,7 @@ verified on dev, and carry 242 selectors across 7 breakpoints versus 153 across 
 `reference/wordpress-php-template/assets/voter-guide.css`. The PHP version is less finished,
 not leaner.
 
-**All page CSS lives in one place: inside `sections/header-section.html`** (~35.5KB, 242
+**All page CSS lives in one place: inside the header block** (one file per phase, see `sections/PASTE-ORDER.md`, "Header by phase"; the figures below are for `sections/header-section.html`) (~35.5KB, 242
 selectors). The other six fragments carry **zero CSS** by design. This is already consolidated
 — it is *not* duplicated per block.
 
