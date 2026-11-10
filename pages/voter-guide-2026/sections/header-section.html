@@ -1126,6 +1126,26 @@
   .vpm-vg .vg-outcomes-box a.vg-outcome-link:focus-visible {text-decoration-color:currentColor;}
   .vpm-vg .vg-outcomes-box {--vpm-gray-600:#5A6470;--vpm-blue-500:#1A6AA8;} /* tokens.css */
   .vpm-vg .vg-outcomes-note {margin:8px 0 0;font-size:12px;color:var(--vpm-gray-600);text-align:center;}
+  /* Wider and shorter than the old dates card: results sit in a 2x2 grid, and the results
+     link and the "unofficial" note share one footer line. One column on small phones. */
+  @media (min-width:981px){ /* side by side only; below this the row stacks, so a basis would set height */
+    .vpm-vg .vg-sidebar.vg-outcomes-sidebar {width:auto;flex:0 1 560px;padding-top:0;}
+  }
+  .vpm-vg .vg-outcomes-box.vg-dates-box {padding:20px 24px 8px;}
+  .vpm-vg .vg-outcomes-box .vg-eyebrow {margin-bottom:4px;}
+  .vpm-vg .vg-outcomes-list {display:grid;grid-template-columns:1fr 1fr;column-gap:24px;}
+  .vpm-vg .vg-outcomes-list .vg-date-row {gap:12px;padding:12px 0;border-bottom:1px solid rgba(0,0,63,0.12);}
+  .vpm-vg .vg-outcomes-list .vg-date-row:nth-last-child(-n+2) {border-bottom:none;}
+  .vpm-vg .vg-outcomes-box .vg-date-chip {min-width:44px;font-size:18px;}
+  .vpm-vg .vg-outcomes-foot {display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0 16px;margin-top:4px;border-top:1px solid rgba(0,0,63,0.12);}
+  .vpm-vg .vg-outcomes-foot a.vg-find-district {width:auto;margin:0;padding:0;border:0;}
+  .vpm-vg .vg-outcomes-foot .vg-outcomes-note {margin:0;}
+  @media (max-width:560px){
+    .vpm-vg .vg-outcomes-list {grid-template-columns:1fr;}
+    .vpm-vg .vg-outcomes-list .vg-date-row {padding:10px 0;}
+    .vpm-vg .vg-outcomes-list .vg-date-row:nth-last-child(2) {border-bottom:1px solid rgba(0,0,63,0.12);}
+    .vpm-vg .vg-outcomes-foot {justify-content:center;padding-bottom:8px;}
+  }
   /* Post-election: "On this page" nav inside the hero (as on vpm.org/elections).
      A Code Block is too short a parent for position:sticky, so the script pins it. */
   .vpm-vg .vpm-vg.vg-nav-in-hero {background:transparent;margin:32px 0 0;padding:0;}
@@ -1170,10 +1190,11 @@
       <!-- Post-election (Nov. 2026): the Important Dates panel became this outcomes panel.
            Same box and row styles. List only races VPM has already reported a winner in;
            everything else goes through the results link. -->
-      <aside class="vg-sidebar">
+      <aside class="vg-sidebar vg-outcomes-sidebar">
         <div class="vg-dates-box vg-outcomes-box">
           <p class="vg-eyebrow">Key results</p>
 
+          <div class="vg-outcomes-list">
           <div class="vg-date-row">
             <div class="vg-date-chip">US<br>SEN</div>
             <div>
@@ -1195,7 +1216,6 @@
               <p class="vg-date-info-sub">5th Congressional District</p>
             </div>
           </div>
-
           <div class="vg-date-row">
             <div class="vg-date-chip">Q<br>1–3</div>
             <div>
@@ -1203,11 +1223,15 @@
               <p class="vg-date-info-sub">Reproductive rights, marriage equality, voting rights</p>
             </div>
           </div>
-          <a class="vg-find-district" href="https://www.vpm.org/elections/#results">
-            See all results
-            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <p class="vg-outcomes-note">Results are unofficial until certified.</p>
+          </div>
+
+          <div class="vg-outcomes-foot">
+            <a class="vg-find-district" href="https://www.vpm.org/elections/#results">
+              See all results
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <p class="vg-outcomes-note">Results are unofficial until certified.</p>
+          </div>
         </div>
       </aside>
     </div>
