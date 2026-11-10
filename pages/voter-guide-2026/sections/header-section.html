@@ -1146,6 +1146,13 @@
     .vpm-vg .vg-outcomes-list .vg-date-row:nth-last-child(2) {border-bottom:1px solid rgba(0,0,63,0.12);}
     .vpm-vg .vg-outcomes-foot {justify-content:center;padding-bottom:8px;}
   }
+  /* Post-election: "Virginia Voter Guide" on one line, sized to the column it sits in
+     (8.6 is the text's width in ems). Falls back to a vw size where cqw isn't supported. */
+  .vpm-vg .vg-hero-main {container-type:inline-size;}
+  @media (max-width:980px){ .vpm-vg .vg-hero-main {width:100%;} } /* stacked: a size container can't shrink-to-fit */
+  /* The size goes on the h1, so the spaces between words are headline-sized too. */
+  .vpm-vg .vg-headline.vg-headline-one-line {font-size:clamp(36px,5vw,64px);font-size:min(72px,calc(100cqw / 8.8));line-height:0.92;}
+  .vpm-vg .vg-headline.vg-headline-one-line span {display:inline;font-size:1em;}
   /* Post-election: "On this page" nav inside the hero (as on vpm.org/elections).
      A Code Block is too short a parent for position:sticky, so the script pins it. */
   .vpm-vg .vpm-vg.vg-nav-in-hero {background:transparent;margin:32px 0 0;padding:0;}
@@ -1178,7 +1185,7 @@
     <div class="vg-hero-row">
       <div class="vg-hero-main">
         <p class="vg-eyebrow">Virginia · 2026 General Election</p>
-        <h1 class="vg-headline vg-heading-font">
+        <h1 class="vg-headline vg-heading-font vg-headline-one-line">
           <span class="vg-l1">Virginia</span>
           <span class="vg-l2">Voter</span>
           <span class="vg-l3">Guide</span>
