@@ -8,9 +8,11 @@ font imports, no build step, images as absolute URLs.
 ## Header by phase
 
 Block 1 changes with the election calendar. Each phase has its own file, kept so it can be
-pasted again next cycle. Paste exactly one; all three carry the shared stylesheet.
+pasted again next cycle. Paste exactly one; all three carry the shared stylesheet. Each file
+is the whole Code Block: open it, select all, copy, and paste over the whole block.
+`copy-voterguide-header.sh` does the same from a terminal.
 
-| Phase | File | What the hero sidebar shows | Copy it |
+| Phase | File | What the hero sidebar shows | Script flag |
 |---|---|---|---|
 | Pre-election | `header-section.html` | Important Dates calendar | `copy-voterguide-header.sh --pre` |
 | Election night | `results-header-section.html` | AP live results embed | `copy-voterguide-header.sh --results` |
