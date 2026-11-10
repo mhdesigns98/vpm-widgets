@@ -8,9 +8,11 @@ font imports, no build step, images as absolute URLs.
 ## Header by phase
 
 Block 1 changes with the election calendar. Each phase has its own file, kept so it can be
-pasted again next cycle. Paste exactly one; all three carry the shared stylesheet.
+pasted again next cycle. Paste exactly one; all three carry the shared stylesheet. Each file
+is the whole Code Block: open it, select all, copy, and paste over the whole block.
+`copy-voterguide-header.sh` does the same from a terminal.
 
-| Phase | File | What the hero sidebar shows | Copy it |
+| Phase | File | What the hero sidebar shows | Script flag |
 |---|---|---|---|
 | Pre-election | `header-section.html` | Important Dates calendar | `copy-voterguide-header.sh --pre` |
 | Election night | `results-header-section.html` | AP live results embed | `copy-voterguide-header.sh --results` |
@@ -147,6 +149,6 @@ vpm.org/voterguide is now its own page; vpm.org/elections carries the results. O
   `#latest`. CMS rows without an id are matched by heading text ("What You Need to Know",
   "Know Your Candidates", "Proposed Constitutional Amendments", "Latest Coverage"). A link
   whose section isn't on the page hides itself.
-- The live page's stylesheet has drifted from this repo copy. Until they're reconciled,
-  add only the rules after `/* Post-election outcomes panel` to the live `<style>`, and
-  replace the markup and script after `</style>`.
+- Paste the whole file over the whole block, stylesheet included (`copy-voterguide-header.sh`
+  copies it). Don't paste part of the block: on Nov. 10, 2026 a paste after the first
+  `</style>` replaced the live stylesheet too and left the header unstyled.
