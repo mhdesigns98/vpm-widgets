@@ -147,6 +147,6 @@ vpm.org/voterguide is now its own page; vpm.org/elections carries the results. O
   `#latest`. CMS rows without an id are matched by heading text ("What You Need to Know",
   "Know Your Candidates", "Proposed Constitutional Amendments", "Latest Coverage"). A link
   whose section isn't on the page hides itself.
-- The live page's stylesheet has drifted from this repo copy. Until they're reconciled,
-  add only the rules after `/* Post-election outcomes panel` to the live `<style>`, and
-  replace the markup and script after `</style>`.
+- Paste the whole file over the whole block, stylesheet included (`copy-voterguide-header.sh`
+  copies it). Don't paste part of the block: on Nov. 10, 2026 a paste after the first
+  `</style>` replaced the live stylesheet too and left the header unstyled.

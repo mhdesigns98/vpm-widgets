@@ -5,11 +5,9 @@
 #   --pre      pre-election   sections/header-section.html         (Important Dates calendar)
 #   --results  election night sections/results-header-section.html (AP live results)
 #
-# Post-election: paste over everything AFTER the first </style> in the header Code Block
-# and leave the live <style> alone (it has drifted from this repo copy). The clipboard
-# gets the post-election CSS in its own <style>, then the hero, Key results and nav.
-# Pre and results: these copy the whole file, stylesheet included, and replace the
-# whole block, as they were pasted originally.
+# Every phase copies the whole file, stylesheet included: select everything in the header
+# Code Block and paste over it. (Pasting only part of the block, after the first </style>,
+# is how vpm.org/voterguide lost its stylesheet on Nov. 10, 2026.)
 #
 # Add --print to print instead of copying, or --preview to copy a console snippet that
 # previews it on the live page (tools/preview-on-live). Flags combine: --pre --preview.
@@ -30,24 +28,11 @@ case "$phase" in
   results) file=sections/results-header-section.html ;;
   post) file=sections/post-election-header-section.html ;;
 esac
-if [ "$phase" = post ]; then
-  out=$(python3 - "$file" <<'EOF'
-import sys
-s = open(sys.argv[1], encoding='utf-8').read()
-css = s[s.index('  /* Post-election outcomes panel'):s.rindex('</style>')]
-markup = s[s.index('<div class="vpm-vg vg-header">'):].strip()
-print('<style>\n' + css + '</style>\n\n' + markup)
-EOF
-  ) || exit 1
-  where="Paste over everything after the first </style> in the header Code Block."
-else
-  out=$(cat "$file") || exit 1
-  where="Paste it as the whole header Code Block, replacing what's there."
-fi
+out=$(cat "$file") || exit 1
 if [ "$mode" = print ]; then printf '%s\n' "$out"; exit 0; fi
 if [ "$mode" = preview ]; then
   printf '%s\n' "$out" | node ../../tools/preview-on-live/preview-on-live.mjs || exit 1
   echo "Live page: https://www.vpm.org/voterguide/"
   exit 0
 fi
-printf '%s\n' "$out" | pbcopy && echo "Copied the $phase header ($(printf '%s' "$out" | wc -c | tr -d ' ') characters). $where"
+printf '%s\n' "$out" | pbcopy && echo "Copied the $phase header ($(printf '%s' "$out" | wc -c | tr -d ' ') characters). Select everything in the header Code Block (Cmd+A) and paste over it."
