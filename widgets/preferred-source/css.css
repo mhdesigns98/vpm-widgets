@@ -96,19 +96,20 @@
   font-size: var(--vpm-ps-fs-btn);
   font-weight: 700;
   line-height: 1;
-  color: var(--vpm-ps-white);
+  /* !important on color and decoration only: holds the CTA against host a{...!important} rules */
+  color: var(--vpm-ps-white) !important;
   background: var(--vpm-ps-dark-blue);
   border: 0;
   border-radius: var(--vpm-ps-radius-md);
-  text-decoration: none;
+  text-decoration: none !important;
   white-space: nowrap;
   transition: background-color var(--vpm-ps-dur-fast) var(--vpm-ps-ease);
 }
 
 .vpm-ps .vpm-ps__btn:hover {
-  color: var(--vpm-ps-white);
+  color: var(--vpm-ps-white) !important;
   background: var(--vpm-ps-blue-900);
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 .vpm-ps .vpm-ps__btn:focus-visible {
@@ -131,6 +132,7 @@
   margin: -1px;
   padding: 0;
   overflow: hidden;
+  font-size: var(--vpm-ps-fs-btn);
   clip: rect(0 0 0 0);
   white-space: nowrap;
   border: 0;
