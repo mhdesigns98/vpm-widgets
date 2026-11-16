@@ -74,6 +74,7 @@ Related page builds: `pages/elections-2026-primary/`, `pages/voter-guide-2026/`.
 |---|---|---|---|
 | `widgets/impact-testimonial/` | widget | multiple | Testimonial component for impact/giving pages |
 | `widgets/links-with-map/` | widget | multiple | Reusable map-beside-directory block — Google My Maps embed + multi-column outbound link list; first instance is Virginia wineries A–Z (WordPress ACF split-file format, no JS). Consumed by the `unwined-episode` page |
+| `widgets/preferred-source/` | widget | multiple | Inline CTA linking readers to Google's source preferences tool to add vpm.org as a preferred source (deeplink, no Google JS); for article pages (WordPress ACF split-file format, namespace `vpm-ps-`, no JS) |
 | `widgets/vpm-load-more/` | widget | multiple | Collapsible content section with "Continue reading" expand button, for hiding most of a long-form section (e.g. an interview transcript) behind a click; content stays in the DOM for SEO/a11y (namespace `vpm-lm-`, WordPress Custom HTML block) |
 
 ## Page builds

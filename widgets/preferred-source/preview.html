@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VPM: Add as a preferred source on Google</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700;800&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; padding: 40px 24px; background: #F2F3F4; font-family: 'Public Sans', system-ui, sans-serif; }
+  .preview-shell { max-width: 700px; margin: 0 auto 48px; }
+  .preview-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #5A6470; margin: 0 0 12px; }
+  .preview-narrow { max-width: 320px; }
+/* ============================================
+   VPM: Add as a preferred source on Google
+   Namespace: vpm-ps-
+   Tokens inlined from tokens.css (widget must stay self-contained)
+   ============================================ */
+
+.vpm-ps {
+  /* Brand core */
+  --vpm-ps-dark-blue:  #003865;
+  --vpm-ps-blue-900:   #002244;
+  --vpm-ps-blue-050:   #EEF4FB;
+  --vpm-ps-light-blue: #6CACE4;
+  --vpm-ps-yellow:     #E0E721;
+  --vpm-ps-black:      #101820;
+  --vpm-ps-gray-600:   #5A6470;
+  --vpm-ps-white:      #FFFFFF;
+
+  /* Type */
+  --vpm-ps-font: 'Public Sans', 'GT America', 'Helvetica Neue', Arial, sans-serif;
+  --vpm-ps-fs-title: 18px;
+  --vpm-ps-fs-body: 15px;
+  --vpm-ps-fs-btn: 15px;
+  --vpm-ps-lh-snug: 1.2;
+  --vpm-ps-lh-normal: 1.45;
+
+  /* Space / shape / motion */
+  --vpm-ps-space-1: 4px;
+  --vpm-ps-space-2: 8px;
+  --vpm-ps-space-3: 12px;
+  --vpm-ps-space-4: 16px;
+  --vpm-ps-space-5: 24px;
+  --vpm-ps-radius-md: 4px;
+  --vpm-ps-shadow-focus: 0 0 0 3px rgba(108, 172, 228, 0.55);
+  --vpm-ps-ease: cubic-bezier(0.2, 0, 0, 1);
+  --vpm-ps-dur-fast: 120ms;
+
+  /* Reset against hostile host CSS */
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  margin: var(--vpm-ps-space-5) 0;
+  padding: 0;
+  font-family: var(--vpm-ps-font);
+  color: var(--vpm-ps-black);
+  background: var(--vpm-ps-blue-050);
+  border-left: 4px solid var(--vpm-ps-dark-blue);
+  container-type: inline-size;
+  container-name: vpm-ps;
+}
+
+.vpm-ps *,
+.vpm-ps *::before,
+.vpm-ps *::after { box-sizing: border-box; }
+
+.vpm-ps .vpm-ps__row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--vpm-ps-space-3);
+  margin: 0;
+  padding: var(--vpm-ps-space-4) var(--vpm-ps-space-5);
+}
+
+.vpm-ps .vpm-ps__text { margin: 0; padding: 0; }
+
+.vpm-ps .vpm-ps__title {
+  margin: 0 0 var(--vpm-ps-space-1);
+  padding: 0;
+  font-family: var(--vpm-ps-font);
+  font-size: var(--vpm-ps-fs-title);
+  font-weight: 700;
+  line-height: var(--vpm-ps-lh-snug);
+  color: var(--vpm-ps-dark-blue);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.vpm-ps .vpm-ps__body {
+  margin: 0;
+  padding: 0;
+  font-size: var(--vpm-ps-fs-body);
+  line-height: var(--vpm-ps-lh-normal);
+  color: var(--vpm-ps-gray-600);
+}
+
+.vpm-ps .vpm-ps__btn,
+.vpm-ps .vpm-ps__btn:visited {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--vpm-ps-space-2);
+  flex-shrink: 0;
+  margin: 0;
+  padding: var(--vpm-ps-space-3) var(--vpm-ps-space-4);
+  min-height: 44px;
+  font-family: var(--vpm-ps-font);
+  font-size: var(--vpm-ps-fs-btn);
+  font-weight: 700;
+  line-height: 1;
+  /* !important on color and decoration only: holds the CTA against host a{...!important} rules */
+  color: var(--vpm-ps-white) !important;
+  background: var(--vpm-ps-dark-blue);
+  border: 0;
+  border-radius: var(--vpm-ps-radius-md);
+  text-decoration: none !important;
+  white-space: nowrap;
+  transition: background-color var(--vpm-ps-dur-fast) var(--vpm-ps-ease);
+}
+
+.vpm-ps .vpm-ps__btn:hover {
+  color: var(--vpm-ps-white) !important;
+  background: var(--vpm-ps-blue-900);
+  text-decoration: none !important;
+}
+
+.vpm-ps .vpm-ps__btn:focus-visible {
+  outline: 2px solid var(--vpm-ps-dark-blue);
+  outline-offset: 2px;
+  box-shadow: var(--vpm-ps-shadow-focus);
+}
+
+.vpm-ps .vpm-ps__icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  fill: var(--vpm-ps-yellow);
+}
+
+.vpm-ps .vpm-ps__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  font-size: var(--vpm-ps-fs-btn);
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@container vpm-ps (min-width: 560px) {
+  .vpm-ps .vpm-ps__row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--vpm-ps-space-5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vpm-ps .vpm-ps__btn { transition: none; }
+}
+</style>
+</head>
+<body>
+<div class="preview-shell"><p class="preview-label">Article width</p>
+<aside class="vpm-ps" aria-label="Add VPM as a preferred source on Google">
+  <div class="vpm-ps__row">
+    <div class="vpm-ps__text">
+      <p class="vpm-ps__title">See more VPM News in Google</p>
+      <p class="vpm-ps__body">Pick VPM as a preferred source and our stories show up more in your Top Stories.</p>
+    </div>
+    <a class="vpm-ps__btn" href="https://www.google.com/preferences/source?q=vpm.org" target="_blank" rel="noopener">
+      <svg class="vpm-ps__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1l2.1 4.3 4.7.7-3.4 3.3.8 4.7L8 11.8 3.8 14l.8-4.7L1.2 6l4.7-.7z"/></svg>
+      Add VPM on Google<span class="vpm-ps__sr"> (opens in a new tab)</span>
+    </a>
+  </div>
+</aside>
+</div>
+<div class="preview-shell preview-narrow"><p class="preview-label">Sidebar / mobile</p>
+<aside class="vpm-ps" aria-label="Add VPM as a preferred source on Google">
+  <div class="vpm-ps__row">
+    <div class="vpm-ps__text">
+      <p class="vpm-ps__title">See more VPM News in Google</p>
+      <p class="vpm-ps__body">Pick VPM as a preferred source and our stories show up more in your Top Stories.</p>
+    </div>
+    <a class="vpm-ps__btn" href="https://www.google.com/preferences/source?q=vpm.org" target="_blank" rel="noopener">
+      <svg class="vpm-ps__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1l2.1 4.3 4.7.7-3.4 3.3.8 4.7L8 11.8 3.8 14l.8-4.7L1.2 6l4.7-.7z"/></svg>
+      Add VPM on Google<span class="vpm-ps__sr"> (opens in a new tab)</span>
+    </a>
+  </div>
+</aside>
+</div>
+</body>
+</html>
