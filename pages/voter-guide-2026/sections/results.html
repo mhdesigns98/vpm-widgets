@@ -1,0 +1,106 @@
+<!--
+  VPM Voter Guide — Results Section (ACF), post-election recap
+  ==============================================================
+  Its own Code Block on the post-election page, in a row directly below Latest Coverage.
+  Give that CMS row the title "Election Results": it is the section heading (this block
+  has none of its own, just a "Results by race · Source: AP" bar).
+  Paste order: sections/PASTE-ORDER.md, "Post-election recap".
+
+  The iframe, resizer loader and phone collapse are unchanged from
+  results-header-section.html; only the panel's heading bar differs. Carries no CSS: needs recap-header.html on the page.
+  On phones (760px and under) the AP table is cut to 560px behind "Show all races".
+
+  AP layout: 57278/37902 ("Virginia races" table), the final election-night layout.
+  Keep the guarded resizer loader rather than AP's bare <script src> tag: the guard
+  stops a re-injected block loading it twice.
+
+  The one un-prefixed class is "ap-embed": AP's resizeClient.js finds frames by
+  `iframe.ap-embed`. Renaming it silently breaks auto-resize.
+-->
+<div class="vpm-vg vg-results-block">
+  <div class="vg-wrap">
+    <!-- The CMS row title ("Election Results") is this section's heading; the panel only names its source. -->
+    <section class="vg-results-panel" id="results" aria-label="Virginia election results by race, from the Associated Press">
+      <div class="vg-results-panelhd">
+        <p class="vg-results-source">Results by race &middot; Source: <strong>Associated Press</strong></p>
+      </div>
+      <!-- `ap-embed` is required: AP's resizeClient.js sizes `iframe.ap-embed` to its content. -->
+      <div class="vg-results-framewrap" id="vg-results-frame">
+        <iframe
+          class="ap-embed"
+          title="Live Virginia election results from the Associated Press"
+          src="https://interactives.apelections.org/election-results/customers/layouts/organization-layouts/published/57278/37902.html"
+          width="100%"
+          height="520"
+          frameborder="0"
+          scrolling="no"
+          marginheight="0"
+        ></iframe>
+      </div>
+      <!-- Phones only (CSS): cuts the table to one screen until pressed. Label set by the script. -->
+      <button type="button" class="vg-results-more" aria-expanded="false" aria-controls="vg-results-frame"><span class="vg-results-more-label">Show all races</span><span class="vg-results-more-icon" aria-hidden="true"></span></button>
+    </section>
+
+    <p class="vg-results-note">
+      VPM News does not call races independently. AP declares a winner only when it determines the trailing candidates cannot catch up.
+      <a href="https://apnews.com/hub/how-ap-counts-the-vote" target="_blank" rel="noopener">How AP counts the vote</a>
+    </p>
+  </div>
+</div>
+
+<script>
+/* Phone "Show all races". Must sit directly after the .vg-results-block div above:
+   it finds that div as its previous sibling. */
+(function () {
+  var root = document.currentScript && document.currentScript.previousElementSibling;
+  if (!root || !root.classList.contains('vg-results-block')) return;
+
+  // Phone collapse (CSS cuts the table; this runs the button). Skips the cut when AP's
+  // content is short, and opens it if keyboard focus enters the cut-off frame.
+  var panel = root.querySelector('.vg-results-panel');
+  var more = panel && panel.querySelector('.vg-results-more');
+  var frame = panel && panel.querySelector('iframe.ap-embed');
+  if (more && frame) {
+    var CUT = 560;
+    var label = more.querySelector('.vg-results-more-label');
+    var setOpen = function (open) {
+      panel.classList.toggle('vg-open', open);
+      more.setAttribute('aria-expanded', String(open));
+      label.textContent = open ? 'Show fewer races' : 'Show all races';
+    };
+    var fit = function () { panel.classList.toggle('vg-fits', frame.offsetHeight <= CUT); };
+    more.addEventListener('click', function () {
+      var open = !panel.classList.contains('vg-open');
+      setOpen(open);
+      // closing from far down the table: bring the reader back to the panel
+      if (!open && panel.getBoundingClientRect().top < 0) panel.scrollIntoView({ block: 'start' });
+    });
+    // AP's frame is cross-origin, so it fires no focus event: tabbing into it shows up as
+    // this window blurring with the frame active. Only on Tab, so a tap inside doesn't open it.
+    var tabbed = 0;
+    document.addEventListener('keydown', function (e) { if (e.key === 'Tab') tabbed = Date.now(); });
+    window.addEventListener('blur', function () {
+      setTimeout(function () {
+        if (document.activeElement === frame && Date.now() - tabbed < 500) setOpen(true);
+      }, 0);
+    });
+    if ('ResizeObserver' in window) new ResizeObserver(fit).observe(frame);
+    fit();
+  }
+
+})();
+</script>
+
+<script>
+/* AP's resizeClient.js keeps the iframe sized to its content as races expand.
+   Guarded so a re-injected block doesn't append a second copy. If it's blocked,
+   the frame holds at its 520px floor. */
+(function () {
+  var SRC = 'https://interactives.apelections.org/election-results/assets/microsite/resizeClient.js';
+  if (document.querySelector('script[src*="microsite/resizeClient.js"]')) return;
+  var s = document.createElement('script');
+  s.src = SRC;
+  s.defer = true;
+  document.head.appendChild(s);
+})();
+</script>

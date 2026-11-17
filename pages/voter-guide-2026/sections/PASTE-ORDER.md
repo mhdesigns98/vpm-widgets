@@ -112,7 +112,7 @@ structure above standing in for the live block, load it in a browser and check:
 Then paste block 1 + a live Article List block on Kinsta staging before touching the
 live page — the theme-collision bugs only show up against the real theme.
 
-## Election-night variant
+## Election-night variant (retired; see "Post-election recap" below)
 
 On election night, paste `results-header-section.html` in Block 1's place instead of `header-section.html` (never both). It swaps the Important Dates card for the AP live results embed and carries the same shared stylesheet. Its title changes by phase on its own; see the header comment.
 
@@ -135,6 +135,40 @@ The live page at vpm.org/elections doesn't follow the table above. As of Nov. 3,
 ## Optional block, not in the default order
 
 `house-races.html` (More U.S. House Races, `#house-races`) is a standalone Code Block for the seven districts without a VPM candidate Q&A. Its own comment says to paste it right after the "Know Your Candidates" article list, which this page doesn't currently have, so it has no slot in the table above. Its candidate lists need editorial sign-off before it goes live, and adding it means adding a `#house-races` link to `section-nav.html`.
+
+## Post-election recap (from Nov. 2026)
+
+Replaces the election-night layout above. Two Code Blocks: `recap-header.html` (stylesheet + hero + jump nav) **instead of** `results-header-section.html` and `section-nav.html` (never both), and `results.html` (the AP results) further down.
+
+| # | Block | Kind | Nav id |
+|---|---|---|---|
+| 1 | `recap-header.html` hero + "On this page" nav. **Must stay first:** it carries all the CSS. | Code Block | — |
+| 2 | "Latest Coverage" | Article List, full-width row | `#latest` |
+| 3 | `results.html` AP results + "Show all races" + resizer | Code Block, full-width row | `#results` |
+| 4 | "What happens next" | Article List, full-width row | `#whats-next` |
+| 5 | 970×250 sponsor ad row (existing, unchanged) | Code Block | — |
+| 6 | `newsletter-signup.html` Morning Monitor | Code Block (full width) | — |
+| 7 | "Who ran" | Promo List (hand-picked) | `#key-elections` |
+| 8 | "The amendments, explained" | Promo List (hand-picked) | `#amendments` |
+| 9 | `video-coverage.html` (unchanged) | Code Block | `#video` |
+
+The nav lists links in page order on its own, so moving a row doesn't need a nav edit.
+
+### CMS steps (editor)
+
+1. Row 1: change to one column. Replace the old header Code Block **and** the separate nav Code Block with `recap-header.html`. Remove the 30% sidebar column.
+2. Latest Coverage row: move it directly under row 1. Keep the row title, **clear the Article List's own title** (it renders a second "Latest Coverage" h2). Set the row id to `latest` if the CMS allows.
+3. New row directly under Latest Coverage with a Code Block holding `results.html`. Give the row the title **"Election Results"**: it is the section heading (the block only has a "Results by race · Source: AP" bar).
+4. "Latest Election Coverage from VPM" Article List: rebuild it as its own full-width row under the results, built like the Latest Coverage row. Put **"What happens next" in the row title**, leave the Article List's own title empty, and set the row id to `whats-next` if the CMS allows. It stays automatic, so it repeats Latest Coverage's stories.
+5. Sponsor ad row, then the Morning Monitor Code Block with the new `newsletter-signup.html`.
+6. "Know Your Candidates" → retitle **"Who ran"** (id `key-elections` already set).
+7. "Proposed Constitutional Amendments" → retitle **"The amendments, explained"**; set id `amendments` if the CMS allows.
+8. Video Code Block stays as is, after Amendments.
+9. Delete the "What You Need to Know" + Voting FAQ row. `voting-faq.html` stays in this repo for the future standalone voter guide page (it still loads its chevrons from the old Vercel demo; fix that when that page is built).
+
+Article Lists use the theme's own look on this page: `recap-header.html` no longer carries the dark "Featured Stories" restyle, so each list shows its own title (set it on the list or on the row, not both). The nav finds untagged rows by heading text ("Latest Coverage" or "Election Coverage", "What happens next", "Who ran", "The amendments, explained"), so a retitle that changes those words drops its link unless the id is set.
+
+A recap section with news-team copy was considered and dropped for now (Nov. 2026). It can come back as its own Code Block between the hero and Latest Coverage; see git history for the `recap.html` draft.
 
 ## Post-election voter guide (vpm.org/voterguide, from Nov. 2026)
 
