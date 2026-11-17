@@ -12,3 +12,11 @@ Merged Watch + Listen call to action: one VPM dark-blue band with a "Watch and l
 - Self-contained, namespace `vpm-tunein-`, no JS, no external dependencies.
 - Watch links open in a new tab (screen-reader text says so); Listen links open in the same tab, matching the originals.
 - Responsive: three columns, then two (900px), then one (600px). `:focus-visible` yellow outline; `prefers-reduced-motion` respected.
+
+## Analytics
+
+No tracking code or attributes needed. vpm.org's existing GA4 `click` event already records `link_url` and `link_classes` for every link click (it's how the old `vpm-streambar__button` and `vpm-watch-tile` clicks are tracked today).
+
+To report on this module in GA4: event name `click`, filter **Link classes** contains `vpm-tunein`, break down by **Link URL** (one per button) and **Page path** (which placement). Off-site links also fire the usual `outbound_link_click`.
+
+The class names are the tracking key: renaming `vpm-tunein__btn` or `vpm-tunein__schedules` breaks continuity in those reports.
