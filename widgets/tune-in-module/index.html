@@ -44,7 +44,7 @@
     .vpm-tunein .vpm-tunein__inner {
       max-width: 1200px; margin: 0 auto; padding: 28px 20px 20px;
       display: grid; gap: 24px 40px;
-      grid-template-columns: minmax(180px, 0.8fr) 1fr 1fr;
+      grid-template-columns: minmax(160px, 220px) 1fr 1fr;
       align-items: start;
     }
     .vpm-tunein .vpm-tunein__eyebrow {
@@ -72,13 +72,13 @@
     }
     .vpm-tunein .vpm-tunein__list {
       list-style: none; margin: 0; padding: 0;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+      display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; gap: 8px;
     }
     .vpm-tunein .vpm-tunein__list li { margin: 0; padding: 0; }
     .vpm-tunein .vpm-tunein__intro, .vpm-tunein .vpm-tunein__group { margin: 0; padding: 0; }
     .vpm-tunein .vpm-tunein__btn {
       display: flex; align-items: center; justify-content: center;
-      min-height: 44px; padding: 8px 12px;
+      min-height: 52px; padding: 6px 12px; line-height: 1.25;
       border: 2px solid var(--vpm-white); border-radius: var(--radius-md);
       background: transparent; color: var(--vpm-white) !important;
       font-family: var(--font-sans); font-size: 14px; font-weight: 700;
@@ -119,7 +119,7 @@
       }
       .vpm-tunein .vpm-tunein__eyebrow { flex-basis: 100%; }
       .vpm-tunein .vpm-tunein__legend { margin: 0; }
-      .vpm-tunein .vpm-tunein__btn { font-size: 13px; padding: 8px; }
+      .vpm-tunein .vpm-tunein__btn { font-size: 13px; padding: 6px 8px; }
     }
     @container vpm-tunein (max-width: 600px) {
       .vpm-tunein .vpm-tunein__inner {
@@ -136,7 +136,7 @@
       .vpm-tunein .vpm-tunein__legend { margin: 0; font-size: 12px; }
       .vpm-tunein .vpm-tunein__group-label { margin-bottom: 6px; font-size: 13px; }
       .vpm-tunein .vpm-tunein__list { gap: 6px; }
-      .vpm-tunein .vpm-tunein__btn { min-height: 44px; padding: 6px 8px; font-size: 13px; }
+      .vpm-tunein .vpm-tunein__btn { padding: 6px 8px; font-size: 13px; }
       .vpm-tunein .vpm-tunein__footer { justify-content: flex-start; padding-top: 2px; }
       .vpm-tunein .vpm-tunein__schedules { font-size: 13px; }
     }
