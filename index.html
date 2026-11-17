@@ -490,6 +490,13 @@ body {
       files: [{ label: 'HTML', file: 'index.html' }],
     },
     {
+      slug: 'tune-in-module',
+      name: 'Tune-in Module',
+      desc: 'Merged Watch + Listen CTA band: watch and listen button groups plus a schedules link on VPM dark blue.',
+      preview: 'index.html',
+      files: [{ label: 'HTML', file: 'index.html' }],
+    },
+    {
       slug: 'watch-page-header',
       name: 'Watch Page Header',
       desc: 'Embeddable channel selector header for the VPM Watch live broadcast page.',
@@ -575,6 +582,16 @@ body {
       slug: 'newsletter-signup-cta',
       name: 'Newsletter Signup CTA',
       desc: 'Compact inline CTA banner linking to the combined newsletter signup page. WordPress ACF split-file format.',
+      preview: 'preview.html',
+      files: [
+        { label: 'HTML', file: 'html.html' },
+        { label: 'CSS',  file: 'css.css'  },
+      ],
+    },
+    {
+      slug: 'preferred-source',
+      name: 'Preferred Source (Google)',
+      desc: 'Inline CTA asking readers to add vpm.org as a preferred source in Google Search, via Google\'s deeplink. WordPress ACF split-file format, no JS.',
       preview: 'preview.html',
       files: [
         { label: 'HTML', file: 'html.html' },
@@ -719,7 +736,9 @@ body {
       preview: 'demo/index.html',
       files: [
         { label: 'Paste order', file: 'sections/PASTE-ORDER.md'              },
-        { label: 'Header',      file: 'sections/header-section.html'         },
+        { label: 'Header (pre)',     file: 'sections/header-section.html'               },
+        { label: 'Header (results)', file: 'sections/results-header-section.html'       },
+        { label: 'Header (post)',    file: 'sections/post-election-header-section.html' },
         { label: 'Nav',         file: 'sections/section-nav.html'            },
         { label: 'VA races',    file: 'sections/key-virginia-elections.html' },
         { label: 'Regional',    file: 'sections/key-regional-races.html'     },

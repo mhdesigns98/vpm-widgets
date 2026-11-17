@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Preview paste</title>
+<style>
+  :root {
+    --ground:#f4f5f7; --panel:#ffffff; --edge:#d7dbe1; --ink:#1b1f27; --dim:#5b6270;
+    --accent:#1a6aa8; --accent-ink:#ffffff;
+    --sans:-apple-system, "Segoe UI", system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --ground:#14161b; --panel:#1b1e25; --edge:#2c2f38; --ink:#e7e9ee; --dim:#a3a9b6; --accent:#5aa3e0; --accent-ink:#14161b; }
+  }
+  :root[data-theme="dark"] { --ground:#14161b; --panel:#1b1e25; --edge:#2c2f38; --ink:#e7e9ee; --dim:#a3a9b6; --accent:#5aa3e0; --accent-ink:#14161b; }
+  body { margin:0; background:var(--ground); color:var(--ink); font:16px/1.55 var(--sans); }
+  main { max-width:640px; margin:0 auto; padding:48px 16px; }
+  h1 { font-size:24px; margin:0 0 8px; }
+  p, li { color:var(--dim); }
+  .card { background:var(--panel); border:1px solid var(--edge); border-radius:8px; padding:24px; margin:24px 0; }
+  .bm { display:inline-block; background:var(--accent); color:var(--accent-ink); font-weight:600; text-decoration:none; padding:10px 18px; border-radius:6px; cursor:grab; }
+  .bm:focus-visible { outline:3px solid var(--ink); outline-offset:2px; }
+  ol { padding-left:20px; margin:0; }
+  li { margin:6px 0; }
+  code { font-size:14px; background:var(--ground); padding:1px 5px; border-radius:4px; color:var(--ink); }
+  .err { color:#b42318; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Preview paste</h1>
+  <p>Try a CMS paste on the real vpm.org page before you save it. The preview shows only in your own tab, and refreshing the page brings the live version back.</p>
+
+  <div class="card">
+    <p style="margin-top:0">Drag this to your bookmarks bar:</p>
+    <a class="bm" id="bm" href="#" onclick="return false">Preview paste</a>
+    <p id="status" style="margin-bottom:0"></p>
+  </div>
+
+  <h2 style="font-size:18px">Each time</h2>
+  <ol>
+    <li>Copy the paste. For the voter guide header, run <code>vgcopy</code>.</li>
+    <li>Open the live page, for example vpm.org/voterguide.</li>
+    <li>Click <strong>Preview paste</strong>. The first time, Chrome asks to let vpm.org see your clipboard. Click Allow.</li>
+  </ol>
+  <p>If the clipboard is blocked, a box opens so you can paste by hand. Your clipboard still holds the paste afterward, so it's ready for the CMS.</p>
+  <p>The bookmark swaps the live block whose classes match the paste's first element. To replace a different element, use the console route in the README.</p>
+</main>
+
+<script src="inject.js"></script>
+<script>
+  // Runs on vpm.org when the bookmark is clicked. Everything it needs is inlined in the href.
+  function previewBoot() {
+    function run(text) {
+      var msg = previewOnLive(text, null);
+      if (msg.indexOf('Swapped') === 0) console.info('[preview] ' + msg);
+      else alert('Preview paste: ' + msg);
+    }
+    function ask() {
+      var box = document.createElement('div');
+      box.setAttribute('style', 'position:fixed;inset:0;z-index:2147483647;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;font:15px/1.4 system-ui,sans-serif');
+      box.innerHTML = '<div role="dialog" aria-label="Preview paste" style="background:#fff;color:#1b1f27;width:min(640px,92vw);padding:20px;border-radius:8px">' +
+        '<p style="margin:0 0 10px;color:#1b1f27">Paste the CMS code to preview:</p>' +
+        '<textarea style="width:100%;height:220px;box-sizing:border-box;font:13px ui-monospace,monospace;color:#1b1f27;background:#fff;border:1px solid #c5cad3"></textarea>' +
+        '<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">' +
+        '<button type="button" data-x="cancel" style="padding:8px 14px;font:inherit;cursor:pointer">Cancel</button>' +
+        '<button type="button" data-x="go" style="padding:8px 14px;font:inherit;font-weight:600;background:#1a6aa8;color:#fff;border:0;border-radius:4px;cursor:pointer">Preview</button></div></div>';
+      document.body.appendChild(box);
+      var ta = box.querySelector('textarea');
+      ta.focus();
+      box.addEventListener('click', function (e) {
+        var x = e.target.getAttribute && e.target.getAttribute('data-x');
+        if (x === 'cancel' || e.target === box) box.remove();
+        if (x === 'go') { var v = ta.value; box.remove(); if (v.trim()) run(v); }
+      });
+      box.addEventListener('keydown', function (e) { if (e.key === 'Escape') box.remove(); });
+    }
+    if (navigator.clipboard && navigator.clipboard.readText) {
+      navigator.clipboard.readText().then(function (t) { if (/<[a-z]/i.test(t)) run(t); else ask(); }, ask);
+    } else ask();
+  }
+
+  var bm = document.getElementById('bm'), note = document.getElementById('status');
+  if (typeof previewOnLive !== 'function') {
+    note.className = 'err';
+    note.textContent = 'inject.js did not load, so the bookmark is empty. Open this page from the repo folder (or the Widget Lab) with inject.js next to it.';
+  } else {
+    var code = '(function(){' + previewOnLive.toString() + '(' + previewBoot.toString() + ')();})();';
+    bm.href = 'javascript:' + encodeURIComponent(code);
+    bm.removeAttribute('onclick');
+    bm.addEventListener('click', function (e) { e.preventDefault(); note.textContent = 'Drag it to the bookmarks bar instead. It only works on a vpm.org page.'; });
+    note.textContent = 'Already installed? Drag it again after the tool changes, so the bookmark picks up the update.';
+  }
+</script>
+</body>
+</html>

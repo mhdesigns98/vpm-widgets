@@ -5,6 +5,19 @@ Paste-ready HTML fragments for the VPM News Voter Guide, built to the
 every class prefixed and scoped under a single `.vpm-vg` wrapper, no frameworks, no
 font imports, no build step, images as absolute URLs.
 
+## Header by phase
+
+Block 1 changes with the election calendar. Each phase has its own file, kept so it can be
+pasted again next cycle. Paste exactly one; all three carry the shared stylesheet. Each file
+is the whole Code Block: open it, select all, copy, and paste over the whole block.
+`copy-voterguide-header.sh` does the same from a terminal.
+
+| Phase | File | What the hero sidebar shows | Script flag |
+|---|---|---|---|
+| Pre-election | `header-section.html` | Important Dates calendar | `copy-voterguide-header.sh --pre` |
+| Election night | `results-header-section.html` | AP live results embed | `copy-voterguide-header.sh --results` |
+| Post-election | `post-election-header-section.html` | Key results, linked to stories | `copy-voterguide-header.sh` (default) |
+
 ## Paste order
 
 | # | Block | File |
@@ -156,3 +169,20 @@ The nav lists links in page order on its own, so moving a row doesn't need a nav
 Article Lists use the theme's own look on this page: `recap-header.html` no longer carries the dark "Featured Stories" restyle, so each list shows its own title (set it on the list or on the row, not both). The nav finds untagged rows by heading text ("Latest Coverage" or "Election Coverage", "What happens next", "Who ran", "The amendments, explained"), so a retitle that changes those words drops its link unless the id is set.
 
 A recap section with news-team copy was considered and dropped for now (Nov. 2026). It can come back as its own Code Block between the hero and Latest Coverage; see git history for the `recap.html` draft.
+
+## Post-election voter guide (vpm.org/voterguide, from Nov. 2026)
+
+vpm.org/voterguide is now its own page; vpm.org/elections carries the results. On
+/voterguide the header block changed:
+
+- `post-election-header-section.html` is the whole top of the page: hero, Key results panel and the
+  "On this page" nav, which now sits inside the hero (as on /elections).
+- **No Featured Stories Article List under it**, and no split: paste the fragment whole.
+- **Don't paste `section-nav.html`** on this page; the nav is already in the header.
+- The nav links to `#need-to-know`, `#faq`, `#key-elections`, `#amendments`, `#video` and
+  `#latest`. CMS rows without an id are matched by heading text ("What You Need to Know",
+  "Know Your Candidates", "Proposed Constitutional Amendments", "Latest Coverage"). A link
+  whose section isn't on the page hides itself.
+- Paste the whole file over the whole block, stylesheet included (`copy-voterguide-header.sh`
+  copies it). Don't paste part of the block: on Nov. 10, 2026 a paste after the first
+  `</style>` replaced the live stylesheet too and left the header unstyled.
