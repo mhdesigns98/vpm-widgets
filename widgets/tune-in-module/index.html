@@ -7,7 +7,7 @@
 </head>
 <body>
 <!-- Paste from here to the end comment into a WordPress HTML block. -->
-<section class="vpm-tunein" aria-labelledby="vpm-tunein-heading">
+<section class="vpm-tunein" aria-label="Watch and listen to VPM">
   <style>
     .vpm-tunein {
       --vpm-dark-blue: #003865;
@@ -34,6 +34,8 @@
       font-size: 16px;
       line-height: 1.4;
       position: relative;
+      container: vpm-tunein / inline-size;
+      padding: 0;
     }
     .vpm-tunein *, .vpm-tunein *::before, .vpm-tunein *::after { box-sizing: inherit; }
     .vpm-tunein::before {
@@ -60,7 +62,7 @@
       text-transform: uppercase; letter-spacing: 0.08em; color: var(--vpm-white);
     }
     .vpm-tunein .vpm-tunein__dot {
-      flex: none; width: 8px; height: 8px; margin-right: 8px;
+      flex: none; width: 8px; height: 8px; margin: 0 8px 0 0; padding: 0; font-size: 0;
       border-radius: 50%; background: var(--vpm-red);
       box-shadow: 0 0 0 2px var(--vpm-white);
     }
@@ -73,20 +75,21 @@
       display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
     }
     .vpm-tunein .vpm-tunein__list li { margin: 0; padding: 0; }
+    .vpm-tunein .vpm-tunein__intro, .vpm-tunein .vpm-tunein__group { margin: 0; padding: 0; }
     .vpm-tunein .vpm-tunein__btn {
       display: flex; align-items: center; justify-content: center;
       min-height: 44px; padding: 8px 12px;
       border: 2px solid var(--vpm-white); border-radius: var(--radius-md);
-      background: transparent; color: var(--vpm-white);
+      background: transparent; color: var(--vpm-white) !important;
       font-family: var(--font-sans); font-size: 14px; font-weight: 700;
       text-transform: uppercase; letter-spacing: 0.02em; text-align: center;
-      text-decoration: none;
+      text-decoration: none !important; margin: 0;
       transition: background-color var(--dur-fast) ease, color var(--dur-fast) ease,
                   transform var(--dur-base) ease, box-shadow var(--dur-base) ease;
     }
-    .vpm-tunein .vpm-tunein__btn--primary { background: var(--vpm-white); color: var(--vpm-dark-blue); }
+    .vpm-tunein .vpm-tunein__btn--primary { background: var(--vpm-white); color: var(--vpm-dark-blue) !important; }
     .vpm-tunein .vpm-tunein__btn:hover {
-      background: var(--vpm-yellow); border-color: var(--vpm-yellow); color: var(--vpm-dark-blue);
+      background: var(--vpm-yellow); border-color: var(--vpm-yellow); color: var(--vpm-dark-blue) !important;
       transform: translateY(-2px); box-shadow: var(--shadow-md);
     }
     .vpm-tunein .vpm-tunein__btn:focus-visible,
@@ -96,19 +99,20 @@
     .vpm-tunein .vpm-tunein__footer {
       grid-column: 1 / -1;
       display: flex; justify-content: flex-end;
-      border-top: 1px solid rgba(255, 255, 255, 0.2); padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2); margin: 0; padding: 6px 0 0;
     }
     .vpm-tunein .vpm-tunein__schedules {
-      color: var(--vpm-white); font-size: 14px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.04em; text-decoration: none;
+      color: var(--vpm-white) !important; font-size: 14px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.04em; text-decoration: none !important;
+      display: inline-flex; align-items: center; min-height: 44px;
       transition: color var(--dur-fast) ease;
     }
-    .vpm-tunein .vpm-tunein__schedules:hover { color: var(--vpm-yellow); text-decoration: underline; }
+    .vpm-tunein .vpm-tunein__schedules:hover { color: var(--vpm-yellow) !important; text-decoration: underline !important; }
     .vpm-tunein .vpm-tunein__sr {
       position: absolute; width: 1px; height: 1px; overflow: hidden;
-      clip: rect(0 0 0 0); white-space: nowrap;
+      clip: rect(0 0 0 0); white-space: nowrap; font-size: 14px; margin: 0; padding: 0;
     }
-    @media (max-width: 900px) {
+    @container vpm-tunein (max-width: 900px) {
       .vpm-tunein .vpm-tunein__inner { grid-template-columns: 1fr 1fr; }
       .vpm-tunein .vpm-tunein__intro {
         grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px;
@@ -117,7 +121,7 @@
       .vpm-tunein .vpm-tunein__legend { margin: 0; }
       .vpm-tunein .vpm-tunein__btn { font-size: 13px; padding: 8px; }
     }
-    @media (max-width: 600px) {
+    @container vpm-tunein (max-width: 600px) {
       .vpm-tunein .vpm-tunein__inner {
         grid-template-columns: 1fr; gap: 14px; padding: 16px 16px 14px;
       }
@@ -132,8 +136,8 @@
       .vpm-tunein .vpm-tunein__legend { margin: 0; font-size: 12px; }
       .vpm-tunein .vpm-tunein__group-label { margin-bottom: 6px; font-size: 13px; }
       .vpm-tunein .vpm-tunein__list { gap: 6px; }
-      .vpm-tunein .vpm-tunein__btn { min-height: 40px; padding: 6px 8px; font-size: 13px; }
-      .vpm-tunein .vpm-tunein__footer { justify-content: flex-start; padding-top: 10px; }
+      .vpm-tunein .vpm-tunein__btn { min-height: 44px; padding: 6px 8px; font-size: 13px; }
+      .vpm-tunein .vpm-tunein__footer { justify-content: flex-start; padding-top: 2px; }
       .vpm-tunein .vpm-tunein__schedules { font-size: 13px; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -145,7 +149,7 @@
   <div class="vpm-tunein__inner">
     <div class="vpm-tunein__intro">
       <p class="vpm-tunein__eyebrow">Watch and listen</p>
-      <h2 class="vpm-tunein__heading" id="vpm-tunein-heading">Tune in to VPM</h2>
+      <h2 class="vpm-tunein__heading">Tune in to VPM</h2>
       <p class="vpm-tunein__legend" aria-hidden="true"><span class="vpm-tunein__dot"></span>Live now</p>
     </div>
 
