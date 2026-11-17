@@ -120,6 +120,10 @@ How the counter behaves now:
   it scrolls into view (`threshold: 0`; it was 0.4, which was unreliable on small screens).
 - Already in view or scrolled past on load (restored scroll, `#awards` jump): final number,
   no animation.
+- A counter skipped past in one scroll step (End key, fast fling, jump link) never intersects,
+  so the observer alone would leave it at 0 above the viewport. A rAF-throttled scroll sweep
+  shows it at its final value; the listener removes itself once every counter is settled.
+  Found in the live check on 2026-11-17.
 - `prefers-reduced-motion: reduce`, no `IntersectionObserver`, or JS not running: final numbers.
 - The fold check runs one frame late (`requestAnimationFrame`). Under PJAX the script re-runs
   *before* `pjax.js` calls `scrollTo(0, 0)`, so measuring immediately would use the previous

@@ -191,22 +191,58 @@ const vpmImpactInit = () => {
       requestAnimationFrame(tick);
     };
 
+    /* Pending counters are checked on every observer callback and on scroll.
+       The observer alone misses a counter that a single scroll step carries
+       from below the fold to above it (End key, fast fling, jump link): it
+       never intersects, so it would sit at 0 above the viewport. The sweep
+       shows those at their final value instead. */
     if (!prefersReduced && "IntersectionObserver" in window) {
       requestAnimationFrame(() => {
-        const counterObs = new IntersectionObserver((entries, obs) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-            obs.unobserve(entry.target);
-            animateCounter(entry.target);
+        const pending = new Set();
+        let counterObs;
+        let sweepTick = false;
+
+        const sweep = () => {
+          sweepTick = false;
+          pending.forEach((el) => {
+            const rect = el.getBoundingClientRect();
+            if (rect.bottom <= 0) {
+              el.textContent = String(finalValue(el));
+            } else if (rect.top < window.innerHeight) {
+              animateCounter(el);
+            } else {
+              return;
+            }
+            pending.delete(el);
+            counterObs.unobserve(el);
           });
-        }, { threshold: 0 });
+          if (!pending.size) {
+            counterObs.disconnect();
+            window.removeEventListener("scroll", onScroll);
+          }
+        };
+
+        const onScroll = () => {
+          if (sweepTick) return;
+          sweepTick = true;
+          requestAnimationFrame(sweep);
+        };
+
+        counterObs = new IntersectionObserver(sweep, { threshold: 0 });
 
         counterEls.forEach((el) => {
           if (finalValue(el) === null) return;
           if (el.getBoundingClientRect().top < window.innerHeight) return;
           el.textContent = "0";
+          pending.add(el);
           counterObs.observe(el);
         });
+
+        if (pending.size) {
+          window.addEventListener("scroll", onScroll, { passive: true });
+        } else {
+          counterObs.disconnect();
+        }
       });
     }
   }
