@@ -9,11 +9,19 @@
    That is why adding the wrapper class alone did not start the counters.
    With the deferral, this block can go in any Code Block on the page.
 
+   CHANGED 2026-11-17: the whole script is wrapped in an IIFE. The theme's
+   pjax.js re-executes inline Code Block scripts on every in-site navigation,
+   so a visitor who came back to this page without a full reload hit
+   "Identifier 'vpmImpactInit' has already been declared" and the script never
+   ran. Also, the awards numbers are now real in the HTML (see the counter
+   section below).
+
    Handles: Brightspot/CMS header offset for the sticky nav, nav scrollspy +
    smooth scroll, letter "read more" toggling, and the Awards counter animation.
    Every piece checks for its own target elements first, so it is safe on pages
    that use only some of the sections. */
 
+(() => {
 const vpmImpactInit = () => {
   const root = document.querySelector(".vpm-impact-component");
   if (!root) return;
@@ -152,39 +160,54 @@ const vpmImpactInit = () => {
     });
   });
 
-  /* Awards counter animation */
+  /* Awards counter animation.
+     The HTML ships the real final numbers, so a visitor whose JS never runs
+     (blocked, errored, delayed by a performance plugin) still sees them.
+     JS resets a counter to 0 only when it is below the fold, then counts up
+     when it scrolls in. Counters already in view or scrolled past on load
+     (restored scroll, #awards jump) keep their final value.
+     Measured one frame late: on PJAX navigation this script re-runs before
+     pjax.js scrolls to the top, so an immediate measurement would read the
+     previous page's scroll position. */
   const awardsRoot = document.querySelector(".vpm-awards2025");
   if (awardsRoot) {
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const counterEls = awardsRoot.querySelectorAll(".award-number, .total-number");
+    const prefersReduced = window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const counterEls = [...awardsRoot.querySelectorAll(".award-number, .total-number")];
 
-    function animateCounter(el, duration) {
-      duration = duration || 1200;
-      const target = Number(el.dataset.target || 0);
-      if (!Number.isFinite(target)) return;
+    const finalValue = (el) => {
+      const n = Number(el.dataset.target);
+      return el.dataset.target && Number.isFinite(n) ? n : null;
+    };
+
+    const animateCounter = (el, duration = 1200) => {
+      const target = finalValue(el);
       const start = performance.now();
-      function tick(now) {
+      const tick = (now) => {
         const t = Math.min((now - start) / duration, 1);
-        el.textContent = Math.round(target * t).toString();
+        el.textContent = String(Math.round(target * t));
         if (t < 1) requestAnimationFrame(tick);
-      }
+      };
       requestAnimationFrame(tick);
-    }
+    };
 
-    if (prefersReduced) {
-      counterEls.forEach(function(el) { el.textContent = el.dataset.target || "0"; });
-    } else {
-      const counterObs = new IntersectionObserver(function(entries, obs) {
-        entries.forEach(function(entry) {
-          if (!entry.isIntersecting) return;
-          var el = entry.target;
-          if (el.dataset.animated) return;
-          el.dataset.animated = "true";
-          animateCounter(el);
-          obs.unobserve(el);
+    if (!prefersReduced && "IntersectionObserver" in window) {
+      requestAnimationFrame(() => {
+        const counterObs = new IntersectionObserver((entries, obs) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            obs.unobserve(entry.target);
+            animateCounter(entry.target);
+          });
+        }, { threshold: 0 });
+
+        counterEls.forEach((el) => {
+          if (finalValue(el) === null) return;
+          if (el.getBoundingClientRect().top < window.innerHeight) return;
+          el.textContent = "0";
+          counterObs.observe(el);
         });
-      }, { threshold: 0.4 });
-      counterEls.forEach(function(el) { counterObs.observe(el); });
+      });
     }
   }
 
@@ -202,3 +225,4 @@ if (document.readyState === "loading") {
 } else {
   vpmImpactInit();
 }
+})();
