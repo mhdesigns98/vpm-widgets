@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Election Promo Variants</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Oswald:wght@600;700&display=swap">
+<style>
+  body { margin: 0; background: #fff; font-family: "Public Sans", system-ui, sans-serif; color: #1a1a1a; }
+  .label { max-width: 1320px; margin: 40px auto 12px; padding: 0 16px; font: 700 13px/1.4 "Public Sans", sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #555; }
+
+  /* ---- shared banner shell (mirrors the live promo) ---- */
+  .vpm-elecpromo { background: #003865; color: #fff; }
+  .vpm-elecpromo__inner { max-width: 1320px; margin: 0 auto; padding: 32px 16px; display: grid; grid-template-columns: 1fr 330px; gap: 48px; align-items: center; }
+  .vpm-elecpromo__title { font: 700 38px/1.1 "Oswald", sans-serif; margin: 0 0 16px; }
+  .vpm-elecpromo__body { font-size: 17px; line-height: 1.55; margin: 0 0 24px; color: #EEF4FB; max-width: 62ch; }
+  .vpm-elecpromo__ctas { display: flex; flex-wrap: wrap; gap: 14px; }
+  .vpm-elecpromo__btn { display: inline-block; padding: 15px 26px; font-weight: 700; font-size: 15px; text-decoration: none; border-radius: 3px; }
+  .vpm-elecpromo__btn--primary { background: #6CACE4; color: #fff; }
+  .vpm-elecpromo__btn--ghost { border: 1px solid #fff; color: #fff; }
+  .vpm-elecpromo__img { width: 100%; aspect-ratio: 330/198; object-fit: cover; border-radius: 4px; display: block; background: #0B4F85; }
+
+  /* ---- current: boxed tags (the problem) ---- */
+  .vpm-elecpromo__tags { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+  .vpm-elecpromo__tag { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 10px 16px; }
+  .vpm-elecpromo__tag--fill { background: #E0E721; color: #002244; }
+  .vpm-elecpromo__tag--line { border: 1px solid #fff; }
+
+  /* ---- Variant A: plain eyebrow + dot-separated meta ---- */
+  .vpm-elecpromo__eyebrow { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin: 0 0 12px; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  .vpm-elecpromo__kicker { color: #E0E721; }
+  .vpm-elecpromo__meta { color: #D6E8F6; font-weight: 500; letter-spacing: .04em; }
+  .vpm-elecpromo__meta::before { content: "\00B7"; margin-right: 12px; color: #6CACE4; }
+
+  /* ---- Variant B: accent rule kicker, update note moves under the CTAs ---- */
+  .vpm-elecpromo__kicker--rule { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #E0E721; }
+  .vpm-elecpromo__kicker--rule::before { content: ""; width: 28px; height: 3px; background: #E0E721; }
+  .vpm-elecpromo__note { margin: 16px 0 0; font-size: 14px; font-style: italic; color: #D6E8F6; }
+
+  @media (max-width: 760px) {
+    .vpm-elecpromo__inner { grid-template-columns: 1fr; gap: 24px; }
+    .vpm-elecpromo__media { order: -1; }
+    .vpm-elecpromo__title { font-size: 30px; }
+    /* eyebrow stacks on narrow screens; a leading separator would dangle */
+    .vpm-elecpromo__eyebrow { flex-direction: column; gap: 4px; }
+    .vpm-elecpromo__meta::before { content: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="label">Current (tags read as buttons)</div>
+<section class="vpm-elecpromo"><div class="vpm-elecpromo__inner">
+  <div>
+    <div class="vpm-elecpromo__tags">
+      <span class="vpm-elecpromo__tag vpm-elecpromo__tag--fill">VPM's Election Coverage</span>
+      <span class="vpm-elecpromo__tag vpm-elecpromo__tag--line">Updated through November</span>
+    </div>
+    <h2 class="vpm-elecpromo__title">Virginia's 2026 Elections</h2>
+    <p class="vpm-elecpromo__body">Reporting, interviews, and explainers on the candidates and races on your ballot, and what the outcomes mean for communities across Virginia.</p>
+    <div class="vpm-elecpromo__ctas"><a class="vpm-elecpromo__btn vpm-elecpromo__btn--primary" href="#">Voter Guide</a><a class="vpm-elecpromo__btn vpm-elecpromo__btn--ghost" href="#">Latest Stories</a></div>
+  </div>
+  <div class="vpm-elecpromo__media"><div class="vpm-elecpromo__img"></div></div>
+</div></section>
+
+<div class="label">Variant A: plain eyebrow line</div>
+<section class="vpm-elecpromo"><div class="vpm-elecpromo__inner">
+  <div>
+    <p class="vpm-elecpromo__eyebrow">
+      <span class="vpm-elecpromo__kicker">VPM's Election Coverage</span>
+      <span class="vpm-elecpromo__meta">Updated through November</span>
+    </p>
+    <h2 class="vpm-elecpromo__title">Virginia's 2026 Elections</h2>
+    <p class="vpm-elecpromo__body">Reporting, interviews, and explainers on the candidates and races on your ballot, and what the outcomes mean for communities across Virginia.</p>
+    <div class="vpm-elecpromo__ctas"><a class="vpm-elecpromo__btn vpm-elecpromo__btn--primary" href="#">Voter Guide</a><a class="vpm-elecpromo__btn vpm-elecpromo__btn--ghost" href="#">Latest Stories</a></div>
+  </div>
+  <div class="vpm-elecpromo__media"><div class="vpm-elecpromo__img"></div></div>
+</div></section>
+
+<div class="label">Variant B: accent-rule kicker, update note below buttons</div>
+<section class="vpm-elecpromo"><div class="vpm-elecpromo__inner">
+  <div>
+    <p class="vpm-elecpromo__kicker--rule">VPM's Election Coverage</p>
+    <h2 class="vpm-elecpromo__title">Virginia's 2026 Elections</h2>
+    <p class="vpm-elecpromo__body">Reporting, interviews, and explainers on the candidates and races on your ballot, and what the outcomes mean for communities across Virginia.</p>
+    <div class="vpm-elecpromo__ctas"><a class="vpm-elecpromo__btn vpm-elecpromo__btn--primary" href="#">Voter Guide</a><a class="vpm-elecpromo__btn vpm-elecpromo__btn--ghost" href="#">Latest Stories</a></div>
+    <p class="vpm-elecpromo__note">Updated through November</p>
+  </div>
+  <div class="vpm-elecpromo__media"><div class="vpm-elecpromo__img"></div></div>
+</div></section>
+
+</body>
+</html>

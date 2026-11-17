@@ -1,0 +1,51 @@
+/* Homepage promo banner (.ga-banner): show tags as a plain eyebrow line, not boxes,
+   so they don't read as buttons next to .ga-btn. !important on the second tag beats
+   the inline style the theme writes on it. */
+.ga-banner .ga-tags {
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin-bottom: 10px;
+}
+.ga-banner .ga-tag {
+  background: none;
+  padding: 0;
+  color: var(--yellow);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+.ga-banner .ga-tag + .ga-tag {
+  background: none !important;
+  border: 0 !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+.ga-banner .ga-tag + .ga-tag::before {
+  content: "\00B7";
+  margin-right: 12px;
+  color: var(--light-blue);
+}
+/* Primary CTA: white on light blue is 2.43:1, below WCAG AA 4.5:1 */
+.ga-banner .ga-btn.primary { color: var(--dark-navy); }
+@media (max-width: 768px) {
+  /* stacked on phones; a leading dot would dangle */
+  .ga-banner .ga-tags { flex-direction: column; gap: 4px; }
+  .ga-banner .ga-tag + .ga-tag::before { content: none; }
+  /* theme buttons are shrink-to-fit at every width: small chips in a wide
+     column, and two-line labels at 320px. Share the row instead, capped so
+     they don't stretch across a tablet; wrap to full width when 2 won't fit */
+  .ga-banner .ga-btns { flex-wrap: wrap; max-width: 480px; }
+  .ga-banner .ga-btn {
+    flex: 1 1 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    white-space: nowrap;
+    text-align: center;
+  }
+  /* theme fixes the photo at 180px tall, which crops it to a thin strip once
+     the column goes full width; keep a photo shape instead */
+  .ga-banner .ga-image { height: auto; aspect-ratio: 16 / 9; max-height: 320px; }
+}
