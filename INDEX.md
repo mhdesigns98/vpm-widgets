@@ -66,6 +66,7 @@ Related page builds: `pages/elections-2026-primary/`, `pages/voter-guide-2026/`.
 | Path | Shape | Used on | Description |
 |---|---|---|---|
 | `widgets/listen-stream-bar/` | widget | multiple | Quick-access audio stream bar for the Listen page — eyebrow label + four stream/podcast buttons on VPM dark blue (WordPress HTML block) |
+| `widgets/tune-in-module/` | widget | multiple | Merged Watch + Listen CTA band (first placement: vpm.org/shows) — Watch and Listen button groups plus a schedules link on VPM dark blue; combines `watch-page-header` and `listen-stream-bar` (WordPress HTML block, namespace `vpm-tunein-`, no JS) |
 | `widgets/watch-page-header/` | widget | multiple | Channel selector header for the Watch live page |
 
 ## Other widgets
