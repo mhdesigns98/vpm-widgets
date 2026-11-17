@@ -63,7 +63,14 @@
     .vpm-tunein .vpm-tunein__dot {
       flex: none; width: 8px; height: 8px; margin: 0 8px 0 0; padding: 0; font-size: 0;
       border-radius: 50%; background: var(--vpm-red);
-      box-shadow: 0 0 0 2px var(--vpm-white);
+      box-shadow: 0 0 0 2px currentColor;
+    }
+    /* Live dot sits at the button's left edge, out of the flow, so labels stay centered
+       and wrapped labels don't push it away. Symmetric padding keeps text off the dot. */
+    .vpm-tunein .vpm-tunein__btn { position: relative; }
+    .vpm-tunein .vpm-tunein__btn.vpm-tunein__btn--live { padding-left: 24px; padding-right: 24px; }
+    .vpm-tunein .vpm-tunein__btn .vpm-tunein__dot {
+      position: absolute; left: 10px; top: 50%; margin: -4px 0 0 0;
     }
     .vpm-tunein .vpm-tunein__legend {
       margin: 8px 0 0; font-size: 13px; color: var(--vpm-white);
@@ -155,18 +162,18 @@
     <nav class="vpm-tunein__group" aria-label="Watch VPM">
       <p class="vpm-tunein__group-label">Watch</p>
       <ul class="vpm-tunein__list">
-        <li><a class="vpm-tunein__btn vpm-tunein__btn--primary" href="https://video.vpm.org/" target="_blank" rel="noopener noreferrer"><span class="vpm-tunein__dot" aria-hidden="true"></span><span class="vpm-tunein__sr">Live: </span>VPM PBS<span class="vpm-tunein__sr"> (opens in new tab)</span></a></li>
-        <li><a class="vpm-tunein__btn" href="https://video.vpm.org/livestream/?selected=kids-main" target="_blank" rel="noopener noreferrer"><span class="vpm-tunein__dot" aria-hidden="true"></span><span class="vpm-tunein__sr">Live: </span>PBS Kids<span class="vpm-tunein__sr"> (opens in new tab)</span></a></li>
+        <li><a class="vpm-tunein__btn vpm-tunein__btn--live vpm-tunein__btn--primary" href="https://video.vpm.org/" target="_blank" rel="noopener noreferrer"><span class="vpm-tunein__dot" aria-hidden="true"></span><span class="vpm-tunein__sr">Live: </span>VPM PBS<span class="vpm-tunein__sr"> (opens in new tab)</span></a></li>
+        <li><a class="vpm-tunein__btn vpm-tunein__btn--live" href="https://video.vpm.org/livestream/?selected=kids-main" target="_blank" rel="noopener noreferrer"><span class="vpm-tunein__dot" aria-hidden="true"></span><span class="vpm-tunein__sr">Live: </span>PBS Kids<span class="vpm-tunein__sr"> (opens in new tab)</span></a></li>
         <li><a class="vpm-tunein__btn" href="https://www.youtube.com/channel/UC0G2XnXhO8SA0CGvxQUawEA" target="_blank" rel="noopener noreferrer">VPM on YouTube<span class="vpm-tunein__sr"> (opens in new tab)</span></a></li>
-        <li><a class="vpm-tunein__btn" href="https://www.pbs.org/livestream/" target="_blank" rel="noopener noreferrer"><span class="vpm-tunein__dot" aria-hidden="true"></span><span class="vpm-tunein__sr">Live: </span>More PBS channels<span class="vpm-tunein__sr"> (opens in new tab)</span></a></li>
+        <li><a class="vpm-tunein__btn vpm-tunein__btn--live" href="https://www.pbs.org/livestream/" target="_blank" rel="noopener noreferrer"><span class="vpm-tunein__dot" aria-hidden="true"></span><span class="vpm-tunein__sr">Live: </span>More PBS channels<span class="vpm-tunein__sr"> (opens in new tab)</span></a></li>
       </ul>
     </nav>
 
     <nav class="vpm-tunein__group" aria-label="Listen to VPM">
       <p class="vpm-tunein__group-label">Listen</p>
       <ul class="vpm-tunein__list">
-        <li><a class="vpm-tunein__btn vpm-tunein__btn--primary" href="https://bit.ly/4hXz2VY"><span class="vpm-tunein__dot" aria-hidden="true"></span><span class="vpm-tunein__sr">Live: </span>VPM News&nbsp;88.9</a></li>
-        <li><a class="vpm-tunein__btn" href="https://bit.ly/3V1SQh0"><span class="vpm-tunein__dot" aria-hidden="true"></span><span class="vpm-tunein__sr">Live: </span>VPM Music</a></li>
+        <li><a class="vpm-tunein__btn vpm-tunein__btn--live vpm-tunein__btn--primary" href="https://bit.ly/4hXz2VY"><span class="vpm-tunein__dot" aria-hidden="true"></span><span class="vpm-tunein__sr">Live: </span>VPM News&nbsp;88.9</a></li>
+        <li><a class="vpm-tunein__btn vpm-tunein__btn--live" href="https://bit.ly/3V1SQh0"><span class="vpm-tunein__dot" aria-hidden="true"></span><span class="vpm-tunein__sr">Live: </span>VPM Music</a></li>
         <li><a class="vpm-tunein__btn" href="https://www.vpm.org/vpm-podcasts">Podcasts</a></li>
         <li><a class="vpm-tunein__btn" href="https://www.vpm.org/music-archive">Past music shows</a></li>
       </ul>
