@@ -1,6 +1,6 @@
 # Tune-in Module
 
-Merged Watch + Listen call to action: one VPM dark-blue band with a "Watch and listen" eyebrow, a Watch group (VPM PBS, PBS Kids, YouTube, All PBS streams), a Listen group (News stream, Music stream, Podcasts, Music archive) and a single schedules link.
+Merged Watch + Listen call to action: one VPM dark-blue band with a "Watch and listen" eyebrow, a Watch group (VPM PBS, PBS Kids, VPM on YouTube, More PBS channels), a Listen group (VPM News 88.9, VPM Music, Podcasts, Past music shows) and a single schedules link.
 
 **Origin:** Combines `watch-page-header` (image tiles + schedules bar) and `listen-stream-bar` into one compact module. Image tiles became text buttons so the module stays short above a show list. Rebuilt on current `tokens.css` (Public Sans / IBM Plex Sans Condensed, current accent bar, sharp corners, 2px hover lift).
 
