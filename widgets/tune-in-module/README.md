@@ -11,7 +11,7 @@ Merged Watch + Listen call to action: one VPM dark-blue band with a "Watch and l
 **Usage notes:**
 - Self-contained, namespace `vpm-tunein-`, no JS, no external dependencies.
 - Watch links open in a new tab (screen-reader text says so); Listen links open in the same tab, matching the originals.
-- Responsive: three columns, then two (900px), then one (600px). `:focus-visible` yellow outline; `prefers-reduced-motion` respected.
+- Responsive to its own width (container queries), not the screen: three columns, then two (≤900px), then one (≤600px), so it also works in a sidebar. Every button is 52px tall. `:focus-visible` yellow outline; `prefers-reduced-motion` respected.
 
 ## Analytics
 
