@@ -1,0 +1,14 @@
+# Tune-in Module
+
+Merged Watch + Listen call to action: one VPM dark-blue band with a "Watch and listen" eyebrow, a Watch group (VPM PBS, PBS Kids, YouTube, All PBS streams), a Listen group (News stream, Music stream, Podcasts, Music archive) and a single schedules link.
+
+**Origin:** Combines `watch-page-header` (image tiles + schedules bar) and `listen-stream-bar` into one compact module. Image tiles became text buttons so the module stays short above a show list. Rebuilt on current `tokens.css` (Public Sans / IBM Plex Sans Condensed, current accent bar, sharp corners, 2px hover lift).
+
+**First placement:** vpm.org/shows, between the page title and Recent Stories. Candidate to replace the Watch and Listen page headers later.
+
+**Deploy target:** WordPress HTML block. Paste the `<section class="vpm-tunein">` block from `index.html`.
+
+**Usage notes:**
+- Self-contained, namespace `vpm-tunein-`, no JS, no external dependencies.
+- Watch links open in a new tab (screen-reader text says so); Listen links open in the same tab, matching the originals.
+- Responsive: three columns, then two (900px), then one (600px). `:focus-visible` yellow outline; `prefers-reduced-motion` respected.

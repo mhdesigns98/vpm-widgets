@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tune-in Module</title>
+</head>
+<body>
+<!-- Paste from here to the end comment into a WordPress HTML block. -->
+<section class="vpm-tunein" aria-labelledby="vpm-tunein-heading">
+  <style>
+    .vpm-tunein {
+      --vpm-dark-blue: #003865;
+      --vpm-blue-900: #002244;
+      --vpm-light-blue: #6CACE4;
+      --vpm-yellow: #E0E721;
+      --vpm-red: #EE2737;
+      --vpm-white: #FFFFFF;
+      --font-sans: 'Public Sans', 'GT America', 'Helvetica Neue', Arial, sans-serif;
+      --font-display: 'IBM Plex Sans Condensed', 'Oswald', 'GT America Condensed', 'Arial Narrow', sans-serif;
+      --radius-md: 4px;
+      --shadow-md: 0 8px 24px rgba(16, 24, 32, 0.10);
+      --dur-fast: 120ms;
+      --dur-base: 200ms;
+      --accent-bar: linear-gradient(90deg,
+        var(--vpm-light-blue) 0%, var(--vpm-light-blue) 30%,
+        var(--vpm-yellow) 30%, var(--vpm-yellow) 70%,
+        var(--vpm-red) 70%, var(--vpm-red) 100%);
+
+      box-sizing: border-box;
+      background: var(--vpm-dark-blue);
+      color: var(--vpm-white);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.4;
+      position: relative;
+    }
+    .vpm-tunein *, .vpm-tunein *::before, .vpm-tunein *::after { box-sizing: inherit; }
+    .vpm-tunein::before {
+      content: ""; display: block; height: 4px; background: var(--accent-bar);
+    }
+    .vpm-tunein .vpm-tunein__inner {
+      max-width: 1200px; margin: 0 auto; padding: 28px 20px 20px;
+      display: grid; gap: 24px 40px;
+      grid-template-columns: minmax(180px, 0.8fr) 1fr 1fr;
+      align-items: start;
+    }
+    .vpm-tunein .vpm-tunein__eyebrow {
+      margin: 0 0 6px; font-size: 13px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.12em; color: var(--vpm-yellow);
+    }
+    .vpm-tunein .vpm-tunein__heading {
+      margin: 0; padding: 0; border: 0; background: none;
+      font-family: var(--font-display); font-weight: 700;
+      font-size: 32px; line-height: 1.1; color: var(--vpm-white);
+    }
+    .vpm-tunein .vpm-tunein__group-label {
+      display: flex; align-items: center; gap: 8px;
+      margin: 0 0 10px; font-size: 14px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em; color: var(--vpm-white);
+    }
+    .vpm-tunein .vpm-tunein__live {
+      background: var(--vpm-red); color: var(--vpm-white);
+      font-size: 11px; letter-spacing: 0.08em; padding: 2px 6px; border-radius: var(--radius-md);
+    }
+    .vpm-tunein .vpm-tunein__list {
+      list-style: none; margin: 0; padding: 0;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    }
+    .vpm-tunein .vpm-tunein__list li { margin: 0; padding: 0; }
+    .vpm-tunein .vpm-tunein__btn {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 44px; padding: 8px 12px;
+      border: 2px solid var(--vpm-white); border-radius: var(--radius-md);
+      background: transparent; color: var(--vpm-white);
+      font-family: var(--font-sans); font-size: 14px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.02em; text-align: center;
+      text-decoration: none;
+      transition: background-color var(--dur-fast) ease, color var(--dur-fast) ease,
+                  transform var(--dur-base) ease, box-shadow var(--dur-base) ease;
+    }
+    .vpm-tunein .vpm-tunein__btn--primary { background: var(--vpm-white); color: var(--vpm-dark-blue); }
+    .vpm-tunein .vpm-tunein__btn:hover {
+      background: var(--vpm-yellow); border-color: var(--vpm-yellow); color: var(--vpm-dark-blue);
+      transform: translateY(-2px); box-shadow: var(--shadow-md);
+    }
+    .vpm-tunein .vpm-tunein__btn:focus-visible,
+    .vpm-tunein .vpm-tunein__schedules:focus-visible {
+      outline: 3px solid var(--vpm-yellow); outline-offset: 2px;
+    }
+    .vpm-tunein .vpm-tunein__footer {
+      grid-column: 1 / -1;
+      display: flex; justify-content: flex-end;
+      border-top: 1px solid rgba(255, 255, 255, 0.2); padding-top: 14px;
+    }
+    .vpm-tunein .vpm-tunein__schedules {
+      color: var(--vpm-white); font-size: 14px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.04em; text-decoration: none;
+      transition: color var(--dur-fast) ease;
+    }
+    .vpm-tunein .vpm-tunein__schedules:hover { color: var(--vpm-yellow); text-decoration: underline; }
+    .vpm-tunein .vpm-tunein__sr {
+      position: absolute; width: 1px; height: 1px; overflow: hidden;
+      clip: rect(0 0 0 0); white-space: nowrap;
+    }
+    @media (max-width: 900px) {
+      .vpm-tunein .vpm-tunein__inner { grid-template-columns: 1fr 1fr; }
+      .vpm-tunein .vpm-tunein__intro { grid-column: 1 / -1; }
+    }
+    @media (max-width: 600px) {
+      .vpm-tunein .vpm-tunein__inner { grid-template-columns: 1fr; padding-top: 24px; }
+      .vpm-tunein .vpm-tunein__heading { font-size: 26px; }
+      .vpm-tunein .vpm-tunein__footer { justify-content: flex-start; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .vpm-tunein .vpm-tunein__btn { transition: none; }
+      .vpm-tunein .vpm-tunein__btn:hover { transform: none; }
+    }
+  </style>
+
+  <div class="vpm-tunein__inner">
+    <div class="vpm-tunein__intro">
+      <p class="vpm-tunein__eyebrow">Watch and listen</p>
+      <h2 class="vpm-tunein__heading" id="vpm-tunein-heading">Tune in to VPM</h2>
+    </div>
+
+    <nav class="vpm-tunein__group" aria-label="Watch VPM">
+      <p class="vpm-tunein__group-label">Watch <span class="vpm-tunein__live">Live</span></p>
+      <ul class="vpm-tunein__list">
+        <li><a class="vpm-tunein__btn vpm-tunein__btn--primary" href="https://video.vpm.org/" target="_blank" rel="noopener noreferrer">VPM PBS<span class="vpm-tunein__sr"> (opens in new tab)</span></a></li>
+        <li><a class="vpm-tunein__btn" href="https://video.vpm.org/livestream/?selected=kids-main" target="_blank" rel="noopener noreferrer">PBS Kids<span class="vpm-tunein__sr"> (opens in new tab)</span></a></li>
+        <li><a class="vpm-tunein__btn" href="https://www.youtube.com/channel/UC0G2XnXhO8SA0CGvxQUawEA" target="_blank" rel="noopener noreferrer">YouTube<span class="vpm-tunein__sr"> (opens in new tab)</span></a></li>
+        <li><a class="vpm-tunein__btn" href="https://www.pbs.org/livestream/" target="_blank" rel="noopener noreferrer">All PBS streams<span class="vpm-tunein__sr"> (opens in new tab)</span></a></li>
+      </ul>
+    </nav>
+
+    <nav class="vpm-tunein__group" aria-label="Listen to VPM">
+      <p class="vpm-tunein__group-label">Listen <span class="vpm-tunein__live">Live</span></p>
+      <ul class="vpm-tunein__list">
+        <li><a class="vpm-tunein__btn vpm-tunein__btn--primary" href="https://bit.ly/4hXz2VY">News stream</a></li>
+        <li><a class="vpm-tunein__btn" href="https://bit.ly/3V1SQh0">Music stream</a></li>
+        <li><a class="vpm-tunein__btn" href="https://www.vpm.org/vpm-podcasts">Podcasts</a></li>
+        <li><a class="vpm-tunein__btn" href="https://www.vpm.org/music-archive">Music archive</a></li>
+      </ul>
+    </nav>
+
+    <div class="vpm-tunein__footer">
+      <a class="vpm-tunein__schedules" href="https://www.vpm.org/vpm-tv-schedule/">TV, radio and music schedules &rarr;</a>
+    </div>
+  </div>
+</section>
+<!-- end tune-in-module -->
+</body>
+</html>
