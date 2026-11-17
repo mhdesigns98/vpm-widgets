@@ -1,6 +1,6 @@
 # Tune-in Module: open follow-ups
 
-- [x] Live dots on VPM PBS, PBS Kids, More PBS channels, VPM News 88.9, VPM Music. YouTube stays unmarked (decided 2026-11-17).
+- [x] Live dots removed (decided 2026-11-17): the labels already say which links are stations, and the dots cost label width plus several alignment fixes.
 - [ ] Placement: below the Shows heading or in a sidebar, decide after seeing it on the page. Both widths pass the harness.
 - [x] bit.ly stream links are correct and stay (decided 2026-11-17).
 - [x] `/ship tune-in-module` passed 2026-11-17 (harness, 316px sidebar, hostile CSS, keyboard, WebKit). Real fonts (Public Sans, IBM Plex Sans Condensed) confirmed loading on the staging test post 2026-11-17.
