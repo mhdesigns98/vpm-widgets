@@ -100,6 +100,54 @@ Also fixed while in there: `.impact-card__title` referenced `--font-heading` and
 neither ever declared anywhere; and `id="awards"` was duplicated across two nested sections
 (it now lives only on the CMS-generated section header — see *Page assembly* above).
 
+## Awards counters: graceful fallback (2026-11-17)
+
+Some visitors still saw 0 for every award. Cause: the theme's `pjax.js` swaps `<main>` in place
+on in-site navigation and re-executes every inline Code Block script. On a second visit without
+a full reload, the top-level `const vpmImpactInit` was declared again, threw
+`Identifier 'vpmImpactInit' has already been declared`, and the script never ran, leaving the
+literal 0s from the HTML.
+
+**Fix, in two parts:**
+
+1. **`js.js` is wrapped in an IIFE**, so re-execution under PJAX is safe.
+2. **`html-awards.html` ships the real final numbers** (11 / 6 / 4 / 3 / 2 / 2 / 1, total 29),
+   not 0s. Whatever goes wrong with JS, visitors see the right counts.
+
+How the counter behaves now:
+
+- JS resets a counter to 0 **only if it is below the fold**, then counts up when any part of
+  it scrolls into view (`threshold: 0`; it was 0.4, which was unreliable on small screens).
+- Already in view or scrolled past on load (restored scroll, `#awards` jump): final number,
+  no animation.
+- A counter skipped past in one scroll step (End key, fast fling, jump link) never intersects,
+  so the observer alone would leave it at 0 above the viewport. A rAF-throttled scroll sweep
+  shows it at its final value; the listener removes itself once every counter is settled.
+  Found in the live check on 2026-11-17.
+- `prefers-reduced-motion: reduce`, no `IntersectionObserver`, or JS not running: final numbers.
+- The fold check runs one frame late (`requestAnimationFrame`). Under PJAX the script re-runs
+  *before* `pjax.js` calls `scrollTo(0, 0)`, so measuring immediately would use the previous
+  page's scroll position.
+- `aria-live="polite"` was removed from `.total-number`: with the animation it would announce
+  every step from 0 to 29.
+
+The header image `src` now matches live (`www.vpm.org/wp-content/uploads/bs-img/…`); the repo
+still had the older `assets.vpm.org` URL. Paste the repo file as-is, or keep the
+`<!-- Awards -->` comment that live has above the block (it's harmless either way).
+
+**Performance plugins:** as of 2026-11-17 the served page shows no "delay JS until interaction"
+plugin (no WP Rocket, Perfmatters, LiteSpeed, Flying Scripts, Autoptimize, NitroPack or
+Cloudflare Rocket Loader markers). If one is added, exclude the keyword `vpmImpactInit`. Even
+without an exclusion, delayed JS now degrades to static final numbers instead of 0s.
+
+**Known, not fixed:**
+
+- `.num-box` is `aria-hidden`, so screen readers hear the award names but never the counts.
+- "Awards Received During 2025" appears twice: the CMS section header `<h2>` (no id) and this
+  block's `<h2 id="vpm-awards2025-title">`. No duplicate **ids** on the page, but two identical
+  headings in a row.
+- Each PJAX visit adds another `scroll` listener from `updateHeaderOffset` that is never removed.
+
 ## Deviations from the Widget Lab conventions
 
 Called out deliberately — this is a page, not a self-contained embed:
@@ -128,5 +176,12 @@ Jump-link anchors verified on staging 2026-08-06 by DOM inspection: all seven id
 present as `.page-section-header` sections and resolve. The `scroll-padding-top: 96px` added to
 `css.css` on the same date is **not yet live** — it takes effect when the stylesheet Code Block
 is re-pasted.
+Awards counter fallback (2026-11-17) verified in headless Chromium at 375×812 against
+`html-awards.html` + `js.js` + `css.css`: load at top → below-fold counters reset to 0 and count
+up on scroll; reload scrolled past → final numbers; `prefers-reduced-motion` → final numbers;
+JS disabled → final numbers; simulated PJAX re-run → old script throws the redeclaration error,
+new script doesn't and animates. **Not yet live** — needs the awards and script Code Blocks
+re-pasted, then a check on vpm.org (including a real in-site navigation back to the page).
+
 This page has **not** been through `/ship-widget` — see the pre-ship checklist in the repo
 `CLAUDE.md`. Note it would flag the `id` attributes the CMS section headers rely on.
