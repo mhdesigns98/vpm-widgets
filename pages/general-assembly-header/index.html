@@ -16,6 +16,7 @@
     --vpm-gahdr-yellow: #e0e721;    /* tokens --vpm-yellow */
     --vpm-gahdr-ink: #101820;       /* tokens --vpm-black */
     --vpm-gahdr-white: #ffffff;
+    --vpm-gahdr-nav: #002244;       /* tokens --vpm-blue-900 */
     --vpm-gahdr-line: rgba(108, 172, 228, 0.2);
     background: var(--vpm-gahdr-navy);
     color: var(--vpm-gahdr-white);
@@ -28,6 +29,11 @@
   /* Host reset: one-class weight beats bare p{}/span{} rules, loses to the rules below. */
   :where(.vpm-gahdr) p, :where(.vpm-gahdr) h1, :where(.vpm-gahdr) span,
   :where(.vpm-gahdr) ul, :where(.vpm-gahdr) li { margin: 0; padding: 0; }
+  /* Wrapper divs and the nav: one class each, so they beat a host div{}/nav{} rule; the real
+     rules below have the same weight and come later, so they still win. */
+  :where(.vpm-gahdr) .vpm-gahdr__wrap, :where(.vpm-gahdr) .vpm-gahdr__top,
+  :where(.vpm-gahdr) .vpm-gahdr__main, :where(.vpm-gahdr) .vpm-gahdr__meta,
+  :where(.vpm-gahdr) .vpm-gahdr__spacer, :where(.vpm-gahdr) .vpm-gahdr__nav { margin: 0; padding: 0; }
 
   .vpm-gahdr__wrap { max-width: 1200px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
   .vpm-gahdr__hero { padding-top: 48px; padding-bottom: 48px; }
@@ -41,7 +47,7 @@
     text-transform: uppercase; color: var(--vpm-gahdr-azure);
   }
   .vpm-gahdr__title {
-    margin: 0; font-family: "Oswald", Impact, "Arial Narrow", sans-serif; font-weight: 700;
+    margin: 0; font-size: 16px; font-family: "Oswald", Impact, "Arial Narrow", sans-serif; font-weight: 700;
   }
   .vpm-gahdr__line {
     display: block; text-transform: uppercase; font-weight: 700;
@@ -57,7 +63,7 @@
     font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
   }
   .vpm-gahdr__dot {
-    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; font-size: 0;
     background: var(--vpm-gahdr-yellow);
   }
   .vpm-gahdr__dek {
@@ -67,9 +73,9 @@
   /* "On this page" bar, same treatment as vpm.org/elections */
   .vpm-gahdr__nav {
     position: relative; z-index: 20;
-    background: rgba(0, 34, 68, 0.92);
-    -webkit-backdrop-filter: saturate(140%) blur(8px);
-    backdrop-filter: saturate(140%) blur(8px);
+    /* Solid, not the elections bar's 92% see-through: pinned over white content, the
+       11px label would drop below 4.5:1 */
+    background: var(--vpm-gahdr-nav);
     border-top: 1px solid var(--vpm-gahdr-line);
     border-bottom: 1px solid var(--vpm-gahdr-line);
   }
@@ -86,15 +92,18 @@
   }
   .vpm-gahdr__nav ul::-webkit-scrollbar { display: none; }
   .vpm-gahdr__nav a {
-    display: block; white-space: nowrap; padding: 8px 12px; border-radius: 3px;
-    font-size: 13px; font-weight: 500; text-decoration: none;
-    color: var(--vpm-gahdr-azure-79);
+    display: flex; align-items: center; min-height: 44px; /* 44px tap target */
+    white-space: nowrap; padding: 0 12px; border-radius: 3px;
+    font-size: 13px; font-weight: 500;
+    /* !important on color/decoration only: holds against a host a{… !important} rule */
+    text-decoration: none !important;
+    color: var(--vpm-gahdr-azure-79) !important;
     transition: color 0.15s ease, background-color 0.15s ease;
   }
-  .vpm-gahdr__nav a:hover { color: var(--vpm-gahdr-white); background: rgba(255, 255, 255, 0.06); }
-  .vpm-gahdr__nav a:focus-visible { outline: 2px solid var(--vpm-gahdr-yellow); outline-offset: 2px; }
+  .vpm-gahdr__nav a:hover { color: var(--vpm-gahdr-white) !important; background: rgba(255, 255, 255, 0.06); }
+  .vpm-gahdr__nav a:focus-visible { outline: 2px solid var(--vpm-gahdr-yellow); outline-offset: -2px; } /* inset: the scrolling ul clips an outside outline */
   .vpm-gahdr__nav a.vpm-gahdr--active {
-    color: var(--vpm-gahdr-ink); background: var(--vpm-gahdr-yellow); font-weight: 600;
+    color: var(--vpm-gahdr-ink) !important; background: var(--vpm-gahdr-yellow); font-weight: 600;
   }
 
   @media (max-width: 600px) {

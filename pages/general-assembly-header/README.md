@@ -12,6 +12,15 @@ on the category page.
 **Editorial upkeep:** the eyebrow ("2027 Session") and status line ("Session convenes Jan. 13,
 2027") are dated. Update them each session, and once it's underway.
 
+**Anchors supplied at runtime:** the header's script gives the category page's existing
+sections these ids, by heading text. Nothing to add by hand in the CMS.
+
+| Anchor | Section it lands on (matched heading) |
+|---|---|
+| `#ga-latest` | Latest Stories |
+| `#ga-newsletter` | Start Your Day with Virginia's Top Stories (Morning Monitor signup) |
+| `#ga-resources` | Helpful Resources |
+
 **On this page bar:** links are matched to the page's existing sections by heading text
 (Latest Stories, Start Your Day…, Helpful Resources). If a heading is renamed, update its
 `data-vpm-gahdr-heading`; a link with no match hides, and the bar hides under two links.
