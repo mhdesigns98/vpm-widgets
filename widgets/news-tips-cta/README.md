@@ -7,8 +7,10 @@ point readers to the newsroom.
 - **Namespace:** `vpm-ntips-`
 - **Format:** single file. Paste the whole `index.html` into one Code Block. No JS, no ids, so it
   can sit on any page, more than once if needed.
-- **Used on:** https://www.vpm.org/category/general-assembly/ (below the stories). The same copy
-  also lives on vpm.org/news as a plain Rich Text block, a candidate for swapping to this widget.
+- **Used on:** https://www.vpm.org/category/general-assembly/, in its own Code Block (Full width
+  off) just above the "Meet the VPM Award Winning News Team" section, which stays (decided
+  2026-11-20: that section links to /newsroom, this one to the tips inbox). The same copy also
+  lives on vpm.org/news as a plain Rich Text block, a candidate for swapping to this widget.
 - **Layout:** responds to its own width (container query), so it works full width or in a column.
   Two columns from 720px of available width.
 - **Copy:** supplied by the newsroom (2026-11-20). If the description or email changes, edit it
