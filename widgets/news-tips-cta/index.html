@@ -1,0 +1,139 @@
+<!--
+  VPM News — "Contact the newsroom" CTA (widget, single Code Block)
+  Paste: the WHOLE file into one Code Block. Reusable on any vpm.org page; first placement is
+  https://www.vpm.org/category/general-assembly/ (below the stories).
+  Namespace: vpm-ntips-. No JS, no ids (safe to place more than once on a page).
+  Family look: matches widgets/newsletter-signup-cta (dark blue band, light blue + yellow bar).
+-->
+<style>
+  .vpm-ntips {
+    --vpm-ntips-dark-blue: #003865;     /* tokens --vpm-dark-blue */
+    --vpm-ntips-blue-900: #002244;      /* tokens --vpm-blue-900 */
+    --vpm-ntips-light-blue: #6cace4;    /* tokens --vpm-light-blue */
+    --vpm-ntips-yellow: #e0e721;        /* tokens --vpm-yellow */
+    --vpm-ntips-white: #ffffff;         /* tokens --vpm-white */
+    --vpm-ntips-on-dark-muted: #b9c8d8; /* tokens --fg-on-dark-muted */
+    --vpm-ntips-rule: rgba(108, 172, 228, 0.3);
+    --vpm-ntips-font: "Public Sans", "GT America", "Helvetica Neue", Arial, sans-serif; /* tokens --font-sans */
+    --vpm-ntips-ease: cubic-bezier(0.2, 0, 0, 1);
+
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: var(--vpm-ntips-dark-blue);
+    color: var(--vpm-ntips-white);
+    font-family: var(--vpm-ntips-font);
+    -webkit-font-smoothing: antialiased;
+    /* Lays out from its own width, so it also works in a narrow column on a wide page. */
+    container-type: inline-size;
+    container-name: vpm-ntips;
+  }
+  .vpm-ntips *, .vpm-ntips *::before, .vpm-ntips *::after { box-sizing: border-box; }
+
+  .vpm-ntips .vpm-ntips__bar {
+    height: 4px; margin: 0; padding: 0;
+    background: linear-gradient(90deg,
+      var(--vpm-ntips-light-blue) 0%, var(--vpm-ntips-light-blue) 50%,
+      var(--vpm-ntips-yellow) 50%, var(--vpm-ntips-yellow) 100%);
+  }
+  .vpm-ntips .vpm-ntips__row {
+    display: flex; flex-direction: column; gap: 24px;
+    margin: 0; padding: 24px;
+  }
+  .vpm-ntips .vpm-ntips__about,
+  .vpm-ntips .vpm-ntips__tip { margin: 0; padding: 0; min-width: 0; }
+
+  .vpm-ntips .vpm-ntips__eyebrow {
+    margin: 0 0 8px; padding: 0;
+    font-size: 12px; font-weight: 700; line-height: 1.3;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--vpm-ntips-yellow);
+  }
+  .vpm-ntips .vpm-ntips__title {
+    margin: 0 0 12px; padding: 0;
+    font-family: var(--vpm-ntips-font);
+    font-size: clamp(20px, 2vw, 26px); font-weight: 800; line-height: 1.2;
+    letter-spacing: -0.01em; text-transform: none;
+    color: var(--vpm-ntips-white);
+    text-wrap: balance;
+  }
+  .vpm-ntips .vpm-ntips__body {
+    margin: 0; padding: 0; max-width: 68ch;
+    font-size: 15px; font-weight: 400; line-height: 1.55;
+    color: var(--vpm-ntips-on-dark-muted);
+    text-wrap: pretty;
+  }
+
+  .vpm-ntips .vpm-ntips__tip {
+    display: flex; flex-direction: column; align-items: flex-start; gap: 16px;
+    padding-top: 24px;
+    border-top: 1px solid var(--vpm-ntips-rule);
+  }
+  .vpm-ntips .vpm-ntips__tip-text {
+    margin: 0; padding: 0;
+    font-size: 16px; font-weight: 600; line-height: 1.45;
+    color: var(--vpm-ntips-white);
+  }
+  .vpm-ntips .vpm-ntips__email {
+    display: inline-flex; align-items: center; gap: 8px;
+    min-height: 44px; padding: 12px 24px;
+    border: 0; border-radius: 4px;
+    background: var(--vpm-ntips-light-blue);
+    font-family: var(--vpm-ntips-font);
+    font-size: 16px; font-weight: 700; line-height: 1.2;
+    /* !important on color/decoration only: holds against a host a{… !important} rule */
+    color: var(--vpm-ntips-blue-900) !important;
+    text-decoration: none !important;
+    overflow-wrap: anywhere;
+    transition: background-color 120ms var(--vpm-ntips-ease);
+  }
+  .vpm-ntips .vpm-ntips__email:hover { background: var(--vpm-ntips-white); }
+  .vpm-ntips .vpm-ntips__email:focus-visible {
+    background: var(--vpm-ntips-white);
+    outline: 2px solid var(--vpm-ntips-yellow); outline-offset: 2px;
+  }
+  .vpm-ntips .vpm-ntips__icon { width: 18px; height: 18px; flex-shrink: 0; font-size: 0; }
+
+  /* Wide: about on the left, the tip panel on the right */
+  @container vpm-ntips (min-width: 720px) {
+    .vpm-ntips .vpm-ntips__row { flex-direction: row; align-items: center; gap: 48px; padding: 40px; }
+    .vpm-ntips .vpm-ntips__about { flex: 1 1 60%; }
+    .vpm-ntips .vpm-ntips__tip {
+      flex: 0 1 340px; padding-top: 0; padding-left: 48px;
+      border-top: 0; border-left: 1px solid var(--vpm-ntips-rule);
+    }
+  }
+  @supports not (container-type: inline-size) {
+    @media (min-width: 720px) {
+      .vpm-ntips .vpm-ntips__row { flex-direction: row; align-items: center; gap: 48px; padding: 40px; }
+      .vpm-ntips .vpm-ntips__about { flex: 1 1 60%; }
+      .vpm-ntips .vpm-ntips__tip {
+        flex: 0 1 340px; padding-top: 0; padding-left: 48px;
+        border-top: 0; border-left: 1px solid var(--vpm-ntips-rule);
+      }
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vpm-ntips .vpm-ntips__email { transition: none; }
+  }
+  @media (forced-colors: active) {
+    .vpm-ntips .vpm-ntips__email { border: 1px solid currentColor; }
+  }
+</style>
+
+<aside class="vpm-ntips" aria-label="Contact VPM News">
+  <div class="vpm-ntips__bar" aria-hidden="true"></div>
+  <div class="vpm-ntips__row">
+    <div class="vpm-ntips__about">
+      <p class="vpm-ntips__eyebrow">VPM News</p>
+      <h2 class="vpm-ntips__title">Contact the VPM News team</h2>
+      <p class="vpm-ntips__body">VPM News is a go-to source for trusted, factual local news in Virginia. Headquartered in Richmond with a small team in Charlottesville, VPM News delivers award-winning coverage of local issues that matter most to its communities: Virginia&rsquo;s General Assembly; statewide politics and elections; educational, economic, environmental and legal issues; healthcare; local events; infrastructure; and the news of the day.</p>
+    </div>
+    <div class="vpm-ntips__tip">
+      <p class="vpm-ntips__tip-text">To report a news tip or suggestion or to contact the VPM News team, email our newsroom at</p>
+      <a class="vpm-ntips__email" href="mailto:tips@vpm.org"><svg class="vpm-ntips__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>tips@vpm.org</a>
+    </div>
+  </div>
+</aside>
