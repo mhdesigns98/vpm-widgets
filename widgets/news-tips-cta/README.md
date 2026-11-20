@@ -21,7 +21,7 @@ text on the right when wide; stacked in narrow spaces.
   here and re-paste every placement. Grep this repo for `news-tips-cta` to find pages that carry
   a copy.
 - **Heading:** an `h2` ("Contact the VPM News team"). The General Assembly header's On this page
-  bar can link to it by adding `data-vpm-gahdr-heading="Contact the VPM News"` (see that page's
-  README).
+  bar can link to it by adding `data-vpm-gahdr-heading="Contact the VPM News"` (see
+  `pages/general-assembly/README.md`).
 
 Run `/ship news-tips-cta` before pasting into the CMS.

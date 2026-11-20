@@ -32,7 +32,7 @@ stays canonical, and the lint's README says which items it covers.
       and focus (focus outlines need 3:1 against the colors next to them), `prefers-reduced-motion` respected
 - [ ] A translucent sticky/pinned bar is measured over the lightest content that scrolls under it,
       not just over its hero, and focus outlines inside an `overflow` row aren't clipped (inset them).
-      First caught in `general-assembly-header` (2026-11-20): the 92% bar's 11px label fell to 4.37:1
+      First caught in `general-assembly` (2026-11-20): the 92% bar's 11px label fell to 4.37:1
       over white, and the scrolling link row cut off the top and bottom of the focus ring
 - [ ] A photo beside text in a flex row is checked in WebKit at desktop width: the text, not the
       photo's natural height, should set the row's height (place the `img` absolutely inside its
