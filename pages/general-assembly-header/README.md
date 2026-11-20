@@ -7,7 +7,9 @@ archive template has none.
 **Live URL:** https://www.vpm.org/category/general-assembly/
 
 **Paste order:** one Code Block, the whole `index.html` (style, markup, script), placed first
-on the category page.
+on the category page. **Turn on the Code Block's Full width setting** (the theme adds
+`is-full-width`, which removes `.container`'s 1240px cap), as on vpm.org/elections. Without it the
+navy band sits in a boxed 1240px column instead of running edge to edge.
 
 **Editorial upkeep:** the status line switches itself on the session's start date (Virginia
 time): "Session convenes Jan. 13, 2027" before, "2027 session underway" from Jan. 13 on. There is
