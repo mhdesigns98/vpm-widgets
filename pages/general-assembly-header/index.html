@@ -122,16 +122,18 @@
   <div class="vpm-gahdr__wrap vpm-gahdr__hero">
     <div class="vpm-gahdr__top">
       <div class="vpm-gahdr__main">
-        <p class="vpm-gahdr__eyebrow">VPM News &middot; 2027 Session</p>
+        <p class="vpm-gahdr__eyebrow">VPM News</p>
         <h1 class="vpm-gahdr__title">
           <span class="vpm-gahdr__line">Virginia</span>
           <span class="vpm-gahdr__line vpm-gahdr__line--red">General <em>Assembly</em></span>
         </h1>
       </div>
       <div class="vpm-gahdr__meta">
-        <!-- Status swaps itself on the start date (Virginia time): before it, the text below;
-             from it on, data-vpm-gahdr-after. Edit both, and the date, for the next session. -->
-        <p class="vpm-gahdr__status" data-vpm-gahdr-start="2027-01-13" data-vpm-gahdr-after="2027 session underway"><span class="vpm-gahdr__dot" aria-hidden="true"></span><span class="vpm-gahdr__status-text">Session convenes Jan. 13, 2027</span></p>
+        <!-- Session status, all dates Virginia time. Before data-vpm-gahdr-start: the text below.
+             From the start date on: data-vpm-gahdr-after. After data-vpm-gahdr-end (leave it
+             empty until the adjournment date is set): the line hides. Each session, update the
+             text and all three attributes. -->
+        <p class="vpm-gahdr__status" data-vpm-gahdr-start="2027-01-13" data-vpm-gahdr-after="2027 session underway" data-vpm-gahdr-end=""><span class="vpm-gahdr__dot" aria-hidden="true"></span><span class="vpm-gahdr__status-text">Session convenes Jan. 13, 2027</span></p>
         <p class="vpm-gahdr__dek">What lawmakers are debating in Richmond, the bills moving through the House and Senate, and how they affect Virginians.</p>
       </div>
     </div>
@@ -145,7 +147,6 @@
       <span class="vpm-gahdr__nav-label">On this page</span>
       <ul>
         <li><a href="#ga-latest" data-vpm-gahdr-heading="Latest Stories">Latest Stories</a></li>
-        <li><a href="#ga-newsletter" data-vpm-gahdr-heading="Start Your Day">Morning Newsletter</a></li>
         <li><a href="#ga-resources" data-vpm-gahdr-heading="Helpful Resources">Helpful Resources</a></li>
       </ul>
     </div>
@@ -164,6 +165,8 @@
       var today;
       try { today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' }); }
       catch (e) { var d = new Date(); today = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+      var end = st.getAttribute('data-vpm-gahdr-end');
+      if (end && today > end) { st.style.display = 'none'; return; }
       if (today >= st.getAttribute('data-vpm-gahdr-start')) txt.textContent = st.getAttribute('data-vpm-gahdr-after');
     })();
     var nav = root && root.querySelector('.vpm-gahdr__nav');
