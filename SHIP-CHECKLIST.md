@@ -34,6 +34,10 @@ stays canonical, and the lint's README says which items it covers.
       not just over its hero, and focus outlines inside an `overflow` row aren't clipped (inset them).
       First caught in `general-assembly-header` (2026-11-20): the 92% bar's 11px label fell to 4.37:1
       over white, and the scrolling link row cut off the top and bottom of the focus ring
+- [ ] A photo beside text in a flex row is checked in WebKit at desktop width: the text, not the
+      photo's natural height, should set the row's height (place the `img` absolutely inside its
+      box). First caught in `news-tips-cta` (2026-11-20): Chromium was fine, Safari stretched the
+      band to the photo's full height
 - [ ] Semantics: images have real `alt` (or `alt=""` if decorative), iframes have `title`, headings
       don't skip levels. Don't require an `<h1>`: a block pasted into a CMS page sits under that
       page's own title
