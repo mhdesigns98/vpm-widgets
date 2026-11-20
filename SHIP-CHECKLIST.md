@@ -30,6 +30,10 @@ stays canonical, and the lint's README says which items it covers.
 - [ ] Keyboard accessible (DOM order matches visual order, including absolutely positioned controls such
       as a close button; no traps), visible focus, WCAG 2.1 AA contrast in every state including hover
       and focus (focus outlines need 3:1 against the colors next to them), `prefers-reduced-motion` respected
+- [ ] A translucent sticky/pinned bar is measured over the lightest content that scrolls under it,
+      not just over its hero, and focus outlines inside an `overflow` row aren't clipped (inset them).
+      First caught in `general-assembly-header` (2026-11-20): the 92% bar's 11px label fell to 4.37:1
+      over white, and the scrolling link row cut off the top and bottom of the focus ring
 - [ ] Semantics: images have real `alt` (or `alt=""` if decorative), iframes have `title`, headings
       don't skip levels. Don't require an `<h1>`: a block pasted into a CMS page sits under that
       page's own title
