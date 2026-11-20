@@ -1,0 +1,169 @@
+<!--
+  VPM General Assembly — Helpful resources (page build section, its own Code Block)
+  Lives on: https://www.vpm.org/category/general-assembly/, right-hand column of the stories grid.
+  Paste: the WHOLE file into the Code Block that holds the old "Helpful resources" module,
+  replacing it. See ../PASTE-ORDER.md.
+  Namespace: vpm-gares-. No JS. Owns the #ga-resources anchor the header's jump bar links to.
+  Lays out from its own width: one column in the sidebar, two when it gets 560px or more.
+  Links checked 2026-11-20; the legislature moved to vga.virginia.gov in 2026.
+-->
+<style>
+  .vpm-gares {
+    --vpm-gares-dark-blue: #003865;   /* tokens --vpm-dark-blue */
+    --vpm-gares-light-blue: #6cace4;  /* tokens --vpm-light-blue */
+    --vpm-gares-yellow: #e0e721;      /* tokens --vpm-yellow */
+    --vpm-gares-white: #ffffff;       /* tokens --vpm-white */
+    --vpm-gares-gray-700: #3d4652;    /* tokens --vpm-gray-700 */
+    --vpm-gares-gray-200: #e5e7e9;    /* tokens --vpm-gray-200 */
+    --vpm-gares-gray-050: #f8f9fa;    /* tokens --vpm-gray-050 */
+    --vpm-gares-font: "Public Sans", "GT America", "Helvetica Neue", Arial, sans-serif; /* tokens --font-sans */
+
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: var(--vpm-gares-white);
+    border: 1px solid var(--vpm-gares-gray-200);
+    border-radius: 4px;
+    overflow: hidden;
+    color: var(--vpm-gares-gray-700);
+    font-family: var(--vpm-gares-font);
+    -webkit-font-smoothing: antialiased;
+    scroll-margin-top: 64px; /* clears the header's pinned jump bar on a direct #ga-resources load */
+    container-type: inline-size;
+    container-name: vpm-gares;
+  }
+  .vpm-gares *, .vpm-gares *::before, .vpm-gares *::after { box-sizing: border-box; }
+
+  .vpm-gares .vpm-gares__bar {
+    height: 4px; margin: 0; padding: 0;
+    background: linear-gradient(90deg,
+      var(--vpm-gares-light-blue) 0%, var(--vpm-gares-light-blue) 50%,
+      var(--vpm-gares-yellow) 50%, var(--vpm-gares-yellow) 100%);
+  }
+  .vpm-gares .vpm-gares__head { margin: 0; padding: 20px 20px 4px; }
+  .vpm-gares .vpm-gares__title {
+    margin: 0 0 6px; padding: 0;
+    font-family: var(--vpm-gares-font);
+    font-size: 20px; font-weight: 800; line-height: 1.2; letter-spacing: -0.01em;
+    text-transform: none;
+    color: var(--vpm-gares-dark-blue);
+  }
+  .vpm-gares .vpm-gares__intro {
+    margin: 0; padding: 0;
+    font-size: 14px; line-height: 1.45; color: var(--vpm-gares-gray-700);
+  }
+
+  .vpm-gares .vpm-gares__list {
+    display: grid; grid-template-columns: 1fr;
+    margin: 0; padding: 8px 8px 12px; list-style: none;
+  }
+  .vpm-gares .vpm-gares__item { margin: 0; padding: 0; list-style: none; }
+  .vpm-gares .vpm-gares__item + .vpm-gares__item .vpm-gares__link { border-top: 1px solid var(--vpm-gares-gray-200); }
+
+  .vpm-gares .vpm-gares__link {
+    position: relative;
+    display: grid; grid-template-columns: 1fr auto; column-gap: 12px; row-gap: 4px;
+    margin: 0; padding: 14px 12px;
+    border-radius: 2px;
+    /* !important on color/decoration only: holds against a host a{… !important} rule */
+    color: var(--vpm-gares-gray-700) !important;
+    text-decoration: none !important;
+    transition: background-color 120ms ease;
+  }
+  .vpm-gares .vpm-gares__name {
+    display: block; grid-column: 1; margin: 0; padding: 0;
+    font-size: 16px; font-weight: 700; line-height: 1.3;
+    color: var(--vpm-gares-dark-blue);
+  }
+  .vpm-gares .vpm-gares__desc {
+    display: block; grid-column: 1; margin: 0; padding: 0;
+    font-size: 14px; font-weight: 400; line-height: 1.45;
+    color: var(--vpm-gares-gray-700);
+  }
+  .vpm-gares .vpm-gares__icon {
+    grid-column: 2; grid-row: 1; align-self: center;
+    width: 16px; height: 16px; font-size: 0;
+    color: var(--vpm-gares-dark-blue);
+  }
+  .vpm-gares .vpm-gares__link:hover { background: var(--vpm-gares-gray-050); }
+  .vpm-gares .vpm-gares__link:hover .vpm-gares__name {
+    text-decoration: underline; text-underline-offset: 3px;
+  }
+  .vpm-gares .vpm-gares__link:focus-visible {
+    background: var(--vpm-gares-gray-050);
+    outline: 2px solid var(--vpm-gares-dark-blue); outline-offset: -2px;
+  }
+  /* Screen-reader-only "opens in a new tab" note */
+  .vpm-gares .vpm-gares__sr {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0;
+    overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+    font-size: 14px;
+  }
+
+  /* Room for two columns (full-width column on a tablet, or a wider placement) */
+  @container vpm-gares (min-width: 560px) {
+    .vpm-gares .vpm-gares__head { padding: 24px 24px 8px; }
+    .vpm-gares .vpm-gares__list { grid-template-columns: 1fr 1fr; column-gap: 16px; padding: 8px 12px 16px; }
+    .vpm-gares .vpm-gares__item:nth-child(2) .vpm-gares__link { border-top: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vpm-gares .vpm-gares__link { transition: none; }
+  }
+  @media (forced-colors: active) {
+    .vpm-gares .vpm-gares__link:focus-visible { outline-color: Highlight; }
+  }
+</style>
+
+<section class="vpm-gares" id="ga-resources" aria-labelledby="ga-resources-title">
+  <div class="vpm-gares__bar" aria-hidden="true"></div>
+  <div class="vpm-gares__head">
+    <h2 class="vpm-gares__title" id="ga-resources-title">Helpful resources</h2>
+    <p class="vpm-gares__intro">Quick links to official information and tools for following the Virginia General Assembly.</p>
+  </div>
+  <ul class="vpm-gares__list">
+    <li class="vpm-gares__item">
+      <a class="vpm-gares__link" href="https://vga.virginia.gov/" target="_blank" rel="noopener">
+        <span class="vpm-gares__name">General Assembly website<span class="vpm-gares__sr"> (opens in a new tab)</span></span>
+        <span class="vpm-gares__desc">Official source for bills, committee schedules, calendars, and member information.</span>
+        <svg class="vpm-gares__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 3h7v7M13 3 4 12"/></svg>
+      </a>
+    </li>
+    <li class="vpm-gares__item">
+      <a class="vpm-gares__link" href="https://house.vga.virginia.gov/members" target="_blank" rel="noopener">
+        <span class="vpm-gares__name">House member listings<span class="vpm-gares__sr"> (opens in a new tab)</span></span>
+        <span class="vpm-gares__desc">Browse Virginia House of Delegates members, districts, and contact details.</span>
+        <svg class="vpm-gares__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 3h7v7M13 3 4 12"/></svg>
+      </a>
+    </li>
+    <li class="vpm-gares__item">
+      <a class="vpm-gares__link" href="https://apps.senate.virginia.gov/Senator/index.php" target="_blank" rel="noopener">
+        <span class="vpm-gares__name">Senate member listings<span class="vpm-gares__sr"> (opens in a new tab)</span></span>
+        <span class="vpm-gares__desc">Find Virginia State Senate members and learn who represents your district.</span>
+        <svg class="vpm-gares__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 3h7v7M13 3 4 12"/></svg>
+      </a>
+    </li>
+    <li class="vpm-gares__item">
+      <a class="vpm-gares__link" href="https://whosmy.vga.virginia.gov/" target="_blank" rel="noopener">
+        <span class="vpm-gares__name">Who is my legislator?<span class="vpm-gares__sr"> (opens in a new tab)</span></span>
+        <span class="vpm-gares__desc">Look up your delegate and senator by address.</span>
+        <svg class="vpm-gares__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 3h7v7M13 3 4 12"/></svg>
+      </a>
+    </li>
+    <li class="vpm-gares__item">
+      <a class="vpm-gares__link" href="https://lis.virginia.gov/bill-search" target="_blank" rel="noopener">
+        <span class="vpm-gares__name">How to track a bill<span class="vpm-gares__sr"> (opens in a new tab)</span></span>
+        <span class="vpm-gares__desc">Search bills by number or keyword and follow actions, votes, and amendments.</span>
+        <svg class="vpm-gares__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 3h7v7M13 3 4 12"/></svg>
+      </a>
+    </li>
+    <li class="vpm-gares__item">
+      <a class="vpm-gares__link" href="https://capclass.virginiageneralassembly.gov/" target="_blank" rel="noopener">
+        <span class="vpm-gares__name">Capitol Classroom<span class="vpm-gares__sr"> (opens in a new tab)</span></span>
+        <span class="vpm-gares__desc">Plain-language guides to how the legislature works and how a bill becomes law.</span>
+        <svg class="vpm-gares__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 3h7v7M13 3 4 12"/></svg>
+      </a>
+    </li>
+  </ul>
+</section>

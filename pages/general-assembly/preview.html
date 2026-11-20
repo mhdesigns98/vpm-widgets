@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>General Assembly page preview</title>
+<!-- Preview only, never pasted. Loads sections/header.html and sections/resources.html into a
+     rough copy of the category page's layout: full-width hero, then a 70/30 grid with
+     placeholder stories on the left and the resources module in the right column. -->
+<style>
+  body { margin: 0; font-family: "Public Sans", "Helvetica Neue", Arial, sans-serif; color: #101820; background: #fff; }
+  .pv-container { max-width: 1240px; margin: 0 auto; padding: 0 20px; }
+  .pv-grid { display: grid; grid-template-columns: 70fr 30fr; gap: 40px; padding: 40px 20px; max-width: 1240px; margin: 0 auto; box-sizing: border-box; }
+  .pv-grid h2.pv-h { font-size: 28px; margin: 0 0 16px; }
+  .pv-story { height: 220px; background: #e5e7e9; margin-bottom: 24px; }
+  .pv-side > * + * { margin-top: 24px; }
+  .pv-slot { height: 250px; background: #f2f3f4; display: flex; align-items: center; justify-content: center; color: #5a6470; font-size: 13px; }
+  @media (max-width: 768px) { .pv-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+  <section class="page-section page-code-block is-full-width" id="pv-header"></section>
+  <div class="pv-grid">
+    <section class="page-section page-article-grid">
+      <h2 class="pv-h">Latest Stories</h2>
+      <div class="pv-story"></div><div class="pv-story"></div><div class="pv-story"></div>
+      <div class="pv-story"></div><div class="pv-story"></div><div class="pv-story"></div>
+    </section>
+    <div class="pv-side">
+      <div class="pv-slot">Morning Monitor signup (widget)</div>
+      <div class="pv-slot">Sidebar ad</div>
+      <section class="page-section page-code-block" id="pv-resources"></section>
+    </div>
+  </div>
+<script>
+  (async function () {
+    async function load(file, slot) {
+      const html = await fetch(file).then(r => r.text());
+      const t = document.createElement('template');
+      t.innerHTML = html;
+      const host = document.getElementById(slot);
+      [...t.content.childNodes].forEach(n => {
+        if (n.tagName === 'SCRIPT') { const s = document.createElement('script'); s.textContent = n.textContent; host.appendChild(s); }
+        else host.appendChild(n);
+      });
+    }
+    await load('sections/resources.html', 'pv-resources');
+    await load('sections/header.html', 'pv-header');
+  })();
+</script>
+</body>
+</html>
