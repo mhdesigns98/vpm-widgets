@@ -62,6 +62,7 @@
     display: flex; align-items: center; gap: 8px; margin: 0;
     font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
   }
+  .vpm-gahdr__status-text { font-size: 12px; }
   .vpm-gahdr__dot {
     width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; font-size: 0;
     background: var(--vpm-gahdr-yellow);
@@ -128,7 +129,9 @@
         </h1>
       </div>
       <div class="vpm-gahdr__meta">
-        <p class="vpm-gahdr__status"><span class="vpm-gahdr__dot" aria-hidden="true"></span>Session convenes Jan. 13, 2027</p>
+        <!-- Status swaps itself on the start date (Virginia time): before it, the text below;
+             from it on, data-vpm-gahdr-after. Edit both, and the date, for the next session. -->
+        <p class="vpm-gahdr__status" data-vpm-gahdr-start="2027-01-13" data-vpm-gahdr-after="2027 session underway"><span class="vpm-gahdr__dot" aria-hidden="true"></span><span class="vpm-gahdr__status-text">Session convenes Jan. 13, 2027</span></p>
         <p class="vpm-gahdr__dek">What lawmakers are debating in Richmond, the bills moving through the House and Senate, and how they affect Virginians.</p>
       </div>
     </div>
@@ -151,6 +154,18 @@
 <script>
   (function () {
     var root = document.currentScript && document.currentScript.previousElementSibling;
+
+    // Session status: switch to the "after" text from the start date on, in Virginia time.
+    // Runs before the nav check so it works even if the nav bar is hidden.
+    (function () {
+      var st = root && root.querySelector('[data-vpm-gahdr-start]');
+      var txt = st && st.querySelector('.vpm-gahdr__status-text');
+      if (!txt) return;
+      var today;
+      try { today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' }); }
+      catch (e) { var d = new Date(); today = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+      if (today >= st.getAttribute('data-vpm-gahdr-start')) txt.textContent = st.getAttribute('data-vpm-gahdr-after');
+    })();
     var nav = root && root.querySelector('.vpm-gahdr__nav');
     if (!nav) return;
     var spacer = root.querySelector('.vpm-gahdr__spacer');

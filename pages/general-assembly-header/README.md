@@ -9,8 +9,13 @@ archive template has none.
 **Paste order:** one Code Block, the whole `index.html` (style, markup, script), placed first
 on the category page.
 
-**Editorial upkeep:** the eyebrow ("2027 Session") and status line ("Session convenes Jan. 13,
-2027") are dated. Update them each session, and once it's underway.
+**Editorial upkeep:** the status line switches itself on the session's start date (Virginia
+time): "Session convenes Jan. 13, 2027" before, "2027 session underway" from Jan. 13 on. There is
+no automatic end-of-session switch (no confirmed adjournment date), so edit the block when the
+session adjourns. For the next session, change the eyebrow, the status text, and the
+`data-vpm-gahdr-start` / `data-vpm-gahdr-after` attributes on the status line. The Jan. 13 date
+follows the constitution's second-Wednesday rule; confirm it against the General Assembly's
+official calendar before pasting.
 
 **Anchors supplied at runtime:** the header's script gives the category page's existing
 sections these ids, by heading text. Nothing to add by hand in the CMS.
