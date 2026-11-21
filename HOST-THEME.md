@@ -17,6 +17,15 @@ inventing a type scale or a defensive stylesheet. Measured on one page build
 - **Widths:** `.container` is `max-width: 1240px; padding: 0 20px`. Rich Text width variants are
   narrow 720 / medium 900 / **wide 1100** / full 100%. A Code Block replacing a `width-wide`
   section should set its own `max-width: 1100px`.
+- **Category-page sidebar Code Blocks are 350px wide** at a 1280 viewport (a `page-grid-cols
+  cols-2-70-30` grid; the column goes full width on tablets). Design sidebar blocks with container
+  queries, not viewport media queries. A Code Block's **Full width** setting adds `is-full-width`
+  and removes `.container`'s 1240px cap; a hero band needs it. (Measured live on
+  vpm.org/category/general-assembly/, 2026-11-20.)
+- **Preview a block on the live page** by injecting it inside the theme's Code Block wrappers
+  (`section.page-section.page-code-block > .container > .page-code-block-html`) from the browser.
+  How, and the traps (curl blocked, smooth scroll not animating in the test pane):
+  `~/Projects/research/vpm-live-block-testing.md`.
 - **The Stream Player is `position: relative`, not fixed.** It scrolls away with the header. There
   is no pinned bottom bar on this theme to collide with. The Stream Player item in
   `SHIP-CHECKLIST.md` predates the wpp-base migration. Re-verify before assuming either way; don't remove the item on one page's
