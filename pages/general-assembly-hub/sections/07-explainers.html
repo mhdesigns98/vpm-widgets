@@ -1,0 +1,99 @@
+<!--
+  VPM General Assembly hub — Explainers (its own Code Block)
+  Lives on: https://www.vpm.org/general-assembly/, block 7. See ../PASTE-ORDER.md.
+  Paste: the WHOLE file into its own Code Block. Full width OFF.
+  Namespace: vpm-gahub-. No JS. Owns #ga-explainers (the header's jump bar links here).
+  Editing: replace each [STORY URL] with the published story's address. Until a story exists,
+  delete that card (from <li to </li>) rather than linking it to nothing.
+-->
+<style>
+  .vpm-gahub {
+    --vpm-gahub-dark-blue: #003865;   /* tokens --vpm-dark-blue */
+    --vpm-gahub-light-blue: #6cace4;  /* tokens --vpm-light-blue */
+    --vpm-gahub-yellow: #e0e721;      /* tokens --vpm-yellow */
+    --vpm-gahub-red-700: #b81e2a;     /* tokens --vpm-red-700 */
+    --vpm-gahub-gray-700: #3d4652;    /* tokens --vpm-gray-700 */
+    --vpm-gahub-gray-200: #e5e7e9;    /* tokens --vpm-gray-200 */
+    --vpm-gahub-gray-050: #f8f9fa;    /* tokens --vpm-gray-050 */
+    --vpm-gahub-white: #ffffff;       /* tokens --vpm-white */
+    --vpm-gahub-font: "Public Sans", "GT America", "Helvetica Neue", Arial, sans-serif; /* tokens --font-sans */
+
+    box-sizing: border-box; display: block; margin: 0; padding: 48px 0;
+    color: var(--vpm-gahub-gray-700); font-family: var(--vpm-gahub-font);
+    font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased;
+  }
+  .vpm-gahub *, .vpm-gahub *::before, .vpm-gahub *::after { box-sizing: border-box; }
+  :where(.vpm-gahub) h2, :where(.vpm-gahub) h3, :where(.vpm-gahub) p, :where(.vpm-gahub) ul, :where(.vpm-gahub) li, :where(.vpm-gahub) span { margin: 0; padding: 0; }
+  .vpm-gahub .vpm-gahub__section { scroll-margin-top: 64px; }
+
+  .vpm-gahub .vpm-gahub__eyebrow {
+    margin: 0 0 8px; font-size: 13px; font-weight: 700; line-height: 1.2;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--vpm-gahub-red-700);
+  }
+  .vpm-gahub .vpm-gahub__title {
+    margin: 0 0 24px; font-family: var(--vpm-gahub-font);
+    font-size: clamp(24px, 2.4vw, 32px); font-weight: 800; line-height: 1.2;
+    letter-spacing: -0.01em; text-transform: none; color: var(--vpm-gahub-dark-blue);
+  }
+
+  .vpm-gahub .vpm-gahub__cards {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;
+    margin: 0; padding: 0; list-style: none;
+  }
+  .vpm-gahub .vpm-gahub__card-item { margin: 0; padding: 0; list-style: none; }
+  .vpm-gahub .vpm-gahub__card {
+    position: relative; display: flex; flex-direction: column; gap: 8px; height: 100%;
+    margin: 0; padding: 24px 24px 20px;
+    background: var(--vpm-gahub-white); border: 1px solid var(--vpm-gahub-gray-200);
+    border-top: 4px solid var(--vpm-gahub-light-blue); border-radius: 0 0 4px 4px;
+    color: var(--vpm-gahub-gray-700) !important; text-decoration: none !important;
+    transition: background-color 120ms ease;
+  }
+  .vpm-gahub .vpm-gahub__card-item:nth-child(2) .vpm-gahub__card { border-top-color: var(--vpm-gahub-yellow); }
+  .vpm-gahub .vpm-gahub__card-kicker {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--vpm-gahub-red-700);
+  }
+  .vpm-gahub .vpm-gahub__card-title {
+    margin: 0; font-family: var(--vpm-gahub-font); font-size: 20px; font-weight: 800; line-height: 1.25;
+    text-transform: none; color: var(--vpm-gahub-dark-blue);
+  }
+  .vpm-gahub .vpm-gahub__card-text { margin: 0; font-size: 16px; line-height: 1.5; color: var(--vpm-gahub-gray-700); }
+  .vpm-gahub .vpm-gahub__card-cta {
+    margin-top: auto; padding-top: 8px; font-size: 15px; font-weight: 700; color: var(--vpm-gahub-dark-blue);
+  }
+  .vpm-gahub .vpm-gahub__card:hover { background: var(--vpm-gahub-gray-050); }
+  .vpm-gahub .vpm-gahub__card:hover .vpm-gahub__card-title { text-decoration: underline; text-underline-offset: 3px; }
+  .vpm-gahub .vpm-gahub__card:focus-visible { outline: 2px solid var(--vpm-gahub-dark-blue); outline-offset: 2px; }
+
+  @media (max-width: 600px) {
+    .vpm-gahub { padding: 32px 0; }
+    .vpm-gahub .vpm-gahub__card { padding: 20px 16px 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .vpm-gahub .vpm-gahub__card { transition: none; } }
+  @media (forced-colors: active) { .vpm-gahub .vpm-gahub__card:focus-visible { outline-color: Highlight; } }
+</style>
+
+<div class="vpm-gahub">
+  <section class="vpm-gahub__section" id="ga-explainers" aria-labelledby="ga-explainers-title">
+    <p class="vpm-gahub__eyebrow">How it works</p>
+    <h2 class="vpm-gahub__title" id="ga-explainers-title">Explainers</h2>
+    <ul class="vpm-gahub__cards">
+      <li class="vpm-gahub__card-item">
+        <a class="vpm-gahub__card" href="[STORY URL: budget explainer]">
+          <span class="vpm-gahub__card-kicker">The budget</span>
+          <h3 class="vpm-gahub__card-title">How Virginia's state budget gets made</h3>
+          <span class="vpm-gahub__card-text">Who writes it, how the House and Senate settle their differences, and what the governor can change.</span>
+          <span class="vpm-gahub__card-cta" aria-hidden="true">Read the explainer &rarr;</span>
+        </a>
+      </li>
+      <li class="vpm-gahub__card-item">
+        <a class="vpm-gahub__card" href="[STORY URL: how to take part]">
+          <span class="vpm-gahub__card-kicker">Get involved</span>
+          <h3 class="vpm-gahub__card-title">How to make your voice heard</h3>
+          <span class="vpm-gahub__card-text">How to testify before a committee, submit a public comment, and watch committee meetings and floor sessions live.</span>
+          <span class="vpm-gahub__card-cta" aria-hidden="true">Read the guide &rarr;</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+</div>

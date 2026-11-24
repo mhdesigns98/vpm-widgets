@@ -1,0 +1,211 @@
+<!--
+  VPM General Assembly hub — Bills we're watching (its own Code Block)
+  Lives on: https://www.vpm.org/general-assembly/, block 5. See ../PASTE-ORDER.md.
+  Paste: the WHOLE file (style + markup + script) into its own Code Block. Full width OFF.
+  Namespace: vpm-gahub-. Owns #ga-bills (the header's jump bar links here).
+
+  EDITING (full steps in ../EDITING.md):
+  - One bill = everything from "BILL START" to "BILL END". Copy that whole chunk to add a bill;
+    delete it to remove one. Nothing else needs to change.
+  - Status: type one of these exactly (capital letter first, rest as shown):
+      In committee | Passed House | Passed Senate | Passed both chambers
+      To governor  | Signed       | Vetoed        | Failed
+    The script styles those eight. Anything else still shows, just unstyled.
+  - Delete the three SAMPLE bills before the page goes live.
+-->
+<style>
+  .vpm-gahub {
+    --vpm-gahub-dark-blue: #003865;   /* tokens --vpm-dark-blue */
+    --vpm-gahub-light-blue: #6cace4;  /* tokens --vpm-light-blue */
+    --vpm-gahub-blue-100: #d6e8f6;    /* tokens --vpm-blue-100 */
+    --vpm-gahub-blue-050: #eef4fb;    /* tokens --vpm-blue-050 */
+    --vpm-gahub-red-700: #b81e2a;     /* tokens --vpm-red-700 */
+    --vpm-gahub-black: #101820;       /* tokens --vpm-black */
+    --vpm-gahub-gray-700: #3d4652;    /* tokens --vpm-gray-700 */
+    --vpm-gahub-gray-600: #5a6470;    /* tokens --vpm-gray-600 */
+    --vpm-gahub-gray-300: #d1d3d4;    /* tokens --vpm-gray-300 */
+    --vpm-gahub-gray-200: #e5e7e9;    /* tokens --vpm-gray-200 */
+    --vpm-gahub-gray-100: #f2f3f4;    /* tokens --vpm-gray-100 */
+    --vpm-gahub-white: #ffffff;       /* tokens --vpm-white */
+    --vpm-gahub-font: "Public Sans", "GT America", "Helvetica Neue", Arial, sans-serif; /* tokens --font-sans */
+
+    box-sizing: border-box; display: block; margin: 0; padding: 48px 0;
+    color: var(--vpm-gahub-gray-700); font-family: var(--vpm-gahub-font);
+    font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased;
+  }
+  .vpm-gahub *, .vpm-gahub *::before, .vpm-gahub *::after { box-sizing: border-box; }
+  :where(.vpm-gahub) h2, :where(.vpm-gahub) p, :where(.vpm-gahub) ul, :where(.vpm-gahub) li, :where(.vpm-gahub) span { margin: 0; padding: 0; }
+  .vpm-gahub .vpm-gahub__section { scroll-margin-top: 64px; container-type: inline-size; container-name: vpm-gahub-bills; }
+
+  .vpm-gahub .vpm-gahub__eyebrow {
+    margin: 0 0 8px; font-size: 13px; font-weight: 700; line-height: 1.2;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--vpm-gahub-red-700);
+  }
+  .vpm-gahub .vpm-gahub__title {
+    margin: 0 0 8px; font-family: var(--vpm-gahub-font);
+    font-size: clamp(24px, 2.4vw, 32px); font-weight: 800; line-height: 1.2;
+    letter-spacing: -0.01em; text-transform: none; color: var(--vpm-gahub-dark-blue);
+  }
+  .vpm-gahub .vpm-gahub__intro {
+    max-width: 680px; margin: 0 0 8px; font-size: 16px; line-height: 1.55; color: var(--vpm-gahub-gray-700);
+  }
+  .vpm-gahub .vpm-gahub__updated { margin: 0 0 24px; font-size: 14px; color: var(--vpm-gahub-gray-600); }
+
+  .vpm-gahub a.vpm-gahub__link {
+    display: inline-flex; align-items: center; min-height: 44px; /* 44px tap target */
+    color: var(--vpm-gahub-dark-blue) !important;
+    text-decoration: underline !important; text-underline-offset: 3px; text-decoration-thickness: 1px;
+    font-weight: 700;
+  }
+  .vpm-gahub a.vpm-gahub__link:hover { text-decoration-thickness: 2px; }
+  .vpm-gahub a.vpm-gahub__link:focus-visible { outline: 2px solid var(--vpm-gahub-dark-blue); outline-offset: 2px; }
+  .vpm-gahub .vpm-gahub__sr {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0;
+    overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; font-size: 14px;
+  }
+
+  /* Phones and narrow columns: each bill is a card with its field labels showing */
+  .vpm-gahub .vpm-gahub__bill-head { display: none; }
+  .vpm-gahub .vpm-gahub__bill-head span { font-size: 12px; }
+  .vpm-gahub .vpm-gahub__bills { margin: 0; padding: 0; list-style: none; border-top: 2px solid var(--vpm-gahub-dark-blue); }
+  .vpm-gahub .vpm-gahub__bill {
+    display: grid; grid-template-columns: 1fr; gap: 6px;
+    margin: 0; padding: 16px 0; list-style: none; border-bottom: 1px solid var(--vpm-gahub-gray-200);
+  }
+  .vpm-gahub .vpm-gahub__bill-num { margin: -10px 0 -6px; font-size: 18px; line-height: 1.3; }
+  .vpm-gahub .vpm-gahub__bill-summary { margin: 0 0 4px; font-size: 16px; line-height: 1.5; color: var(--vpm-gahub-black); }
+  .vpm-gahub .vpm-gahub__bill-field { display: flex; align-items: center; flex-wrap: wrap; gap: 0 8px; margin: 0; min-height: 28px; font-size: 15px; line-height: 1.4; }
+  .vpm-gahub .vpm-gahub__label {
+    min-width: 72px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--vpm-gahub-gray-600);
+  }
+
+  /* Status: the words carry the meaning; shape and color only back them up */
+  .vpm-gahub .vpm-gahub__status {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 10px 3px 8px; border: 1px solid var(--vpm-gahub-gray-300); border-radius: 2px;
+    background: var(--vpm-gahub-white); color: var(--vpm-gahub-black);
+    font-size: 14px; font-weight: 700; line-height: 1.3; white-space: nowrap;
+  }
+  .vpm-gahub .vpm-gahub__status::before { font-size: 13px; line-height: 1; }
+  .vpm-gahub .vpm-gahub__status[data-vpm-gahub-status="committee"]::before { content: "\25CB"; content: "\25CB" / ""; }
+  .vpm-gahub .vpm-gahub__status[data-vpm-gahub-status="passed-house"],
+  .vpm-gahub .vpm-gahub__status[data-vpm-gahub-status="passed-senate"] { background: var(--vpm-gahub-blue-050); border-color: var(--vpm-gahub-light-blue); color: var(--vpm-gahub-dark-blue); }
+  .vpm-gahub .vpm-gahub__status[data-vpm-gahub-status="passed-house"]::before,
+  .vpm-gahub .vpm-gahub__status[data-vpm-gahub-status="passed-senate"]::before { content: "\25D0"; content: "\25D0" / ""; }
+  .vpm-gahub .vpm-gahub__status[data-vpm-gahub-status="passed-both"] { background: var(--vpm-gahub-blue-100); border-color: var(--vpm-gahub-light-blue); color: var(--vpm-gahub-dark-blue); }
+  .vpm-gahub .vpm-gahub__status[data-vpm-gahub-status="passed-both"]::before { content: "\25CF"; content: "\25CF" / ""; }
+  .vpm-gahub .vpm-gahub__status[data-vpm-gahub-status="governor"] { background: var(--vpm-gahub-light-blue); border-color: var(--vpm-gahub-light-blue); color: var(--vpm-gahub-black); }
+  .vpm-gahub .vpm-gahub__status[data-vpm-gahub-status="governor"]::before { content: "\2192"; content: "\2192" / ""; }
+  .vpm-gahub .vpm-gahub__status[data-vpm-gahub-status="signed"] { background: var(--vpm-gahub-dark-blue); border-color: var(--vpm-gahub-dark-blue); color: var(--vpm-gahub-white); }
+  .vpm-gahub .vpm-gahub__status[data-vpm-gahub-status="signed"]::before { content: "\2713"; content: "\2713" / ""; }
+  .vpm-gahub .vpm-gahub__status[data-vpm-gahub-status="vetoed"] { background: var(--vpm-gahub-red-700); border-color: var(--vpm-gahub-red-700); color: var(--vpm-gahub-white); }
+  .vpm-gahub .vpm-gahub__status[data-vpm-gahub-status="vetoed"]::before { content: "\2715"; content: "\2715" / ""; }
+  .vpm-gahub .vpm-gahub__status[data-vpm-gahub-status="failed"] { background: var(--vpm-gahub-gray-100); border-color: var(--vpm-gahub-gray-300); color: var(--vpm-gahub-gray-700); }
+  .vpm-gahub .vpm-gahub__status[data-vpm-gahub-status="failed"]::before { content: "\2013"; content: "\2013" / ""; }
+
+  /* Empty state: shows only when every bill has been deleted */
+  .vpm-gahub .vpm-gahub__empty { display: none; margin: 0; padding: 16px 0; font-size: 16px; color: var(--vpm-gahub-gray-600); }
+  .vpm-gahub .vpm-gahub__bills:not(:has(.vpm-gahub__bill)) { border-top: 0; }
+  .vpm-gahub .vpm-gahub__bills:not(:has(.vpm-gahub__bill)) + .vpm-gahub__empty { display: block; }
+
+  /* Wide: a table-like grid with one header row; the per-row labels go screen-reader-only */
+  @container vpm-gahub-bills (min-width: 760px) {
+    .vpm-gahub .vpm-gahub__bill-head,
+    .vpm-gahub .vpm-gahub__bill {
+      display: grid; grid-template-columns: 110px minmax(0, 1fr) 140px 190px 150px;
+      column-gap: 20px; align-items: start;
+    }
+    .vpm-gahub .vpm-gahub__bill-head {
+      margin: 0; padding: 0 0 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--vpm-gahub-gray-600);
+    }
+    .vpm-gahub .vpm-gahub__bill-num { margin: -10px 0 0; font-size: 16px; line-height: 1.5; }
+    .vpm-gahub .vpm-gahub__bill-field { min-height: 0; }
+    .vpm-gahub .vpm-gahub__bill-field a.vpm-gahub__link { margin-top: -10px; }
+    .vpm-gahub .vpm-gahub__bill-summary { margin: 0; }
+    .vpm-gahub .vpm-gahub__bill-field { line-height: 1.5; }
+    .vpm-gahub .vpm-gahub__label {
+      position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; min-width: 0;
+      overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+    }
+  }
+  @media (max-width: 600px) { .vpm-gahub { padding: 32px 0; } }
+  @media (forced-colors: active) {
+    .vpm-gahub .vpm-gahub__status { border-color: CanvasText; }
+  }
+</style>
+
+<div class="vpm-gahub">
+  <section class="vpm-gahub__section" id="ga-bills" aria-labelledby="ga-bills-title">
+    <p class="vpm-gahub__eyebrow">Tracking the session</p>
+    <h2 class="vpm-gahub__title" id="ga-bills-title">Bills we're watching</h2>
+    <p class="vpm-gahub__intro">Legislation VPM News is following this session, in plain language. Select a bill number for its official record, votes and full text on the state's Legislative Information System.</p>
+    <p class="vpm-gahub__updated">Status last updated: [DATE]</p>
+
+    <div class="vpm-gahub__bill-head" aria-hidden="true">
+      <span>Bill</span><span>What it does</span><span>Topic</span><span>Status</span><span>Coverage</span>
+    </div>
+
+    <ul class="vpm-gahub__bills">
+
+      <!-- ===== BILL START (SAMPLE, delete before launch) ===== -->
+      <li class="vpm-gahub__bill">
+        <p class="vpm-gahub__bill-num"><a class="vpm-gahub__link" href="[LIS URL]" target="_blank" rel="noopener">[SAMPLE] HB 0000<span class="vpm-gahub__sr"> on LIS (opens in a new tab)</span></a></p>
+        <p class="vpm-gahub__bill-summary">[One-line plain-language summary of what the bill would do]</p>
+        <p class="vpm-gahub__bill-field"><span class="vpm-gahub__label">Topic</span> [Topic]</p>
+        <p class="vpm-gahub__bill-field"><span class="vpm-gahub__label">Status</span> <span class="vpm-gahub__status">In committee</span></p>
+        <p class="vpm-gahub__bill-field"><span class="vpm-gahub__label">Coverage</span> <a class="vpm-gahub__link" href="[VPM STORY URL]">Read our story</a></p>
+      </li>
+      <!-- ===== BILL END ===== -->
+
+      <!-- ===== BILL START (SAMPLE, delete before launch) ===== -->
+      <li class="vpm-gahub__bill">
+        <p class="vpm-gahub__bill-num"><a class="vpm-gahub__link" href="[LIS URL]" target="_blank" rel="noopener">[SAMPLE] SB 0000<span class="vpm-gahub__sr"> on LIS (opens in a new tab)</span></a></p>
+        <p class="vpm-gahub__bill-summary">[One-line plain-language summary of what the bill would do]</p>
+        <p class="vpm-gahub__bill-field"><span class="vpm-gahub__label">Topic</span> [Topic]</p>
+        <p class="vpm-gahub__bill-field"><span class="vpm-gahub__label">Status</span> <span class="vpm-gahub__status">Passed Senate</span></p>
+        <p class="vpm-gahub__bill-field"><span class="vpm-gahub__label">Coverage</span> <a class="vpm-gahub__link" href="[VPM STORY URL]">Read our story</a></p>
+      </li>
+      <!-- ===== BILL END ===== -->
+
+      <!-- ===== BILL START (SAMPLE, delete before launch) ===== -->
+      <li class="vpm-gahub__bill">
+        <p class="vpm-gahub__bill-num"><a class="vpm-gahub__link" href="[LIS URL]" target="_blank" rel="noopener">[SAMPLE] HB 0001<span class="vpm-gahub__sr"> on LIS (opens in a new tab)</span></a></p>
+        <p class="vpm-gahub__bill-summary">[One-line plain-language summary of what the bill would do]</p>
+        <p class="vpm-gahub__bill-field"><span class="vpm-gahub__label">Topic</span> [Topic]</p>
+        <p class="vpm-gahub__bill-field"><span class="vpm-gahub__label">Status</span> <span class="vpm-gahub__status">Signed</span></p>
+        <p class="vpm-gahub__bill-field"><span class="vpm-gahub__label">Coverage</span> No story yet</p>
+      </li>
+      <!-- ===== BILL END ===== -->
+
+    </ul>
+    <p class="vpm-gahub__empty">Check back once the session begins for the bills we're following.</p>
+  </section>
+</div>
+<script>
+  (function () {
+    var root = document.currentScript && document.currentScript.previousElementSibling;
+    if (!root) return;
+    // Text the editor types -> style key. Matching ignores case and extra spaces.
+    var KEYS = {
+      'in committee': 'committee',
+      'passed house': 'passed-house',
+      'passed senate': 'passed-senate',
+      'passed both chambers': 'passed-both',
+      'to governor': 'governor',
+      'signed': 'signed',
+      'vetoed': 'vetoed',
+      'failed': 'failed'
+    };
+    var pills = root.querySelectorAll('.vpm-gahub__status');
+    for (var i = 0; i < pills.length; i++) {
+      var key = KEYS[pills[i].textContent.replace(/\s+/g, ' ').trim().toLowerCase()];
+      if (key) pills[i].setAttribute('data-vpm-gahub-status', key);
+    }
+  })();
+</script>
+
+<!-- ===== SPLIT ===== LIVE BLOCK HERE (UNCONFIRMED): From the Capitol, Shaban Athuman's photo updates ===== -->
+<!-- Not on the live category page as of 2026-11-23, so it's unknown whether this is a live block or
+     static markup. Confirm before paste. If there's nothing to place, skip straight to block 7. -->

@@ -1,0 +1,108 @@
+<!--
+  VPM General Assembly hub — Glossary (its own Code Block)
+  Lives on: https://www.vpm.org/general-assembly/, block 8. See ../PASTE-ORDER.md.
+  Paste: the WHOLE file into its own Code Block. Full width OFF.
+  Namespace: vpm-gahub-. No JS (uses <details>, which opens and closes on its own).
+  Owns #ga-glossary (the header's jump bar links here).
+  Editing: one term = one <details> ... </details> chunk. Copy one to add a term.
+  Definitions written 2026-11-24; fact-check before launch.
+-->
+<style>
+  .vpm-gahub {
+    --vpm-gahub-dark-blue: #003865;   /* tokens --vpm-dark-blue */
+    --vpm-gahub-blue-050: #eef4fb;    /* tokens --vpm-blue-050 */
+    --vpm-gahub-red-700: #b81e2a;     /* tokens --vpm-red-700 */
+    --vpm-gahub-gray-700: #3d4652;    /* tokens --vpm-gray-700 */
+    --vpm-gahub-gray-200: #e5e7e9;    /* tokens --vpm-gray-200 */
+    --vpm-gahub-font: "Public Sans", "GT America", "Helvetica Neue", Arial, sans-serif; /* tokens --font-sans */
+
+    box-sizing: border-box; display: block; margin: 0; padding: 48px 0;
+    color: var(--vpm-gahub-gray-700); font-family: var(--vpm-gahub-font);
+    font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased;
+  }
+  .vpm-gahub *, .vpm-gahub *::before, .vpm-gahub *::after { box-sizing: border-box; }
+  :where(.vpm-gahub) h2, :where(.vpm-gahub) p, :where(.vpm-gahub) details, :where(.vpm-gahub) summary { margin: 0; padding: 0; }
+  .vpm-gahub .vpm-gahub__section { scroll-margin-top: 64px; }
+
+  .vpm-gahub .vpm-gahub__eyebrow {
+    margin: 0 0 8px; font-size: 13px; font-weight: 700; line-height: 1.2;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--vpm-gahub-red-700);
+  }
+  .vpm-gahub .vpm-gahub__title {
+    margin: 0 0 8px; font-family: var(--vpm-gahub-font);
+    font-size: clamp(24px, 2.4vw, 32px); font-weight: 800; line-height: 1.2;
+    letter-spacing: -0.01em; text-transform: none; color: var(--vpm-gahub-dark-blue);
+  }
+  .vpm-gahub .vpm-gahub__intro {
+    max-width: 680px; margin: 0 0 24px; font-size: 16px; line-height: 1.55; color: var(--vpm-gahub-gray-700);
+  }
+
+  .vpm-gahub .vpm-gahub__terms { max-width: 820px; margin: 0; padding: 0; border-top: 1px solid var(--vpm-gahub-gray-200); }
+  .vpm-gahub .vpm-gahub__term { margin: 0; padding: 0; font-size: 16px; border-bottom: 1px solid var(--vpm-gahub-gray-200); }
+  .vpm-gahub .vpm-gahub__term-name {
+    position: relative; display: block; margin: 0; padding: 14px 40px 14px 4px; min-height: 44px;
+    cursor: pointer; list-style: none;
+    font-size: 17px; font-weight: 700; line-height: 1.4; color: var(--vpm-gahub-dark-blue);
+  }
+  .vpm-gahub .vpm-gahub__term-name::-webkit-details-marker { display: none; }
+  /* Plus / minus drawn in CSS, so it reads the same in every font */
+  .vpm-gahub .vpm-gahub__term-name::before,
+  .vpm-gahub .vpm-gahub__term-name::after {
+    content: ""; position: absolute; right: 12px; top: 50%; width: 14px; height: 2px; margin-top: -1px;
+    background: currentColor;
+  }
+  .vpm-gahub .vpm-gahub__term-name::after { transform: rotate(90deg); transition: transform 120ms ease; }
+  .vpm-gahub .vpm-gahub__term[open] > .vpm-gahub__term-name::after { transform: rotate(0deg); }
+  .vpm-gahub .vpm-gahub__term-name:hover { background: var(--vpm-gahub-blue-050); }
+  .vpm-gahub .vpm-gahub__term-name:focus-visible { outline: 2px solid var(--vpm-gahub-dark-blue); outline-offset: -2px; }
+  .vpm-gahub .vpm-gahub__term-def { margin: 0; padding: 0 40px 16px 4px; font-size: 16px; line-height: 1.6; color: var(--vpm-gahub-gray-700); }
+
+  @media (max-width: 600px) { .vpm-gahub { padding: 32px 0; } }
+  @media (prefers-reduced-motion: reduce) { .vpm-gahub .vpm-gahub__term-name::after { transition: none; } }
+  @media (forced-colors: active) {
+    .vpm-gahub .vpm-gahub__term-name::before, .vpm-gahub .vpm-gahub__term-name::after { background: CanvasText; }
+  }
+</style>
+
+<div class="vpm-gahub">
+  <section class="vpm-gahub__section" id="ga-glossary" aria-labelledby="ga-glossary-title">
+    <p class="vpm-gahub__eyebrow">Capitol vocabulary</p>
+    <h2 class="vpm-gahub__title" id="ga-glossary-title">Glossary</h2>
+    <p class="vpm-gahub__intro">Terms you'll hear in our coverage, explained.</p>
+
+    <div class="vpm-gahub__terms">
+      <details class="vpm-gahub__term">
+        <summary class="vpm-gahub__term-name">Crossover</summary>
+        <p class="vpm-gahub__term-def">The deadline, about halfway through the session, for each chamber to finish work on its own bills. After crossover, the House considers only bills the Senate passed, and the Senate considers only bills the House passed. A bill that hasn't passed its first chamber by then is effectively dead for the year.</p>
+      </details>
+      <details class="vpm-gahub__term">
+        <summary class="vpm-gahub__term-name">Sine die</summary>
+        <p class="vpm-gahub__term-def">Latin for "without a day." When the General Assembly adjourns sine die, it ends the session without setting a day to return. It marks the official end of the regular session.</p>
+      </details>
+      <details class="vpm-gahub__term">
+        <summary class="vpm-gahub__term-name">Caucus</summary>
+        <p class="vpm-gahub__term-def">The group of lawmakers from the same party in one chamber, such as the House Democratic Caucus or the Senate Republican Caucus. Caucuses choose their leaders and plan strategy. "Caucus" can also mean the private meetings they hold.</p>
+      </details>
+      <details class="vpm-gahub__term">
+        <summary class="vpm-gahub__term-name">Passed by indefinitely</summary>
+        <p class="vpm-gahub__term-def">A committee sets a bill aside without a final vote. The committee could bring it back later in the session, but that rarely happens, so in practice the bill is usually dead for the year.</p>
+      </details>
+      <details class="vpm-gahub__term">
+        <summary class="vpm-gahub__term-name">Continued to next session</summary>
+        <p class="vpm-gahub__term-def">A committee holds a bill over to the following year's session instead of deciding on it now. This is often used for bills that need more study. A continued bill can be taken up again without being reintroduced.</p>
+      </details>
+      <details class="vpm-gahub__term">
+        <summary class="vpm-gahub__term-name">Reconvened session</summary>
+        <p class="vpm-gahub__term-def">A short session, usually one day in April, when lawmakers return to Richmond to consider the governor's amendments and vetoes. Overriding a veto takes a two-thirds vote in both chambers.</p>
+      </details>
+      <details class="vpm-gahub__term">
+        <summary class="vpm-gahub__term-name">Conference committee</summary>
+        <p class="vpm-gahub__term-def">A small group of delegates and senators appointed to work out the differences when the House and Senate pass different versions of the same bill. The state budget almost always goes to a conference committee. Both chambers then vote on the compromise.</p>
+      </details>
+      <details class="vpm-gahub__term">
+        <summary class="vpm-gahub__term-name">Enrolled bill</summary>
+        <p class="vpm-gahub__term-def">The final version of a bill after both chambers have passed it in identical form. It's printed, signed by the Speaker of the House and the president of the Senate, and sent to the governor to sign, amend or veto.</p>
+      </details>
+    </div>
+  </section>
+</div>

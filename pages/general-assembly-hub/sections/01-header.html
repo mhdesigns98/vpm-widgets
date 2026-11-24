@@ -1,0 +1,245 @@
+<!--
+  VPM General Assembly hub — header (page build section, its own Code Block)
+  Lives on: https://www.vpm.org/general-assembly/, block 1. See ../PASTE-ORDER.md.
+  COPY of pages/general-assembly/sections/header.html, adapted for the hub: only the
+  "On this page" links differ. Same namespace, so a grep for vpm-gahdr finds both.
+  If you change the styles or script in one, change the other.
+  Paste: the WHOLE file (style + markup + script) into the FIRST Code Block, Full width on.
+  Namespace: vpm-gahdr-. Fonts (Oswald, Inter) come from the host theme; fallbacks below.
+  This block carries the page's only <h1>. Do not give the WordPress page title an H1 too.
+-->
+<style>
+  .vpm-gahdr {
+    --vpm-gahdr-navy: #00003f;      /* voter guide --navy-brand */
+    --vpm-gahdr-red: #ee2737;       /* tokens --vpm-red */
+    --vpm-gahdr-azure: #6cace4;     /* tokens --vpm-light-blue */
+    --vpm-gahdr-azure-79: #b9c8d8;  /* tokens --fg-on-dark-muted */
+    --vpm-gahdr-azure-40: #8e98a5;
+    --vpm-gahdr-yellow: #e0e721;    /* tokens --vpm-yellow */
+    --vpm-gahdr-ink: #101820;       /* tokens --vpm-black */
+    --vpm-gahdr-white: #ffffff;
+    --vpm-gahdr-nav: #002244;       /* tokens --vpm-blue-900 */
+    --vpm-gahdr-line: rgba(108, 172, 228, 0.2);
+    background: var(--vpm-gahdr-navy);
+    color: var(--vpm-gahdr-white);
+    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+    padding: 0;
+  }
+  .vpm-gahdr *, .vpm-gahdr *::before, .vpm-gahdr *::after { box-sizing: border-box; }
+  /* Host reset: one-class weight beats bare p{}/span{} rules, loses to the rules below. */
+  :where(.vpm-gahdr) p, :where(.vpm-gahdr) h1, :where(.vpm-gahdr) span,
+  :where(.vpm-gahdr) ul, :where(.vpm-gahdr) li { margin: 0; padding: 0; }
+  /* Wrapper divs and the nav: one class each, so they beat a host div{}/nav{} rule; the real
+     rules below have the same weight and come later, so they still win. */
+  :where(.vpm-gahdr) .vpm-gahdr__wrap, :where(.vpm-gahdr) .vpm-gahdr__top,
+  :where(.vpm-gahdr) .vpm-gahdr__main, :where(.vpm-gahdr) .vpm-gahdr__meta,
+  :where(.vpm-gahdr) .vpm-gahdr__spacer, :where(.vpm-gahdr) .vpm-gahdr__nav { margin: 0; padding: 0; }
+
+  .vpm-gahdr__wrap { max-width: 1200px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+  .vpm-gahdr__hero { padding-top: 48px; padding-bottom: 48px; }
+  .vpm-gahdr__top {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    flex-wrap: wrap; gap: 24px 48px;
+  }
+  .vpm-gahdr__main { flex: 1 1 auto; min-width: 0; }
+  .vpm-gahdr__eyebrow {
+    margin: 0 0 12px; font-size: 12px; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--vpm-gahdr-azure);
+  }
+  .vpm-gahdr__title {
+    margin: 0; font-size: 16px; font-family: "Oswald", Impact, "Arial Narrow", sans-serif; font-weight: 700;
+  }
+  .vpm-gahdr__line {
+    display: block; text-transform: uppercase; font-weight: 700;
+    font-size: clamp(44px, 6.5vw, 96px); line-height: 0.92; letter-spacing: -1px;
+    color: var(--vpm-gahdr-white);
+  }
+  .vpm-gahdr__line--red { color: var(--vpm-gahdr-red); }
+  .vpm-gahdr__line em { font-style: normal; font-size: inherit; color: var(--vpm-gahdr-azure); }
+
+  .vpm-gahdr__meta { flex: 0 1 400px; min-width: 0; }
+  .vpm-gahdr__status {
+    display: flex; align-items: center; gap: 8px; margin: 0;
+    font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+  }
+  .vpm-gahdr__status-text { font-size: 12px; }
+  .vpm-gahdr__dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; font-size: 0;
+    background: var(--vpm-gahdr-yellow);
+  }
+  .vpm-gahdr__dek {
+    margin: 12px 0 0; font-size: 16px; line-height: 24px; color: var(--vpm-gahdr-azure-79);
+  }
+
+  /* "On this page" bar, same treatment as vpm.org/elections */
+  .vpm-gahdr__nav {
+    position: relative; z-index: 20;
+    /* Solid, not the elections bar's 92% see-through: pinned over white content, the
+       11px label would drop below 4.5:1 */
+    background: var(--vpm-gahdr-nav);
+    border-top: 1px solid var(--vpm-gahdr-line);
+    border-bottom: 1px solid var(--vpm-gahdr-line);
+  }
+  /* Pinned by the script once its own spot scrolls past (CSS sticky can't: its parent ends here) */
+  .vpm-gahdr__nav.vpm-gahdr--pinned { position: fixed; top: 0; left: 0; right: 0; }
+  .vpm-gahdr__nav-inner { display: flex; align-items: center; gap: 20px; min-height: 48px; }
+  .vpm-gahdr__nav-label {
+    flex-shrink: 0; font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--vpm-gahdr-azure-40);
+  }
+  .vpm-gahdr__nav ul {
+    display: flex; gap: 4px; margin: 0; padding: 0; list-style: none;
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .vpm-gahdr__nav ul::-webkit-scrollbar { display: none; }
+  .vpm-gahdr__nav a {
+    display: flex; align-items: center; min-height: 44px; /* 44px tap target */
+    white-space: nowrap; padding: 0 12px; border-radius: 3px;
+    font-size: 13px; font-weight: 500;
+    /* !important on color/decoration only: holds against a host a{… !important} rule */
+    text-decoration: none !important;
+    color: var(--vpm-gahdr-azure-79) !important;
+    transition: color 0.15s ease, background-color 0.15s ease;
+  }
+  .vpm-gahdr__nav a:hover { color: var(--vpm-gahdr-white) !important; background: rgba(255, 255, 255, 0.06); }
+  .vpm-gahdr__nav a:focus-visible { outline: 2px solid var(--vpm-gahdr-yellow); outline-offset: -2px; } /* inset: the scrolling ul clips an outside outline */
+  .vpm-gahdr__nav a.vpm-gahdr--active {
+    color: var(--vpm-gahdr-ink) !important; background: var(--vpm-gahdr-yellow); font-weight: 600;
+  }
+
+  @media (max-width: 600px) {
+    .vpm-gahdr__hero { padding-top: 32px; padding-bottom: 32px; }
+    .vpm-gahdr__wrap { padding-left: 16px; padding-right: 16px; }
+    .vpm-gahdr__nav-label { display: none; }
+    .vpm-gahdr__nav-inner { gap: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vpm-gahdr__nav a { transition: none; }
+  }
+</style>
+
+<div class="vpm-gahdr">
+  <div class="vpm-gahdr__wrap vpm-gahdr__hero">
+    <div class="vpm-gahdr__top">
+      <div class="vpm-gahdr__main">
+        <p class="vpm-gahdr__eyebrow">VPM News</p>
+        <h1 class="vpm-gahdr__title">
+          <span class="vpm-gahdr__line">Virginia</span>
+          <span class="vpm-gahdr__line vpm-gahdr__line--red">General <em>Assembly</em></span>
+        </h1>
+      </div>
+      <div class="vpm-gahdr__meta">
+        <!-- Session status, all dates Virginia time. Before data-vpm-gahdr-start: the text below.
+             From the start date on: data-vpm-gahdr-after. After data-vpm-gahdr-end (leave it
+             empty until the adjournment date is set): the line hides. Each session, update the
+             text and all three attributes. -->
+        <p class="vpm-gahdr__status" data-vpm-gahdr-start="2027-01-13" data-vpm-gahdr-after="2027 session underway" data-vpm-gahdr-end=""><span class="vpm-gahdr__dot" aria-hidden="true"></span><span class="vpm-gahdr__status-text">Session convenes Jan. 13, 2027</span></p>
+        <p class="vpm-gahdr__dek">What lawmakers are debating in Richmond, the bills moving through the House and Senate, and how they affect Virginians.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Links to the hub's sections. Each target id is set by that section's own block.
+       Links whose section isn't on the page are hidden; with fewer than 2, the bar hides. -->
+  <div class="vpm-gahdr__spacer" aria-hidden="true"></div>
+  <nav class="vpm-gahdr__nav" aria-label="Page sections">
+    <div class="vpm-gahdr__wrap vpm-gahdr__nav-inner">
+      <span class="vpm-gahdr__nav-label">On this page</span>
+      <ul>
+        <li><a href="#ga-dates" data-vpm-gahdr-heading="Key dates">Key dates</a></li>
+        <li><a href="#ga-latest" data-vpm-gahdr-heading="Latest coverage">Latest</a></li>
+        <li><a href="#ga-leaders" data-vpm-gahdr-heading="Who's in charge">Who's in charge</a></li>
+        <li><a href="#ga-bills" data-vpm-gahdr-heading="Bills we're watching">Bills</a></li>
+        <li><a href="#ga-explainers" data-vpm-gahdr-heading="Explainers">Explainers</a></li>
+        <li><a href="#ga-glossary" data-vpm-gahdr-heading="Glossary">Glossary</a></li>
+        <li><a href="#ga-resources" data-vpm-gahdr-heading="Helpful Resources">Resources</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<!-- QUICK POSTS (not built yet): a Quick Posts live rail would go here, directly below this
+     header and above Key dates, as its own block. -->
+
+<script>
+  (function () {
+    var root = document.currentScript && document.currentScript.previousElementSibling;
+
+    // Session status: switch to the "after" text from the start date on, in Virginia time.
+    // Runs before the nav check so it works even if the nav bar is hidden.
+    (function () {
+      var st = root && root.querySelector('[data-vpm-gahdr-start]');
+      var txt = st && st.querySelector('.vpm-gahdr__status-text');
+      if (!txt) return;
+      var today;
+      try { today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' }); }
+      catch (e) { var d = new Date(); today = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+      var end = st.getAttribute('data-vpm-gahdr-end');
+      if (end && today > end) { st.style.display = 'none'; return; }
+      if (today >= st.getAttribute('data-vpm-gahdr-start')) txt.textContent = st.getAttribute('data-vpm-gahdr-after');
+    })();
+    var nav = root && root.querySelector('.vpm-gahdr__nav');
+    if (!nav) return;
+    var spacer = root.querySelector('.vpm-gahdr__spacer');
+    var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+    function norm(t) { return t.replace(/\s+/g, ' ').trim().toLowerCase(); }
+    function idOf(a) { return a.getAttribute('href').slice(1); }
+    function target(a) { return document.getElementById(idOf(a)); }
+
+    // Give the host's un-ided sections the id each link expects, by heading text.
+    function claimIds() {
+      var heads = document.querySelectorAll('section.page-section h2');
+      links.forEach(function (a) {
+        if (target(a)) return;
+        var name = norm(a.getAttribute('data-vpm-gahdr-heading') || '');
+        for (var i = 0; i < heads.length; i++) {
+          if (norm(heads[i].textContent).indexOf(name) !== 0) continue;
+          var sec = heads[i].closest('section.page-section');
+          if (sec && !sec.id && !root.contains(sec)) { sec.id = idOf(a); sec.style.scrollMarginTop = '64px'; return; }
+        }
+      });
+    }
+    function prune() {
+      var shown = links.filter(function (a) {
+        var ok = !!target(a);
+        a.parentNode.style.display = ok ? '' : 'none';
+        return ok;
+      });
+      nav.style.display = shown.length < 2 ? 'none' : '';
+    }
+    links.forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var t = target(a);
+        if (!t) return;
+        e.preventDefault();
+        var top = t.getBoundingClientRect().top + window.pageYOffset - nav.offsetHeight - 8;
+        window.scrollTo({ top: top, behavior: reduce && reduce.matches ? 'auto' : 'smooth' });
+        history.replaceState(null, '', '#' + idOf(a));
+      });
+    });
+    function spy() {
+      if (!('IntersectionObserver' in window)) return;
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (!en.isIntersecting) return;
+          links.forEach(function (a) { a.classList.toggle('vpm-gahdr--active', idOf(a) === en.target.id); });
+        });
+      }, { rootMargin: '-64px 0px -70% 0px' });
+      links.forEach(function (a) { var t = target(a); if (t) obs.observe(t); });
+    }
+    function pin() {
+      var past = spacer.getBoundingClientRect().top < 0;
+      if (past === nav.classList.contains('vpm-gahdr--pinned')) return;
+      spacer.style.height = past ? nav.offsetHeight + 'px' : '';
+      nav.classList.toggle('vpm-gahdr--pinned', past);
+    }
+    function init() {
+      claimIds(); prune(); spy(); pin();
+      window.addEventListener('scroll', pin, { passive: true });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+  })();
+</script>

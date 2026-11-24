@@ -18,6 +18,10 @@ a `sections/` build on 2026-11-20 when the resources module joined it.
 The page also carries two widgets, pasted as their own blocks (copies aren't held here):
 
 Uses widget: news-tips-cta
+
+**Copies on the hub page:** `pages/general-assembly-hub/` (vpm.org/general-assembly) carries copies of
+`header.html` (with its own "On this page" links) and `resources.html`. When you change the styles,
+script or links in one, change the other.
 Uses widget: newsletter-signup-embed
 
 ## Header: session status line
