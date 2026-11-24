@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>General Assembly hub preview</title>
+<!-- Preview only, never pasted. Loads every file in sections/ into a rough copy of a vpm.org page:
+     block 1 full width, the rest inside the theme's .container (1240px max, 20px side padding).
+     Grey boxes stand in for blocks this build doesn't own. -->
+<style>
+  body { margin: 0; font-family: "Public Sans", "Helvetica Neue", Arial, sans-serif; color: #101820; background: #fff; }
+  .container { max-width: 1240px; margin: 0 auto; padding: 0 20px; box-sizing: border-box; }
+  .is-full-width .container { max-width: none; padding: 0; }
+  .pv-slot { margin: 16px 0; padding: 24px; background: #f2f3f4; color: #5a6470; font-size: 13px; text-align: center; }
+  .pv-stories { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 24px 0 0; }
+  .pv-story { height: 200px; background: #e5e7e9; }
+  @media (max-width: 768px) { .pv-stories { grid-template-columns: 1fr; } .pv-story { height: 120px; } }
+</style>
+</head>
+<body>
+  <section class="page-section page-code-block is-full-width"><div class="container" data-pv="sections/01-header.html"></div></section>
+  <section class="page-section page-code-block"><div class="container" data-pv="sections/02-key-dates.html"></div></section>
+  <section class="page-section page-article-list"><div class="container">
+    <div class="pv-stories"><div class="pv-story"></div><div class="pv-story"></div><div class="pv-story"></div></div>
+    <div class="pv-slot">Article List (live CMS block, General Assembly category)</div>
+  </div></section>
+  <section class="page-section page-code-block"><div class="container" data-pv="sections/04-leadership.html"></div></section>
+  <section class="page-section page-code-block"><div class="container" data-pv="sections/05-bills.html"></div></section>
+  <section class="page-section"><div class="container"><div class="pv-slot">From the Capitol (UNCONFIRMED live block)</div></div></section>
+  <section class="page-section page-code-block"><div class="container" data-pv="sections/07-explainers.html"></div></section>
+  <section class="page-section page-code-block"><div class="container" data-pv="sections/08-glossary.html"></div></section>
+  <section class="page-section page-code-block"><div class="container" data-pv="sections/09-resources.html"></div></section>
+  <section class="page-section"><div class="container">
+    <div class="pv-slot">Morning Monitor signup (widget newsletter-signup-embed)</div>
+    <div class="pv-slot">Contact the VPM News team (widget news-tips-cta)</div>
+  </div></section>
+<script>
+  (async function () {
+    const slots = [...document.querySelectorAll('[data-pv]')];
+    // Load the header last: its script looks up the other sections' ids.
+    slots.push(slots.shift());
+    for (const host of slots) {
+      const html = await fetch(host.dataset.pv).then(r => r.text());
+      const t = document.createElement('template');
+      t.innerHTML = html;
+      [...t.content.childNodes].forEach(n => {
+        if (n.tagName === 'SCRIPT') { const s = document.createElement('script'); s.textContent = n.textContent; host.appendChild(s); }
+        else host.appendChild(n);
+      });
+    }
+  })();
+</script>
+</body>
+</html>

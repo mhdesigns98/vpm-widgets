@@ -1,0 +1,132 @@
+<!--
+  VPM General Assembly hub — Key dates + "Latest coverage" label (its own Code Block)
+  Lives on: https://www.vpm.org/general-assembly/, block 2. See ../PASTE-ORDER.md.
+  Paste: the WHOLE file into its own Code Block. Full width OFF.
+  Namespace: vpm-gahub-. No JS. Owns #ga-dates and #ga-latest (the header's jump bar links here).
+  Editing: see ../EDITING.md, "Change a key date". Only the text inside the
+  vpm-gahub__date lines changes. Leave [DATE] in place until the date is published.
+-->
+<style>
+  .vpm-gahub {
+    --vpm-gahub-dark-blue: #003865;   /* tokens --vpm-dark-blue */
+    --vpm-gahub-light-blue: #6cace4;  /* tokens --vpm-light-blue */
+    --vpm-gahub-blue-050: #eef4fb;    /* tokens --vpm-blue-050 */
+    --vpm-gahub-yellow: #e0e721;      /* tokens --vpm-yellow */
+    --vpm-gahub-red: #ee2737;         /* tokens --vpm-red */
+    --vpm-gahub-red-700: #b81e2a;     /* tokens --vpm-red-700 */
+    --vpm-gahub-gray-700: #3d4652;    /* tokens --vpm-gray-700 */
+    --vpm-gahub-gray-200: #e5e7e9;    /* tokens --vpm-gray-200 */
+    --vpm-gahub-white: #ffffff;       /* tokens --vpm-white */
+    --vpm-gahub-font: "Public Sans", "GT America", "Helvetica Neue", Arial, sans-serif; /* tokens --font-sans */
+
+    box-sizing: border-box; display: block; margin: 0; padding: 48px 0 0;
+    color: var(--vpm-gahub-gray-700); font-family: var(--vpm-gahub-font);
+    font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased;
+  }
+  .vpm-gahub *, .vpm-gahub *::before, .vpm-gahub *::after { box-sizing: border-box; }
+  /* Host reset at zero specificity; the BEM rules below (two classes) win. */
+  :where(.vpm-gahub) h2, :where(.vpm-gahub) h3, :where(.vpm-gahub) p, :where(.vpm-gahub) ol, :where(.vpm-gahub) li { margin: 0; padding: 0; }
+  .vpm-gahub .vpm-gahub__section { scroll-margin-top: 64px; } /* clears the pinned jump bar */
+
+  .vpm-gahub .vpm-gahub__eyebrow {
+    margin: 0 0 8px; font-size: 13px; font-weight: 700; line-height: 1.2;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--vpm-gahub-red-700);
+  }
+  .vpm-gahub .vpm-gahub__title {
+    margin: 0 0 8px; font-family: var(--vpm-gahub-font);
+    font-size: clamp(24px, 2.4vw, 32px); font-weight: 800; line-height: 1.2;
+    letter-spacing: -0.01em; text-transform: none; color: var(--vpm-gahub-dark-blue);
+  }
+  .vpm-gahub .vpm-gahub__intro {
+    max-width: 680px; margin: 0 0 24px; font-size: 16px; line-height: 1.55;
+    color: var(--vpm-gahub-gray-700);
+  }
+
+  /* Dates: a row of five on wide screens, a vertical timeline on phones */
+  .vpm-gahub .vpm-gahub__dates {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;
+    margin: 0; padding: 0; list-style: none; counter-reset: none;
+  }
+  .vpm-gahub .vpm-gahub__date-item {
+    margin: 0; padding: 16px 16px 20px; list-style: none;
+    background: var(--vpm-gahub-blue-050);
+    border-top: 4px solid var(--vpm-gahub-light-blue);
+    border-radius: 0 0 4px 4px;
+  }
+  .vpm-gahub .vpm-gahub__date-item--first { border-top-color: var(--vpm-gahub-yellow); }
+  .vpm-gahub .vpm-gahub__date-item--last { border-top-color: var(--vpm-gahub-red); }
+  .vpm-gahub .vpm-gahub__date {
+    display: block; margin: 0 0 6px; font-size: 14px; font-weight: 700; line-height: 1.3;
+    letter-spacing: 0.04em; text-transform: uppercase; color: var(--vpm-gahub-red-700);
+  }
+  .vpm-gahub .vpm-gahub__date-name {
+    margin: 0 0 6px; font-family: var(--vpm-gahub-font); font-size: 18px; font-weight: 700;
+    line-height: 1.25; text-transform: none; color: var(--vpm-gahub-dark-blue);
+  }
+  .vpm-gahub .vpm-gahub__date-text { margin: 0; font-size: 15px; line-height: 1.5; color: var(--vpm-gahub-gray-700); }
+
+  /* "Latest coverage" label: the live Article List block sits directly under it */
+  .vpm-gahub .vpm-gahub__latest { margin: 48px 0 0; padding: 0 0 16px; border-bottom: 1px solid var(--vpm-gahub-gray-200); }
+  .vpm-gahub .vpm-gahub__latest .vpm-gahub__title { margin: 0; }
+
+  @media (max-width: 600px) {
+    .vpm-gahub { padding-top: 32px; }
+    .vpm-gahub .vpm-gahub__dates { grid-template-columns: 1fr; gap: 0; }
+    .vpm-gahub .vpm-gahub__date-item,
+    .vpm-gahub .vpm-gahub__date-item--first,
+    .vpm-gahub .vpm-gahub__date-item--last {
+      padding: 0 0 20px 20px; background: none; border-top: 0; border-radius: 0;
+      border-left: 4px solid var(--vpm-gahub-light-blue);
+    }
+    .vpm-gahub .vpm-gahub__date-item--first { border-left-color: var(--vpm-gahub-yellow); }
+    .vpm-gahub .vpm-gahub__date-item--last { border-left-color: var(--vpm-gahub-red); padding-bottom: 0; }
+    .vpm-gahub .vpm-gahub__latest { margin-top: 32px; }
+  }
+</style>
+
+<div class="vpm-gahub">
+  <section class="vpm-gahub__section" id="ga-dates" aria-labelledby="ga-dates-title">
+    <p class="vpm-gahub__eyebrow">2027 session</p>
+    <h2 class="vpm-gahub__title" id="ga-dates-title">Key dates</h2>
+    <p class="vpm-gahub__intro">The milestones that shape what happens to a bill, from the first day of session to the day new laws take effect.</p>
+
+    <!-- ===== KEY DATES: edit only the text on each vpm-gahub__date line ===== -->
+    <ol class="vpm-gahub__dates">
+      <li class="vpm-gahub__date-item vpm-gahub__date-item--first">
+        <span class="vpm-gahub__date">Jan. 13, 2027</span>
+        <h3 class="vpm-gahub__date-name">Session convenes</h3>
+        <p class="vpm-gahub__date-text">Lawmakers gather in Richmond, and bills begin moving through committees.</p>
+      </li>
+      <li class="vpm-gahub__date-item">
+        <span class="vpm-gahub__date">[DATE]</span>
+        <h3 class="vpm-gahub__date-name">Crossover</h3>
+        <p class="vpm-gahub__date-text">The last day each chamber can pass its own bills. After this, the House works on Senate bills and the Senate on House bills.</p>
+      </li>
+      <li class="vpm-gahub__date-item">
+        <span class="vpm-gahub__date">[DATE]</span>
+        <h3 class="vpm-gahub__date-name">Sine die</h3>
+        <p class="vpm-gahub__date-text">The scheduled end of the regular session. Bills that haven't passed both chambers by now don't become law this year.</p>
+      </li>
+      <li class="vpm-gahub__date-item">
+        <span class="vpm-gahub__date">[DATE]</span>
+        <h3 class="vpm-gahub__date-name">Reconvened (veto) session</h3>
+        <p class="vpm-gahub__date-text">Lawmakers return to vote on the governor's amendments and vetoes.</p>
+      </li>
+      <li class="vpm-gahub__date-item vpm-gahub__date-item--last">
+        <span class="vpm-gahub__date">July 1, 2027</span>
+        <h3 class="vpm-gahub__date-name">New laws take effect</h3>
+        <p class="vpm-gahub__date-text">Most bills signed into law take effect on July 1, unless the bill sets a different date.</p>
+      </li>
+    </ol>
+    <!-- ===== END KEY DATES ===== -->
+  </section>
+
+  <div class="vpm-gahub__latest vpm-gahub__section" id="ga-latest">
+    <h2 class="vpm-gahub__title">Latest coverage</h2>
+  </div>
+</div>
+
+<!-- ===== SPLIT ===== LIVE BLOCK HERE: Article List, General Assembly category ===== -->
+<!-- Stop pasting. Add an Article List block in the CMS (category: General Assembly, title field
+     EMPTY, since "Latest coverage" above is its heading), then continue with block 4 in a NEW
+     Code Block. -->

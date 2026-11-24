@@ -1,0 +1,134 @@
+<!--
+  VPM General Assembly hub — "All coverage" link + Who's in charge (its own Code Block)
+  Lives on: https://www.vpm.org/general-assembly/, block 4, directly under the live Article List.
+  See ../PASTE-ORDER.md.
+  Paste: the WHOLE file into its own Code Block. Full width OFF.
+  Namespace: vpm-gahub-. No JS. Owns #ga-leaders (the header's jump bar links here).
+  Editing: see ../EDITING.md, "Update who's in charge". Replace each [bracketed] value.
+  If a chamber has no vacancies, delete its whole "Vacant" line (from <div to </div>).
+-->
+<style>
+  .vpm-gahub {
+    --vpm-gahub-dark-blue: #003865;   /* tokens --vpm-dark-blue */
+    --vpm-gahub-blue-050: #eef4fb;    /* tokens --vpm-blue-050 */
+    --vpm-gahub-red-700: #b81e2a;     /* tokens --vpm-red-700 */
+    --vpm-gahub-gray-700: #3d4652;    /* tokens --vpm-gray-700 */
+    --vpm-gahub-gray-600: #5a6470;    /* tokens --vpm-gray-600 */
+    --vpm-gahub-gray-200: #e5e7e9;    /* tokens --vpm-gray-200 */
+    --vpm-gahub-white: #ffffff;       /* tokens --vpm-white */
+    --vpm-gahub-font: "Public Sans", "GT America", "Helvetica Neue", Arial, sans-serif; /* tokens --font-sans */
+
+    box-sizing: border-box; display: block; margin: 0; padding: 24px 0 48px;
+    color: var(--vpm-gahub-gray-700); font-family: var(--vpm-gahub-font);
+    font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased;
+  }
+  .vpm-gahub *, .vpm-gahub *::before, .vpm-gahub *::after { box-sizing: border-box; }
+  :where(.vpm-gahub) h2, :where(.vpm-gahub) h3, :where(.vpm-gahub) p, :where(.vpm-gahub) ul, :where(.vpm-gahub) li, :where(.vpm-gahub) dl, :where(.vpm-gahub) dt, :where(.vpm-gahub) dd { margin: 0; padding: 0; }
+  .vpm-gahub .vpm-gahub__section { scroll-margin-top: 64px; }
+
+  /* Link to the full archive, right under the live story list */
+  .vpm-gahub .vpm-gahub__more { margin: 0 0 48px; font-size: 16px; font-weight: 700; line-height: 1.4; }
+  .vpm-gahub .vpm-gahub__more a {
+    display: inline-flex; align-items: center; min-height: 44px; /* 44px tap target */
+    color: var(--vpm-gahub-dark-blue) !important;
+    text-decoration: underline !important; text-underline-offset: 3px; text-decoration-thickness: 1px;
+  }
+  .vpm-gahub .vpm-gahub__more a:hover { text-decoration-thickness: 2px; }
+  .vpm-gahub .vpm-gahub__more a:focus-visible { outline: 2px solid var(--vpm-gahub-dark-blue); outline-offset: 2px; }
+
+  .vpm-gahub .vpm-gahub__eyebrow {
+    margin: 0 0 8px; font-size: 13px; font-weight: 700; line-height: 1.2;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--vpm-gahub-red-700);
+  }
+  .vpm-gahub .vpm-gahub__title {
+    margin: 0 0 8px; font-family: var(--vpm-gahub-font);
+    font-size: clamp(24px, 2.4vw, 32px); font-weight: 800; line-height: 1.2;
+    letter-spacing: -0.01em; text-transform: none; color: var(--vpm-gahub-dark-blue);
+  }
+  .vpm-gahub .vpm-gahub__intro {
+    max-width: 680px; margin: 0 0 24px; font-size: 16px; line-height: 1.55; color: var(--vpm-gahub-gray-700);
+  }
+
+  /* Chambers: two cards side by side, stacked on phones */
+  .vpm-gahub .vpm-gahub__chambers {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 0 0 24px; padding: 0;
+  }
+  .vpm-gahub .vpm-gahub__chamber {
+    margin: 0; padding: 20px; background: var(--vpm-gahub-blue-050); border-radius: 4px;
+  }
+  .vpm-gahub .vpm-gahub__chamber-name {
+    margin: 0 0 4px; font-family: var(--vpm-gahub-font); font-size: 20px; font-weight: 700;
+    line-height: 1.25; text-transform: none; color: var(--vpm-gahub-dark-blue);
+  }
+  .vpm-gahub .vpm-gahub__seats { margin: 0 0 12px; font-size: 14px; color: var(--vpm-gahub-gray-600); }
+  .vpm-gahub .vpm-gahub__split { margin: 0; padding: 0; font-size: 16px; }
+  .vpm-gahub .vpm-gahub__split-row {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+    margin: 0; padding: 8px 0; font-size: 16px; border-top: 1px solid var(--vpm-gahub-gray-200);
+  }
+  .vpm-gahub .vpm-gahub__split-row:first-child { border-top: 0; padding-top: 0; }
+  .vpm-gahub .vpm-gahub__split dt { margin: 0; font-size: 16px; font-weight: 600; color: var(--vpm-gahub-gray-700); }
+  .vpm-gahub .vpm-gahub__split dd {
+    margin: 0; font-size: 24px; font-weight: 800; line-height: 1; color: var(--vpm-gahub-dark-blue);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* People: a list of role / name pairs */
+  .vpm-gahub .vpm-gahub__people {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0 32px;
+    margin: 0; padding: 0; font-size: 16px;
+  }
+  .vpm-gahub .vpm-gahub__person { margin: 0; padding: 14px 0; font-size: 16px; border-top: 1px solid var(--vpm-gahub-gray-200); }
+  .vpm-gahub .vpm-gahub__person dt {
+    margin: 0 0 2px; font-size: 13px; font-weight: 700; letter-spacing: 0.04em;
+    text-transform: uppercase; color: var(--vpm-gahub-gray-600);
+  }
+  .vpm-gahub .vpm-gahub__person dd { margin: 0; font-size: 17px; font-weight: 700; line-height: 1.35; color: var(--vpm-gahub-dark-blue); }
+
+  @media (max-width: 600px) {
+    .vpm-gahub { padding-bottom: 32px; }
+    .vpm-gahub .vpm-gahub__more { margin-bottom: 32px; }
+    .vpm-gahub .vpm-gahub__chamber { padding: 16px; }
+  }
+</style>
+
+<div class="vpm-gahub">
+  <p class="vpm-gahub__more"><a href="https://www.vpm.org/category/general-assembly/">All General Assembly coverage &rarr;</a></p>
+
+  <section class="vpm-gahub__section" id="ga-leaders" aria-labelledby="ga-leaders-title">
+    <p class="vpm-gahub__eyebrow">The 2027 legislature</p>
+    <h2 class="vpm-gahub__title" id="ga-leaders-title">Who's in charge</h2>
+    <p class="vpm-gahub__intro">Which party controls each chamber, and the leaders who decide which bills get a hearing and how the budget is written.</p>
+
+    <!-- ===== WHO'S IN CHARGE: replace each [bracketed] value ===== -->
+    <div class="vpm-gahub__chambers">
+      <div class="vpm-gahub__chamber">
+        <h3 class="vpm-gahub__chamber-name">House of Delegates</h3>
+        <p class="vpm-gahub__seats">100 seats</p>
+        <dl class="vpm-gahub__split">
+          <div class="vpm-gahub__split-row"><dt>Democrats</dt><dd>[##]</dd></div>
+          <div class="vpm-gahub__split-row"><dt>Republicans</dt><dd>[##]</dd></div>
+          <div class="vpm-gahub__split-row"><dt>Vacant</dt><dd>[#]</dd></div>
+        </dl>
+      </div>
+      <div class="vpm-gahub__chamber">
+        <h3 class="vpm-gahub__chamber-name">Senate</h3>
+        <p class="vpm-gahub__seats">40 seats</p>
+        <dl class="vpm-gahub__split">
+          <div class="vpm-gahub__split-row"><dt>Democrats</dt><dd>[##]</dd></div>
+          <div class="vpm-gahub__split-row"><dt>Republicans</dt><dd>[##]</dd></div>
+          <div class="vpm-gahub__split-row"><dt>Vacant</dt><dd>[#]</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <dl class="vpm-gahub__people">
+      <div class="vpm-gahub__person"><dt>Governor</dt><dd>[Name] ([Party])</dd></div>
+      <div class="vpm-gahub__person"><dt>Speaker of the House</dt><dd>[Name] ([Party])</dd></div>
+      <div class="vpm-gahub__person"><dt>Senate Majority Leader</dt><dd>[Name] ([Party])</dd></div>
+      <div class="vpm-gahub__person"><dt>Chair, House Appropriations</dt><dd>[Name] ([Party])</dd></div>
+      <div class="vpm-gahub__person"><dt>Chair, Senate Finance &amp; Appropriations</dt><dd>[Name] ([Party])</dd></div>
+    </dl>
+    <!-- ===== END WHO'S IN CHARGE ===== -->
+  </section>
+</div>
