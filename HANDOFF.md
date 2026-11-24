@@ -44,7 +44,7 @@
 ## Key files
 
 - `share/index.html` — the share page (all logic inline)
-- `.claude/commands/share.md` — `/share` command; `.claude/commands/` also has brief, new-widget, ship-widget, save-component, new-page, ship-page, consolidate-page, critique
+- `.claude/commands/share.md` — `/share` command; `.claude/commands/` also has brief, new-widget, ship-widget, save-component, new-page, ship-page, consolidate-page (`/critique` comes from the personal claude-setup install)
 - `functions/api/pbs-episodes.js` — Pages Function, on `main`, not deployed anywhere
 - `widgets/live-updates-rail/HANDOFF.md` — that widget's own state (parked pending newsroom feedback)
 - `CLAUDE.md`, `CONTRIBUTING.md`, `INDEX.md` — conventions, onboarding, widget and page index
